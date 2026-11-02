@@ -1,0 +1,669 @@
+{
+  "schema_version": "floorplan-cvpr-submission-plan-v1",
+  "version": "2026-11-02-floorplan-submission-v1",
+  "status": "planning",
+  "project": "FloorFlow",
+  "target": {
+    "venue": "CVPR main conference",
+    "cycle": "next eligible cycle",
+    "deadline": null,
+    "deadline_policy": "Confirm the official deadline before the held-out freeze."
+  },
+  "objective": "Submit a CVPR paper on auditable, strictly local floorplan editing with a strong oracle-control upper bound and defensible target-free predicted-control operation reliability, without claiming complete-method or cross-benchmark SOTA.",
+  "primary_thesis": "FloorFlow separates edit reliability from reference reconstruction fidelity: it executes supported local edits, rejects unsupported or ambiguous requests, preserves the declared outside region exactly, and produces structurally plausible plans even when target-free control fidelity remains limited.",
+  "scope": {
+    "dataset": "CubiCasa5K",
+    "editing_split": "test503 oracle-control and a separately frozen predicted-control held-out set",
+    "identity_fallback_split": "official test509",
+    "operations": [
+      "room_type_change",
+      "room_addition",
+      "room_deletion",
+      "opening_pressure_or_delete",
+      "furniture_low_salience_or_delete"
+    ],
+    "explicit_abstentions": [
+      "unsupported_wall_move",
+      "ambiguous_global_scope",
+      "conflicting_instruction"
+    ],
+    "allowed_claims": [
+      "protocol-aligned oracle-control editing anchor",
+      "exact strict-locality evidence",
+      "target-free structural reasonableness under predicted controls",
+      "supported-operation execution and safe abstention reliability",
+      "matched local comparisons"
+    ],
+    "forbidden_claims": [
+      "complete HouseMind-E method defeat",
+      "HouseMind RPLAN leaderboard SOTA",
+      "RPLAN or complete-CAD SOTA",
+      "uniform Node/Edge/GED superiority",
+      "deployable free-text editing without matched evidence",
+      "pooling oracle and predicted-control rows"
+    ]
+  },
+  "evidence_baseline": {
+    "oracle_control": {
+      "status": "passed_scoped",
+      "split": "CubiCasa5K test503",
+      "cases": 2479,
+      "seeds": [
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "delta_iou_range": [
+        0.9567032400416569,
+        0.9998006091318032
+      ],
+      "delta_mse_range": [
+        0.000018663442751858384,
+        0.00009582009079892316
+      ],
+      "outside_layers_exact": 1.0,
+      "fpeval_validity": 1.0,
+      "fevp_five_check_validity_range": [
+        0.9124,
+        0.9569
+      ],
+      "conditional_watertightness_range": [
+        0.9578754578754579,
+        0.9674908424908425
+      ],
+      "sources": [
+        "outputs/reports/residential_edit_test503_v1.json",
+        "outputs/reports/residential_sota_main_results_v5.json",
+        "outputs/reports/residential_sota_claim_gate_v5.json",
+        "paper/tables/residential_sota_main_v5.md",
+        "paper/tables/oracle_control_cvpr_dossier_v1.md"
+      ]
+    },
+    "predicted_control_reasonableness": {
+      "status": "passed_on_validation_pending_test",
+      "split": "CubiCasa5K val491",
+      "seeds": [
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "target_free": true,
+      "raster_plausible_mean": 0.984928716904277,
+      "room_coverage": 1.0,
+      "room_face_retention": 0.9956546660185849,
+      "validity": 1.0,
+      "raw_fpeval_watertightness": 0.8167006109979633,
+      "functional_watertightness": 0.9979633401221996,
+      "wall_continuity": 0.9954274177242576,
+      "opening_wall_alignment": 0.9935304120556612,
+      "furniture_room_containment": 1.0,
+      "plan_plausibility": 0.9865580448065174,
+      "outside_footprint_fraction": 0.0,
+      "room_overlap_ratio": 0.0,
+      "room_macro_iou_diagnostic": 0.2697007730837154,
+      "protocol_boundary": "For 401/491 single-component footprints, raw and componentwise watertightness are both 1.0. The remaining 90 multi-component footprints fail the standard single-region fpeval rule but reach componentwise watertightness 0.9889.",
+      "sources": [
+        "docs/predicted_control_plausibility_v2.md",
+        "docs/predicted_control_reasonableness_results_v1.md",
+        "configs/predicted_control_reasonableness_contract_v1.json",
+        "outputs/reports/predicted_control_plausibility_fiveseed_v12.json",
+        "outputs/reports/predicted_control_plausibility_val491_final_v12.json"
+      ]
+    },
+    "predicted_control_operation_reasonableness": {
+      "status": "passed_on_validation_semantic_audit_pending",
+      "split": "val191",
+      "target_free_at_inference": true,
+      "prompt_count": 738,
+      "supported_prompt_count": 438,
+      "executed": 438,
+      "unsupported_or_ambiguous_prompt_count": 300,
+      "abstained": 300,
+      "outside_pixel_exact": 1.0,
+      "outside_room_label_exact": 1.0,
+      "validity": 1.0,
+      "unsupported_abstention_rate": 1.0,
+      "object_delete_contract_passed": true,
+      "ghost_state_contract_passed": true,
+      "paired_refinement": {
+        "node_f1_mean_delta": 0.07789333345276564,
+        "node_f1_ci95": [
+          0.06576368867694739,
+          0.09007713809748805
+        ],
+        "edge_overlap_mean_delta": 0.0013534613971553035,
+        "edge_overlap_ci95": [
+          0.00026898651131055474,
+          0.0028919986353855027
+        ],
+        "ged_mean_delta": 4.842465753424658,
+        "ged_ci95": [
+          3.6163812785388125,
+          6.107420091324199
+        ],
+        "ged_interpretation": "Higher GED is a disclosed negative diagnostic."
+      },
+      "protocol_boundary": "The file named residential_predicted_edit_test503_final_v1.json reports split val191 and test_opened=false. It is validation evidence, not a held-out test result.",
+      "sources": [
+        "configs/residential_predicted_edit_v1.json",
+        "outputs/reports/residential_predicted_edit_test503_final_v1.json",
+        "outputs/reports/predicted_edit_object_delete_audit_v1.json",
+        "outputs/reports/predicted_edit_ghost_state_audit_v1.json"
+      ]
+    },
+    "predicted_control_fidelity_limitations": {
+      "status": "disclosed_limitation",
+      "room_macro_iou": 0.2697007730837154,
+      "graph_metrics": "The predicted-edit type graph remains far below absolute Node/Edge/GED publication gates on the evaluated validation prompts.",
+      "policy": "Report fidelity, reasonableness, and operation safety as separate evidence axes. Do not use oracle fidelity to imply predicted-control fidelity."
+    }
+  },
+  "claim_ladder": [
+    {
+      "level": 0,
+      "claim": "Strict-locality and legality are measurable as independent editing axes.",
+      "status": "supported",
+      "required_tasks": [
+        "FP-SUB-00",
+        "FP-SUB-01",
+        "FP-SUB-02"
+      ]
+    },
+    {
+      "level": 1,
+      "claim": "FloorFlow provides a strong oracle-control edit-detection anchor while preserving exact outside content.",
+      "status": "supported",
+      "required_tasks": [
+        "FP-SUB-00",
+        "FP-SUB-02"
+      ]
+    },
+    {
+      "level": 2,
+      "claim": "Under target-free predicted controls, FloorFlow executes supported typed operations safely, abstains on unsupported requests, and produces structurally plausible plans.",
+      "status": "validation_supported_semantic_and_test_audits_pending",
+      "required_tasks": [
+        "FP-SUB-03",
+        "FP-SUB-04",
+        "FP-SUB-05",
+        "FP-SUB-06"
+      ]
+    },
+    {
+      "level": 3,
+      "claim": "The predicted-control reliability result generalizes to a frozen held-out set.",
+      "status": "open",
+      "required_tasks": [
+        "FP-SUB-06",
+        "FP-SUB-07"
+      ]
+    },
+    {
+      "level": 4,
+      "claim": "FloorFlow beats complete HouseMind or establishes RPLAN/full-CAD SOTA.",
+      "status": "blocked_and_not_required",
+      "required_tasks": []
+    }
+  ],
+  "submission_gates": {
+    "S0_claim_integrity": [
+      "Every numeric claim names dataset, split, input controls, evaluator, and deployability.",
+      "Oracle, predicted-control, identity, generation, and free-text rows are never pooled.",
+      "FP-Eval validity and FEVP five-check validity remain separate.",
+      "Raw and functional/componentwise watertightness remain separate."
+    ],
+    "S1_oracle_anchor": [
+      "Per-operation Delta-IoU and Delta-MSE match the current source reports.",
+      "Outside exact layers equal 1.0.",
+      "Matched local baseline and editing-aware control values are frozen.",
+      "HouseMind-E remains labeled as cross-dataset context."
+    ],
+    "S2_predicted_reasonableness": [
+      "Raster plausibility >= 0.95.",
+      "Validity = 1.0.",
+      "Functional watertightness >= 0.95.",
+      "Wall continuity >= 0.95.",
+      "Plan plausibility >= 0.95.",
+      "Outside-footprint fraction = 0.0.",
+      "Raw watertightness and the multi-component footprint boundary are reported."
+    ],
+    "S3_operation_reliability": [
+      "All supported prompts execute on the declared operation set.",
+      "All explicitly unsupported or ambiguous prompts abstain.",
+      "Every executed edit preserves outside pixel and room-label content exactly.",
+      "Every executed edit has validity 1.0.",
+      "Operation-specific semantic success is frozen and evaluated before test.",
+      "Abstention coverage and prompt distribution are reported."
+    ],
+    "S4_heldout_freeze": [
+      "Configuration, prompt manifest, checkpoints, seeds, thresholds, and evaluator hashes are frozen.",
+      "Held-out split is opened once.",
+      "No threshold or model selection changes after opening.",
+      "Failed or negative metrics remain in the result package."
+    ],
+    "S5_external_and_ablation": [
+      "Raster2Seq local-redraw and editing-aware control are evaluated on matched rows.",
+      "Typed, dense, no-gate, no-graph, and matched-compute ablations are reported.",
+      "Missing external evidence remains N/A.",
+      "No external leaderboard rank is fabricated."
+    ],
+    "S6_manuscript_package": [
+      "Main tables are readable and tied to claims.",
+      "Qualitative panels show before, after, edit region, outside diff, and failure cases.",
+      "Limitations and negative results are visible in the main paper.",
+      "Reproducibility manifest and anonymous supplement pass integrity checks."
+    ]
+  },
+  "critical_path": [
+    "FP-SUB-03",
+    "FP-SUB-04",
+    "FP-SUB-05",
+    "FP-SUB-06",
+    "FP-SUB-07",
+    "FP-SUB-10",
+    "FP-SUB-11",
+    "FP-SUB-12",
+    "FP-SUB-15"
+  ],
+  "phases": [
+    {
+      "id": "P0",
+      "name": "Evidence freeze and claim positioning",
+      "tasks": [
+        "FP-SUB-00",
+        "FP-SUB-01",
+        "FP-SUB-02"
+      ],
+      "exit_gate": "S0_claim_integrity"
+    },
+    {
+      "id": "P1",
+      "name": "Predicted-control operation reliability",
+      "tasks": [
+        "FP-SUB-03",
+        "FP-SUB-04",
+        "FP-SUB-05"
+      ],
+      "exit_gate": "S3_operation_reliability"
+    },
+    {
+      "id": "P2",
+      "name": "One-shot held-out validation",
+      "tasks": [
+        "FP-SUB-06",
+        "FP-SUB-07"
+      ],
+      "exit_gate": "S4_heldout_freeze"
+    },
+    {
+      "id": "P3",
+      "name": "External comparisons and visual evidence",
+      "tasks": [
+        "FP-SUB-08",
+        "FP-SUB-09"
+      ],
+      "exit_gate": "S5_external_and_ablation"
+    },
+    {
+      "id": "P4",
+      "name": "Manuscript and review",
+      "tasks": [
+        "FP-SUB-10",
+        "FP-SUB-11",
+        "FP-SUB-12",
+        "FP-SUB-13"
+      ],
+      "exit_gate": "S6_manuscript_package"
+    },
+    {
+      "id": "P5",
+      "name": "Submission",
+      "tasks": [
+        "FP-SUB-14",
+        "FP-SUB-15"
+      ],
+      "exit_gate": "S6_manuscript_package"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "FP-SUB-00",
+      "priority": "P0",
+      "status": "completed",
+      "title": "Freeze the two-axis submission claim",
+      "depends_on": [],
+      "deliverables": [
+        "paper/cvpr_manuscript_skeleton_v1.md",
+        "paper/cvpr_claim_sections_v3.md",
+        "docs/fp_oracle_control_protocol_status_v1.md"
+      ],
+      "acceptance": "The paper claim covers edit reliability and structural reasonableness without claiming complete-method SOTA."
+    },
+    {
+      "id": "FP-SUB-01",
+      "priority": "P0",
+      "status": "completed",
+      "title": "Refresh the evidence registry and mark historical metrics",
+      "depends_on": [],
+      "deliverables": [
+        "docs/cvpr_positive_result_ledger.md",
+        "docs/cvpr_negative_results_ledger.md",
+        "paper/cvpr_experiment_structure_v1.md"
+      ],
+      "acceptance": "Current claims reference the latest source reports and stale ranges are marked historical."
+    },
+    {
+      "id": "FP-SUB-02",
+      "priority": "P0",
+      "status": "completed",
+      "title": "Create the compact oracle-control CVPR dossier",
+      "depends_on": [
+        "FP-SUB-00",
+        "FP-SUB-01"
+      ],
+      "deliverables": [
+        "paper/tables/oracle_control_cvpr_dossier_v1.md"
+      ],
+      "acceptance": "Main metrics, matched comparisons, mechanism audit, robustness, slices, and source map are in one document."
+    },
+    {
+      "id": "FP-SUB-03",
+      "priority": "P0",
+      "status": "in_progress",
+      "title": "Create the predicted-control reasonableness dossier",
+      "depends_on": [
+        "FP-SUB-00",
+        "FP-SUB-01"
+      ],
+      "deliverables": [
+        "paper/tables/predicted_control_reasonableness_dossier_v1.md"
+      ],
+      "acceptance": "The dossier reports target-free plausibility, raw and functional watertightness, operation execution/abstention, object-delete audits, contamination boundaries, and separate fidelity limitations."
+    },
+    {
+      "id": "FP-SUB-04",
+      "priority": "P0",
+      "status": "planned",
+      "title": "Define and run operation-specific semantic success audits",
+      "depends_on": [
+        "FP-SUB-03"
+      ],
+      "metrics": {
+        "room_type_change": "Requested room type is realized in the declared region without outside changes.",
+        "room_addition": "A valid room instance of the requested type is inserted in the region.",
+        "room_deletion": "The targeted room instance is removed or merged without illegal topology.",
+        "opening_delete": "The targeted opening family disappears and room labels remain.",
+        "furniture_delete": "The targeted furniture family disappears and room labels remain."
+      },
+      "provisional_thresholds": {
+        "operation_semantic_success": 0.9,
+        "unsupported_abstention": 1.0,
+        "outside_pixel_exact": 1.0,
+        "outside_room_label_exact": 1.0,
+        "validity": 1.0
+      },
+      "deliverables": [
+        "configs/predicted_operation_success_contract_v1.json",
+        "scripts/evaluate_predicted_operation_success_v1.py",
+        "outputs/reports/predicted_operation_success_val191_v1.json",
+        "tests/test_predicted_operation_success.py"
+      ],
+      "acceptance": "Every supported operation has a deterministic semantic-success predicate, coverage count, denominator, and paired or case-level uncertainty."
+    },
+    {
+      "id": "FP-SUB-05",
+      "priority": "P0",
+      "status": "planned",
+      "title": "Freeze the predicted-control validation protocol",
+      "depends_on": [
+        "FP-SUB-03",
+        "FP-SUB-04"
+      ],
+      "deliverables": [
+        "configs/predicted_control_submission_freeze_v1.json",
+        "outputs/reports/predicted_control_validation_freeze_v1.json"
+      ],
+      "acceptance": "Checkpoints, prompt manifest, operation parser, thresholds, evaluator version, tolerances, and statistics are immutable before held-out access."
+    },
+    {
+      "id": "FP-SUB-06",
+      "priority": "P0",
+      "status": "blocked",
+      "title": "Open the predicted-control held-out split once",
+      "depends_on": [
+        "FP-SUB-05"
+      ],
+      "deliverables": [
+        "outputs/reports/residential_predicted_edit_heldout_v1.json",
+        "outputs/reports/predicted_control_heldout_rows_v1.json",
+        "paper/tables/predicted_control_heldout_v1.md"
+      ],
+      "acceptance": "The held-out result reports supported execution, abstention, semantic success, exact locality, validity, plausibility, fidelity, graph diagnostics, and all negative results exactly once."
+    },
+    {
+      "id": "FP-SUB-07",
+      "priority": "P0",
+      "status": "planned",
+      "title": "Run the final evidence integrity audit",
+      "depends_on": [
+        "FP-SUB-06"
+      ],
+      "deliverables": [
+        "outputs/reports/floorplan_submission_integrity_v1.json"
+      ],
+      "acceptance": "All paper numbers trace to hashed source reports; no stale, oracle-derived, or cross-protocol value enters the predicted-control claim."
+    },
+    {
+      "id": "FP-SUB-08",
+      "priority": "P1",
+      "status": "in_progress",
+      "title": "Refresh matched local and external comparisons",
+      "depends_on": [
+        "FP-SUB-02",
+        "FP-SUB-06"
+      ],
+      "deliverables": [
+        "paper/tables/matched_local_editing_baselines_v1.md",
+        "outputs/reports/matched_local_editing_baselines_v1.json"
+      ],
+      "acceptance": "Raster2Seq redraw, editing-aware control, and FloorFlow use matching rows, controls, preprocessing, and evaluator; HouseMind remains context only."
+    },
+    {
+      "id": "FP-SUB-09",
+      "priority": "P1",
+      "status": "planned",
+      "title": "Build reviewer-facing qualitative and failure evidence",
+      "depends_on": [
+        "FP-SUB-06"
+      ],
+      "deliverables": [
+        "paper/figures/floorplan_protocol_overview_v1.svg",
+        "paper/figures/predicted_control_operation_panels_v1.svg",
+        "paper/figures/floorplan_failure_taxonomy_v1.svg"
+      ],
+      "acceptance": "Figures show protocol flow, supported execution, safe abstention, exact outside diff, plausible outputs under imperfect controls, and representative failures."
+    },
+    {
+      "id": "FP-SUB-10",
+      "priority": "P0",
+      "status": "planned",
+      "title": "Freeze the main paper tables",
+      "depends_on": [
+        "FP-SUB-06",
+        "FP-SUB-08",
+        "FP-SUB-09"
+      ],
+      "deliverables": [
+        "paper/tables/main_oracle_anchor_v1.md",
+        "paper/tables/main_predicted_reliability_v1.md",
+        "paper/tables/main_resource_and_ablation_v1.md",
+        "paper/tables/main_external_context_v1.md"
+      ],
+      "acceptance": "The main paper has at most four result tables and every number maps to a frozen report."
+    },
+    {
+      "id": "FP-SUB-11",
+      "priority": "P0",
+      "status": "planned",
+      "title": "Write the complete CVPR manuscript",
+      "depends_on": [
+        "FP-SUB-07",
+        "FP-SUB-10"
+      ],
+      "deliverables": [
+        "paper/main.tex",
+        "paper/references.bib",
+        "paper/supplement.tex"
+      ],
+      "acceptance": "The manuscript states the research question, formal protocol, method, claims, evidence, related work, limitations, and submission claims without internal artifact paths or engineering-log language."
+    },
+    {
+      "id": "FP-SUB-12",
+      "priority": "P0",
+      "status": "planned",
+      "title": "Run simulated CVPR review and revise",
+      "depends_on": [
+        "FP-SUB-11"
+      ],
+      "deliverables": [
+        "outputs/reports/floorplan_cvpr_review_v1.md",
+        "outputs/reports/floorplan_revision_roadmap_v1.json"
+      ],
+      "acceptance": "A methodology reviewer, domain reviewer, and devil's advocate each address oracle leakage, exact-locality construction, fidelity limits, abstention coverage, and external comparability."
+    },
+    {
+      "id": "FP-SUB-13",
+      "priority": "P0",
+      "status": "planned",
+      "title": "Prepare reproducibility and artifact package",
+      "depends_on": [
+        "FP-SUB-07",
+        "FP-SUB-11"
+      ],
+      "deliverables": [
+        "outputs/floorplan_submission/artifact_manifest.json",
+        "outputs/floorplan_submission/README.md",
+        "outputs/floorplan_submission/CHECKSUMS.sha256"
+      ],
+      "acceptance": "The package includes code, config, prompt manifests, row schemas, evaluator hashes, checkpoint hashes, environment instructions, and no restricted data or oversized files."
+    },
+    {
+      "id": "FP-SUB-14",
+      "priority": "P0",
+      "status": "planned",
+      "title": "Run final claim, anonymity, and submission checks",
+      "depends_on": [
+        "FP-SUB-12",
+        "FP-SUB-13"
+      ],
+      "deliverables": [
+        "outputs/floorplan_submission/submission_checklist.json"
+      ],
+      "acceptance": "PDF compiles, supplementary files open, references resolve, anonymity passes, claims match results, and all mandatory limitations and disclosures are present."
+    },
+    {
+      "id": "FP-SUB-15",
+      "priority": "P0",
+      "status": "planned",
+      "title": "Submit",
+      "depends_on": [
+        "FP-SUB-14"
+      ],
+      "deliverables": [
+        "paper/main.pdf",
+        "paper/supplement.pdf"
+      ],
+      "acceptance": "Submission is complete before the official deadline with the frozen evidence package."
+    }
+  ],
+  "reviewer_risks": [
+    {
+      "risk": "Oracle controls are target-derived.",
+      "response": "Keep oracle metrics as an upper bound and pair them with a target-free predicted-control reasonableness and operation-safety table.",
+      "required_evidence": [
+        "predicted_control_reasonableness",
+        "predicted_control_operation_reasonableness",
+        "FP-SUB-06"
+      ]
+    },
+    {
+      "risk": "Exact outside preservation is guaranteed by local composition.",
+      "response": "Present it as an architectural guarantee, then prove audit value through no-gate leakage, Raster2Seq leakage, object-delete checks, and unsupported-edit abstention.",
+      "required_evidence": [
+        "FP-SUB-02",
+        "FP-SUB-03",
+        "FP-SUB-04"
+      ]
+    },
+    {
+      "risk": "Predicted-control fidelity is low.",
+      "response": "Separate fidelity from validity and operation reliability; report Room IoU and graph failures without weakening the safety claim.",
+      "required_evidence": [
+        "predicted_control_fidelity_limitations",
+        "FP-SUB-03",
+        "FP-SUB-06"
+      ]
+    },
+    {
+      "risk": "Abstention hides difficult prompts.",
+      "response": "Report support coverage, prompt construction, unsupported categories, abstention rates, and semantic success on every supported operation.",
+      "required_evidence": [
+        "FP-SUB-04",
+        "FP-SUB-06"
+      ]
+    },
+    {
+      "risk": "HouseMind comparison is cross-dataset.",
+      "response": "Use HouseMind only as metric context; rely on matched Raster2Seq and editing-aware controls for local comparisons.",
+      "required_evidence": [
+        "FP-SUB-08"
+      ]
+    },
+    {
+      "risk": "Node/Edge/GED remain weak.",
+      "response": "Keep graph metrics as secondary diagnostics and report them as a limitation, not a headline.",
+      "required_evidence": [
+        "FP-SUB-10",
+        "FP-SUB-11"
+      ]
+    }
+  ],
+  "decision_rules": [
+    {
+      "condition": "Predicted semantic audit and held-out safety/reasonableness pass.",
+      "decision": "Submit the full two-axis reliability paper."
+    },
+    {
+      "condition": "Held-out reasonableness passes but semantic operation success is weak.",
+      "decision": "Reframe as safe operation execution and abstention, and move semantic fidelity to limitations."
+    },
+    {
+      "condition": "Held-out reasonableness fails.",
+      "decision": "Do not submit the predicted-control claim; fall back to the oracle-control protocol paper or delay."
+    },
+    {
+      "condition": "External matched comparison is unavailable.",
+      "decision": "Keep unavailable entries as N/A and make no external rank claim."
+    }
+  ],
+  "stop_rules": [
+    "Do not open the predicted held-out split before FP-SUB-05 is frozen.",
+    "Do not add a new model head while the operation-success audit is unfinished.",
+    "Do not use a proxy improvement to promote a checkpoint without its canonical consumer.",
+    "Do not hide raw watertightness behind functional or componentwise diagnostics.",
+    "Do not convert abstention into a successful semantic edit.",
+    "Do not pool oracle, predicted-control, identity, generation, and free-text rows.",
+    "Do not claim complete-method SOTA without executable matched evidence."
+  ],
+  "open_items": [
+    "Confirm the official CVPR cycle and deadline.",
+    "Freeze the predicted-control held-out prompt manifest and case split.",
+    "Set operation-specific semantic-success thresholds before held-out access.",
+    "Audit current predicted-control updates and replace stale validation reports if their contracts changed.",
+    "Decide whether the identity fallback remains a main-paper contribution or an appendix result."
+  ]
+}
