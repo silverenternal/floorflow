@@ -1,0 +1,13 @@
+{
+  "version": "residential_identity_selected_v1",
+  "checkpoint": "outputs/external_baselines/raster2seq/checkpoint_blends_v2/ema_alpha_0.75.pth",
+  "checkpoint_sha256": "5c738ba5cda8842856a945aba67e60e8b373a8f5c86047af0c1c23c19e362311",
+  "selection_split": "val503",
+  "primary_metric": "room_f1",
+  "selected_val_room_f1": 0.8904009896224341,
+  "selected_val_room_iou": 0.6296252501209932,
+  "selected_val_corner_f1": 0.6005951646839784,
+  "official_test509_used_for_selection": false,
+  "fine_tune_used": false,
+  "fine_tune_rejection": "validation RoomF1 degraded after every evaluated fine-tune checkpoint"
+}

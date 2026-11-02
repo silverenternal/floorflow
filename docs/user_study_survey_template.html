@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Floorplan Style Study</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, sans-serif; }
+    body { margin: 0; background: #f4f6f8; color: #17202a; }
+    main { max-width: 1120px; margin: auto; padding: 24px; }
+    section { background: white; border: 1px solid #d7dde3; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+    h1, h2, h3 { margin-top: 0; }
+    .warning { background: #fff3cd; border-color: #e0b84b; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .references { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+    img { width: 100%; border: 1px solid #c7ced5; border-radius: 8px; background: white; }
+    label, select, input, textarea { font: inherit; }
+    .question { margin: 12px 0; }
+    .muted { color: #526173; }
+    button { font: inherit; padding: 10px 16px; border-radius: 8px; border: 1px solid #2f6fb6; background: #2f6fb6; color: white; cursor: pointer; }
+    button.secondary { background: white; color: #2f6fb6; }
+    button:disabled { opacity: .45; cursor: not-allowed; }
+    .hidden { display: none; }
+    .severity { display: inline-block; padding: 3px 8px; border-radius: 999px; background: #fff3cd; margin-left: 8px; }
+    .plan { border: 1px solid #d7dde3; padding: 10px; border-radius: 10px; }
+    .scale { width: 100%; }
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: 1fr; }
+      .references { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <section class="warning" id="ethics-warning">
+    <h1>Preview only</h1>
+    <p>Ethics review is not marked READY. The survey is intentionally non-submittable
+      until the responsible researcher records approval/exemption and updates the
+      generated survey data.</p>
+  </section>
+
+  <section id="intro">
+    <h1>Style-Controlled Floorplan Review</h1>
+    <p>This pilot compares three anonymous floorplan conditions for the same exterior
+      contour and requested style. Model names and conditions are hidden.</p>
+    <p>There is no right answer. Judge overall design quality, style fit, and apparent
+      legal/architectural consistency.</p>
+    <div class="question">
+      <label>Participant role
+        <select id="role">
+          <option value="">Select</option>
+          <option value="professional">Architecture / interior design professional</option>
+          <option value="general">General user</option>
+        </select>
+      </label>
+    </div>
+    <div class="question">
+      <label>Years of relevant experience
+        <input id="experience" type="number" min="0" max="60" step="1">
+      </label>
+    </div>
+    <div class="question">
+      <label><input id="consent" type="checkbox"> I have read the information sheet and voluntarily consent.</label>
+    </div>
+    <div class="question">
+      <label>Attention check: what is the requested reference?
+        <select id="attention">
+          <option value="">Select</option>
+          <option value="style">The displayed style examples</option>
+          <option value="ground-truth">A hidden ground-truth floorplan</option>
+        </select>
+      </label>
+    </div>
+    <button id="start">Start review</button>
+  </section>
+
+  <section id="case-panel" class="hidden">
+    <h2 id="case-title"></h2>
+    <p class="muted">Judge the three anonymous plans against the contour and style examples.</p>
+    <div class="grid">
+      <div><h3>Exterior contour</h3><img id="contour" alt="Exterior contour"></div>
+      <div style="grid-column: span 2;">
+        <h3>Requested style examples</h3>
+        <div class="references" id="references"></div>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 22px;">Anonymous plans</h3>
+    <div class="grid" id="plans"></div>
+
+    <div class="question">
+      <label>Overall preferred plan
+        <select id="preference">
+          <option value="">Select</option><option>A</option><option>B</option><option>C</option>
+        </select>
+      </label>
+    </div>
+
+    <div id="condition-ratings"></div>
+
+    <div class="question">
+      <label>Optional comment
+        <textarea id="comment" rows="3" maxlength="1000"></textarea>
+      </label>
+    </div>
+
+    <button class="secondary" id="previous">Previous</button>
+    <button id="next">Next case</button>
+    <button id="download" class="hidden">Download response JSON</button>
+    <span id="progress" class="muted"></span>
+  </section>
+</main>
+<script>
+const STORAGE_KEY = "floorflow_user_study_v2";
+let study = null;
+let current = 0;
+
+const $ = (id) => document.getElementById(id);
+const response = {
+  version: "user_study_response_v2",
+  started_at: new Date().toISOString(),
+  participant: { role: "", experience_years: null, consent: false, attention_ok: false },
+  cases: []
+};
+
+const saved = localStorage.getItem(STORAGE_KEY);
+if (saved) {
+  try {
+    const state = JSON.parse(saved);
+    current = state.current || 0;
+    Object.assign(response.participant, state.response.participant || {});
+    response.cases = state.response.cases || [];
+  } catch (_) {}
+}
+
+fetch("./survey_data.json").then((r) => r.json()).then((data) => {
+  study = data;
+  if (data.ethics_status === "READY") {
+    $("ethics-warning").remove();
+  }
+});
+
+function selectedValue(name) {
+  const element = document.querySelector(`input[name="${name}"]:checked`);
+  return element ? String(element.value) : "";
+}
+
+function currentResponse() {
+  return response.cases.find((item) => item.index === current) || null;
+}
+
+function ensureCase() {
+  const existing = currentResponse();
+  if (existing) return existing;
+  const created = { index: current };
+  response.cases.push(created);
+  return created;
+}
+
+function bindCase(entry) {
+  const prefer = $("preference").value;
+  const comment = $("comment").value.trim();
+  Object.assign(entry, {
+    preferred_slot: prefer,
+    comment,
+    ratings: {}
+  });
+  for (const slot of ["A", "B", "C"]) {
+    entry.ratings[slot] = {
+      style_fit_1_to_7: Number(selectedValue(`style-${slot}`) || 0),
+      legality_pass_fail: selectedValue(`legal-${slot}`),
+      failure_reasons: [...document.querySelectorAll(`input[name="reason-${slot}"]:checked`)].map((e) => e.value),
+      confidence_1_to_7: Number(selectedValue(`confidence-${slot}`) || 0)
+    };
+  }
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({ current, response }));
+}
+
+function ratingBlock(slot) {
+  return `
+    <div class="plan question">
+      <h3>Plan ${slot}</h3>
+      <label>Style fit (1 poor, 7 excellent)
+        <select name="style-${slot}">
+          <option value="">Select</option>${[1,2,3,4,5,6,7].map((v) => `<option value="${v}">${v}</option>`).join("")}
+        </select>
+      </label>
+      <label>Appears legal/architecturally consistent
+        <select name="legal-${slot}">
+          <option value="">Select</option><option value="pass">Pass</option><option value="fail">Fail</option>
+        </select>
+      </label>
+      <div class="muted">If fail, select any reasons:</div>
+      ${["gaps","overlap","outside_footprint","opening_implausible","furniture_implausible","other"].map((reason) => `
+        <label><input type="checkbox" name="reason-${slot}" value="${reason}"> ${reason.replaceAll("_"," ")}</label>`).join("")}
+      <label>Confidence (1 low, 7 high)
+        <select name="confidence-${slot}">
+          <option value="">Select</option>${[1,2,3,4,5,6,7].map((v) => `<option value="${v}">${v}</option>`).join("")}
+        </select>
+      </label>
+    </div>`;
+}
+
+function renderCase() {
+  const item = study.cases[current];
+  $("case-title").textContent = `Case ${current + 1} of ${study.cases.length}`;
+  $("contour").src = item.contour;
+  $("references").innerHTML = item.style_references.map((path) => `<img src="${path}" alt="Style reference">`).join("");
+  $("plans").innerHTML = item.plans.map((plan) => `<div class="plan"><h3>Plan ${plan.slot}</h3><img src="${plan.image}" alt="Anonymous plan ${plan.slot}"></div>`).join("");
+  $("condition-ratings").innerHTML = ["A","B","C"].map(ratingBlock).join("");
+  $("preference").value = "";
+  $("comment").value = "";
+  const prior = currentResponse();
+  if (prior && prior.ratings) {
+    $("preference").value = prior.preferred_slot || "";
+    $("comment").value = prior.comment || "";
+    for (const slot of ["A","B","C"]) {
+      const row = prior.ratings[slot] || {};
+      document.querySelector(`select[name="style-${slot}"]`).value = row.style_fit_1_to_7 || "";
+      document.querySelector(`select[name="legal-${slot}"]`).value = row.legality_pass_fail || "";
+      document.querySelector(`select[name="confidence-${slot}"]`).value = row.confidence_1_to_7 || "";
+      for (const reason of row.failure_reasons || []) {
+        const checkbox = document.querySelector(`input[name="reason-${slot}"][value="${reason}"]`);
+        if (checkbox) checkbox.checked = true;
+      }
+    }
+  }
+  $("download").classList.add("hidden");
+  $("next").textContent = current === study.cases.length - 1 ? "Finish" : "Next case";
+  $("previous").disabled = current === 0;
+  $("progress").textContent = `${response.cases.filter((entry) => entry.ratings).length}/${study.cases.length} cases saved locally`;
+}
+
+$("start").onclick = () => {
+  const role = $("role").value;
+  const experience = Number($("experience").value || 0);
+  const consent = $("consent").checked;
+  const attention = $("attention").value;
+  if (!role || !consent || !attention) {
+    alert("Complete role, consent, and attention check.");
+    return;
+  }
+  response.participant = {
+    role,
+    experience_years: experience,
+    consent,
+    attention_ok: attention === "style"
+  };
+  $("intro").classList.add("hidden");
+  $("case-panel").classList.remove("hidden");
+  current = Math.min(current, study.cases.length - 1);
+  renderCase();
+};
+
+$("previous").onclick = () => {
+  bindCase(ensureCase());
+  current = Math.max(0, current - 1);
+  renderCase();
+};
+
+$("next").onclick = () => {
+  const entry = ensureCase();
+  bindCase(entry);
+  const complete = ["A","B","C"].every((slot) => {
+    const value = entry.ratings[slot];
+    return value.style_fit_1_to_7 && value.legality_pass_fail && value.confidence_1_to_7;
+  });
+  if (!entry.preferred_slot || !complete) {
+    alert("Answer preference, style fit, legality, and confidence for all three plans.");
+    return;
+  }
+  if (current < study.cases.length - 1) {
+    current += 1;
+    renderCase();
+  } else {
+    $("download").classList.remove("hidden");
+    $("next").disabled = true;
+  }
+};
+
+$("download").onclick = () => {
+  if (study.ethics_status !== "READY") {
+    alert("Ethics status is not READY. Submission is disabled.");
+    return;
+  }
+  const completed = response.cases.filter((entry) => entry.ratings);
+  if (completed.length !== study.cases.length) {
+    alert("Complete all cases before downloading.");
+    return;
+  }
+  response.completed_at = new Date().toISOString();
+  const blob = new Blob([JSON.stringify(response, null, 2)], { type: "application/json" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `floorflow_response_${Date.now()}.json`;
+  link.click();
+  URL.revokeObjectURL(link.href);
+};
+</script>
+</body>
+</html>

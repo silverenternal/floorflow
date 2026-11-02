@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://floorflow.dev/schema/vector_edit_row_v1.schema.json",
+  "title": "FEVP-2 Vector Edit Benchmark Row",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "case_id",
+    "operation",
+    "source_hash",
+    "edit_region_normalized",
+    "outside_room_level_exact",
+    "outside_room_label_exact",
+    "outside_room_polygon_exact",
+    "outside_wall_exact",
+    "outside_opening_exact",
+    "outside_edge_exact",
+    "locality_violation_area",
+    "ground_truth_self_consistent",
+    "denominators"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "vector-edit-row-v1"
+    },
+    "case_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "operation": {
+      "enum": [
+        "room_type",
+        "room_add",
+        "room_remove",
+        "opening_delete",
+        "furniture_delete"
+      ]
+    },
+    "source_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "edit_region_normalized": {
+      "type": "array",
+      "prefixItems": [
+        {"type": "number"},
+        {"type": "number"},
+        {"type": "number"},
+        {"type": "number"}
+      ],
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "outside_room_level_exact": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "outside_room_label_exact": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "outside_room_polygon_exact": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "outside_wall_exact": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "outside_opening_exact": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "outside_edge_exact": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "locality_violation_area": {
+      "type": "number",
+      "minimum": 0.0
+    },
+    "ground_truth_self_consistent": {
+      "type": "boolean"
+    },
+    "denominators": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}

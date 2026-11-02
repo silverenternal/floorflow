@@ -1,0 +1,22 @@
+{
+  "name": "chip-data-supply-enhanced-v1",
+  "data_manifest": "configs/chip_data_manifest_50k_v1.json",
+  "eval_curve_manifest": "configs/chip_eval_curve_v1.json",
+  "eval_curve_seed": 0,
+  "sampling_mode": "complexity_tail_stream",
+  "batch_prefetch": true,
+  "geometry_augment": "none",
+  "geometry_augment_probability": 0.0,
+  "hierarchy_source_mode": "mixed",
+  "hierarchy_source_shelf_probability": 0.25,
+  "checkpoint_policy": "final",
+  "checkpoint_shortlist_size": 4,
+  "response_sidecar": null,
+  "controls": {
+    "sampler": "random",
+    "source": "random",
+    "geometry_augment": "none",
+    "checkpoint_policy": "final"
+  },
+  "boundary": "CPU-audited configuration; no GPU training was run."
+}

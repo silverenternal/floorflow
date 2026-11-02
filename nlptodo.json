@@ -1,0 +1,1411 @@
+{
+  "version": "2026-11-02-nlp-recovery-v10",
+  "project": "FloorFlow",
+  "workspace": "src/floorflow/nlp_flow",
+  "status": "ready_for_ast_failure_analysis",
+  "status_vocabulary": {
+    "passed": "Gate satisfied and evidence frozen.",
+    "in_progress": "Currently executing.",
+    "ready": "Dependencies satisfied and work may start.",
+    "blocked": "An upstream dependency or verifier is unfinished.",
+    "conditional": "Opened only after a preregistered capability failure.",
+    "planned": "Designed but execution deferred.",
+    "rejected": "Tested and stopped; negative evidence retained outside the executable task graph."
+  },
+  "phases": [
+    "NLP-PHASE-CONTRACT",
+    "NLP-PHASE-INFRA",
+    "NLP-PHASE-DATA",
+    "NLP-PHASE-BENCHMARK",
+    "NLP-PHASE-MODEL",
+    "NLP-PHASE-SCREEN",
+    "NLP-PHASE-SPECIALIZE",
+    "NLP-PHASE-EVALUATE",
+    "NLP-PHASE-CERTIFY"
+  ],
+  "objective": "Build the smallest reproducible coding-and-engineering model whose AST-first generation is native-valid, strict-valid, executable, benchmark-aligned, and able to add verified lightweight E capacity without GPT-style parameter scaling.",
+  "scientific_question": "At matched data, parameters, and compute, can hierarchical typed AST planning plus typed lexical projection make target-free generation parser-valid and strict-valid on every frozen validation case, and can that backbone support a reproducible compact coding/engineering capability frontier?",
+  "scope": "small_coding_and_engineering_language_model",
+  "policy": {
+    "device": "cuda:1_when_available_else_cuda:0",
+    "cpu_compute_policy": "unit_contracts_governance_and_explicit_fallback_only",
+    "gpu_concurrency": 1,
+    "max_python_file_lines": 599,
+    "one_mechanism_at_a_time": true,
+    "validation_selects_models": true,
+    "test_open_once_after_freeze": true,
+    "best_of_n_primary_allowed": false,
+    "hidden_retry_allowed": false,
+    "task_rules": [
+      "Only unfinished work appears as an executable task.",
+      "Completed prerequisites and rejected architectures remain evidence, not executable tasks.",
+      "Only one dependency-ready task and one active work package may run at a time.",
+      "Active tasks have no unmet dependencies.",
+      "No parser repair, retry, best-of-N, target lookup, fixed output shell, or post-hoc grammar splice may create a pass.",
+      "GPU-capable work defaults to GPU; parser, unit-contract, and governance audits may use CPU.",
+      "Every promotion is validation-only until the final frozen external run."
+    ]
+  },
+  "constraints": [
+    "AST is the authoritative compiler IR; source is its deterministic projection.",
+    "Parser validity and strict quality are trained properties, never decoder post-processing.",
+    "Each selected structural action must preserve at least one globally terminalizable completion.",
+    "Lexical spans are typed references to prompt/code evidence, not fixed character offsets.",
+    "Target-free prompts may not contain target AST, target source, target spans, or answer-bearing hints.",
+    "Stage B receives only the exact reparsed AST and its deterministic signature.",
+    "JSON validity is a native typed-output property and must not be algorithmically repaired.",
+    "Proxy metrics, emergence, generated E, and scale cannot bypass parser, strict, or executable correctness.",
+    "Every complex mechanism has a matched simpler control and an explicit negative-result path."
+  ],
+  "anti_scaling_contract": {
+    "primary_claim_parameter_cap": 23000000,
+    "absolute_experiment_parameter_cap": 46000000,
+    "net_parameter_growth_allowed": false,
+    "competitor": "bounded low-capability Pareto band, not GPT-class general models",
+    "required_efficiency_metrics": [
+      "task_success_per_unique_parameter",
+      "task_success_per_inference_flop",
+      "task_success_per_training_token",
+      "wall_clock_time_per_solved_task",
+      "qualified_ast_per_active_e_parameter"
+    ],
+    "generated_e_rule": "Generated E must be constructed from compact typed blueprints under a fixed resident/active compute envelope; selecting or hiding prebuilt experts is not generated E.",
+    "forbidden_strategies": [
+      "unshared generic transformer layer stacking",
+      "dataset or parameter scale as the main result",
+      "reward-only emergence without parser and execution validity",
+      "hiding resident parameters behind active counts",
+      "unbounded test-time expert creation"
+    ]
+  },
+  "capability_exploration_contract": {
+    "status": "gated_by_ast_strict_closure",
+    "purpose": "Recover the typed AST generator before spending compute on capability, emergence, generated-E, or compression claims.",
+    "quality_first": true,
+    "claim_boundary": "No capability, engineering, emergence, generated-E, smallest-model, or SOTA claim may skip NLP-068."
+  },
+  "core_architecture_principle": {
+    "status": "binding",
+    "name": "hierarchical_typed_ast_as_compiler_ir",
+    "statement": "The model first commits a globally terminalizable structure plan, emits typed AST actions and typed lexical decisions, derives source deterministically, and validates the result once.",
+    "required_sequence": [
+      "semantic prompt",
+      "top-level shape and signature plan",
+      "scope and subtree skeleton",
+      "globally terminalizable AST actions",
+      "canonical AST",
+      "typed lexical spans and deterministic source projection",
+      "single parser validation",
+      "parsed-AST signature",
+      "Stage-B refinement"
+    ],
+    "claim_rule": "NLP-068 must pass before any downstream task becomes ready."
+  },
+  "ast_recovery_contract": {
+    "status": "binding",
+    "name": "ast_strict_closure",
+    "evaluation_split": "frozen_target_free_validation",
+    "validation_cases": 60,
+    "hard_acceptance": {
+      "parser_validity": "== 1.0",
+      "strict_passed": "== 1.0",
+      "strict_passed_definition": "Every case independently passes parser validity and every structural quality threshold."
+    },
+    "per_case_required": [
+      "parser_valid == true",
+      "node_type_f1 >= 0.95",
+      "typed_edge_f1 >= 0.95",
+      "scope_relation_f1 >= 0.90",
+      "lexical_f1 >= 0.95",
+      "normalized_tree_edit_distance <= 0.05",
+      "canonical AST signature belongs to the same semantic task"
+    ],
+    "aggregate_reporting_rule": "Aggregate averages cannot compensate for one failed case; strict_passed counts only fully qualified cases.",
+    "forbidden_mechanisms": [
+      "parser repair",
+      "hidden retry",
+      "best-of-N primary selection",
+      "target AST or source lookup",
+      "fixed grammar shell",
+      "forced valid source template",
+      "changing the frozen parser, canonicalizer, case set, or thresholds after observing validation"
+    ],
+    "unlock_rule": "Only an independently audited report with 60/60 parser-valid and 60/60 strict-passed may unlock Stage B."
+  },
+  "completed_prerequisites": [
+    {
+      "id": "PRE-AST-CORPUS",
+      "status": "passed",
+      "evidence": [
+        "configs/nlp_ast_corpus_v1.json",
+        "outputs/reports/nlp_ast_corpus_freeze_v1.json"
+      ],
+      "result": "419 parser-valid rows; frozen 272/42/105 split with training negatives."
+    },
+    {
+      "id": "PRE-TYPED-GRAMMAR",
+      "status": "passed",
+      "evidence": [
+        "configs/nlp_ast_transition_grammar_v1.json",
+        "outputs/reports/nlp_ast_grammar_action_audit_v1.json"
+      ],
+      "result": "Train-only observations and pinned parser schemas; validation teacher replay has zero invalid actions."
+    },
+    {
+      "id": "PRE-TREE-ACTION-DECODER",
+      "status": "passed",
+      "evidence": [
+        "src/floorflow/nlp_flow/tree_action_decoder.py",
+        "outputs/reports/nlp_tree_action_teacher_replay_v1.json"
+      ],
+      "result": "Deterministic action replay and canonical AST round-trip are exact on bounded cases."
+    },
+    {
+      "id": "PRE-REAL-ACTION-CORPUS",
+      "status": "passed",
+      "evidence": [
+        "configs/nlp_tree_action_corpus_v1.json",
+        "outputs/reports/nlp_tree_action_corpus_audit_v1.json"
+      ],
+      "result": "621 real fragments; action replay and AST round-trip are 1.0 with zero prompt leakage."
+    },
+    {
+      "id": "PRE-PREFIX-TRAINING",
+      "status": "passed",
+      "evidence": [
+        "outputs/reports/nlp_prefix_tree_policy_train_v1.json"
+      ],
+      "result": "Causal-prefix teacher-forced action accuracy is 0.9952; generation quality remains rejected."
+    }
+  ],
+  "blocker_evidence": [
+    {
+      "id": "EVIDENCE-EVENT-MLP",
+      "report": "outputs/reports/nlp_real_corpus_ast_gate_v1.json",
+      "result": "parser-valid 3/60; strict-passed 0/60",
+      "disposition": "failed architecture removed from the executable task graph"
+    },
+    {
+      "id": "EVIDENCE-PREFIX-TRANSFORMER",
+      "report": "outputs/reports/nlp_prefix_tree_ast_gate_v1.json",
+      "result": "parser-valid 0/60; strict-passed 0/60",
+      "disposition": "insufficient architecture removed from the executable task graph"
+    },
+    {
+      "id": "EVIDENCE-NO-WINNER",
+      "report": "outputs/reports/nlp_prefix_tree_comparison_v1.json",
+      "result": "no architecture winner",
+      "disposition": "flat action generation is not promoted"
+    }
+  ],
+  "current_findings": {
+    "qualified": [
+      "The real-corpus action corpus, grammar, canonicalizer, and deterministic teacher replay are usable.",
+      "Teacher forcing proves the action vocabulary and supervision can represent the corpus.",
+      "Target-free failures are dominated by state reachability, global structure, lexical projection, and parser mismatch."
+    ],
+    "blocking_interpretation": [
+      "The failure is not solved by adding generic depth to the same flat policy.",
+      "A locally legal action is insufficient unless its resulting state has a globally terminalizable completion.",
+      "Structural planning and lexical projection must be separated before another strict gate run."
+    ]
+  },
+  "budgets": {
+    "parameter_ratio": "total_corpus_tokens / unique_trainable_parameters = 20 for the compressed primary",
+    "tiers": [
+      {
+        "id": "P5M",
+        "parameters": 4600000,
+        "corpus_tokens": 92000000,
+        "role": "smallest matched mechanism screen"
+      },
+      {
+        "id": "P12M",
+        "parameters": 11500000,
+        "corpus_tokens": 230000000,
+        "role": "credible coding screen and capability arm"
+      },
+      {
+        "id": "P23M",
+        "parameters": 23000000,
+        "corpus_tokens": 460000000,
+        "role": "conditional compressed-primary upper band"
+      },
+      {
+        "id": "P46M",
+        "parameters": 46000000,
+        "corpus_tokens": 920000000,
+        "role": "diagnostic only; never a smallest-model claim"
+      }
+    ]
+  },
+  "metric_ledger": {
+    "ast_strict": [
+      "target_free_parser_validity",
+      "strict_passed",
+      "node_type_f1",
+      "typed_edge_f1",
+      "scope_relation_f1",
+      "lexical_f1",
+      "normalized_tree_edit_distance",
+      "grammar_candidate_availability",
+      "terminalizable_state_rate",
+      "ast_to_source_replay_exactness"
+    ],
+    "code": [
+      "pass_at_1",
+      "compile_rate",
+      "unit_test_pass_rate",
+      "repository_all_tests_pass_rate",
+      "patch_apply_rate",
+      "strict_json_parse_validity"
+    ],
+    "engineering": [
+      "triton_numerical_match",
+      "linux_diagnostic_accuracy",
+      "performance_patch_correctness",
+      "latency_guard_pass"
+    ],
+    "emergence_growth": [
+      "valid_unseen_composition_rate",
+      "novelty_precision",
+      "generated_e_verified_activation_rate",
+      "capability_gain_per_active_e_parameter"
+    ],
+    "efficiency": [
+      "qualified_ast_per_unique_parameter",
+      "qualified_ast_per_inference_flop",
+      "qualified_ast_per_training_token",
+      "wall_clock_per_solved_task"
+    ]
+  },
+  "current_round": {
+    "id": "NLP-RECOVERY-ROUND-02",
+    "detail_document": "nlptodo.json",
+    "goal": "Measure why target-free AST generation cannot close, then build the smallest architecture that can reach 60/60 parser-valid and 60/60 strict-passed validation.",
+    "active_tasks": [
+      "NLP-065-AST-FAILURE-ANALYSIS"
+    ],
+    "active_work_packages": [
+      "WP-065-A"
+    ],
+    "gpu_authorized": true,
+    "exit_criteria": [
+      "Every validation failure has a first-failure trace and reproducible primary class.",
+      "Teacher actions remain reachable from every teacher prefix, with all no-candidate events explained.",
+      "Oracle decomposition quantifies topology and lexical upper bounds before the next architecture implementation."
+    ],
+    "status": "ready"
+  },
+  "milestones": [
+    {
+      "id": "M1-FAILURE-TO-PLAN",
+      "status": "ready",
+      "tasks": [
+        "NLP-065-AST-FAILURE-ANALYSIS",
+        "NLP-066-HIERARCHICAL-STRUCTURE-PLANNER",
+        "NLP-067-TYPED-LEXICAL-PROJECTION"
+      ],
+      "acceptance": [
+        "Failures are classified, globally terminalizable structure planning is implemented, and lexical rendering is separated and exact."
+      ]
+    },
+    {
+      "id": "M2-STRICT-CLOSURE",
+      "status": "planned",
+      "tasks": [
+        "NLP-068-STRICT-AST-CLOSURE"
+      ],
+      "acceptance": [
+        "Frozen target-free validation reaches parser_validity 1.0 and strict_passed 1.0 with no repair, retry, best-of-N, lookup, or shell."
+      ]
+    },
+    {
+      "id": "M3-AST-FIRST-STAGEB",
+      "status": "planned",
+      "tasks": [
+        "NLP-062-PARSED-AST-CONDITIONING",
+        "NLP-044-TWO-STAGE-GATE"
+      ],
+      "acceptance": [
+        "Stage B consumes only the exact reparsed AST and AST-first wins or loses under a matched two-stage comparison."
+      ]
+    },
+    {
+      "id": "M4-BENCHMARK-ALIGNMENT",
+      "status": "planned",
+      "tasks": [
+        "NLP-054-BENCHMARK-PROXY"
+      ],
+      "acceptance": [
+        "Every public benchmark family is mapped to executable internal proxies with adequate rank alignment or an explicit missing-loss action."
+      ]
+    },
+    {
+      "id": "M5-CAPABILITY-GROWTH",
+      "status": "planned",
+      "tasks": [
+        "NLP-056-EFFICIENT-ARCH-SEARCH"
+      ],
+      "acceptance": [
+        "A frozen compact architecture reaches reproducible coding/engineering capability, with valid emergence and generated E either beating matched controls or remaining documented negative branches."
+      ]
+    },
+    {
+      "id": "M6-SOTA-CERTIFY",
+      "status": "planned",
+      "tasks": [
+        "NLP-017-MATCHED-SCREEN"
+      ],
+      "acceptance": [
+        "The smallest reproducible tier supports the exact external coding/engineering SOTA-band claim."
+      ]
+    }
+  ],
+  "decision_points": [
+    {
+      "id": "DP-01-FAILURE-CLASS",
+      "after_tasks": [
+        "NLP-065-AST-FAILURE-ANALYSIS"
+      ],
+      "question": "Which first-failure families dominate, and does the proposed planner/lexical split address measured causes rather than aggregate symptoms?",
+      "status": "pending",
+      "pass_action": "Open only the architecture tasks supported by quantified failure classes.",
+      "fail_action": "Keep the task blocked and extend diagnosis until every failure has a reproducible cause."
+    },
+    {
+      "id": "DP-02-STRICT-CLOSURE",
+      "after_tasks": [
+        "NLP-068-STRICT-AST-CLOSURE"
+      ],
+      "question": "Does the frozen target-free validation suite reach parser_validity 1.0 and strict_passed 1.0?",
+      "status": "pending",
+      "pass_action": "Unlock the exact parsed-AST Stage-B handoff.",
+      "fail_action": "Keep every downstream task blocked and return to measured failure classes."
+    },
+    {
+      "id": "DP-03-PARSED-HANDOFF",
+      "after_tasks": [
+        "NLP-062-PARSED-AST-CONDITIONING"
+      ],
+      "question": "Does Stage B consume exactly the parser-derived AST with no latent shortcut or repair?",
+      "status": "pending",
+      "pass_action": "Open the matched two-stage comparison.",
+      "fail_action": "Reject the Stage-B interface and retain Stage A only."
+    },
+    {
+      "id": "DP-04-TWO-STAGE",
+      "after_tasks": [
+        "NLP-044-TWO-STAGE-GATE"
+      ],
+      "question": "Does AST-first two-stage generation beat the matched one-stage control while preserving exact validity?",
+      "status": "pending",
+      "pass_action": "Promote the winning generation family.",
+      "fail_action": "Retain the one-stage control and record the negative mechanism."
+    },
+    {
+      "id": "DP-05-PROXY",
+      "after_tasks": [
+        "NLP-054-BENCHMARK-PROXY"
+      ],
+      "question": "Do internal losses rank-align with executable external benchmark outcomes?",
+      "status": "pending",
+      "pass_action": "Allow proxy-guided architecture and checkpoint selection.",
+      "fail_action": "Add the missing full-chain loss or forbid proxy selection."
+    },
+    {
+      "id": "DP-06-CAPABILITY-GROWTH",
+      "after_tasks": [
+        "NLP-056-EFFICIENT-ARCH-SEARCH"
+      ],
+      "question": "Does learned structure, valid emergence, and generated E improve executable capability per parameter and FLOP over matched controls?",
+      "status": "pending",
+      "pass_action": "Freeze the verified capability architecture.",
+      "fail_action": "Freeze the best matched control and retain failed mechanisms as negative results."
+    },
+    {
+      "id": "DP-07-SOTA",
+      "after_tasks": [
+        "NLP-017-MATCHED-SCREEN"
+      ],
+      "question": "Does the smallest tier support the declared external coding/engineering SOTA band?",
+      "status": "pending",
+      "pass_action": "Publish the certified claim.",
+      "fail_action": "Publish the highest defensible lower claim."
+    }
+  ],
+  "tasks": [
+    {
+      "id": "NLP-065-AST-FAILURE-ANALYSIS",
+      "phase": "NLP-PHASE-MODEL",
+      "priority": "P0",
+      "status": "ready",
+      "depends_on": [],
+      "title": "Attribute target-free AST failures before adding model capacity",
+      "owner": "model",
+      "gpu": "cuda:1",
+      "change": [
+        "Trace teacher prefixes and target-free decoding to separate grammar-mask defects, dead-end states, structure errors, lexical errors, and parser mismatches.",
+        "Run oracle decomposition so topology and lexical improvements are measured independently."
+      ],
+      "inputs": [
+        "Frozen real-corpus action corpus and target-free validation suite",
+        "Typed transition grammar and canonical AST codec",
+        "Rejected event-MLP and prefix-transformer traces"
+      ],
+      "deliverables": [
+        "State-reachability audit",
+        "First-failure classifier",
+        "Oracle upper-bound decomposition",
+        "Architecture decision report"
+      ],
+      "gate": {
+        "pass": [
+          "Every one of the 60 validation failures has a primary class, first failing step, and replayable trace.",
+          "Every no-legal-action event is classified as policy choice, mask defect, or unrecoverable grammar state.",
+          "All teacher actions remain reachable and oracle controls quantify structural and lexical upper bounds."
+        ],
+        "fail_if": [
+          "Failures are reported only as aggregate parser validity.",
+          "Any no-candidate state is hidden by retry, fallback, parser repair, or synthetic replacement."
+        ]
+      },
+      "stop_rules": [
+        "Do not implement another generic decoder without a quantified failure map.",
+        "Do not declare a model-quality improvement in this task."
+      ],
+      "current_results": {
+        "status": "not_started",
+        "claim_level": "none"
+      }
+    },
+    {
+      "id": "NLP-066-HIERARCHICAL-STRUCTURE-PLANNER",
+      "phase": "NLP-PHASE-MODEL",
+      "priority": "P0",
+      "status": "blocked",
+      "depends_on": [
+        "NLP-065-AST-FAILURE-ANALYSIS"
+      ],
+      "title": "Plan globally terminalizable AST structure before subtree decoding",
+      "owner": "model",
+      "gpu": "cuda:1",
+      "change": [
+        "Predict a semantic top-level shape, signatures, declarations, scope skeleton, and node budget before emitting subtree actions.",
+        "Condition every structural action on global completion viability so local legality cannot enter an unrecoverable state."
+      ],
+      "inputs": [
+        "Measured first-failure map",
+        "Qualified AST corpora and construct holdouts",
+        "Typed transition grammar and teacher action traces"
+      ],
+      "deliverables": [
+        "Global AST blueprint schema",
+        "Formal terminalizability mask",
+        "Hierarchical structure decoder",
+        "Matched ablation report"
+      ],
+      "gate": {
+        "pass": [
+          "Every teacher action remains selectable from its frozen prefix.",
+          "Target-free generated paths encounter no unrecoverable intermediate state on validation.",
+          "The hierarchical arm improves first-failure coverage and structural action accuracy over the matched flat-prefix control."
+        ],
+        "fail_if": [
+          "A candidate is considered legal without proof of at least one completion path.",
+          "The blueprint is a fixed template or contains target-specific answer data."
+        ]
+      },
+      "stop_rules": [
+        "Do not open lexical training until the structural planner preserves completion reachability."
+      ],
+      "current_results": {
+        "status": "not_started",
+        "claim_level": "none"
+      }
+    },
+    {
+      "id": "NLP-067-TYPED-LEXICAL-PROJECTION",
+      "phase": "NLP-PHASE-MODEL",
+      "priority": "P0",
+      "status": "blocked",
+      "depends_on": [
+        "NLP-066-HIERARCHICAL-STRUCTURE-PLANNER"
+      ],
+      "title": "Decouple AST structure from typed lexical and source projection",
+      "owner": "model",
+      "gpu": "cuda:1",
+      "change": [
+        "Represent leaves, gaps, identifiers, operators, literals, comments, and ordering as typed decisions conditioned on the canonical AST.",
+        "Render source deterministically from typed decisions and verify AST-to-source-to-AST replay exactly."
+      ],
+      "inputs": [
+        "Structurally valid generated AST plans",
+        "Multilingual lexical annotations and source canonicalizer",
+        "Python, Rust, and C++ parser fixtures"
+      ],
+      "deliverables": [
+        "Typed lexical/span contract",
+        "Lexical planner and source renderer",
+        "Cross-language replay corpus",
+        "Matched flat-source ablation"
+      ],
+      "gate": {
+        "pass": [
+          "AST-to-source canonical replay is exact on every frozen train and validation case.",
+          "Typed lexical decisions retain identifiers, literals, operators, comments, and required ordering without fixed character offsets.",
+          "The decoupled arm reduces lexical and first-failure classes at matched data and compute."
+        ],
+        "fail_if": [
+          "Lexical output is repaired against target source.",
+          "A fixed source template or character-position table substitutes for a learned decision."
+        ]
+      },
+      "stop_rules": [
+        "Do not run the strict gate until canonical source replay is exact."
+      ],
+      "current_results": {
+        "status": "not_started",
+        "claim_level": "none"
+      }
+    },
+    {
+      "id": "NLP-068-STRICT-AST-CLOSURE",
+      "phase": "NLP-PHASE-MODEL",
+      "priority": "P0",
+      "status": "blocked",
+      "depends_on": [
+        "NLP-067-TYPED-LEXICAL-PROJECTION"
+      ],
+      "title": "Close the native AST gate at 60/60 parser valid and 60/60 strict passed",
+      "owner": "model",
+      "gpu": "cuda:1",
+      "change": [
+        "Integrate global structure planning, globally terminalizable actions, typed lexical projection, and deterministic source rendering behind one native AST gateway.",
+        "Run the frozen target-free validation once per preregistered seed and promote only an independently audited exact pass."
+      ],
+      "inputs": [
+        "Hierarchical structure planner",
+        "Typed lexical projector",
+        "Frozen 60-case target-free validation suite",
+        "Frozen parser, canonicalizer, thresholds, and leakage audit"
+      ],
+      "deliverables": [
+        "Single native AST gateway",
+        "Target-free validation report",
+        "Independent strict-gate audit",
+        "Frozen Stage-A handoff"
+      ],
+      "gate": {
+        "pass": [
+          "target-free parser_validity == 1.0 on 60/60 cases.",
+          "strict_passed == 1.0 on 60/60 cases.",
+          "Every case passes node F1 >= 0.95, typed-edge F1 >= 0.95, scope F1 >= 0.90, lexical F1 >= 0.95, and normalized tree distance <= 0.05.",
+          "The independent audit confirms zero target leakage, repair, retry, best-of-N, lookup, fixed shell, and post-hoc splice."
+        ],
+        "fail_if": [
+          "Any case fails parser validity or any strict threshold.",
+          "An aggregate average hides a failed case.",
+          "A retry, repair, best-of-N, target-bearing prompt, or grammar shell contributes to the pass."
+        ]
+      },
+      "stop_rules": [
+        "Do not unlock Stage B below 60/60 parser-valid and 60/60 strict-passed.",
+        "Do not open the test split or any capability claim after a strict-gate failure."
+      ],
+      "current_results": {
+        "status": "not_started",
+        "claim_level": "none"
+      }
+    },
+    {
+      "id": "NLP-062-PARSED-AST-CONDITIONING",
+      "phase": "NLP-PHASE-MODEL",
+      "priority": "P0",
+      "status": "blocked",
+      "depends_on": [
+        "NLP-068-STRICT-AST-CLOSURE"
+      ],
+      "title": "Condition Stage B only on the exact reparsed AST",
+      "owner": "model",
+      "gpu": "cuda:1",
+      "change": [
+        "Reparse generated source once and encode only the canonical AST plus deterministic task signature for Stage B.",
+        "Carry the same signature through topology, source, parser output, and Stage-B conditioning."
+      ],
+      "inputs": [
+        "Strict-gate-qualified Stage A",
+        "Tokenizer and parser fingerprints",
+        "Stage-B result CFM"
+      ],
+      "deliverables": [
+        "Parser endpoint contract",
+        "Parsed-AST encoder",
+        "Cross-attention channel training report",
+        "Fail-closed handoff gate"
+      ],
+      "gate": {
+        "pass": [
+          "Topology, scope graph, source hash, and Stage-B condition signatures match exactly.",
+          "Stage B rejects unrelated or stale parser endpoints."
+        ],
+        "fail_if": [
+          "Latent Stage-A state bypasses the parser.",
+          "Mismatches are repaired or remapped."
+        ]
+      },
+      "stop_rules": [
+        "No Stage-B quality claim before exact handoff passes."
+      ],
+      "current_results": {
+        "status": "not_started",
+        "claim_level": "none"
+      }
+    },
+    {
+      "id": "NLP-044-TWO-STAGE-GATE",
+      "phase": "NLP-PHASE-MODEL",
+      "priority": "P0",
+      "status": "blocked",
+      "depends_on": [
+        "NLP-068-STRICT-AST-CLOSURE",
+        "NLP-062-PARSED-AST-CONDITIONING"
+      ],
+      "title": "Establish whether AST-first and AST-diffusion two-stage generation beats a matched control",
+      "owner": "model",
+      "gpu": "cuda:1",
+      "change": [
+        "Compare Stage-A AST generation plus Stage-B CFM refinement against a one-stage control at matched budgets.",
+        "Route AST, JSON, patch, and tool outputs through one typed gateway whose structural validity is learned."
+      ],
+      "inputs": [
+        "Strictly qualified Stage A",
+        "Exact parsed-AST Stage B",
+        "Matched corpus, parameters, compute, decoding limits, and seeds"
+      ],
+      "deliverables": [
+        "Matched two-stage comparison",
+        "Executable validation",
+        "Native JSON/typed-output gate",
+        "Promotion decision"
+      ],
+      "gate": {
+        "pass": [
+          "Two-stage generation improves executable or structural outcomes at matched budgets.",
+          "AST validity and tree signatures remain exact after Stage B.",
+          "Native strict-JSON parse validity is 1.0 on frozen structured-output validation without algorithmic repair."
+        ],
+        "fail_if": [
+          "The comparison changes data, parameters, compute, or decoding budget.",
+          "Only parser-shell outputs pass.",
+          "JSON validity depends on repair or constrained serialization after an invalid model decision."
+        ]
+      },
+      "stop_rules": [
+        "Retain the one-stage control if AST-first does not win."
+      ],
+      "current_results": {
+        "status": "not_started",
+        "claim_level": "none"
+      }
+    },
+    {
+      "id": "NLP-054-BENCHMARK-PROXY",
+      "phase": "NLP-PHASE-MODEL",
+      "priority": "P0",
+      "status": "blocked",
+      "depends_on": [
+        "NLP-044-TWO-STAGE-GATE"
+      ],
+      "title": "Align every joint-loss term with executable public benchmark behavior",
+      "owner": "model",
+      "gpu": "cuda:1",
+      "change": [
+        "Map recognized coding and engineering benchmarks to execution-grounded proxy tasks and verify that internal metrics predict external rank.",
+        "Turn every missing or misaligned metric into a concrete full-chain loss action before proxy-guided selection is allowed."
+      ],
+      "inputs": [
+        "Frozen public benchmark and metric manifest",
+        "Executable verifier outcomes",
+        "Joint proxy losses and matched model checkpoints"
+      ],
+      "deliverables": [
+        "Benchmark-family coverage matrix",
+        "Execution-grounded proxy corpus",
+        "Joint-loss gradient audit",
+        "External rank-alignment report"
+      ],
+      "gate": {
+        "pass": [
+          "Coding, repository editing, execution, patch, JSON, AST, engineering, calibration, safety, and cost metrics each map to a finite internal loss or an explicit non-selectable proxy.",
+          "Spearman rho >= 0.7 and sign agreement >= 0.75 on frozen external outcomes."
+        ],
+        "fail_if": [
+          "Proxy scores are presented as public benchmark scores.",
+          "A missing benchmark family has no loss gap or exclusion decision.",
+          "Rank alignment is replaced by correlation-free defaults."
+        ]
+      },
+      "stop_rules": [
+        "A weak proxy cannot select checkpoints or architecture."
+      ],
+      "current_results": {
+        "status": "not_started",
+        "claim_level": "none"
+      }
+    },
+    {
+      "id": "NLP-056-EFFICIENT-ARCH-SEARCH",
+      "phase": "NLP-PHASE-SCREEN",
+      "priority": "P0",
+      "status": "blocked",
+      "depends_on": [
+        "NLP-044-TWO-STAGE-GATE",
+        "NLP-054-BENCHMARK-PROXY"
+      ],
+      "title": "Learn compact capability structure, valid emergence, runtime budgets, and generated E",
+      "owner": "model",
+      "gpu": "cuda:1",
+      "change": [
+        "Measure data value and search dynamic encoder/decoder depth, lane width, channel decoupling, and cross-attention aggregation under one capability objective.",
+        "Add validity-constrained emergence and typed generated-E construction while preserving the fixed resident/active compute envelope."
+      ],
+      "inputs": [
+        "Strictly valid AST-first backbone",
+        "Benchmark-aligned joint losses",
+        "Code, model-documentation, Triton, Linux, Python, Rust, and C++ corpora",
+        "Matched parameter and compute controls"
+      ],
+      "deliverables": [
+        "Data marginal-value report",
+        "Learned network-structure search",
+        "Valid-emergence loss and metric",
+        "Generated-E constructor screen",
+        "Zero-tuning runtime contract",
+        "Capability architecture freeze"
+      ],
+      "gate": {
+        "pass": [
+          "The capability winner improves executable quality per resident parameter and FLOP and reproduces across three seeds.",
+          "Strict AST validity remains 1.0 throughout capability training.",
+          "Valid unseen compositions exceed matched controls when emergence is enabled.",
+          "Generated E, if promoted, beats static, random, and fixed-pool controls per active parameter; otherwise it remains a negative branch."
+        ],
+        "fail_if": [
+          "Search selects only by NLL.",
+          "Parameter, data, compute, or verifier budgets differ across arms.",
+          "Novelty receives credit without parser, grammar, and execution validity.",
+          "Generated E depends on prebuilt experts or unbounded runtime growth."
+        ]
+      },
+      "stop_rules": [
+        "Freeze the best matched control if no verified winner emerges.",
+        "Do not use capability gains to relax the strict AST gate."
+      ],
+      "current_results": {
+        "status": "not_started",
+        "claim_level": "none"
+      }
+    },
+    {
+      "id": "NLP-017-MATCHED-SCREEN",
+      "phase": "NLP-PHASE-CERTIFY",
+      "priority": "P0",
+      "status": "blocked",
+      "depends_on": [
+        "NLP-054-BENCHMARK-PROXY",
+        "NLP-056-EFFICIENT-ARCH-SEARCH"
+      ],
+      "title": "Certify the smallest reproducible coding-and-engineering SOTA-band model",
+      "owner": "model",
+      "gpu": "cuda:1",
+      "change": [
+        "Run conversational coding and engineering SFT on the qualified backbone, then execute the matched compact scale ladder.",
+        "Open frozen external benchmarks once and certify only the exact lower-band claim supported by executable results."
+      ],
+      "inputs": [
+        "Frozen capability architecture",
+        "Executable benchmark runners and frozen manifests",
+        "Matched data, token, parameter, compute, and parser ledgers"
+      ],
+      "deliverables": [
+        "Conversational coding/engineering SFT report",
+        "P5M/P12M/P23M matched scale ladder",
+        "Frozen external evaluation",
+        "Smallest SOTA-band certificate"
+      ],
+      "gate": {
+        "pass": [
+          "The smallest tier stays on the executable coding/engineering quality plateau.",
+          "External evaluation supports the exact claimed SOTA band with uncertainty and failed tracks reported.",
+          "AST, JSON, compile, execution, patch, and conversation validity retain their frozen acceptance rates."
+        ],
+        "fail_if": [
+          "Test is used for selection.",
+          "Parameter, data, compute, or generated-capacity budgets are hidden or unmatched.",
+          "A general-purpose GPT-class scale comparison replaces the bounded coding/engineering claim."
+        ]
+      },
+      "stop_rules": [
+        "Publish the highest defensible lower claim if the SOTA band fails."
+      ],
+      "current_results": {
+        "status": "not_started",
+        "claim_level": "none"
+      }
+    }
+  ],
+  "work_packages": [
+    {
+      "id": "WP-065-A",
+      "task_id": "NLP-065-AST-FAILURE-ANALYSIS",
+      "order": 1,
+      "title": "Audit grammar-state reachability and every no-candidate event",
+      "status": "ready",
+      "effort": "L",
+      "outputs": [
+        "scripts/audit_nlp_ast_state_reachability.py",
+        "outputs/reports/nlp_ast_state_reachability_v2.json",
+        "tests/test_nlp_ast_state_reachability.py"
+      ],
+      "acceptance": [
+        "Every teacher action is present from its prefix; every target-free no-candidate event has a state trace and one primary cause; no fallback action is inserted."
+      ]
+    },
+    {
+      "id": "WP-065-B",
+      "task_id": "NLP-065-AST-FAILURE-ANALYSIS",
+      "order": 2,
+      "title": "Classify all frozen validation traces by first failure",
+      "status": "planned",
+      "effort": "L",
+      "outputs": [
+        "src/floorflow/nlp_flow/ast_failure_taxonomy.py",
+        "outputs/reports/nlp_ast_first_failure_taxonomy_v2.json"
+      ],
+      "acceptance": [
+        "All 60 target-free cases receive a primary class, first-failing action, parser delta, AST delta, and cascade summary."
+      ]
+    },
+    {
+      "id": "WP-065-C",
+      "task_id": "NLP-065-AST-FAILURE-ANALYSIS",
+      "order": 3,
+      "title": "Measure oracle topology and lexical upper bounds",
+      "status": "planned",
+      "effort": "L",
+      "outputs": [
+        "outputs/reports/nlp_ast_oracle_decomposition_v2.json"
+      ],
+      "acceptance": [
+        "Target topology plus learned lexical, learned topology plus target lexical, and full teacher controls are matched and replayable."
+      ]
+    },
+    {
+      "id": "WP-065-D",
+      "task_id": "NLP-065-AST-FAILURE-ANALYSIS",
+      "order": 4,
+      "title": "Freeze the architecture-change decision",
+      "status": "planned",
+      "effort": "S",
+      "outputs": [
+        "outputs/reports/nlp_ast_recovery_decision_v2.json"
+      ],
+      "acceptance": [
+        "Each proposed module maps to measured failure counts and has a simpler matched control; unsupported complexity is rejected."
+      ]
+    },
+    {
+      "id": "WP-066-A",
+      "task_id": "NLP-066-HIERARCHICAL-STRUCTURE-PLANNER",
+      "order": 1,
+      "title": "Define the globally terminalizable AST blueprint",
+      "status": "planned",
+      "effort": "M",
+      "outputs": [
+        "src/floorflow/nlp_flow/ast_structure_blueprint.py",
+        "tests/test_nlp_ast_structure_blueprint.py"
+      ],
+      "acceptance": [
+        "The blueprint records top-level shape, declarations, signatures, scope skeleton, node budget, and required completion obligations."
+      ]
+    },
+    {
+      "id": "WP-066-B",
+      "task_id": "NLP-066-HIERARCHICAL-STRUCTURE-PLANNER",
+      "order": 2,
+      "title": "Implement formal terminalizability masks and viability scoring",
+      "status": "planned",
+      "effort": "L",
+      "outputs": [
+        "src/floorflow/nlp_flow/terminalizable_action_mask.py",
+        "outputs/reports/nlp_terminalizable_action_audit_v2.json"
+      ],
+      "acceptance": [
+        "Only actions with a grammar-valid completion path are selectable; injected dead ends are masked before decoding."
+      ]
+    },
+    {
+      "id": "WP-066-C",
+      "task_id": "NLP-066-HIERARCHICAL-STRUCTURE-PLANNER",
+      "order": 3,
+      "title": "Train the blueprint planner and subtree decoder",
+      "status": "planned",
+      "effort": "XL",
+      "outputs": [
+        "outputs/reports/nlp_hierarchical_structure_training_v2.json"
+      ],
+      "acceptance": [
+        "GPU training uses full causal history, blueprint conditioning, scope state, and completion-viability scores with no target leakage."
+      ]
+    },
+    {
+      "id": "WP-066-D",
+      "task_id": "NLP-066-HIERARCHICAL-STRUCTURE-PLANNER",
+      "order": 4,
+      "title": "Compare hierarchical planning with a matched flat-prefix control",
+      "status": "planned",
+      "effort": "XL",
+      "outputs": [
+        "outputs/reports/nlp_hierarchical_structure_ablation_v2.json"
+      ],
+      "acceptance": [
+        "Reachability, structure accuracy, node budget, scope closure, and first-failure reduction are reported per matched arm."
+      ]
+    },
+    {
+      "id": "WP-067-A",
+      "task_id": "NLP-067-TYPED-LEXICAL-PROJECTION",
+      "order": 1,
+      "title": "Freeze the typed lexical and copy-span contract",
+      "status": "planned",
+      "effort": "M",
+      "outputs": [
+        "src/floorflow/nlp_flow/typed_lexical_contract.py",
+        "tests/test_nlp_typed_lexical_contract.py"
+      ],
+      "acceptance": [
+        "Leaf classes, gaps, identifiers, operators, literals, comments, and ordering use typed references with variable-length spans."
+      ]
+    },
+    {
+      "id": "WP-067-B",
+      "task_id": "NLP-067-TYPED-LEXICAL-PROJECTION",
+      "order": 2,
+      "title": "Implement deterministic AST-to-source rendering",
+      "status": "planned",
+      "effort": "L",
+      "outputs": [
+        "src/floorflow/nlp_flow/typed_source_renderer.py",
+        "outputs/reports/nlp_ast_source_replay_v2.json"
+      ],
+      "acceptance": [
+        "Canonical AST plus typed lexical decisions renders source that reparses to the identical canonical AST on every frozen replay case."
+      ]
+    },
+    {
+      "id": "WP-067-C",
+      "task_id": "NLP-067-TYPED-LEXICAL-PROJECTION",
+      "order": 3,
+      "title": "Train the AST-conditioned lexical planner",
+      "status": "planned",
+      "effort": "XL",
+      "outputs": [
+        "outputs/reports/nlp_typed_lexical_training_v2.json"
+      ],
+      "acceptance": [
+        "The GPU lexical channel learns copy, literal, operator, comment, and ordering decisions from prompt and AST context."
+      ]
+    },
+    {
+      "id": "WP-067-D",
+      "task_id": "NLP-067-TYPED-LEXICAL-PROJECTION",
+      "order": 4,
+      "title": "Compare typed lexical projection with flat source generation",
+      "status": "planned",
+      "effort": "XL",
+      "outputs": [
+        "outputs/reports/nlp_typed_lexical_ablation_v2.json"
+      ],
+      "acceptance": [
+        "Lexical F1, AST replay exactness, parser validity, and first-failure reduction improve under matched budgets."
+      ]
+    },
+    {
+      "id": "WP-068-A",
+      "task_id": "NLP-068-STRICT-AST-CLOSURE",
+      "order": 1,
+      "title": "Build the single native AST closure gateway",
+      "status": "planned",
+      "effort": "L",
+      "outputs": [
+        "src/floorflow/nlp_flow/strict_ast_gateway.py",
+        "tests/test_nlp_strict_ast_gateway.py"
+      ],
+      "acceptance": [
+        "The gateway accepts one structure plan, one typed lexical decision stream, one canonical AST, one deterministic source rendering, and one parser validation."
+      ]
+    },
+    {
+      "id": "WP-068-B",
+      "task_id": "NLP-068-STRICT-AST-CLOSURE",
+      "order": 2,
+      "title": "Train on exact replay, failure replay, and terminalizable curricula",
+      "status": "planned",
+      "effort": "XL",
+      "outputs": [
+        "outputs/reports/nlp_strict_ast_training_v2.json"
+      ],
+      "acceptance": [
+        "GPU training includes exact teacher paths, measured failure prefixes, and states requiring global completion viability without target leakage."
+      ]
+    },
+    {
+      "id": "WP-068-C",
+      "task_id": "NLP-068-STRICT-AST-CLOSURE",
+      "order": 3,
+      "title": "Run the frozen 60-case target-free validation gate",
+      "status": "planned",
+      "effort": "XL",
+      "outputs": [
+        "outputs/reports/nlp_strict_ast_validation_v2.json"
+      ],
+      "acceptance": [
+        "The report contains 60/60 parser-valid and 60/60 strict-passed with every per-case metric and trace."
+      ]
+    },
+    {
+      "id": "WP-068-D",
+      "task_id": "NLP-068-STRICT-AST-CLOSURE",
+      "order": 4,
+      "title": "Independently audit and freeze Stage A",
+      "status": "planned",
+      "effort": "M",
+      "outputs": [
+        "scripts/audit_nlp_strict_ast_closure.py",
+        "outputs/reports/nlp_strict_ast_independent_audit_v2.json",
+        "configs/nlp_strict_ast_handoff_v2.json"
+      ],
+      "acceptance": [
+        "A separate runner verifies case count, metrics, leakage, determinism, decode policy, and forbidden mechanisms before freezing Stage A."
+      ]
+    },
+    {
+      "id": "WP-062-A",
+      "task_id": "NLP-062-PARSED-AST-CONDITIONING",
+      "order": 1,
+      "title": "Freeze the parser endpoint and tree-signature contract",
+      "status": "planned",
+      "effort": "M",
+      "outputs": [
+        "src/floorflow/nlp_flow/parsed_ast_contract.py",
+        "tests/test_nlp_parsed_ast_contract.py"
+      ],
+      "acceptance": [
+        "Generated source is reparsed once; topology, scope graph, source hash, and Stage-B condition share one deterministic signature."
+      ]
+    },
+    {
+      "id": "WP-062-B",
+      "task_id": "NLP-062-PARSED-AST-CONDITIONING",
+      "order": 2,
+      "title": "Encode the exact reparsed AST for Stage B",
+      "status": "planned",
+      "effort": "XL",
+      "outputs": [
+        "src/floorflow/nlp_flow/parsed_ast_encoder.py",
+        "tests/test_nlp_parsed_ast_encoder.py"
+      ],
+      "acceptance": [
+        "Stage B accepts only the canonical reparsed graph and rejects unrelated latent endpoints."
+      ]
+    },
+    {
+      "id": "WP-062-C",
+      "task_id": "NLP-062-PARSED-AST-CONDITIONING",
+      "order": 3,
+      "title": "Train decoupled AST, prompt, and test cross-attention channels",
+      "status": "planned",
+      "effort": "XL",
+      "outputs": [
+        "outputs/reports/nlp_parsed_ast_stage_b_training_v2.json"
+      ],
+      "acceptance": [
+        "Channels train independently, aggregate through zero-initialized cross-attention, and preserve native output validity."
+      ]
+    },
+    {
+      "id": "WP-062-D",
+      "task_id": "NLP-062-PARSED-AST-CONDITIONING",
+      "order": 4,
+      "title": "Fail closed on every tree-signature mismatch",
+      "status": "planned",
+      "effort": "M",
+      "outputs": [
+        "outputs/reports/nlp_parsed_ast_handoff_gate_v2.json"
+      ],
+      "acceptance": [
+        "Mismatched topology or scope signatures stop generation before Stage B; no repair or remapping is allowed."
+      ]
+    },
+    {
+      "id": "WP-044-A",
+      "task_id": "NLP-044-TWO-STAGE-GATE",
+      "order": 1,
+      "title": "Build the matched one-stage control",
+      "status": "planned",
+      "effort": "XL",
+      "outputs": [
+        "configs/nlp_two_stage_matched_v3.json"
+      ],
+      "acceptance": [
+        "Two-stage and one-stage arms share data, tokenizer, parameters, compute, decoding caps, seeds, and parser fingerprints."
+      ]
+    },
+    {
+      "id": "WP-044-B",
+      "task_id": "NLP-044-TWO-STAGE-GATE",
+      "order": 2,
+      "title": "Measure executable and structural two-stage gains",
+      "status": "planned",
+      "effort": "XL",
+      "outputs": [
+        "outputs/reports/nlp_two_stage_executable_comparison_v3.json"
+      ],
+      "acceptance": [
+        "Parser validity, compile rate, unit-test pass rate, node/edge/scope F1, and tree distance are reported without repair."
+      ]
+    },
+    {
+      "id": "WP-044-C",
+      "task_id": "NLP-044-TWO-STAGE-GATE",
+      "order": 3,
+      "title": "Unify AST, native JSON, patch, and tool outputs",
+      "status": "planned",
+      "effort": "XL",
+      "outputs": [
+        "outputs/reports/nlp_typed_output_unification_v3.json"
+      ],
+      "acceptance": [
+        "All structured outputs use the same typed-tree gateway; strict-JSON validity is 1.0 through learned decisions without repair."
+      ]
+    },
+    {
+      "id": "WP-044-D",
+      "task_id": "NLP-044-TWO-STAGE-GATE",
+      "order": 4,
+      "title": "Make the validation-only two-stage promotion decision",
+      "status": "planned",
+      "effort": "M",
+      "outputs": [
+        "outputs/reports/nlp_two_stage_decision_v3.json"
+      ],
+      "acceptance": [
+        "Promote AST-first only if it wins at matched budgets; otherwise retain the one-stage control and report the failed mechanism."
+      ]
+    },
+    {
+      "id": "WP-054-A",
+      "task_id": "NLP-054-BENCHMARK-PROXY",
+      "order": 1,
+      "title": "Freeze public benchmark and metric coverage",
+      "status": "planned",
+      "effort": "L",
+      "outputs": [
+        "configs/nlp_benchmark_proxy_manifest_v3.json",
+        "outputs/reports/nlp_benchmark_coverage_audit_v3.json"
+      ],
+      "acceptance": [
+        "Function, repository, patch, execution, JSON, AST, Triton, Linux, performance, calibration, and safety families each have explicit metrics and contamination controls."
+      ]
+    },
+    {
+      "id": "WP-054-B",
+      "task_id": "NLP-054-BENCHMARK-PROXY",
+      "order": 2,
+      "title": "Materialize execution-grounded proxy labels",
+      "status": "planned",
+      "effort": "XL",
+      "outputs": [
+        "outputs/reports/nlp_benchmark_execution_labels_v3.json"
+      ],
+      "acceptance": [
+        "Every mapped family has independently executable labels and a frozen train/validation/test contamination audit."
+      ]
+    },
+    {
+      "id": "WP-054-C",
+      "task_id": "NLP-054-BENCHMARK-PROXY",
+      "order": 3,
+      "title": "Train and audit every joint proxy loss",
+      "status": "planned",
+      "effort": "XL",
+      "outputs": [
+        "outputs/reports/nlp_benchmark_proxy_joint_v3.json"
+      ],
+      "acceptance": [
+        "Every required compile, execution, trace, patch, retrieval, instruction, calibration, safety, and cost proxy receives a finite gradient."
+      ]
+    },
+    {
+      "id": "WP-054-D",
+      "task_id": "NLP-054-BENCHMARK-PROXY",
+      "order": 4,
+      "title": "Measure rank alignment and close missing losses",
+      "status": "planned",
+      "effort": "L",
+      "outputs": [
+        "outputs/reports/nlp_benchmark_proxy_alignment_v3.json",
+        "outputs/reports/nlp_benchmark_proxy_gap_decision_v3.json"
+      ],
+      "acceptance": [
+        "Spearman rho >= 0.7, sign agreement >= 0.75, and every weak metric maps to a concrete missing full-chain loss or loss exclusion."
+      ]
+    },
+    {
+      "id": "WP-056-A",
+      "task_id": "NLP-056-EFFICIENT-ARCH-SEARCH",
+      "order": 1,
+      "title": "Measure marginal learning value of the approved corpus families",
+      "status": "planned",
+      "effort": "XL",
+      "outputs": [
+        "configs/nlp_capability_mix_v3.json",
+        "outputs/reports/nlp_data_marginal_value_v3.json"
+      ],
+      "acceptance": [
+        "Python, Rust, and C++ code/docs; model-architecture documents; Triton and Linux engineering documents are compared by valid capability gain per token."
+      ]
+    },
+    {
+      "id": "WP-056-B",
+      "task_id": "NLP-056-EFFICIENT-ARCH-SEARCH",
+      "order": 2,
+      "title": "Search dynamic encoder/decoder structure and channel aggregation",
+      "status": "planned",
+      "effort": "XL",
+      "outputs": [
+        "src/floorflow/nlp_flow/dynamic_structure_controller.py",
+        "outputs/reports/nlp_network_structure_search_v3.json"
+      ],
+      "acceptance": [
+        "Depth, lanes, channel decoupling, decoder size, serial/parallel composition, and cross-attention aggregation are selected by validation capability per parameter and FLOP."
+      ]
+    },
+    {
+      "id": "WP-056-C",
+      "task_id": "NLP-056-EFFICIENT-ARCH-SEARCH",
+      "order": 3,
+      "title": "Train and validate the emergence objective",
+      "status": "planned",
+      "effort": "XL",
+      "outputs": [
+        "src/floorflow/nlp_flow/valid_emergence_objective.py",
+        "outputs/reports/nlp_valid_emergence_ablation_v3.json"
+      ],
+      "acceptance": [
+        "Semantic-basis activation and unseen composition are quantified; parser/grammar/execution validity gates every emergence reward."
+      ]
+    },
+    {
+      "id": "WP-056-D",
+      "task_id": "NLP-056-EFFICIENT-ARCH-SEARCH",
+      "order": 4,
+      "title": "Construct and verify lightweight E modules at runtime",
+      "status": "planned",
+      "effort": "XL",
+      "outputs": [
+        "src/floorflow/nlp_flow/generated_expert_constructor.py",
+        "outputs/reports/nlp_generated_e_matched_v3.json"
+      ],
+      "acceptance": [
+        "The model emits a typed expert blueprint, initializes it from learned bases, verifies it, and activates it only within a fixed compute envelope."
+      ]
+    },
+    {
+      "id": "WP-056-E",
+      "task_id": "NLP-056-EFFICIENT-ARCH-SEARCH",
+      "order": 5,
+      "title": "Learn runtime budgets and stopping without per-task tuning",
+      "status": "planned",
+      "effort": "L",
+      "outputs": [
+        "outputs/reports/nlp_zero_hp_runtime_v3.json"
+      ],
+      "acceptance": [
+        "Node count, source length, depth, encoder/decoder size, E birth/retirement, and Stage-A/B NFE are predicted from semantic state with explicit safety caps."
+      ]
+    },
+    {
+      "id": "WP-056-F",
+      "task_id": "NLP-056-EFFICIENT-ARCH-SEARCH",
+      "order": 6,
+      "title": "Confirm and freeze the capability architecture",
+      "status": "planned",
+      "effort": "XL",
+      "outputs": [
+        "configs/nlp_capability_architecture_frozen_v3.json",
+        "outputs/reports/nlp_capability_matched_confirmation_v3.json"
+      ],
+      "acceptance": [
+        "The winner reproduces across at least three seeds, beats matched controls on valid capability per parameter/FLOP, and retains strict AST validity 1.0."
+      ]
+    },
+    {
+      "id": "WP-017-A",
+      "task_id": "NLP-017-MATCHED-SCREEN",
+      "order": 1,
+      "title": "Run conversational coding and engineering SFT",
+      "status": "planned",
+      "effort": "XL",
+      "outputs": [
+        "outputs/reports/nlp_conversational_engineering_sft_v3.json"
+      ],
+      "acceptance": [
+        "Multi-turn corrections, code patches, JSON, AST, and tool outputs remain natively valid with no role or target leakage."
+      ]
+    },
+    {
+      "id": "WP-017-B",
+      "task_id": "NLP-017-MATCHED-SCREEN",
+      "order": 2,
+      "title": "Run the P5M/P12M/P23M matched scale ladder",
+      "status": "planned",
+      "effort": "XL",
+      "outputs": [
+        "outputs/reports/nlp_scale_ladder_v3.json"
+      ],
+      "acceptance": [
+        "At least two seeds per tier use matched tokens, compute, tokenizer, parser, evaluator, and frozen architecture rules."
+      ]
+    },
+    {
+      "id": "WP-017-C",
+      "task_id": "NLP-017-MATCHED-SCREEN",
+      "order": 3,
+      "title": "Run frozen external coding and engineering evaluation",
+      "status": "planned",
+      "effort": "XL",
+      "outputs": [
+        "outputs/reports/nlp_external_sota_eval_v3.json"
+      ],
+      "acceptance": [
+        "External benchmarks open once after validation freeze and include executable, structural, engineering, cost, and safety metrics."
+      ]
+    },
+    {
+      "id": "WP-017-D",
+      "task_id": "NLP-017-MATCHED-SCREEN",
+      "order": 4,
+      "title": "Certify the smallest defensible SOTA band",
+      "status": "planned",
+      "effort": "M",
+      "outputs": [
+        "outputs/reports/nlp_smallest_sota_certificate_v3.json"
+      ],
+      "acceptance": [
+        "The certificate reports exact benchmarks, uncertainty, parameter/data/compute ledgers, failed tracks, generation-family choice, and compression status."
+      ]
+    }
+  ]
+}

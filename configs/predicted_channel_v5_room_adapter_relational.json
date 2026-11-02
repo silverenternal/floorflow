@@ -1,0 +1,11 @@
+{
+  "schema_version": "predicted-channel-v5-room-adapter-relational",
+  "extends": "predicted_channel_v5_room_adapter_control.json",
+  "status": "adapter_preserving_candidate",
+  "model": {
+    "room_instance_relational_adjacency": true,
+    "room_instance_class_count_prior": false,
+    "count_aware_second_graph": true
+  },
+  "claim_boundary": "Relational-edge-only adapter screen; no score is inherited from the full-model run."
+}

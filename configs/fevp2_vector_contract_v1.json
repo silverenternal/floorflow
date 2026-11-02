@@ -1,0 +1,37 @@
+{
+  "schema_version": "fevp2-vector-contract-v1",
+  "protocol": "FloorPlan Editing Verification Protocol",
+  "protocol_version": "2.0-vector",
+  "canonical_grid": {
+    "image_size": 256,
+    "label_dtype": "uint8"
+  },
+  "tolerances": {
+    "room_match_min_iou": 0.5,
+    "room_polygon_hausdorff_px": 0.5,
+    "wall_endpoint_px": 0.5,
+    "opening_center_px": 1.0,
+    "edge_contact_px": 2.0,
+    "locality_violation_area_epsilon": 1e-09
+  },
+  "metrics": {
+    "outside_room_polygon_exact": "Every room whose mask does not intersect the edit region is matched one-to-one by label and IoU >= 0.5 with boundary Hausdorff distance <= 0.5 px.",
+    "outside_wall_exact": "Wall support outside the edit region, changed pixels, and a two-pixel dilation is exactly equal; segment support is also checked with a 0.5-pixel directed tolerance.",
+    "outside_opening_exact": "Unaffected openings form a same-type bijection with center distance <= 1.0 px.",
+    "outside_edge_exact": "The room adjacency set among unaffected rooms is identical under the room mapping.",
+    "locality_violation_area": "Symmetric-difference area of matched unaffected rooms and buffered wall segments, normalized by their total area."
+  },
+  "ground_truth_gate": {
+    "outside_room_level_exact": 1.0,
+    "outside_wall_exact": 1.0,
+    "outside_opening_exact": 1.0,
+    "outside_edge_exact": 1.0,
+    "locality_violation_area": 0.0
+  },
+  "attack_suite": [
+    "Move one unaffected room polygon vertex by 1 px.",
+    "Delete one unaffected wall segment.",
+    "Move one unaffected opening center by more than 1 px.",
+    "Remove one unaffected room adjacency edge."
+  ]
+}

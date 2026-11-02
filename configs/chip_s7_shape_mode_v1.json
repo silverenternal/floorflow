@@ -1,0 +1,23 @@
+{
+  "version": "chip-s7-shape-mode-v1",
+  "parent": "M27 canonical seed21",
+  "purpose": "Generate four bounded rho hypotheses from one shared endpoint with winner-takes-all supervision and diversity control.",
+  "architecture": "typed_hierarchy",
+  "shape_modes": 4,
+  "shape_mode_max_delta": 0.5,
+  "shape_mode_top_fractions": [0.1, 0.25, 0.5, 1.0],
+  "shape_mode_apply": true,
+  "shape_mode_selection": "pareto",
+  "objective": {
+    "shape_mode_loss_weight": 0.1,
+    "shape_mode_selection_weight": 0.1,
+    "shape_mode_diversity_weight": 0.01,
+    "shape_mode_usage_weight": 0.01
+  },
+  "training": {
+    "subset": "configs/chip_m63_response_indices1k_v1.json",
+    "probe_steps": 300,
+    "eval_budget": "NFE4/refiner400 on the frozen 32-case screen"
+  },
+  "claim_boundary": "Default-off identity-initialized shape head. No quality claim before matched screening and post-legalizer candidate evaluation."
+}

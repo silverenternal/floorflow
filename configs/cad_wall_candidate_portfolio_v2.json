@@ -1,0 +1,43 @@
+{
+  "schema_version": "cad-wall-candidate-portfolio-v2",
+  "status": "implementation_ready_no_gpu_run",
+  "scope": "predicted_control_wall_precision",
+  "candidate_mode": "skeleton_portfolio",
+  "proposal_sources": {
+    "0": "room_boundary",
+    "1": "footprint_boundary",
+    "2": "predicted_host_skeleton",
+    "3": "skeleton_k3_s006",
+    "4": "skeleton_k5_s006",
+    "5": "skeleton_k5_s010"
+  },
+  "scorer": {
+    "hidden_dim": 96,
+    "source_embedding_parameters": 576,
+    "source_features": true,
+    "use_encoded_score": false
+  },
+  "training": {
+    "train_cases": 512,
+    "validation_cases": 128,
+    "epochs": 8,
+    "batch_size": 4,
+    "seed": 19,
+    "device": "cuda:0"
+  },
+  "controls": [
+    "boundary-only candidate control",
+    "skeleton portfolio without source embedding",
+    "source-aware skeleton portfolio",
+    "parameter-matched random source embedding control"
+  ],
+  "gates": {
+    "wall_f1": 0.58,
+    "wall_precision": 0.52,
+    "wall_recall_min": 0.65,
+    "junction_f1": 0.65,
+    "wall_continuity_min": 0.99,
+    "room_node_edge_ged_safety": "non-regressing"
+  },
+  "claim_boundary": "Candidate and scorer contract only; no wall metric claim before matched screening."
+}

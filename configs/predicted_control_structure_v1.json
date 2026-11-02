@@ -1,0 +1,55 @@
+{
+  "schema_version": "predicted-control-structure-v1",
+  "hypothesis": "The existing coarse structure refiner was stopped after only three full-data epochs while wall F1, opening F1, and watertightness were still rising; extending the same architecture to eight epochs can improve structure without changing room predictions.",
+  "reuse": {
+    "trainer": "scripts/train_raster_predicted_control_bridge.py",
+    "model": "src/floorflow/heads/joint_control_repair.py::JointControlRepair",
+    "loss": "src/floorflow/objectives/control_repair.py::structure_losses",
+    "warm_start": "outputs/train/raster_structure_bridge_full_v1/best.pt",
+    "room_checkpoint": "outputs/train/native_room_384_full_32ep_v1/best.pt",
+    "room_query_checkpoint": "outputs/train/raster_instance_control_384_promotion256_10ep_v1/best.pt"
+  },
+  "baseline": {
+    "epochs_completed": 3,
+    "wall_f1": 0.5693510398723929,
+    "opening_f1": 0.3594319345827865,
+    "watertight": 0.4439918533604888,
+    "room_closure_rate": 0.49490835030549896,
+    "note": "Internal structure resolution; final explicit-plan metrics are reported separately."
+  },
+  "budget": {
+    "stage": "completed_eight_epoch_budget_probe",
+    "additional_epochs": 5,
+    "train_cases": 5126,
+    "validation_cases": 491,
+    "batch_size": 16,
+    "workers": 12,
+    "learning_rate": 2e-4,
+    "structure_only": true,
+    "room_query_checkpoint": "outputs/train/raster_instance_control_384_promotion256_10ep_v1/best.pt",
+    "room_mask_threshold": 0.6,
+    "room_mask_strength": 8.0,
+    "image_size": 384,
+    "room_size": 224,
+    "structure_size": 128,
+    "seed": 19,
+    "device": "cuda:0",
+    "estimated_minutes_max": 20
+  },
+  "decision_rules": {
+    "continue": "Extend to 24 total epochs or plateau if wall/opening/watertight metrics continue improving.",
+    "conditioning_mismatch": "The first five-epoch extension used dense room logits and did not improve end-to-end wall/opening metrics; this next arm uses the query-routed room control that is actually deployed.",
+    "add_new_loss": "Only after the eight-epoch continuation is evaluated; target wall precision, opening recall, then graph metrics separately.",
+    "reject": "Do not reject before the five-epoch continuation completes and the later checkpoint trend is inspected."
+  },
+  "outcome": {
+    "status": "budget_probe_rejected",
+    "reason": "The five-epoch continuation plateaus and does not improve end-to-end wall or opening F1.",
+    "next_route": "Reuse the existing wall-centerline and opening-interval representations as separate layers; do not collapse them into the room raster."
+  },
+  "gates": {
+    "screen": "Wall precision >= 0.55, opening F1 >= 0.30, Node F1 >= 0.85, edge F1 >= 0.65, GED improves on cal64 and holdout64.",
+    "safety": "Validity 1.0, wall continuity >= 0.95, functional watertightness >= 0.95, plan plausibility >= 0.95.",
+    "matched": "Use the same case order, evaluator, room path, and decode as the current safe-routing candidate."
+  }
+}

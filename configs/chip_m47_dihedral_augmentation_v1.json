@@ -1,0 +1,59 @@
+{
+  "version": "chip-m47-dihedral-augmentation-v1",
+  "status": "rejected_quick_gate",
+  "candidate": "Canonical M27 warm-started with label-preserving dihedral geometry augmentation",
+  "priority": "P0",
+  "pain_point": "Canonical M27 remains sensitive to training order and fails an Official small-block case after legalization despite a near-target raw HPWL/area. The existing augmentation path is implemented but was not used by the canonical recipe.",
+  "mechanism": "Randomly reflect or rotate each 2D layout by one of the four dihedral actions while transforming boxes, pins, boundary codes, target latent and pin features consistently. No parameters, sampler stages or inference operators are added.",
+  "reuse": [
+    "src/floorflow/chip_flow/train_evaluation.py",
+    "tests/test_chip_train_subset.py",
+    "scripts/train_chip_slot.py",
+    "outputs/chip_hierarchy/m36_hierarchy_token_bridge_v1/m36_control_quick/checkpoints/final.pt"
+  ],
+  "screen": {
+    "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2",
+    "train_indices": "configs/chip_train_screen_5k_v1.json",
+    "dev_manifest": "outputs/reports/chip_dev_screen_v45.json",
+    "training_seed": 21,
+    "data_seed": 21,
+    "steps": 2000,
+    "batch_size": 128,
+    "device": "cuda:0",
+    "geometry_augment": "dihedral",
+    "eval_protocol": {
+      "nfe": 4,
+      "refiner_steps": 400,
+      "inference_seed": 19
+    }
+  },
+  "control": {
+    "checkpoint": "outputs/chip_hierarchy/m36_hierarchy_token_bridge_v1/m36_control_quick/checkpoints/final.pt",
+    "cost": 1.138701604693825,
+    "v_rel": 0.03650970115869849
+  },
+  "promotion_gate": "Joint legalized cost and V_rel improvement with feasibility 1.0.",
+  "quick_result": {
+    "dev_curve_total": 0.01710661382228136,
+    "control_curve_total": 0.017198146894574166,
+    "control_cost": 1.138701604693825,
+    "candidate_cost": 1.2225093118738526,
+    "cost_relative": 0.0735993581062544,
+    "cost_ci": [0.009898169325115043, 0.17979900912896093],
+    "control_v_rel": 0.03650970115869849,
+    "candidate_v_rel": 0.05793129287427169,
+    "v_rel_relative": 0.5867369777270686,
+    "v_rel_ci": [0.008827037325811863, 0.0348424437242247],
+    "area_gap_relative": 0.3203779841862714,
+    "b2b_hpwl_relative": 0.6802890203474711,
+    "p2b_hpwl_relative": 89.88502160206095,
+    "grouping_relative": 1.0,
+    "boundary_relative": 0.30952380952380953,
+    "rho_mae_relative": 0.0035193917851631413,
+    "feasible_fraction": 1.0,
+    "report": "outputs/reports/chip_m47_dihedral_quick_refiner400_dev32.json"
+  },
+  "decision": "Reject dihedral augmentation. The proxy curve improved, but legalized cost, V_rel, grouping and p2b regressed. Do not sweep augmentation subsets.",
+  "falsification": "Either primary metric regresses or the gain is isolated to one geometric orientation.",
+  "boundary": "Frozen subset diagnostic only; not a full-data or external-PPA claim."
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": "native-room-512-budget-v2",
+  "data_root": ".data/cubicasa5k",
+  "cache_512_screen": "outputs/cache/cubicasa5k_screen256_512_v2",
+  "warm_start": "outputs/train/native_room_384_full_32ep_v1/best.pt",
+  "architecture": "resnet18_fpn",
+  "screen": {
+    "train_cases": 256,
+    "validation_cases": 64,
+    "epochs": 8,
+    "batch_size": 8,
+    "learning_rate": 1e-4,
+    "weight_decay": 1e-4,
+    "dice_weight": 0.5,
+    "boundary_weight": 0.5,
+    "class_balance": true,
+    "seed": 2903,
+    "device": "cuda:0"
+  },
+  "matched_control": {
+    "resolution": 384,
+    "same_seed_and_data_order": true,
+    "same_warm_start": true
+  },
+  "promotion": {
+    "epochs": 24,
+    "plateau_early_stop_allowed_after_epoch": 8
+  },
+  "estimated_budget": {
+    "screen_training_minutes_max": 10,
+    "full_promotion_minutes_max": 60,
+    "largest_uncertainty": "cache construction and 512px activation memory"
+  },
+  "gates": {
+    "screen_room_iou_delta_min": 0.0,
+    "screen_instance_f1_delta_min": 0.0,
+    "screen_type_accuracy_delta_min": 0.0,
+    "screen_count_mae_delta_max": 0.0,
+    "reasonableness_validity": 1.0,
+    "functional_watertight_min": 0.95,
+    "wall_continuity_min": 0.95,
+    "plan_plausibility_min": 0.95
+  }
+}

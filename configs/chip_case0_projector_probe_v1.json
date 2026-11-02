@@ -1,0 +1,9 @@
+{
+  "version": "chip-case0-projector-probe-v1",
+  "status": "diagnostic_only",
+  "cache": "outputs/cache/chip_official_test_100_v1",
+  "indices": [0],
+  "blocks": 21,
+  "purpose": "Measure whether residual overlap and legalization displacement shrink with additional hard-projector iterations.",
+  "boundary": "One-case operator diagnostic; not a quality or SOTA result."
+}

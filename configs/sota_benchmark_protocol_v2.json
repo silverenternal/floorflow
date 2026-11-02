@@ -1,0 +1,182 @@
+{
+  "schema_version": "sota-benchmark-protocol-v2",
+  "scope": "residential_floorplan_only",
+  "status": "frozen_for_model_sprints",
+  "execution_device": "cuda:0",
+  "output_contract": {
+    "schema_version": "sota-floorplan-output-v2",
+    "implementation": "src/floorflow/evaluation/sota_protocol.py",
+    "coordinate_system": "pixel-centre Cartesian, top-left origin",
+    "canonical_resolution": [256, 256],
+    "required_entities": [
+      "footprint",
+      "room instances with labels, polygons, and support",
+      "wall segments with thickness",
+      "openings attached to walls",
+      "furniture polygons attached to rooms",
+      "room adjacency"
+    ],
+    "required_provenance": [
+      "case_id",
+      "source_hash",
+      "track",
+      "schema_version"
+    ]
+  },
+  "tolerances": {
+    "room_match_min_iou": 0.5,
+    "room_polygon_hausdorff_px": 0.5,
+    "room_min_area_px": 4.0,
+    "room_overlap_area_px2": 4.0,
+    "wall_junction_cluster_px": 2.0,
+    "wall_endpoint_px": 0.5,
+    "opening_center_px": 1.0,
+    "hole_min_area_px": 0.25,
+    "edge_contact_px": 2.0,
+    "changed_pixel_epsilon": 0.0
+  },
+  "graph_contract": {
+    "primary_protocol": "unique_room_type_adjacency",
+    "primary_node_f1": "HouseMind-style unique room-type set F1",
+    "primary_edge_overlap": "Jaccard overlap over unique room-type adjacency pairs",
+    "primary_ged": "NetworkX unit substitution/insertion/deletion on the same room-type graph",
+    "secondary_protocol": "type_geometry_hungarian",
+    "secondary_node_f1": "one-to-one room-instance F1 at IoU >= 0.5",
+    "secondary_edge_overlap": "instance adjacency Jaccard after one-to-one room mapping",
+    "secondary_ged": "exact unit-cost attributed instance GED when within budget; deterministic fallback otherwise",
+    "pooling_rule": "Never pool primary room-type and secondary instance scores."
+  },
+  "splits": {
+    "rplan_generation": {
+      "dataset": "DiffPlanner RPLAN preprocessing",
+      "train": 56053,
+      "validation": 12018,
+      "test_lockbox": 12002,
+      "case_unit": "one RPLAN sample",
+      "selection": "validation only",
+      "test_policy": "one frozen run after SOTA-12"
+    },
+    "cubicasa_reconstruction": {
+      "dataset": "FloorFlow CubiCasa5K cache",
+      "train": 5126,
+      "validation": 491,
+      "test_lockbox": 503,
+      "case_unit": "one SVG floor",
+      "selection": "validation only",
+      "test_policy": "one frozen run after SOTA-12"
+    },
+    "editing": {
+      "dataset": "CubiCasa5K matched edit pairs and released HouseMind edit prompts",
+      "validation": "declared validation pairs only",
+      "test_lockbox": "test503 for typed/oracle rows; deployable free-text rows use the predeclared text-only lockbox",
+      "case_unit": "one before/instruction/after triple",
+      "selection": "validation only",
+      "test_policy": "one frozen run after SOTA-12"
+    }
+  },
+  "tracks": {
+    "rplan_generation": {
+      "inputs": ["boundary", "optional allowed program"],
+      "primary_metrics": ["fid", "mse", "node_f1", "edge_overlap", "ged"],
+      "hard_metrics": ["validity", "conditional_watertightness"],
+      "diagnostic_metrics": ["instance_node_f1", "instance_edge_overlap", "instance_ged"],
+      "oracle_controls_allowed": false,
+      "external_competitors": ["CE2EPlan", "executable TLC-Plan or FMLM when released"]
+    },
+    "cubicasa_reconstruction": {
+      "inputs": ["rendered floorplan raster", "footprint when declared by protocol"],
+      "primary_metrics": ["room_iou", "instance_f1", "wall_f1", "opening_f1", "furniture_f1"],
+      "hard_metrics": ["validity", "conditional_watertightness"],
+      "graph_metrics": ["node_f1", "edge_overlap", "ged"],
+      "oracle_controls_allowed": false,
+      "external_competitors": ["official Raster2Seq", "other executable reconstruction methods under the identical case manifest"]
+    },
+    "typed_editing": {
+      "inputs": ["before plan", "typed instruction", "declared edit region"],
+      "primary_metrics": ["delta_iou", "delta_mse", "node_f1", "edge_overlap", "ged"],
+      "hard_metrics": ["outside_pixel_exact", "outside_room_label_exact", "validity", "conditional_watertightness"],
+      "oracle_regions_allowed_for_main": false,
+      "external_competitors": ["matched local-redraw adapters"]
+    },
+    "free_text_editing": {
+      "inputs": ["before plan", "natural-language instruction"],
+      "primary_metrics": ["instruction_success", "delta_iou", "delta_mse", "node_f1", "edge_overlap", "ged"],
+      "hard_metrics": ["outside_pixel_exact", "outside_room_label_exact", "validity", "conditional_watertightness"],
+      "oracle_regions_allowed_for_main": false,
+      "external_competitors": ["complete HouseMind-E reproduction", "strongest executable instruction editor"]
+    },
+    "oracle_control_diagnostic": {
+      "inputs": ["before plan", "target-derived control", "declared edit region"],
+      "primary_metrics": ["delta_iou", "delta_mse", "node_f1", "edge_overlap", "ged"],
+      "hard_metrics": ["outside_pixel_exact", "outside_room_label_exact", "validity", "conditional_watertightness"],
+      "leaderboard": false,
+      "allowed_use": "capacity and failure diagnosis only",
+      "forbidden_use": "deployable SOTA or external-model comparison"
+    }
+  },
+  "claim_rules": {
+    "leaderboard_requires": [
+      "matching track",
+      "matching split",
+      "matching input contract",
+      "matching case unit",
+      "matching preprocessing",
+      "matching post-processing",
+      "same canonical evaluator version",
+      "executable competitor"
+    ],
+    "primary_significance": {
+      "unit": "case",
+      "confidence_interval": "paired bootstrap",
+      "bootstrap_samples": 10000,
+      "test": "two-sided Wilcoxon signed-rank",
+      "effect_size": "rank-biserial correlation",
+      "multiplicity": "Holm correction"
+    },
+    "forbidden_claims": [
+      "Raster2Seq editing superiority",
+      "CE2EPlan editing comparison",
+      "HouseMind complete-method defeat without complete inference",
+      "RPLAN SOTA without a matched FloorFlow RPLAN run",
+      "CubiCasa SOTA across the official 509-case and project 503-floor units",
+      "room-type Node F1 mixed with room-instance Node F1",
+      "oracle-control metrics presented as deployable results"
+    ]
+  },
+  "adversarial_suite": [
+    {
+      "id": "remove_room",
+      "expected_sensitivity": ["node_f1", "instance_node_f1", "instance_ged"]
+    },
+    {
+      "id": "remove_adjacency",
+      "expected_sensitivity": ["edge_overlap", "instance_edge_overlap"]
+    },
+    {
+      "id": "move_opening",
+      "expected_sensitivity": ["opening_f1"]
+    },
+    {
+      "id": "remove_furniture",
+      "expected_sensitivity": ["furniture_f1"]
+    },
+    {
+      "id": "overlap_rooms",
+      "expected_sensitivity": ["validity"]
+    },
+    {
+      "id": "remove_wall",
+      "expected_sensitivity": ["wall_f1"]
+    }
+  ],
+  "authoritative_external_contract": "configs/sota_official_baselines_v2.json",
+  "implementations": {
+    "output_and_pair_evaluator": "src/floorflow/evaluation/sota_protocol.py",
+    "room_graph_matching": "src/floorflow/evaluation/room_graph_matching.py",
+    "room_type_graph": "src/floorflow/evaluation/housemind_structure.py",
+    "validity_and_watertightness": "src/floorflow/evaluation/fevp_metric_contracts.py",
+    "room_geometry": "src/floorflow/evaluation/room_metric_suite.py",
+    "walls": "src/floorflow/evaluation/wall_metrics.py",
+    "openings": "src/floorflow/geometry/opening_readout.py"
+  }
+}

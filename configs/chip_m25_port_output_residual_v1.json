@@ -1,0 +1,68 @@
+{
+  "version": "chip-m25-port-output-residual-v1",
+  "status": "rejected_quick_gate",
+  "candidate": "M25 final-x0 port-consensus residual",
+  "candidate_flag": "--hierarchy-port-output",
+  "train_indices": "configs/chip_train_scaling_20k_v1.json",
+  "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2",
+  "case_indices": "outputs/reports/chip_dev_screen_v45.json",
+  "seed": 23,
+  "device": "cuda:1",
+  "architecture": {
+    "hidden": 192,
+    "heads": 3,
+    "depth": 10,
+    "typed_layers": 1,
+    "head_dim": 64,
+    "projector_iterations": 4
+  },
+  "training": {
+    "batch_size": 128,
+    "grad_accum_steps": 1,
+    "sampling_mode": "random",
+    "curve_per_count": 5,
+    "sampling_steps": 8,
+    "checkpoint_every": 500,
+    "overlap_weight_scale": 10.0,
+    "hierarchy_bbox_weight": 0.5,
+    "hierarchy_bbox_decay_steps": 10000
+  },
+  "quick": {
+    "steps": 2000,
+    "refiner_steps": 400
+  },
+  "confirmation": {
+    "steps": 5000,
+    "refiner_steps": 1600
+  },
+  "evaluation": {
+    "nfe": 4,
+    "refiner_lr": 0.001,
+    "refiner_schedule": "linear",
+    "projector_iterations": 8,
+    "legalizer_time_limit_ms": 2000,
+    "refiner_weights": {
+      "boundary": 2.0,
+      "group": 2.0,
+      "mib": 1.0,
+      "overlap": 10.0,
+      "wl": 1.0,
+      "area": 1.0
+    }
+  },
+  "promotion": {
+    "max_relative_regression": 0.002,
+    "min_relative_improvement_in_at_least_one_metric": 0.005,
+    "required": "Reuse the exact depth10 M24 20k-ceiling control. Candidate differs only by adding the existing zero-gated port-consensus residual after the backbone."
+  },
+  "diagnosis": {
+    "pain_point": "M24 improves latent, rho, WL and area but loses legalized p2b and boundary at confirmation.",
+    "hypothesis": "Pre-backbone port feedback is washed out; adding it to the final x0 keeps the port constraint active at the decoded endpoint.",
+    "falsification": "No joint gain, p2b/boundary still regress, or the gate collapses.",
+    "parameter_delta": {
+      "added": 19108,
+      "ratio": 1.0032739096234404
+    }
+  },
+  "boundary": "Frozen 20k-case mechanism screen only. No full-data, routed-PPA or SOTA claim."
+}

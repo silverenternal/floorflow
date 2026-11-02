@@ -1,0 +1,79 @@
+{
+  "version": "chip-proxy-measurement-sources-v1",
+  "analysis_seed": 2026,
+  "baseline_checkpoint": "seed20:baseline",
+  "sources": [
+    {
+      "label": "seed20",
+      "path": "outputs/reports/chip_m74_m48_portfolio_seed20_official100_v1.json"
+    },
+    {
+      "label": "seed21",
+      "path": "outputs/reports/chip_m74_m48_portfolio_seed21_official100_v1.json"
+    }
+  ],
+  "candidates": ["baseline", "expanded", "projector32"],
+  "measurements": [
+    {
+      "id": "chip-b2b-proxy-v1",
+      "atom_id": "A03",
+      "proxy_metric": "raw_b2b_hpwl",
+      "canonical_metric": "legalized_b2b_hpwl_gap",
+      "proxy_path": "target_free_geometry.b2b_hpwl",
+      "canonical_path": "stages.legalized.b2b_hpwl_gap",
+      "proxy_direction": "minimize",
+      "canonical_direction": "minimize"
+    },
+    {
+      "id": "chip-p2b-proxy-v1",
+      "atom_id": "A10",
+      "proxy_metric": "raw_p2b_hpwl",
+      "canonical_metric": "legalized_p2b_hpwl_gap",
+      "proxy_path": "target_free_geometry.p2b_hpwl",
+      "canonical_path": "stages.legalized.p2b_hpwl_gap",
+      "proxy_direction": "minimize",
+      "canonical_direction": "minimize"
+    },
+    {
+      "id": "chip-area-compactness-proxy-v1",
+      "atom_id": "A27",
+      "proxy_metric": "outline_compactness",
+      "canonical_metric": "legalized_area_gap",
+      "proxy_path": "target_free_geometry.outline_compactness",
+      "canonical_path": "stages.legalized.area_gap",
+      "proxy_direction": "maximize",
+      "canonical_direction": "minimize"
+    },
+    {
+      "id": "chip-aspect-proxy-v1",
+      "atom_id": "A27",
+      "proxy_metric": "absolute_outline_aspect",
+      "canonical_metric": "legalized_rho_mae",
+      "proxy_path": "target_free_geometry.outline_aspect",
+      "canonical_path": "stages.legalized.rho_mae",
+      "proxy_direction": "minimize",
+      "canonical_direction": "minimize",
+      "proxy_transform": "absolute"
+    },
+    {
+      "id": "chip-displacement-proxy-v1",
+      "atom_id": "A28",
+      "proxy_metric": "legalizer_center_displacement",
+      "canonical_metric": "legalized_cost",
+      "proxy_path": "displacement.center_l2_mean",
+      "canonical_path": "stages.legalized.cost",
+      "proxy_direction": "minimize",
+      "canonical_direction": "minimize"
+    },
+    {
+      "id": "chip-legalizer-rung-proxy-v1",
+      "atom_id": "A29",
+      "proxy_metric": "legalizer_rung",
+      "canonical_metric": "legalized_cost",
+      "proxy_path": "legalizer.rung",
+      "canonical_path": "stages.legalized.cost",
+      "proxy_direction": "minimize",
+      "canonical_direction": "minimize"
+    }
+  ]
+}

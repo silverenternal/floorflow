@@ -1,0 +1,37 @@
+{
+  "version": "2026-10-28-chip-orfs-external-lock-v1",
+  "repository": {
+    "url": "https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts",
+    "commit": "64939f3717ad7c694199ba04cb98924b98022868",
+    "commit_time_utc": "2026-10-25T05:24:58Z",
+    "local_path": "third_party/OpenROAD-flow-scripts",
+    "flow_license": "BSD-3-Clause",
+    "flow_license_path": "LICENSE_BUILD_RUN_SCRIPTS",
+    "flow_license_sha256": "fae0db7a4c00c3125f037e5818e8cd0c8aa5c67fff2e8c558312068e9f2d1592"
+  },
+  "image": {
+    "reference": "openroad/orfs:latest",
+    "resolved_index_digest": "sha256:6810dbf0e03dddbc89ed8c0a1e13cad09ce4c98d40c4ac0ab99fdc04b0676347",
+    "linux_amd64_manifest_digest": "sha256:703649ba855225a98050412cbd8211068ddad149e2449d1f7d429a18f4f302b2",
+    "linux_amd64_config_digest": "sha256:a1dbb1cddaf8a07e702fb57cfac6a50b9fa6cc6cccf333ccc85feb5b856d3c6f",
+    "docker_archive": ".data/images/openroad-orfs/orfs-linux-amd64-703649ba.tar",
+    "docker_archive_sha256": "8634fdc8fc0b43b30ec42d65a1a204b8ac0b761b7a27789f7ff12f0f780d961e",
+    "mirror_reference": "docker.1ms.run/openroad/orfs:latest",
+    "mirror_manifest_matches_docker_hub": true,
+    "local_tag": "openroad/orfs:chips-cvpr-703649ba"
+  },
+  "platform": {
+    "name": "nangate45",
+    "license": "Apache-2.0",
+    "license_path": "flow/platforms/nangate45/LICENSE",
+    "selection_reason": "All frozen candidates use the same public platform, SDC-driven timing, routing stack, and deterministic ORFS implementation."
+  },
+  "flow_settings": {
+    "flow_variant": "baseline",
+    "work_home": "outputs/chip_ppa/orfs",
+    "num_cores": 32,
+    "endpoint_slack": true,
+    "route_effort": "ORFS defaults in the pinned configuration",
+    "network_required_during_run": false
+  }
+}

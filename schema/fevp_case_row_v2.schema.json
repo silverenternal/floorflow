@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://floorflow.dev/schema/fevp-case-row-v2.schema.json",
+  "title": "FloorPlan Editing Verification Protocol Hardened Case Row",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "case_id",
+    "operation",
+    "source_hash",
+    "outside_pixel_exact",
+    "outside_room_level_exact",
+    "outside_room_label_exact",
+    "outside_room_polygon_exact",
+    "outside_edge_exact",
+    "locality_violation_rate",
+    "validity",
+    "validity_checks",
+    "target_watertight",
+    "conditional_watertightness",
+    "watertight_diagnostics",
+    "node_precision",
+    "node_recall",
+    "node_f1",
+    "edge_precision",
+    "edge_recall",
+    "edge_f1",
+    "edge_overlap"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "fevp-case-row-v2"
+    },
+    "case_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "operation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "outside_pixel_exact": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "outside_room_level_exact": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "outside_room_label_exact": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "outside_room_polygon_exact": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "outside_edge_exact": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "locality_violation_rate": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "validity": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "validity_checks": {
+      "type": "object",
+      "required": [
+        "outer_boundary_closed",
+        "room_polygon_closed",
+        "no_self_intersection",
+        "no_room_overlap",
+        "semantic_complete"
+      ],
+      "additionalProperties": true
+    },
+    "target_watertight": {
+      "type": "boolean"
+    },
+    "conditional_watertightness": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "watertight_diagnostics": {
+      "type": "object",
+      "required": [
+        "hole_count",
+        "hole_area_ratio",
+        "disconnected_component_count",
+        "dangling_endpoint_rate",
+        "watertight_issue_codes"
+      ],
+      "additionalProperties": true
+    },
+    "node_precision": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "node_recall": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "node_f1": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "edge_precision": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "edge_recall": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "edge_f1": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "edge_overlap": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "optional": {
+      "type": "object",
+      "properties": {
+        "delta_iou": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "delta_mse": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "ged": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0.0
+        }
+      }
+    }
+  }
+}

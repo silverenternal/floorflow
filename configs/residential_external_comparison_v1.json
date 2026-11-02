@@ -1,0 +1,19 @@
+{
+  "schema_version": "residential-external-comparison-config-v1",
+  "scope": "matched_cubicasa_validation_reconstruction",
+  "split": "val491",
+  "test_access": "forbidden_until_validation_freeze",
+  "floorflow_root": "outputs/eval/fp_completion_predicted_refined_val491_v1/rasters",
+  "raster2seq_root": "outputs/external_baselines/raster2seq/predicted_refined_val491_v1/predictions",
+  "same_controls": true,
+  "same_target": true,
+  "same_footprint": true,
+  "same_resolution": true,
+  "raster2seq_role": "matched reconstruction baseline",
+  "claim_branch": {
+    "matched_cubicasa_reconstruction_head_to_head": true,
+    "complete_cad_generation_sota": false,
+    "rplan_generation_sota": false,
+    "house_mind_editing_defeat": false
+  }
+}

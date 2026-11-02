@@ -1,0 +1,9 @@
+{
+  "version": "chip-m48-case11822-probe-v1",
+  "status": "diagnostic_only",
+  "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2/dev",
+  "indices": [11822],
+  "blocks": 114,
+  "purpose": "Probe a displacement-preserving fallback for the only dev32 case that reaches scale_pack rung 5.",
+  "boundary": "Single-case operator diagnostic; the final candidate must be gated on dev32 and Official-8 without case-ID selection."
+}

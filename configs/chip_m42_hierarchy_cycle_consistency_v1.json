@@ -1,0 +1,49 @@
+{
+  "version": "chip-m42-hierarchy-cycle-consistency-v1",
+  "status": "rejected_quick_gate",
+  "candidate": "Canonical M27 plus endpoint-to-hierarchy cycle consistency",
+  "priority": "P0",
+  "pain_point": "The endpoint geometry can contradict the network's own L0 global, L1 structural and L3 port predictions because those states are supervised only against targets.",
+  "structural_repair": "Recompute L0/L1/L3 from decoded endpoint boxes through the same masks and port incidence and match the network's own predicted states. No new sampler, parameters or inference operators.",
+  "training": {
+    "source_checkpoint": "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed21_5k/checkpoints/final.pt",
+    "train_indices": "configs/chip_train_screen_5k_v1.json",
+    "steps": 2000,
+    "batch_size": 128,
+    "seed": 21,
+    "data_seed": 21,
+    "device": "cuda:0",
+    "hierarchy_cycle_weight": 0.1
+  },
+  "control": {
+    "checkpoint": "outputs/chip_hierarchy/m36_hierarchy_token_bridge_v1/m36_control_quick/checkpoints/final.pt",
+    "cost": 1.138701604693825,
+    "v_rel": 0.03650970115869849
+  },
+  "evaluation": {
+    "manifest": "outputs/reports/chip_dev_screen_v45.json",
+    "nfe": 4,
+    "refiner_steps": 400,
+    "inference_seed": 19
+  },
+  "promotion_gate": "Joint legalized cost and V_rel improvement with feasibility 1.0 and no legalizer rung/solve escalation.",
+  "falsification": "Cycle residual falls without endpoint gains, or either primary metric regresses.",
+  "quick_result": {
+    "candidate_cost": 1.2243707139137512,
+    "cost_relative": 0.075234,
+    "cost_ci": [0.007048, 0.193923],
+    "candidate_v_rel": 0.0433846508125067,
+    "v_rel_relative": 0.188305,
+    "area_gap_relative": 0.563651,
+    "area_ci": [0.000357, 0.096119],
+    "b2b_hpwl_relative": 0.76637,
+    "p2b_hpwl_relative": 52.866282,
+    "grouping_relative": 0.227273,
+    "boundary_relative": 0.142857,
+    "rho_mae_relative": 0.036837,
+    "feasible_fraction": 1.0,
+    "decision": "Reject. Endpoint-to-head self-consistency yields internally coherent but less legalizable geometry. Do not sweep the cycle weight.",
+    "report": "outputs/reports/chip_m42_cycle01_quick_refiner400_dev32.json"
+  },
+  "boundary": "Frozen subset mechanism screen only; no full-data claim."
+}

@@ -1,0 +1,28 @@
+{
+  "version": "chip-m31-seed-soup-v1",
+  "status": "rejected_official100",
+  "candidate": "Equal-weight soup of M27 training seeds 19/20/21",
+  "checkpoint": "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed_soup_19_20_21.pt",
+  "source_checkpoints": [
+    "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed19_5k/checkpoints/final.pt",
+    "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed20_5k/checkpoints/final.pt",
+    "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed21_5k/checkpoints/final.pt"
+  ],
+  "shared_initialization": "third_party/Trinity/checkpoints/d192",
+  "weights": [0.3333333333333333, 0.3333333333333333, 0.3333333333333333],
+  "evaluation": {
+    "official_cache": "outputs/cache/chip_official_test_100_v1",
+    "inference_seed": 19,
+    "nfe": 4,
+    "refiner_steps": 1600,
+    "refiner_weights": {
+      "boundary": 2.0,
+      "group": 2.0,
+      "mib": 1.0,
+      "overlap": 10.0,
+      "wl": 1.0,
+      "area": 1.0
+    }
+  },
+  "promotion": "One frozen equal-weight Official-100 comparison. No weight search after outcomes."
+}

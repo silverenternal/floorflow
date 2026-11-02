@@ -1,0 +1,76 @@
+{
+  "version": "chip-m27-trinity-backbone-init-v1",
+  "status": "canonical_seed21_seed_order_probe_closed",
+  "candidate": "M27 typed hierarchy initialized from pinned Trinity d192",
+  "candidate_flag": null,
+  "candidate_args": [
+    "--hierarchy-depth",
+    "12",
+    "--trinity-backbone-init",
+    "third_party/Trinity/checkpoints/d192"
+  ],
+  "train_indices": "configs/chip_train_scaling_20k_v1.json",
+  "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2",
+  "case_indices": "outputs/reports/chip_dev_screen_v45.json",
+  "seed": 23,
+  "device": "cuda:1",
+  "architecture": {
+    "hidden": 192,
+    "heads": 3,
+    "depth": 10,
+    "typed_layers": 1,
+    "head_dim": 64,
+    "projector_iterations": 4
+  },
+  "training": {
+    "batch_size": 128,
+    "grad_accum_steps": 1,
+    "sampling_mode": "random",
+    "curve_per_count": 5,
+    "sampling_steps": 8,
+    "checkpoint_every": 500,
+    "overlap_weight_scale": 10.0,
+    "hierarchy_bbox_weight": 0.5,
+    "hierarchy_bbox_decay_steps": 10000
+  },
+  "quick": {
+    "steps": 2000,
+    "refiner_steps": 400
+  },
+  "confirmation": {
+    "steps": 5000,
+    "refiner_steps": 1600
+  },
+  "evaluation": {
+    "nfe": 4,
+    "refiner_lr": 0.001,
+    "refiner_schedule": "linear",
+    "projector_iterations": 8,
+    "legalizer_time_limit_ms": 2000,
+    "refiner_weights": {
+      "boundary": 2.0,
+      "group": 2.0,
+      "mib": 1.0,
+      "overlap": 10.0,
+      "wl": 1.0,
+      "area": 1.0
+    }
+  },
+  "promotion": {
+    "max_relative_regression": 0.002,
+    "min_relative_improvement_in_at_least_one_metric": 0.005,
+    "required": "Control is the exact M24 depth12 scratch arm on the same 20k-case ceiling. Candidate differs only by strict Trinity d192 backbone initialization."
+  },
+  "diagnosis": {
+    "pain_point": "From-scratch typed hierarchy training over 20k cases still fails to reach the published anchor even with depth parity.",
+    "hypothesis": "Reusing the anchor backbone preserves its learned placement field while typed modules add graph-state conditioning; this should improve the long-budget endpoint rather than only early convergence.",
+    "falsification": "No joint gain over depth12 scratch, strict load failure, or gains that disappear at refiner1600.",
+    "parameter_delta": {
+      "base_depth12": 6797217,
+      "candidate": 6797217,
+      "model_parameter_delta": 0,
+      "initialized_backbone_parameters": 5856400
+    }
+  },
+  "boundary": "Frozen 20k-case transfer screen only. No full-data or SOTA claim; the anchor's original data exposure is reported separately."
+}

@@ -1,0 +1,82 @@
+{
+  "schema_version": "fp-control-v1",
+  "task": "layout-conditioned floorplan completion",
+  "sources": {
+    "oracle": {
+      "description": "Controls derived from the held-out target for a labeled upper-bound diagnostic only.",
+      "deployable": false,
+      "target_used_for_control": true
+    },
+    "predicted": {
+      "description": "Controls produced by a frozen independent contour-to-control model.",
+      "deployable": true,
+      "target_used_for_control": false
+    },
+    "external": {
+      "description": "Controls serialized from a declared external editor or user workflow.",
+      "deployable": true,
+      "target_used_for_control": false
+    }
+  },
+  "required_arrays": {
+    "room_logits": {
+      "channels": "num_room_classes",
+      "spatial_size": 224,
+      "encoding": "float16",
+      "metric_levels": [
+        "L3_instances",
+        "L4_semantics"
+      ]
+    },
+    "program": {
+      "channels": "num_room_classes",
+      "encoding": "bool",
+      "metric_levels": [
+        "L0_legal",
+        "L3_instances"
+      ]
+    },
+    "structure": {
+      "channels": "rooms+wall+opening+opening_types+footprint",
+      "spatial_size": 128,
+      "encoding": "float16",
+      "metric_levels": [
+        "L1_topology",
+        "L2_objects"
+      ]
+    },
+    "furniture": {
+      "channels": "rooms+furniture_types+footprint",
+      "spatial_size": 192,
+      "encoding": "float16",
+      "metric_levels": [
+        "L1_topology",
+        "L2_objects"
+      ]
+    },
+    "support": {
+      "channels": "rooms+wall+opening+furniture+footprint",
+      "spatial_size": 192,
+      "encoding": "float16",
+      "metric_levels": [
+        "L1_topology",
+        "L3_instances"
+      ]
+    }
+  },
+  "required_metadata": [
+    "source",
+    "split",
+    "schema_version",
+    "target_used_for_control",
+    "deployable",
+    "input_sha256",
+    "taxonomy_sha256"
+  ],
+  "prohibitions": [
+    "Do not compare oracle and predicted controls in the same deployable table.",
+    "Do not allow a method to inspect target data beyond the serialized control arrays.",
+    "Do not mutate controls differently for different methods.",
+    "Do not use best-of-N or test-time target selection."
+  ]
+}

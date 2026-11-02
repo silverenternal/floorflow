@@ -1,0 +1,80 @@
+{
+  "version": "chip-external-holdout-chipbench-m27-v1",
+  "status": "routed_pilot_blocked_pin_aligned_982_drc",
+  "manifest": "outputs/reports/chip_chipbench_holdout_manifest_v1_verified.json",
+  "candidate": {
+    "architecture": "typed_hierarchy",
+    "checkpoint": "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed21_5k/checkpoints/final.pt"
+  },
+  "control": {
+    "architecture": "typed_hierarchy",
+    "checkpoint": "outputs/chip_hierarchy/m24_depth_parity_20k_ceiling_v1/candidate_confirmation/checkpoints/final.pt"
+  },
+  "pilot_cases": [
+    "ariane81",
+    "dft68",
+    "or1200"
+  ],
+  "protocol": {
+    "protocol_tag": "chipbench_m27_holdout_v1",
+    "nfe": 4,
+    "refiner_steps": 1600,
+    "refiner_lr": 0.001,
+    "refiner_schedule": "linear",
+    "refiner_shape": true,
+    "refiner_optimizer": "adam",
+    "refiner_chunk": 5,
+    "projector_iterations": 8,
+    "skip_cts_repair_timing": true,
+    "detailed_route_end_iter": 10,
+    "resource_adaptation_reason": "CTS repair exceeded 99 GB and OOM-killed OpenROAD; droute_end_iter=1 left 49712 DRC in the candidate sensitivity run. Both arms must use the same adaptation.",
+    "legalizer_relation": "expanded",
+    "instance_hierarchy": true,
+    "preserve_reference_orientation": true,
+    "deterministic": true,
+    "seed": 19,
+    "refiner_weights": [
+      "boundary=2.0",
+      "group=2.0",
+      "mib=1.0",
+      "overlap=10.0",
+      "wl=1.0",
+      "area=1.0"
+    ]
+  },
+  "phase_gate": {
+    "placement": "Both arms must be legal, zero-overlap and use a matched legalizer route.",
+    "adapter": "All macros must round-trip with matching counts.",
+    "route": "Only then open common ORFS detailed route and report congestion/DRC/timing/power/area."
+  },
+  "pilot_result": {
+    "pair_manifest": "outputs/reports/chipbench_m27_pilot_positioned_pairs_v1.json",
+    "staged_orfs_manifest": "outputs/reports/chipbench_holdout_orfs_staged_manifest_v1.json",
+    "candidate_or1200_report": "outputs/reports/orfs/chipbench_m27_positioned_or1200_candidate_s19.json",
+  "candidate_or1200_status": "pin_aligned_invalid_982_drc",
+    "candidate_or1200_rerun_required": true,
+    "last_progress": {
+      "detail_place": "completed_after_pre_macro_fix",
+      "cts": "OOM_without_SKIP_CTS_REPAIR_TIMING",
+    "first_route": "completed_with_49712_DRC_at_end_iter_1",
+    "amended_route": "completed_with_44485_DRC_at_end_iter_10",
+    "correct_def_route": "completed_with_4196_DRC_and_complete_metrics",
+    "grid560_def_route": "completed_with_3101_DRC_but_final_extraction_short",
+    "pin_aligned_route": "completed_with_982_DRC_and_complete_metrics",
+    "final_report": "not_valid_for_PPA_due_nonzero_DRC"
+    },
+    "available_stages": [
+      "def2db",
+      "tapcell",
+      "PDN",
+      "global place",
+    "resize",
+    "CTS",
+    "global route",
+    "detail route"
+    ],
+  "missing_stage": "zero_DRC_routeable_macro_placement_after_982_sensitivity",
+    "routed_metrics_opened": false
+  },
+  "boundary": "Three-case external pilot on an already inspected non-PPA cohort; not full 15-design confirmation."
+}

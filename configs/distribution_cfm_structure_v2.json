@@ -1,0 +1,38 @@
+{
+  "schema_version": "distribution-cfm-structure-v2",
+  "status": "implementation_ready_no_gpu_run",
+  "scope": "residential_contour_conditioned_distribution_cfm",
+  "changes": {
+    "static_condition_encoder": true,
+    "typed_family_streams": true,
+    "multiscale_structure_injection": true,
+    "bridge_mode": "residual",
+    "shape_descriptor": "vectorized_shape_moments"
+  },
+  "cache_contract": {
+    "condition_encoding_calls_per_samples": 1,
+    "flow_condition_recomputation": false,
+    "heun_4step_encoder_reuse_ratio": 0.875
+  },
+  "family_streams": [
+    "room",
+    "wall",
+    "opening",
+    "furniture",
+    "condition"
+  ],
+  "structure_injection": {
+    "levels": "all_unet_encoder_levels",
+    "operation": "identity_initialized_film",
+    "source": "typed_state_groups_plus_envelope"
+  },
+  "audit_metrics": [
+    "condition_cache_equivalence",
+    "condition_cache_reuse_ratio",
+    "family_stream_distinctness",
+    "outside_support_change",
+    "group_coupling_residual",
+    "bridge_identity_at_initialization"
+  ],
+  "claim_boundary": "Architecture and efficiency contract only; sample quality must be measured by matched generation runs."
+}

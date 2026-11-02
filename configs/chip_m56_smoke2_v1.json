@@ -1,0 +1,5 @@
+{
+  "version": "chip-m56-smoke2-v1",
+  "indices": [6146, 124],
+  "purpose": "End-to-end legal-parent reflow plumbing and locality smoke only."
+}

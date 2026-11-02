@@ -1,0 +1,53 @@
+{
+  "schema_version": "opening-candidate-ranker-v2",
+  "status": "promoted_oracle_and_full_consumer_absolute_gate_open",
+  "candidate_source": {
+    "detector": "opening-interval-multiscale",
+    "checkpoint": "outputs/train/opening_interval_multiscale_promotion1024_seed19_v1/best.pt",
+    "foreground_threshold": 0.15,
+    "independent_foreground": true
+  },
+  "ranker": {
+    "model": "outputs/train/opening_candidate_ranker_v2/ranker.joblib",
+    "presence_threshold": 0.15,
+    "family_mode": "detector",
+    "feature_count": 21,
+    "models": {
+      "presence": "HistGradientBoostingClassifier",
+      "family": "HistGradientBoostingClassifier"
+    }
+  },
+  "training_contract": {
+    "train_split": "train",
+    "train_cases": 1024,
+    "train_candidates": 12821,
+    "calibration_split": "val[0:96]",
+    "holdout_split": "val[96:288]",
+    "target_used_at_inference": false,
+    "test_opened": false
+  },
+  "oracle_host_holdout": {
+    "baseline_vector_f1": 0.3042037695793634,
+    "candidate_vector_f1": 0.31614533170257847,
+    "paired_delta": 0.011941562123215113,
+    "paired_ci95": [0.006454407288146538, 0.017520681060544847],
+    "wilcoxon_p_greater": 6.088481012663896e-08,
+    "precision_delta": 0.04719107730590389,
+    "recall_delta": -0.00845924759642594,
+    "geometry_retention": 0.9805555555555555,
+    "family_consistency_rate_delta": -0.0001521351379708
+  },
+  "full_consumer_val491": {
+    "baseline_opening_f1": 0.2663856264144158,
+    "candidate_opening_f1": 0.28230158681513157,
+    "paired_delta": 0.015915960400715756,
+    "paired_ci95": [0.008116193157468149, 0.023715429977369605],
+    "wilcoxon_p_greater": 0.000025660807556576868,
+    "room_wall_graph_ged_validity_watertight_outside": "unchanged_on_491_cases"
+  },
+  "absolute_gate": {
+    "vector_f1": 0.35,
+    "status": "failed"
+  },
+  "claim_boundary": "Candidate verification is a relative mechanism result. It is not opening or full-CAD SOTA."
+}

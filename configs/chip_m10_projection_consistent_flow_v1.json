@@ -1,0 +1,86 @@
+{
+  "version": "chip-m10-projection-consistent-flow-v1",
+  "status": "rejected_at_confirmation",
+  "checkpoint": "outputs/chip_hierarchy/sota_full50k_exposure_v1/checkpoints/final.pt",
+  "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2/dev",
+  "case_indices": "outputs/reports/chip_dev_screen_v45.json",
+  "device": "cuda:0",
+  "batch_size": 16,
+  "seed": 19,
+  "use_ema": true,
+  "deterministic": true,
+  "projector_iterations": 8,
+  "legalizer_time_limit_ms": 2000,
+  "legalizer_workers": 4,
+  "nfes": [1, 2, 4, 8],
+  "refiner_steps": [0, 400, 1600],
+  "projection_modes": [
+    "post_step",
+    "projection_consistent",
+    "final_only"
+  ],
+  "stages": {
+    "quick": {
+      "nfes": [1, 4],
+      "refiner_steps": [0, 400],
+      "projection_modes": [
+        "post_step",
+        "projection_consistent",
+        "final_only"
+      ]
+    },
+    "confirmation": {
+      "nfes": [1, 2, 4, 8],
+      "refiner_steps": [0, 400, 1600],
+      "projection_modes": [
+        "post_step",
+        "final_only"
+      ]
+    }
+  },
+  "selection": {
+    "source_quick_report": "outputs/reports/chip_m10_projection_consistent_flow_dev32_fallback_cpu_v1.json",
+    "selection_report": "outputs/reports/chip_m10_quick_selection_v1.json",
+    "selected_mode": "final_only",
+    "primary_nfe": 4,
+    "primary_refiner_steps": 400,
+    "confirmation_refiner_steps": 1600,
+    "rejected_mode": "projection_consistent"
+  },
+  "decision": {
+    "status": "rejected_confirmation",
+    "selected_mode": "final_only",
+    "confirmation_report": "outputs/reports/chip_m10_projection_consistent_flow_final_only_confirmation_fallback_cpu_v1.json",
+    "confirmation_cost_relative": 0.03330347279073364,
+    "confirmation_v_rel_relative": 0.0059413994813636494,
+    "reason": "The refiner400 mean gain reverses at refiner1600 for both primary metrics.",
+    "full_data_allowed": false
+  },
+  "refiner": {
+    "learning_rate": 0.001,
+    "schedule": "linear",
+    "shape": true,
+    "optimizer": "adam",
+    "chunk": 5,
+    "weights": {
+      "boundary": 2.0,
+      "group": 2.0,
+      "mib": 1.0,
+      "overlap": 10.0,
+      "wl": 1.0,
+      "area": 1.0
+    }
+  },
+  "primary_baseline_mode": "post_step",
+  "advance_gate": {
+    "rule": "At a matched NFE/refiner point, a candidate mode must improve both mean legalized cost and V_rel without reducing feasibility below 1.0. Paired intervals are reported but cannot be selected from the target set.",
+    "protected_state": "Exact area, fixed shapes, preplaced positions, MIB shape sharing and boundary codes must remain satisfied.",
+    "full_data_allowed": false
+  },
+  "source_review": {
+    "paper": "https://arxiv.org/abs/2604.23658",
+    "repository": "https://github.com/lamda-bbo/flowplace",
+    "license": "not_present_on_2026_10_30",
+    "implementation_boundary": "clean-room use of the extrapolate-project-reinterpolate idea through existing floorflow modules"
+  }
+}

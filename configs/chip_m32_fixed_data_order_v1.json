@@ -1,0 +1,20 @@
+{
+  "version": "chip-m32-fixed-data-order-v1",
+  "status": "rejected_seed20_official100",
+  "candidate": "M27 recipe with parameter seed20 and fixed data seed21",
+  "trinity_backbone_init": "third_party/Trinity/checkpoints/d192",
+  "training": {
+    "train_indices": "configs/chip_train_scaling_20k_v1.json",
+    "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2",
+    "seed": 20,
+    "data_seed": 21,
+    "steps": 5000,
+    "device": "cuda:1"
+  },
+  "evaluation": {
+    "inference_seed": 19,
+    "nfe": 4,
+    "refiner_steps": 1600
+  },
+  "boundary": "Single predeclared fixed-data-order probe; no data-order sweep."
+}

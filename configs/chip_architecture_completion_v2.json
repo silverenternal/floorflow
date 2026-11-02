@@ -1,0 +1,233 @@
+{
+  "version": "chip-architecture-completion-v2",
+  "scope": "CPU implementation and contract validation only; no GPU quality claim",
+  "canonical_parent": "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed21_5k/checkpoints/final.pt",
+  "stages": [
+    {
+      "id": "M50-SAME-CALL-COMMIT",
+      "flags": {
+        "structured_heads": true,
+        "structured_hierarchy_coupling": true,
+        "structured_factorized_block": false,
+        "structural_relation_head": true,
+        "structural_relation_weight": 0.05,
+        "coarse_commit_fraction": 0.3
+      },
+      "causal_probe": "NFE1 block output must respond to predicted L0/L1 and committed states must stop changing."
+    },
+    {
+      "id": "M51-FACTORIZED-GEOMETRY",
+      "flags": {
+        "structured_heads": true,
+        "structured_hierarchy_coupling": false,
+        "structured_factorized_block": true
+      },
+      "causal_probe": "Center-only and rho-only perturbations must remain separated."
+    },
+    {
+      "id": "M52-RELATION-GRAPH",
+      "flags": {
+        "relation_specific_attention": true,
+        "dynamic_graph_input": true,
+        "complexity_conditioning": true,
+        "degree_conditioned_expert": true,
+        "relation_gate_weight": 0.01
+      },
+      "causal_probe": "Structural tokens must affect only member blocks and edge messages must react to current geometry."
+    },
+    {
+      "id": "M53-REFINER-COMPATIBLE-FLOW",
+      "flags": {
+        "structured_hierarchy_coupling": false,
+        "structured_factorized_block": false,
+        "training_projector": true,
+        "training_projector_iterations": 2,
+        "training_projector_displacement_weight": 0.05,
+        "endpoint_compatibility_weight": 0.05,
+        "endpoint_refiner_trajectory_steps": 2
+      },
+      "causal_probe": "Raw-to-projected/refined displacement must backpropagate into x0."
+    },
+    {
+      "id": "M54-LEGALIZATION-AWARE-FLOW",
+      "flags": {
+        "legalizer_response_weight": 0.05,
+        "legalizer_response_delay_steps": 0,
+        "legalizer_response_anneal_steps": 500,
+        "response_sidecar": "outputs/cache/chip_m63_response_screen1k_v1.npz",
+        "train_indices": "configs/chip_m63_response_indices1k_v1.json",
+        "structured_legalizer_response": true,
+        "structured_legalizer_apply": true,
+        "structured_legalizer_strength": 0.5,
+        "structured_legalizer_max_displacement": 0.1
+      },
+      "causal_probe": "Predicted displacement and rung response must be learned without applying the action at internal ODE steps."
+    },
+    {
+      "id": "M55-ROUTEABILITY-AND-STABLE-TRAINING",
+      "flags": {
+        "spatial_route_field": true,
+        "hierarchy_source_mode": "mixed",
+        "hierarchy_source_levels": "derived",
+        "hierarchy_source_shelf_probability": 0.25,
+        "hierarchy_source_shelf_probability_final": 0.75,
+        "hierarchy_source_shelf_probability_steps": 4000,
+        "backbone_unfreeze_step": 1000,
+        "geometry_augment": "dihedral",
+        "geometry_augment_probability": 0.25
+      },
+      "causal_probe": "Net endpoints, pin positions and block extents must change the route field while the source schedule converges to shelf layouts."
+    },
+    {
+      "id": "M57-CONFIDENCE-GATED-COMMIT",
+      "flags": {
+        "structured_heads": true,
+        "structured_hierarchy_coupling": true,
+        "structured_factorized_block": false,
+        "structural_relation_head": true,
+        "structural_relation_weight": 0.05,
+        "coarse_commit_fraction": 0.3,
+        "coarse_anchor_tolerance": 0.05,
+        "coarse_anchor_strength": 0.25,
+        "coarse_anchor_max_step": 0.1
+      },
+      "causal_probe": "Only stable slots receive a bounded coarse anchor; unstable slots retain trajectory freedom."
+    },
+    {
+      "id": "M58-SHARED-TRUNK-FACTORIZATION",
+      "flags": {
+        "structured_heads": true,
+        "structured_hierarchy_coupling": false,
+        "structured_factorized_block": true,
+        "structured_factorized_shared_trunk": true,
+        "structured_rho_trust_radius": 0.1
+      },
+      "causal_probe": "Both center and rho heads must backpropagate through the shared trunk while rho remains bounded."
+    },
+    {
+      "id": "M59-LEGALIZER-CONSTRAINED-ENDPOINT",
+      "flags": {
+        "structured_hierarchy_coupling": false,
+        "structured_factorized_block": false,
+        "training_projector": true,
+        "training_projector_iterations": 2,
+        "training_projector_displacement_weight": 0.05,
+        "endpoint_compatibility_weight": 0.05,
+        "endpoint_refiner_trajectory_steps": 2,
+        "endpoint_legalized_area_weight": 0.1,
+        "endpoint_legalized_p2b_weight": 0.1,
+        "endpoint_legalizer_target_weight": 0.1,
+        "response_sidecar": "outputs/cache/chip_m63_response_screen1k_v1.npz",
+        "train_indices": "configs/chip_m63_response_indices1k_v1.json"
+      },
+      "causal_probe": "Projected area, p2b and held-out legalizer displacement must influence the endpoint gradient."
+    },
+    {
+      "id": "M60-INCIDENCE-NORMALIZED-GRAPH",
+      "flags": {
+        "relation_specific_attention": true,
+        "incidence_normalized_relations": true,
+        "dynamic_graph_input": true,
+        "complexity_conditioning": true,
+        "degree_conditioned_expert": true,
+        "relation_gate_weight": 0.01
+      },
+      "causal_probe": "Relation residuals must not grow with active edge count."
+    },
+    {
+      "id": "M61A-ROUTE-ONLY",
+      "flags": {
+        "spatial_route_field": true,
+        "routing_proxy_weight": 0.05
+      },
+      "causal_probe": "Route field sensitivity must improve cost or p2b without the source schedule."
+    },
+    {
+      "id": "M61B-SOURCE-ONLY",
+      "flags": {
+        "hierarchy_source_mode": "mixed",
+        "hierarchy_source_levels": "derived",
+        "hierarchy_source_shelf_probability": 0.25,
+        "hierarchy_source_shelf_probability_final": 0.75,
+        "hierarchy_source_shelf_probability_steps": 4000,
+        "backbone_unfreeze_step": 1000,
+        "geometry_augment": "dihedral",
+        "geometry_augment_probability": 0.25
+      },
+      "causal_probe": "Source-only adaptation must isolate deployment-manifold effects."
+    },
+    {
+      "id": "M62-CONSTRAINED-FUSION",
+      "flags": {
+        "structured_hierarchy_coupling": false,
+        "structured_factorized_block": false,
+        "training_projector": true,
+        "training_projector_iterations": 2,
+        "training_projector_displacement_weight": 0.05,
+        "endpoint_compatibility_weight": 0.05,
+        "endpoint_refiner_trajectory_steps": 2,
+        "endpoint_legalized_area_weight": 0.1,
+        "endpoint_legalized_p2b_weight": 0.1,
+        "endpoint_legalizer_target_weight": 0.1,
+        "spatial_route_field": true,
+        "routing_proxy_weight": 0.05,
+        "response_sidecar": "outputs/cache/chip_m63_response_screen1k_v1.npz",
+        "train_indices": "configs/chip_m63_response_indices1k_v1.json"
+      },
+      "causal_probe": "Endpoint and route residuals must remain independently gated and jointly non-regressing."
+    },
+    {
+      "id": "M64-SOURCE-ONLY-CLEAN",
+      "flags": {
+        "hierarchy_source_mode": "mixed",
+        "hierarchy_source_levels": "derived",
+        "hierarchy_source_shelf_probability": 0.25,
+        "hierarchy_source_shelf_probability_final": 0.75,
+        "hierarchy_source_shelf_probability_steps": 4000
+      },
+      "causal_probe": "Deployment-source annealing alone must explain the M61B cost/b2b/p2b gain."
+    },
+    {
+      "id": "M65-GRAPH-SOURCE-FUSION",
+      "flags": {
+        "relation_specific_attention": true,
+        "incidence_normalized_relations": true,
+        "dynamic_graph_input": true,
+        "complexity_conditioning": true,
+        "degree_conditioned_expert": true,
+        "relation_gate_weight": 0.01,
+        "hierarchy_source_mode": "mixed",
+        "hierarchy_source_levels": "derived",
+        "hierarchy_source_shelf_probability": 0.25,
+        "hierarchy_source_shelf_probability_final": 0.75,
+        "hierarchy_source_shelf_probability_steps": 4000
+      },
+      "causal_probe": "Incidence-normalized graph and source annealing must be complementary under the same budget."
+    }
+  ],
+  "portfolio": {
+    "selector_policy": "balanced",
+    "vrel_tolerance": 0.01,
+    "router": "PortfolioRouter",
+    "router_status": "weak_on_mode_features_55pct_accuracy",
+    "claim_boundary": "The pre-generation router is not promoted until held-out accuracy and equal-budget quality pass."
+  },
+  "execution_order": [
+    "M50-SAME-CALL-COMMIT",
+    "M51-FACTORIZED-GEOMETRY",
+    "M53-REFINER-COMPATIBLE-FLOW",
+    "M52-RELATION-GRAPH",
+    "M55-ROUTEABILITY-AND-STABLE-TRAINING",
+    "M57-CONFIDENCE-GATED-COMMIT",
+    "M58-SHARED-TRUNK-FACTORIZATION",
+    "M59-LEGALIZER-CONSTRAINED-ENDPOINT",
+    "M60-INCIDENCE-NORMALIZED-GRAPH",
+    "M61A-ROUTE-ONLY",
+    "M61B-SOURCE-ONLY",
+    "M62-CONSTRAINED-FUSION",
+    "M64-SOURCE-ONLY-CLEAN",
+    "M65-GRAPH-SOURCE-FUSION"
+  ],
+  "side_stage_rule": "Open M54-LEGALIZATION-AWARE-FLOW after M53 only when response labels and final-only action contracts pass.",
+  "execution_rule": "Run one stage at a time on the frozen subset. Do not enable all stages together before each stage passes its CPU contract and later GPU quick gate."
+}

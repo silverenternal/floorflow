@@ -1,0 +1,60 @@
+{
+  "version": "chip-m41-anchor-preserving-lora-v1",
+  "status": "rejected_quick_gate",
+  "candidate": "M27 with frozen backbone plus rank-4 attention/MLP LoRA",
+  "priority": "P0",
+  "pain_point": "Full-backbone fine-tuning improves the canonical mean but causes anchor drift and training-seed sensitivity. Fully freezing the backbone under-adapts.",
+  "structural_repair": [
+    "Preserve every M27 backbone base weight exactly",
+    "Inject low-rank deltas only in attention qkv/proj and MLP input/output projections",
+    "Keep typed graph encoder, L0-L3 heads and exact-area flow trainable",
+    "Initialize LoRA B to zero so the first prediction is exactly M27"
+  ],
+  "initialization": {
+    "source_checkpoint": "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed21_5k/checkpoints/final.pt",
+    "backbone_lora_rank": 4,
+    "backbone_lora_alpha": 4,
+    "lora_parameters": 147456,
+    "total_parameters": 6944673,
+    "trainable_parameters": 1088273
+  },
+  "training": {
+    "train_indices": "configs/chip_train_screen_5k_v1.json",
+    "steps": 2000,
+    "batch_size": 128,
+    "seed": 21,
+    "data_seed": 21,
+    "device": "cuda:0"
+  },
+  "control": {
+    "checkpoint": "outputs/chip_hierarchy/m36_hierarchy_token_bridge_v1/m36_control_quick/checkpoints/final.pt",
+    "cost": 1.138701604693825,
+    "v_rel": 0.03650970115869849
+  },
+  "evaluation": {
+    "manifest": "outputs/reports/chip_dev_screen_v45.json",
+    "nfe": 4,
+    "refiner_steps": 400,
+    "inference_seed": 19
+  },
+  "promotion_gate": "Joint legalized cost and V_rel improvement with feasibility 1.0 and no legalizer rung/solve escalation.",
+  "falsification": "Nonzero LoRA delta at initialization, either primary metric regresses, or gain disappears under the matched control.",
+  "quick_result": {
+    "candidate_cost": 1.2825679721089094,
+    "cost_relative": 0.126342,
+    "cost_ci": [0.038809, 0.282872],
+    "candidate_v_rel": 0.05530784291415254,
+    "v_rel_relative": 0.514881,
+    "v_rel_ci": [0.008598, 0.029845],
+    "area_gap_relative": 0.829334,
+    "b2b_hpwl_relative": 1.71461,
+    "p2b_hpwl_relative": 58.838805,
+    "grouping_relative": 0.681818,
+    "boundary_relative": 0.309524,
+    "rho_mae_relative": 0.002911,
+    "feasible_fraction": 1.0,
+    "decision": "Reject rank-4 LoRA. Frozen-base adaptation underfits and worsens every legalized structural component. Do not sweep rank before fixing the hierarchy consistency objective.",
+    "report": "outputs/reports/chip_m41_lora4_quick_refiner400_dev32.json"
+  },
+  "boundary": "Frozen subset mechanism screen only."
+}

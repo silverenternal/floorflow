@@ -1,0 +1,59 @@
+{
+  "schema_version": "room-slot-owner-screen-v2",
+  "status": "screen_rejected_no_promotion",
+  "scope": "residential_cubicasa_room_head",
+  "trainer": "scripts/train_raster_instance_control.py",
+  "parent": {
+    "checkpoint": "outputs/train/room_query_blend50_seed19_v1/best.pt",
+    "selection_blend": 0.75,
+    "selection_mode": "dense_relative_identity"
+  },
+  "screen": {
+    "train_cases": 256,
+    "calibration_cases": 64,
+    "holdout_cases": 64,
+    "holdout_offset": 64,
+    "epochs": 8,
+    "seed": 19,
+    "image_size": 384,
+    "batch_size": 8
+  },
+  "model": {
+    "full_resolution_masks": true,
+    "full_resolution_channels": 32,
+    "joint_room_slot_state": true,
+    "joint_slot_owner_fusion": true,
+    "slot_state_only": true,
+    "query_set_head": false,
+    "query_count_gate": false,
+    "query_existence_gate": false,
+    "queries": 24,
+    "layers": 3,
+    "heads": 4,
+    "hidden_dim": 128
+  },
+  "loss": {
+    "room_mask": 1.0,
+    "partition": 0.5,
+    "fused_identity": 0.5,
+    "query_set": 0.5,
+    "existence": 0.5,
+    "query_count": 0.5,
+    "slot_class_anchor": 0.1,
+    "slot_owner": 1.0,
+    "selection_mode": "dense_relative_identity"
+  },
+  "required_controls": [
+    "frozen parent query readout",
+    "slot-owner mask residual without class anchor",
+    "slot-owner mask residual with class anchor",
+    "slot-owner mask residual without count supervision"
+  ],
+  "gates": {
+    "joint_quality": "Room IoU, instance F1, and count MAE improve jointly on calibration and disjoint holdout.",
+    "owner_geometry": "At least one of Room IoU or instance F1 must improve on holdout without the other regressing.",
+    "stability": "The final three epochs must not reverse the selected calibration direction.",
+    "safety": "Validity, watertightness, outside-footprint, wall, opening, node, edge, and GED gates do not regress."
+  },
+  "claim_boundary": "The mask/owner residual and the dense owner-assignment follow-up both fail the joint-quality gate; neither is promoted."
+}

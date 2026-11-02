@@ -1,0 +1,58 @@
+{
+  "version": "chip-sota-architecture-hardening-v1",
+  "status": "implementation_and_cpu_contract_only",
+  "canonical_parent": "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed21_5k/checkpoints/final.pt",
+  "architecture": "typed_hierarchy",
+  "flags": {
+    "hierarchy_coordinate_parameterization": true,
+    "hierarchy_coordinate_mode": "envelope_cluster",
+    "hierarchy_source_mode": "mixed",
+    "hierarchy_source_levels": "derived",
+    "hierarchy_source_shelf_probability": 0.25,
+    "hierarchy_source_shelf_probability_final": 0.5,
+    "hierarchy_source_shelf_probability_steps": 4000,
+    "hierarchy_source_max_shelf_probability": 0.5,
+    "require_deployment_source": true,
+    "global_spec_conditioning": true,
+    "node_semantic_dim": 12,
+    "port_semantic_dim": 5,
+    "netlist_hyperedge_conditioning": true,
+    "membership_hierarchy_conditioning": true,
+    "standalone_legalizer_response": true,
+    "port_consensus_conditioning": true
+  },
+  "objective": {
+    "nfe_consistency_weight": 0.1,
+    "nfe_consistency_steps": 2,
+    "nfe_consistency_target_weight": 1.0,
+    "nfe_consistency_self_weight": 0.1,
+    "endpoint_compatibility_weight": 0.1,
+    "endpoint_mib_share_weight": 0.1,
+    "endpoint_pin_tail_weight": 0.1,
+    "endpoint_rho_trust_weight": 0.1,
+        "port_consensus_conditioning": true,
+    "endpoint_rho_trust_radius": 0.1,
+    "endpoint_pin_tail_fraction": 0.2,
+    "official_cost_weight": 0.0,
+    "official_cost_final_weight": 0.1,
+    "official_cost_delay_steps": 500,
+    "official_cost_anneal_steps": 1000,
+    "official_cost_violation_temperature": 0.1
+  },
+  "legalizer_policy": {
+    "relation": "restored",
+    "reshape": true,
+    "trust": 1.3,
+    "outline": true,
+    "time_limit_ms": 2000
+  },
+  "required_ablation": [
+    "hierarchy coordinate parameterization off/on",
+    "deployment source off/on",
+    "NFE consistency off/on",
+    "MIB sharing, pin tail and rho trust independently",
+    "legalizer reshape off/on",
+    "legalizer trust 1.3 versus one lower trust point"
+  ],
+  "evidence_boundary": "No quality, routed-PPA, timing, power or SOTA claim is attached to this configuration."
+}

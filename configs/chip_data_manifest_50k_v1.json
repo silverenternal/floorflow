@@ -1,0 +1,280 @@
+{
+  "version": "chip-data-manifest-v1",
+  "train": {
+    "root": "/home/hugo/codes/planB/outputs/cache/chip_floorset_50k_train_12k_dev_v2/train",
+    "schema_fields": [
+      "areas",
+      "boxes",
+      "constraints",
+      "features",
+      "b2b",
+      "p2b",
+      "pins",
+      "source_latent",
+      "target_latent"
+    ],
+    "files": {
+      "areas.npy": {
+        "bytes": 12000128,
+        "sha256": "cdc07813ab683fc5baf5bd9bb3c4f46cc63957f1924b7c2806b41c54cd480050"
+      },
+      "b2b.npy": {
+        "bytes": 164218244,
+        "sha256": "2e488d50ff239cf05f8f7cbffebe58e8185a53bb177ae2cb93fd77cb8e6101f1"
+      },
+      "b2b_offset.npy": {
+        "bytes": 400136,
+        "sha256": "e8f2211edbeacb5cc873e414798bcf5826102c92923f041959f408ab5514b34a"
+      },
+      "boxes.npy": {
+        "bytes": 48000128,
+        "sha256": "f441312ae591b029507401312af75817847a8ecbed9a24c134746c172caf66b3"
+      },
+      "constraints.npy": {
+        "bytes": 60000128,
+        "sha256": "e39c75454012b9cba2f9867615713253c8bf12460f65c7d4a57e599e322d8bcd"
+      },
+      "features.npy": {
+        "bytes": 120000128,
+        "sha256": "82bcbdbb5698689ad92f40c9f849b96d1e42e717300c0567bd928d28bf37ac81"
+      },
+      "metadata.json": {
+        "bytes": 340782,
+        "sha256": "f123e93abfc313c90137ae0c63b5738d964b981e38a8ed658f531df7cc181484"
+      },
+      "n.npy": {
+        "bytes": 100128,
+        "sha256": "364f87069ecdb5a6f75126d649b2e159ad57769b6c1016901559bb549f2d188d"
+      },
+      "n_b2b.npy": {
+        "bytes": 200128,
+        "sha256": "18af775afc7019f2930864b9733ce597ebd2592f670b3b90be057ae5f4a394b8"
+      },
+      "n_p2b.npy": {
+        "bytes": 200128,
+        "sha256": "68f89c337ef9d5bcd9fa1dc77f55e4410189f9bfd7b2980d8d9b04005ae8b06c"
+      },
+      "n_pins.npy": {
+        "bytes": 200128,
+        "sha256": "dca41580e969ef64e2e0e57e55de3cef49300a92ef30f89e8e0cc8b343332dd1"
+      },
+      "p2b.npy": {
+        "bytes": 127849832,
+        "sha256": "d23e06202a99bac2b3f195efe5fcca184889e525cf6df92b24b883ff5fe02183"
+      },
+      "p2b_offset.npy": {
+        "bytes": 400136,
+        "sha256": "d27df2d9da2572ca99fe47a9dee382bd1517a241b300e7833e82bcb0039c6814"
+      },
+      "pins.npy": {
+        "bytes": 48101096,
+        "sha256": "8d1ecec180310e607e9f6889534bb90c5ec33ba6543c163e15dc9f205b98b00a"
+      },
+      "pins_offset.npy": {
+        "bytes": 400136,
+        "sha256": "b71ad55e1a141143cdb3813987109e4745b75000165767dd4b80395867044bae"
+      },
+      "source_id.npy": {
+        "bytes": 200128,
+        "sha256": "597ac0410a32c53bf51b52f2d6ac50d75158be4dbacaa395b4c31e88bce7d18a"
+      },
+      "source_index.npy": {
+        "bytes": 100128,
+        "sha256": "2abeb446b022ab4d86b4bac69a0d321f35541dc29e0b19e1c2897793471e57ad"
+      },
+      "source_latent.npy": {
+        "bytes": 36000128,
+        "sha256": "3af56b1476cff43dd5896e39ade0174fa2b6c1cd2c253712823615cd2e92c211"
+      },
+      "target_latent.npy": {
+        "bytes": 36000128,
+        "sha256": "731d6d0641983526a684fff4002622082d9f13bc8f89d545720a645cc4e72ece"
+      }
+    }
+  },
+  "dev": {
+    "root": "/home/hugo/codes/planB/outputs/cache/chip_floorset_50k_train_12k_dev_v2/dev",
+    "schema_fields": [
+      "areas",
+      "boxes",
+      "constraints",
+      "features",
+      "b2b",
+      "p2b",
+      "pins",
+      "source_latent",
+      "target_latent"
+    ],
+    "files": {
+      "areas.npy": {
+        "bytes": 5760128,
+        "sha256": "70208d0354fab4bc50737ad66660383b8f4403c00ce797d80dc2e5fc6815d96b"
+      },
+      "b2b.npy": {
+        "bytes": 132435920,
+        "sha256": "5b792a96b5a25580c6eeabc49b296a37f318586107cead1d19bc6a71071350ea"
+      },
+      "b2b_offset.npy": {
+        "bytes": 96136,
+        "sha256": "27a28290ff07c2929c45b6cc2d6e91644e436dc4a08f699032f7473cb556d09d"
+      },
+      "boxes.npy": {
+        "bytes": 23040128,
+        "sha256": "7e80a6c38d9d14bf05876bff8193c0b965a63dcbefae1161f2e57cd80a283ef8"
+      },
+      "constraints.npy": {
+        "bytes": 28800128,
+        "sha256": "09c08077fb76004c18f4c3652f75e87928b0f22e053e7243bda1fa05538cbc2b"
+      },
+      "features.npy": {
+        "bytes": 57600128,
+        "sha256": "8b267738f0662de2c431b5db92b8dd09690aa60c1518d3691d6e09e92b87d75c"
+      },
+      "metadata.json": {
+        "bytes": 630317,
+        "sha256": "b71e0beef8eb1dfb3cb7b1328c813c3ddb0e399fe357a815fecef2d9a69ee649"
+      },
+      "n.npy": {
+        "bytes": 24128,
+        "sha256": "736ea7ae2aa6836a22dbfd53a56026c3b4d5101badc9d84334cf0305cd58fd71"
+      },
+      "n_b2b.npy": {
+        "bytes": 48128,
+        "sha256": "123eaddb43df930936fcae0b1fa85241d9c690cf853d218c7cc4d22bb9a6b852"
+      },
+      "n_p2b.npy": {
+        "bytes": 48128,
+        "sha256": "08d6b2584b85b7e2ac3a6fc2c407626da4275dfd70325c57d118fb1a1ee2d9de"
+      },
+      "n_pins.npy": {
+        "bytes": 48128,
+        "sha256": "a60f59b910042940c5e1ec5e87d8175dd41292ab067320ae7be03480f135b6a6"
+      },
+      "p2b.npy": {
+        "bytes": 98938220,
+        "sha256": "84f49e30d34d6dc5e87e957a054f90cd9a2b0ff7a8c11a10022514bde910a889"
+      },
+      "p2b_offset.npy": {
+        "bytes": 96136,
+        "sha256": "dcebe2ac9cc8542cc2ec767835b4165a77eb325d685636f301ee79dfc7ecd137"
+      },
+      "pins.npy": {
+        "bytes": 20251536,
+        "sha256": "14978c8937bb8e62f64d32f81e637c4b94044f84cf1b335c9a921f31602b2005"
+      },
+      "pins_offset.npy": {
+        "bytes": 96136,
+        "sha256": "688a41fe00ba699d0293a00134744224f32ae99b4d403938e243be13c8ccd6f4"
+      },
+      "source_id.npy": {
+        "bytes": 48128,
+        "sha256": "d52c5d6ee9179d7ab65a6cae3f376a0cfec97ba17371fa86311265267e2549f7"
+      },
+      "source_index.npy": {
+        "bytes": 24128,
+        "sha256": "00f776557883541a1fc55e7268cad6066f0d3b62c6428549e9f5367349af46bc"
+      },
+      "source_latent.npy": {
+        "bytes": 17280128,
+        "sha256": "8fe45ec35fef1750fa3c7bf2599059708ebf628d6fa82378fa7e6f1b0b3507f7"
+      },
+      "target_latent.npy": {
+        "bytes": 17280128,
+        "sha256": "5fab1f5c3ee5aa05e5fcfdfef15e7b89f668913380e259371e83d1f1ea665f5a"
+      }
+    }
+  },
+  "range_train": {
+    "root": "/home/hugo/codes/planB/outputs/cache/chip_floorset_200k_train_12k_dev_range_v1/train",
+    "schema_fields": [
+      "areas",
+      "boxes",
+      "constraints",
+      "features",
+      "b2b",
+      "p2b",
+      "pins",
+      "source_latent",
+      "target_latent"
+    ],
+    "files": {
+      "areas.npy": {
+        "bytes": 96000128,
+        "sha256": "de9fb5a4e61c88677778befe931dbda7a51c0e14decfa5ae02bf7bdb79b02624"
+      },
+      "b2b.npy": {
+        "bytes": 2208994280,
+        "sha256": "99d8891f26cbee96a9b598dcd0fdf7ffbdd68b7bd0a528b18d42a7113325cbe6"
+      },
+      "b2b_offset.npy": {
+        "bytes": 1600136,
+        "sha256": "e7cecc292084338a55f4a283b4e5ddf9be8e52d8d2cabccc80184161c6de003b"
+      },
+      "boxes.npy": {
+        "bytes": 384000128,
+        "sha256": "8b441ea5fa160f82f95aac8bda5bbfba925684601aed943d1f8c0b94c1c86926"
+      },
+      "constraints.npy": {
+        "bytes": 480000128,
+        "sha256": "2b301647ebdb72147b449aedf33f4facb670c86efae27f2de5e52ee9c5be65ba"
+      },
+      "features.npy": {
+        "bytes": 960000128,
+        "sha256": "45f02f13d50dbd06428ed9ada62b50028c1495ec5a1ef0a015b236eb1ad112bd"
+      },
+      "metadata.json": {
+        "bytes": 647831,
+        "sha256": "d3101b5f2569ebf642e5ef7e6857d510d44ce32b3434b7ab105afcffc8c0c428"
+      },
+      "n.npy": {
+        "bytes": 400128,
+        "sha256": "d4ecff17ad2c02cbc4b30a2ea7f6eeed1d586e6e406ca38c9d1a2cf4bce8692e"
+      },
+      "n_b2b.npy": {
+        "bytes": 800128,
+        "sha256": "568ba666d0c70eb3d99045058249aa5f654fd9f623e56dfaabd4afd43f2574c4"
+      },
+      "n_p2b.npy": {
+        "bytes": 800128,
+        "sha256": "408c3b31fc5fc77aeb5ad0bf233d6508680c46dc55cea39c4ef9e9934d8e314e"
+      },
+      "n_pins.npy": {
+        "bytes": 800128,
+        "sha256": "161139c54be8e32254b04587b57e505754d0f36fc176121f6761a54a69e1de88"
+      },
+      "p2b.npy": {
+        "bytes": 1663009604,
+        "sha256": "2a116c93210ed6686e4ee9f96137bf33aa3ffb6a9a1fe439246a3afec19f5f76"
+      },
+      "p2b_offset.npy": {
+        "bytes": 1600136,
+        "sha256": "d547f58ea601cd38a594d2de13c0d3d8d35b8e1694a92ad5b519ca15bbffe91f"
+      },
+      "pins.npy": {
+        "bytes": 335380672,
+        "sha256": "f39152c09e031fa6fb3d3639940002407fc0276e2d4f7e6c790cc49d0db626ec"
+      },
+      "pins_offset.npy": {
+        "bytes": 1600136,
+        "sha256": "c39994d3fcb8090160e9f52a41ff8bbada0074993f46126152a0db70bbe3bbb4"
+      },
+      "source_id.npy": {
+        "bytes": 800128,
+        "sha256": "42f5243466df98ccf0b139b61e85841002b666d679f5755f951bcddad8d333b2"
+      },
+      "source_index.npy": {
+        "bytes": 400128,
+        "sha256": "cc7f35e2169e5d3096d1d428d7348a32807f877f68ab0781786fbc64f5d7f9d0"
+      },
+      "source_latent.npy": {
+        "bytes": 288000128,
+        "sha256": "49025e63c71846dd633b69510d5ab6297834526e2499dc65bccac26e76fcf599"
+      },
+      "target_latent.npy": {
+        "bytes": 288000128,
+        "sha256": "8bf497e9e0d6552710cc68ac11b4156a592edb760c8123bdf728f38a64ecb6e8"
+      }
+    }
+  },
+  "range_config_sha256": "21562442d64ee0ce0c8eda44b6a05b8196b88c499fa40e5f33f41ad6b1d7e32e"
+}

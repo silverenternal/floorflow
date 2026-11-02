@@ -1,0 +1,104 @@
+{
+  "version": "chip-m36-hierarchy-token-bridge-v1",
+  "status": "rejected_after_quick_gate",
+  "candidate": "M27 plus zero-initialized L0/L1 to L2 hidden-token bridge",
+  "priority": "P0",
+  "pain_point": "The pretrained Trinity backbone receives static graph features and only a three-dimensional coarse residual. Predicted L0 outline and L1 structural states cannot jointly reshape hidden L2 tokens across its twelve layers, which is consistent with the remaining area, cost-tail and long-refiner regressions.",
+  "existing_path": [
+    "HierarchicalTokenFlowModel.global_head",
+    "HierarchicalTokenFlowModel.structural_head",
+    "HierarchyPrediction.block_state",
+    "TokenBridgeBackbone"
+  ],
+  "minimal_change": "At each flow step, fuse the predicted global bbox and structural states with typed structural tokens, then cross-attend into the backbone input tokens. The final projection is zero-initialized and the M27 state loads exactly except for the new bridge.",
+  "reuse": [
+    "third_party Trinity SetTransformerDenoiser blocks and time conditioning",
+    "TypedCrossAttention",
+    "typed L0-L3 hierarchy heads",
+    "hard constraint projector and existing sample/refiner path"
+  ],
+  "architecture": {
+    "hidden": 192,
+    "heads": 3,
+    "depth": 12,
+    "typed_layers": 1,
+    "head_dim": 64,
+    "base_parameters": 6797217,
+    "bridge_parameters": 189030,
+    "candidate_parameters": 6986247,
+    "relative_parameter_increase": 0.027809911
+  },
+  "initialization": {
+    "source_checkpoint": "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed21_5k/checkpoints/final.pt",
+    "mode": "resume_weights_only_allow_new_params",
+    "initial_output_equivalence_required": true
+  },
+  "screen": {
+    "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2",
+    "train_indices": "configs/chip_train_screen_5k_v1.json",
+    "dev_manifest": "outputs/reports/chip_dev_screen_v45.json",
+    "training_seed": 21,
+    "data_seed": 21,
+    "steps": 2000,
+    "batch_size": 128,
+    "device_candidate": "cuda:0",
+    "device_control": "cuda:1",
+    "eval_protocol": {
+      "nfe": 4,
+      "refiner_steps": 400,
+      "inference_seed": 19
+    }
+  },
+  "confirmation": {
+    "steps": 5000,
+    "eval_protocol": {
+      "nfe": 4,
+      "refiner_steps": 1600,
+      "inference_seed": 19
+    }
+  },
+  "promotion_gate": {
+    "required": "Joint improvement over the identically resumed control at the quick gate, feasibility 1.0, and an explicit area or cost-tail diagnostic.",
+    "reject_if": [
+      "Either legalized cost or V_rel regresses",
+      "Any legality guard fails",
+      "The benefit is limited to pre-legalization geometry",
+      "The bridge gate has no effective gradient"
+    ]
+  },
+  "falsification": "No joint primary-metric gain over the matched resumed control; gain disappears at refiner1600; or area/grouping diagnostics do not move.",
+  "quick_result": {
+    "control_cost": 1.138701604693825,
+    "candidate_cost": 1.181421522518722,
+    "cost_relative": 0.03751634111061386,
+    "control_v_rel": 0.03650970115869849,
+    "candidate_v_rel": 0.036907788374219916,
+    "v_rel_relative": 0.01090360103992749,
+    "feasible_fraction": 1.0,
+    "decision": "Reject M36. Hidden-token fusion over-couples L0/L1 into local geometry; grouping improves but b2b and p2b regress.",
+    "control_report": "outputs/reports/chip_m36_control_quick_refiner400_dev32.json",
+    "candidate_report": "outputs/reports/chip_m36_bridge_quick_refiner400_dev32.json"
+  },
+  "followups": [
+    {
+      "id": "M37-bounded-structural-bridge",
+      "status": "rejected_quick_gate",
+      "change": "Remove explicit trajectory-state features, use a zero gate, and bound the hidden-token residual with tanh.",
+      "cost_relative": 0.052363,
+      "v_rel_relative": 0.209991,
+      "learned_gate": -3.543381535564549e-05,
+      "report": "outputs/reports/chip_m37_bounded_quick_refiner400_dev32.json"
+    },
+    {
+      "id": "M39-structural-block-only-bridge",
+      "status": "rejected_quick_gate",
+      "change": "Apply the hidden-token bridge only to cluster/MIB/boundary blocks.",
+      "cost_relative": 0.048363,
+      "v_rel_relative": 0.252964,
+      "v_rel_ci": [0.00073, 0.018076],
+      "grouping_relative": 0.272727,
+      "report": "outputs/reports/chip_m39_structural_bridge_quick_refiner400_dev32.json"
+    }
+  ],
+  "boundary": "Frozen subset mechanism screen only. It is not a full-data, seed-stable, external-PPA or SOTA claim."
+}

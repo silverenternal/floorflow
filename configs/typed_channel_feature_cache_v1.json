@@ -1,0 +1,44 @@
+{
+  "schema_version": "typed-channel-feature-cache-v1",
+  "status": "implementation_ready_cpu_verified",
+  "scope": "frozen-field typed-channel training",
+  "cached_tensors": {
+    "controls": [
+      "room_logits",
+      "structure",
+      "furniture",
+      "support",
+      "program",
+      "opening_family_probability",
+      "junction_probability"
+    ],
+    "features": [
+      "field_features",
+      "evidence",
+      "source_tokens"
+    ]
+  },
+  "storage": {
+    "format": "compressed_npz_per_case",
+    "floating_precision": "controls_float32_features_float16",
+    "manifest": "sha256_fingerprint"
+  },
+  "invalidation_sources": [
+    "image_size",
+    "room_blend",
+    "predicted_root",
+    "room_checkpoint",
+    "structure_checkpoint",
+    "centerline_checkpoint",
+    "opening_checkpoint",
+    "field_channels",
+    "field_grid",
+    "control_evidence_context",
+    "source_channel_attention",
+    "channel_group_adapters",
+    "cross_attention_lora_rank",
+    "spatial_conv_adapter"
+  ],
+  "allowed_scopes": "all scopes except full and field",
+  "claim_boundary": "Cache validation proves field/control reuse, not model quality."
+}

@@ -1,0 +1,27 @@
+{
+  "schema_version": "residential-graph-refinement-config-v1",
+  "scope": "residential_floorplan_only",
+  "split": "val191",
+  "test_access": "forbidden_until_validation_freeze",
+  "selected_method": "direct_tiled",
+  "matching_protocol": "type_geometry_hungarian",
+  "target_method": "direct_tiled",
+  "graph_edit_evaluator": {
+    "type": "networkx_unit_cost_attributed_ged",
+    "max_nodes": 32,
+    "confirmation_timeout_seconds": 60.0,
+    "fallback_is_exact": false
+  },
+  "acceptance": {
+    "node_f1_paired_gain_min": 0.01,
+    "edge_overlap_paired_gain_min": 0.01,
+    "ged_relative_reduction_min": 0.05,
+    "ged_exact_rate_min": 0.95,
+    "bootstrap_iterations": 5000
+  },
+  "claim_boundary": {
+    "raster_mutated": false,
+    "learned_identity_head_promoted": false,
+    "validation_only": true
+  }
+}

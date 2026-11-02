@@ -1,0 +1,40 @@
+{
+  "version": "chip-m43-projector-endpoint-contract-v1",
+  "status": "rejected_training_divergence",
+  "candidate": "Canonical M27 trained with a straight-through hard-projector endpoint contract",
+  "priority": "P0",
+  "pain_point": "Training physics sees unprojected geometry while deployment applies a hard projector and refiner. M42 showed head-level internal consistency can make legalization worse.",
+  "mechanism": "During training only, pass the final x0 value through four hard-projector iterations. Physics, bbox and decode diagnostics use the projected value while gradients pass to the raw x0 through a straight-through identity.",
+  "target_boundary": "Only fixed/preplaced/MIB conditions may read target_latent. Free-block target positions remain unused by the projector.",
+  "training": {
+    "source_checkpoint": "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed21_5k/checkpoints/final.pt",
+    "train_indices": "configs/chip_train_screen_5k_v1.json",
+    "steps": 2000,
+    "batch_size": 128,
+    "seed": 21,
+    "data_seed": 21,
+    "device": "cuda:0",
+    "projector_iterations": 4
+  },
+  "control": {
+    "checkpoint": "outputs/chip_hierarchy/m36_hierarchy_token_bridge_v1/m36_control_quick/checkpoints/final.pt",
+    "cost": 1.138701604693825,
+    "v_rel": 0.03650970115869849
+  },
+  "evaluation": {
+    "manifest": "outputs/reports/chip_dev_screen_v45.json",
+    "nfe": 4,
+    "refiner_steps": 400,
+    "inference_seed": 19
+  },
+  "promotion_gate": "Joint legalized cost and V_rel improvement with feasibility 1.0 and no legalizer rung/solve escalation.",
+  "falsification": "Projector-aware training changes the inference path, violates target-conditioned constraints, or either primary endpoint metric regresses.",
+  "training_result": {
+    "final_total": 11.2299429397583,
+    "final_latent_mse": 32.37560882568359,
+    "final_hierarchy_bbox": 38.90373992919922,
+    "projector_endpoint_delta": 15.601296424865723,
+    "decision": "Reject full-strength hard-projector values. They leave the x0 trust region and destabilize training."
+  },
+  "boundary": "Frozen subset mechanism screen only."
+}

@@ -1,0 +1,74 @@
+{
+  "scope": "residential_rplan_boundary_generation",
+  "test_split_policy": "closed",
+  "dataset": {
+    "train": ".data/external/CE2EPlan/dataset/dataset_json/data_train.json",
+    "validation": ".data/external/CE2EPlan/dataset/dataset_json/data_val.json"
+  },
+  "model": {
+    "hidden_dim": 96,
+    "decoder_channels": 96,
+    "identity_queries": 12,
+    "identity_layers": 2,
+    "vector_layers": 2,
+    "polygon_points": 24,
+    "max_walls": 128,
+    "max_openings": 8,
+    "attention_heads": 4,
+    "route_top_k": 16,
+    "max_boundary_points": 64,
+    "pretrained_backbone": false,
+    "use_mask_anchors": true,
+    "share_identity_heads": true,
+    "enable_query_quality": false,
+    "enable_point_validity": true,
+    "use_boundary_edge_graph": true,
+    "encoder_architecture": "resnet18",
+    "compact_encoder_channels": [64, 128, 192, 288],
+    "compact_encoder_blocks": [1, 3, 4, 2],
+    "enable_program_set": false,
+    "enable_query_graph_refiner": true
+  },
+  "tensors": {
+    "image_size": 128,
+    "canvas_size": 256,
+    "max_boundary_points": 64,
+    "max_rooms": 12,
+    "room_points": 24,
+    "max_walls": 128,
+    "max_openings": 8
+  },
+  "training": {
+    "epochs": 8,
+    "train_cases": 256,
+    "validation_cases": 64,
+    "batch_size": 2,
+    "learning_rate": 0.0002,
+    "weight_decay": 0.0001,
+    "gradient_clip": 1.0,
+    "workers": 4,
+    "seed": 2905,
+    "device": "cuda:0"
+  },
+  "loss_weights": {
+    "polygon": 1.0,
+    "identity": 1.0,
+    "count": 0.5,
+    "wall": 0.5,
+    "opening": 0.25,
+    "adjacency": 0.25,
+    "query_separation": 0.1,
+    "class_balance_power": 0.0,
+    "class_aware_separation": false,
+    "supervised_separation": false,
+    "query_quality": 0.0,
+    "point_validity": 0.5,
+    "room_program": 0.0
+  },
+  "screen_gates": {
+    "finite_loss_and_gradients": true,
+    "contract_assembly_required": true,
+    "test_split_opened": false,
+    "architecture_gate_before_metrics": true
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "predicted-channel-v6-room-identity-adapter-joint",
+  "extends": "predicted_channel_v6_room_identity_adapter_control.json",
+  "status": "identity_repair_candidate",
+  "model": {
+    "room_instance_relational_adjacency": true,
+    "room_instance_class_count_prior": true,
+    "count_aware_second_graph": true,
+    "program_room_action_fusion": true,
+    "differentiable_route_budget": true
+  },
+  "loss_policy": {
+    "room_instance_class_balance": true,
+    "room_query_support_assignment_weight": 0.1,
+    "room_instance_query_separation_weight": 0.1,
+    "room_instance_query_separation_class_agnostic": true
+  },
+  "claim_boundary": "Matched room-identity candidate for the shared class-plus-mask matching, primary loss-balance reference, and trainable program router. No SOTA claim before disjoint holdout and full-val confirmation."
+}

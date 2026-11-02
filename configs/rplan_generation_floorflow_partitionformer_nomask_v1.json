@@ -1,0 +1,77 @@
+{
+  "scope": "residential_rplan_partition_consistent_architecture_no_mask_attention",
+  "test_split_policy": "closed",
+  "dataset": {
+    "train": ".data/external/CE2EPlan/dataset/dataset_json/data_train.json",
+    "validation": ".data/external/CE2EPlan/dataset/dataset_json/data_val.json"
+  },
+  "model": {
+    "hidden_dim": 96,
+    "decoder_channels": 96,
+    "identity_queries": 12,
+    "identity_layers": 2,
+    "vector_layers": 2,
+    "polygon_points": 24,
+    "max_walls": 64,
+    "max_openings": 4,
+    "attention_heads": 4,
+    "route_top_k": 16,
+    "max_boundary_points": 64,
+    "pretrained_backbone": false,
+    "use_mask_anchors": true,
+    "share_identity_heads": true,
+    "enable_query_quality": false,
+    "enable_point_validity": false,
+    "use_boundary_edge_graph": false,
+    "encoder_architecture": "resnet18",
+    "compact_encoder_channels": [64, 128, 256, 384],
+    "compact_encoder_blocks": [2, 4, 6, 3],
+    "enable_program_set": false,
+    "enable_query_graph_refiner": false,
+    "enable_entrance_condition": false,
+    "enable_partition_edge_condition": false,
+    "enable_partition_consistent_queries": true,
+    "enable_partition_attention_masking": false
+  },
+  "tensors": {
+    "image_size": 128,
+    "canvas_size": 256,
+    "max_boundary_points": 64,
+    "max_rooms": 12,
+    "room_points": 24,
+    "max_walls": 64,
+    "max_openings": 4
+  },
+  "training": {
+    "epochs": 12,
+    "train_cases": 1024,
+    "validation_cases": 256,
+    "batch_size": 8,
+    "learning_rate": 0.0002,
+    "weight_decay": 0.0001,
+    "gradient_clip": 1.0,
+    "workers": 4,
+    "seed": 2905,
+    "device": "cuda:0"
+  },
+  "loss_weights": {
+    "polygon": 0.0,
+    "identity": 1.0,
+    "count": 0.5,
+    "wall": 0.5,
+    "opening": 0.25,
+    "adjacency": 0.25,
+    "query_separation": 0.1,
+    "class_balance_power": 0.0,
+    "class_aware_separation": false,
+    "supervised_separation": false,
+    "query_quality": 0.0,
+    "point_validity": 0.0,
+    "room_program": 0.0,
+    "partition_consistency": 0.5
+  },
+  "screen_gates": {
+    "isolate": "partition supervision and joint readout without exclusive cross-attention masks",
+    "test_split_opened": false
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "schema_version": "room-identity-arbitration-v1",
+  "reuse": {
+    "gate": "src/floorflow/recursion/trust_gate.py::RoomGraphTrustGate",
+    "trainer_pattern": "scripts/train_room_graph_trust_gate.py",
+    "dense_model": "outputs/train/native_room_384_full_32ep_v1/best.pt",
+    "query_model": "outputs/train/raster_instance_control_384_promotion256_10ep_v1/best.pt",
+    "query_route": "outputs/reports/predicted_control_affinity_10ep_class_region_val491_v1.json"
+  },
+  "hypothesis": "A learned per-case gate can select query-derived room partitioning only when it preserves dense topology while retaining instance/count/GED gains.",
+  "features_at_inference": [
+    "dense and query top-class agreement",
+    "dense entropy and query confidence",
+    "predicted room-count delta",
+    "room-support disagreement",
+    "component-count delta",
+    "small-component rate",
+    "footprint-boundary exposure",
+    "wall-contact and opening-alignment statistics"
+  ],
+  "forbidden_inputs": [
+    "target room masks",
+    "target polygons",
+    "target count",
+    "validation-derived utility labels",
+    "test split"
+  ],
+  "train_labels": {
+    "source": "train split only",
+    "utility": "Accept query routing only when room IoU and instance F1 are non-regressing on the training case and the structural proxy does not fall.",
+    "tie_rule": "Prefer the dense fallback on utility ties."
+  },
+  "budget": {
+    "train_cases": 256,
+    "calibration_cases": 64,
+    "minimum_epochs": 8,
+    "plateau_early_stop_allowed": true,
+    "gate_parameters_max": 10000,
+    "device": "cuda:0"
+  },
+  "gates": {
+    "calibration": "Selected cases improve Room IoU and instance F1 vs dense; rejected cases are bitwise dense.",
+    "holdout": "Offset128 has no plan-plausibility or wall-continuity regression and retains positive count direction.",
+    "full_validation": "Room IoU >= dense, instance F1 > dense, count MAE lower, GED lower, plan plausibility >= 0.95, wall continuity >= 0.98.",
+    "statistics": "Case-level paired bootstrap, Wilcoxon, and rank-biserial effect sizes."
+  },
+  "safety_fallback": {
+    "enabled": true,
+    "trigger": "Target-free explicit-plan validity or wall-continuity failure after query routing.",
+    "minimum_wall_continuity": 0.98,
+    "fallback_prediction": "The frozen dense room prediction for that case.",
+    "target_used_at_inference": false
+  },
+  "outcome": {
+    "learned_gate": "rejected",
+    "reason": "No reliable benefit over the safety-only ablation; Room and graph differences have confidence intervals crossing zero while F1, Node, and Edge are slightly lower.",
+    "retained_mechanism": "global class-region query routing plus target-free explicit-plan safety fallback",
+    "full_val_report": "outputs/reports/room_identity_safety_global_val491_v1.json"
+  }
+}

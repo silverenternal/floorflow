@@ -1,0 +1,135 @@
+{
+  "version": "chip-external-holdout-chipbench-v1",
+  "status": "frozen_before_candidate_outcome_15_designs_ready",
+  "source": {
+    "repository": "https://github.com/MIRALab-USTC/ChiPBench",
+    "repository_commit": "ea28bebab06977b348a74d3fd07275bb828ca68e",
+    "dataset": "https://huggingface.co/datasets/MIRA-Lab/ChiPBench-D",
+    "dataset_local_root": ".data/chipbench_d_v1",
+    "license": "BSD-3-Clause",
+    "license_note": "The GitHub repository and Hugging Face dataset card state BSD-3-Clause, while the embedded Croissant metadata states MIT. Both are permissive, but the conflict must be retained in provenance and resolved in the final archive."
+  },
+  "selection": {
+    "observed_v45_manifest": "outputs/reports/chip_external_holdout_v45_manifest_v2.json",
+    "exclude_observed_design_names": true,
+    "chipbench_designs": [
+      "ariane81",
+      "vga_lcd",
+      "dft68",
+      "or1200",
+      "mor1kx",
+      "ethernet",
+      "VeriGPU",
+      "isa_npu",
+      "bp_fe38",
+      "bp_be12",
+      "bp68",
+      "swerv_wrapper43",
+      "bp_multi57"
+    ],
+    "orf_supplements": [
+      {
+        "design_key": "nangate45/bp_quad",
+        "source": "third_party/OpenROAD-flow-scripts",
+        "config": "third_party/OpenROAD-flow-scripts/flow/designs/nangate45/bp_quad/config.mk",
+        "macro_count_evidence": "outputs/chip_ppa/orfs/logs/nangate45/bp_quad/macro_count/2_2_floorplan_macro.log",
+        "macro_instance_count": 220,
+        "pre_place_def": "outputs/chip_ppa/orfs/results/nangate45/bp_quad/macro_count/2_3_floorplan_tapcell.odb.def",
+        "macro_lefs": [
+          "third_party/OpenROAD-flow-scripts/flow/platforms/nangate45/lef/fakeram45_256x48.lef",
+          "third_party/OpenROAD-flow-scripts/flow/platforms/nangate45/lef/fakeram45_32x32.lef",
+          "third_party/OpenROAD-flow-scripts/flow/platforms/nangate45/lef/fakeram45_64x124.lef",
+          "third_party/OpenROAD-flow-scripts/flow/platforms/nangate45/lef/fakeram45_512x64.lef",
+          "third_party/OpenROAD-flow-scripts/flow/platforms/nangate45/lef/fakeram45_64x62.lef",
+          "third_party/OpenROAD-flow-scripts/flow/platforms/nangate45/lef/fakeram45_128x116.lef"
+        ]
+      },
+      {
+        "design_key": "sky130hd/chameleon",
+        "source": "third_party/OpenROAD-flow-scripts",
+        "config": "third_party/OpenROAD-flow-scripts/flow/designs/sky130hd/chameleon/config.mk",
+        "macro_count_evidence": null,
+        "macro_count_source": [
+          "third_party/OpenROAD-flow-scripts/flow/designs/src/chameleon/soc_core.v",
+          "third_party/OpenROAD-flow-scripts/flow/designs/src/chameleon/AHB_sys_0/AHBlite_sys_0.v",
+          "third_party/OpenROAD-flow-scripts/flow/designs/src/chameleon/IPs/RAM_3Kx32.v",
+          "third_party/OpenROAD-flow-scripts/flow/designs/src/chameleon/IPs/QSPI_XIP_CTRL.v"
+        ],
+        "macro_instance_count": 6,
+        "macro_master_count": 4,
+        "macro_instance_count_static_estimate": 6,
+        "macro_instance_count_measured": 6,
+        "macro_count_evidence": "outputs/chip_ppa/orfs/logs/sky130hd/chameleon/macro_count/2_2_floorplan_macro.log",
+        "pre_place_def": "outputs/chip_ppa/orfs/results/sky130hd/chameleon/macro_count/2_floorplan.odb.def",
+        "macro_lefs": [
+          "third_party/OpenROAD-flow-scripts/flow/designs/sky130hd/chameleon/lef/apb_sys_0.lef",
+          "third_party/OpenROAD-flow-scripts/flow/designs/sky130hd/chameleon/lef/DFFRAM_4K.lef",
+          "third_party/OpenROAD-flow-scripts/flow/designs/sky130hd/chameleon/lef/DMC_32x16HC.lef",
+          "third_party/OpenROAD-flow-scripts/flow/designs/sky130hd/chameleon/lef/ibex_wrapper.lef"
+        ],
+        "static_estimate": {
+          "DFFRAM_4K": 3,
+          "DMC_32x16HC": 1,
+          "apb_sys_0": 1,
+          "ibex_wrapper": 1
+        },
+        "static_estimate_rule": "RAM_3Kx32 localparam BLOCKS=3 unrolls three DFFRAM_4K macro instances; the other three macro masters are instantiated once each.",
+        "preflight_report": "outputs/reports/chip_chameleon_static_macro_preflight_v1.json"
+      }
+    ],
+    "required_total_designs": 15,
+    "expected_macro_counts": {
+      "ariane81": 81,
+      "vga_lcd": 62,
+      "dft68": 68,
+      "or1200": 36,
+      "mor1kx": 78,
+      "ethernet": 64,
+      "VeriGPU": 12,
+      "isa_npu": 15,
+      "bp_fe38": 38,
+      "bp_be12": 12,
+      "bp68": 68,
+      "swerv_wrapper43": 43,
+      "bp_multi57": 57,
+      "nangate45/bp_quad": 220,
+      "sky130hd/chameleon": 6
+    },
+    "independent_families": {
+      "ariane81": "ariane",
+      "bp68": "black_parrot",
+      "bp_be12": "black_parrot",
+      "bp_fe38": "black_parrot",
+      "bp_multi57": "black_parrot",
+      "vga_lcd": "vga",
+      "dft68": "dft",
+      "or1200": "or1k",
+      "mor1kx": "or1k",
+      "ethernet": "ethernet",
+      "VeriGPU": "gpu",
+      "isa_npu": "npu",
+      "swerv_wrapper43": "swerv",
+      "nangate45/bp_quad": "black_parrot",
+      "sky130hd/chameleon": "riscv_soc"
+    }
+  },
+  "evaluation_contract": {
+    "candidate_outcomes_opened": false,
+    "adapter_smoke_cases": ["VeriGPU", "or1200", "dft68"],
+    "adapter_smoke_boundary": "Candidate placements and round-trip DEFs were generated with the pre-S1 checkpoint. No Official-style score, routed metric, selector feedback or case exclusion decision was observed.",
+    "primary_endpoint": "detailed routed wirelength",
+    "guards": [
+      "global-route congestion",
+      "DRC",
+      "setup WNS/TNS",
+      "power",
+      "area"
+    ],
+    "clustering": "design and RTL family",
+    "do_not_count_as_independent": [
+      "two aspect ratios of the same design",
+      "seed reruns of one design",
+      "partition variants from the same design counted without family clustering"
+    ]
+  }
+}

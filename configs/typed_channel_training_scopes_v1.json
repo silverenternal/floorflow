@@ -1,0 +1,50 @@
+{
+  "schema_version": "typed-channel-training-scopes-v1",
+  "status": "implementation_ready_cpu_verified",
+  "model_config": "configs/predicted_channel_source_router_v3.json",
+  "total_parameters": 6218329,
+  "scopes": {
+    "full": 6218329,
+    "field": 278976,
+    "channel_head": 1711371,
+    "cross_attention": 561411,
+    "cross_attention_lora": 18507,
+    "adalora": 18507,
+    "lora_ranks": 72,
+    "spatial_conv_adapter": 4401,
+    "bias_only": 39962,
+    "channel_queries": 59843,
+    "group_adapters": 51523,
+    "group_ssf": 16128,
+    "group_delta": 32323,
+    "stage_heads": 3052807,
+    "mita_routes": 1352115,
+    "room_adapter": 1082996,
+    "wall_adapter": 824670,
+    "opening_adapter": 832690,
+    "furniture_adapter": 1392226
+  },
+  "semantics": {
+    "channel_head": "all typed channel-head parameters",
+    "cross_attention": "channel-to-pixel cross-attention projections and cross gates only",
+    "cross_attention_lora": "low-rank Q/KV input and output residuals while attention weights stay frozen",
+    "adalora": "LoRA plus trainable per-component rank gates",
+    "lora_ranks": "rank allocation logits only",
+    "spatial_conv_adapter": "zero-initialized depthwise bottleneck residual",
+    "bias_only": "BitFit-style bias vectors only",
+    "group_adapters": "only room/wall/opening/furniture query adapters",
+    "group_ssf": "only per-family scale and shift parameters",
+    "group_delta": "only per-family gated query deltas and source gates",
+    "wall_adapter": "wall adapter, wall stage head, and wall-specific CAD action branches",
+    "opening_adapter": "opening adapter, opening stage head, and opening-specific CAD action branches",
+    "furniture_adapter": "furniture adapter, stage head, and furniture query stage",
+    "room_adapter": "room adapter, room stage, and room-instance stage"
+  },
+  "fairness": {
+    "same_forward_graph": true,
+    "same_losses": true,
+    "frozen_parameters_retain_original_values": true,
+    "full_validation_metrics_required": true
+  },
+  "claim_boundary": "Scopes speed mechanism iteration; final comparisons must still evaluate every output channel and safety metric."
+}

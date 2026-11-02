@@ -1,0 +1,14 @@
+{
+  "version": "chip-m58-shared-trunk-factorization-v1",
+  "stage": "M58-SHARED-TRUNK-FACTORIZATION",
+  "parent_checkpoint": "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed21_5k/checkpoints/final.pt",
+  "train_indices": "configs/chip_train_screen_5k_v1.json",
+  "flags": {
+    "structured_heads": true,
+    "structured_hierarchy_coupling": false,
+    "structured_factorized_block": true,
+    "structured_factorized_shared_trunk": true,
+    "structured_rho_trust_radius": 0.1
+  },
+  "quick_gate": "cost/V_rel/p2b non-regressing with area or rho improvement"
+}

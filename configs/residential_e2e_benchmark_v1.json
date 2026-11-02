@@ -1,0 +1,245 @@
+{
+  "schema_version": "residential-e2e-benchmark-v1",
+  "scope": "residential_floorplan_only",
+  "selection": {
+    "training_split": "CubiCasa train 5126",
+    "validation_split": "CubiCasa val 491",
+    "test_lockbox": "CubiCasa test 503",
+    "selection_rule": "validation only",
+    "test_policy": "one frozen evaluation per dataset",
+    "best_of_n": false
+  },
+  "authoritative_paths": {
+    "dataset_manifest": "outputs/cache/cubicasa5k_full_v2/manifest.json",
+    "taxonomy": "outputs/cache/cubicasa5k_full_v2/taxonomy.json",
+    "cubicasa_data_manifest": "outputs/control_contracts/residential_cagn_v1/test/index.json",
+    "raster2seq_repo": "third_party/Raster2Seq",
+    "raster2seq_checkpoint": "outputs/external_baselines/raster2seq/cubicasa5k/checkpoint.pth",
+    "raster2seq_official_anchor": "outputs/reports/fp_raster2seq_official_anchor_v1.json",
+    "ce2eplan_anchor": "outputs/reports/ce2eplan_official_anchor_v1.json",
+    "ce2eplan_availability": "outputs/reports/ce2eplan_availability_v1.json",
+    "housemind_status": "outputs/reports/fp_housemind_public_status_v2.json",
+    "housemind_reproduction": "outputs/reports/fp_housemind_reproduction_status_v1.json",
+    "contemporary_baseline_audit": "outputs/reports/contemporary_boundary_baseline_audit_v1.json",
+    "external_asset_audit": "outputs/reports/external_baseline_availability_v1.json"
+  },
+  "methods": {
+    "FloorFlow": {
+      "role": "residential_floorplan_generation_and_editing",
+      "task_tracks": [
+        "cubicasa_generation",
+        "cubicasa_predicted_control_editing",
+        "cubicasa_oracle_control_diagnostic"
+      ],
+      "availability": "local",
+      "matched_status": "self",
+      "redistribution": "source_only",
+      "claim_enabled": false
+    },
+    "Raster2Seq": {
+      "role": "matched_reconstruction_baseline",
+      "task_tracks": [
+        "cubicasa_reconstruction"
+      ],
+      "availability": "executable",
+      "matched_status": "official_anchor_only",
+      "redistribution": "external_assets_excluded",
+      "claim_enabled": false
+    },
+    "CE2EPlan": {
+      "role": "rplan_generation_reference",
+      "task_tracks": [
+        "rplan_generation"
+      ],
+      "availability": "local_audit_only",
+      "matched_status": "not_matched",
+      "redistribution": "forbidden_no_license",
+      "claim_enabled": false
+    },
+    "HouseMind": {
+      "role": "multimodal_floorplan_generation_and_editing",
+      "task_tracks": [
+        "instruction_editing",
+        "rplan_generation"
+      ],
+      "availability": "weights_only_inference_blocked",
+      "matched_status": "not_matched",
+      "redistribution": "weights_not_redistributed",
+      "claim_enabled": false
+    },
+    "RenoLayout": {
+      "role": "renovation_reference",
+      "task_tracks": [
+        "renovation_editing_reference"
+      ],
+      "availability": "paper_only",
+      "matched_status": "not_matched",
+      "redistribution": "none",
+      "claim_enabled": false
+    },
+    "TLC-Plan": {
+      "role": "vector_generation_reference",
+      "task_tracks": [
+        "rplan_generation"
+      ],
+      "availability": "repository_readme_only",
+      "matched_status": "not_matched",
+      "redistribution": "none",
+      "claim_enabled": false
+    },
+    "FMLM": {
+      "role": "vector_generation_reference",
+      "task_tracks": [
+        "rplan_generation"
+      ],
+      "availability": "unavailable",
+      "matched_status": "not_matched",
+      "redistribution": "none",
+      "claim_enabled": false
+    }
+  },
+  "tracks": {
+    "cubicasa_reconstruction": {
+      "inputs": ["CubiCasa raster rendering"],
+      "outputs": ["room polygons", "doors", "windows"],
+      "mandatory_metrics": [
+        "room_iou",
+        "room_f1",
+        "corner_f1",
+        "angles_f1",
+        "opening_f1"
+      ],
+      "optional_metrics": ["fixed_evaluator_ged"],
+      "editing_metrics_applicable": false,
+      "leaderboard_scope": "reconstruction_only"
+    },
+    "cubicasa_generation": {
+      "inputs": ["footprint", "optional predicted room program"],
+      "outputs": ["full floorplan"],
+      "mandatory_metrics": [
+        "room_iou",
+        "validity",
+        "conditional_watertightness",
+        "node_f1",
+        "edge_overlap",
+        "fixed_evaluator_ged"
+      ],
+      "optional_metrics": [
+        "furniture_iou",
+        "opening_f1",
+        "coverage",
+        "density",
+        "mmd"
+      ],
+      "editing_metrics_applicable": false,
+      "leaderboard_scope": "matched_cubicasa_generation"
+    },
+    "cubicasa_predicted_control_editing": {
+      "inputs": ["before plan", "instruction/typed edit", "predicted controls"],
+      "outputs": ["after plan"],
+      "mandatory_metrics": [
+        "delta_iou",
+        "outside_exact",
+        "validity",
+        "conditional_watertightness",
+        "node_f1",
+        "edge_overlap",
+        "fixed_evaluator_ged"
+      ],
+      "optional_metrics": ["delta_mse", "room_iou", "edit_region_mse"],
+      "editing_metrics_applicable": true,
+      "leaderboard_scope": "matched_predicted_control_editing"
+    },
+    "cubicasa_oracle_control_diagnostic": {
+      "inputs": ["before plan", "oracle controls"],
+      "outputs": ["after plan"],
+      "mandatory_metrics": [
+        "delta_iou",
+        "outside_exact",
+        "validity",
+        "conditional_watertightness",
+        "node_f1",
+        "edge_overlap"
+      ],
+      "optional_metrics": ["delta_mse", "fixed_evaluator_ged"],
+      "deployable": false,
+      "leaderboard_scope": "diagnostic_only"
+    },
+    "rplan_generation": {
+      "inputs": ["RPLAN boundary"],
+      "outputs": ["vector floorplan"],
+      "mandatory_metrics": ["fid", "fixed_evaluator_ged"],
+      "optional_metrics": [
+        "validity",
+        "node_f1",
+        "edge_overlap",
+        "room_count_ratio",
+        "corner_ratio"
+      ],
+      "editing_metrics_applicable": false,
+      "leaderboard_scope": "authorized_matched_rplan_generation"
+    },
+    "instruction_editing": {
+      "inputs": ["before plan", "natural-language or typed instruction"],
+      "outputs": ["after plan"],
+      "mandatory_metrics": [
+        "delta_iou",
+        "outside_exact",
+        "validity",
+        "conditional_watertightness",
+        "node_f1",
+        "edge_overlap",
+        "fixed_evaluator_ged"
+      ],
+      "optional_metrics": ["delta_mse", "instruction_success_rate"],
+      "editing_metrics_applicable": true,
+      "leaderboard_scope": "matched_instruction_editing"
+    },
+    "renovation_editing_reference": {
+      "inputs": ["pre-design floorplan", "design points or renovation instruction"],
+      "outputs": ["renovated floorplan and furniture"],
+      "mandatory_metrics": [],
+      "optional_metrics": [],
+      "editing_metrics_applicable": true,
+      "leaderboard_scope": "reference_only_not_matched"
+    }
+  },
+  "claim_states": [
+    "matched",
+    "context_only",
+    "not_comparable",
+    "unavailable"
+  ],
+  "claim_rules": {
+    "leaderboard_requires": [
+      "same dataset",
+      "same split",
+      "same conditioning inputs",
+      "same preprocessing",
+      "same output contract",
+      "same scorer",
+      "executable checkpoint"
+    ],
+    "context_only_allowed_in": [
+      "related work",
+      "protocol coverage",
+      "availability appendix"
+    ],
+    "forbidden_claims": [
+      "Raster2Seq editing-aware superiority",
+      "CE2EPlan editing comparison",
+      "HouseMind complete-method defeat",
+      "RPLAN SOTA without matched FloorFlow RPLAN",
+      "TLC-Plan FID/MSE comparison without executable artifacts",
+      "cross-dataset leaderboard aggregation"
+    ]
+  },
+  "engineering_guardrails": {
+    "residential_only": true,
+    "do_not_touch_chips": true,
+    "gpu": "cuda:0",
+    "single_python_file_limit": 600,
+    "no_human_evaluation": true,
+    "no_paper_writing": true
+  }
+}

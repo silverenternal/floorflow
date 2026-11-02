@@ -1,0 +1,46 @@
+{
+  "version": "chip-m44-trust-region-projector-endpoint-v1",
+  "status": "rejected_quick_gate",
+  "candidate": "M43 projector endpoint contract with strength 0.1",
+  "priority": "P0",
+  "reason": "Full-strength projected values diverged in M43. One predeclared trust-region correction bounds the endpoint displacement while retaining projected-geometry supervision.",
+  "training": {
+    "source_checkpoint": "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed21_5k/checkpoints/final.pt",
+    "train_indices": "configs/chip_train_screen_5k_v1.json",
+    "steps": 2000,
+    "batch_size": 128,
+    "seed": 21,
+    "data_seed": 21,
+    "device": "cuda:0",
+    "projector_iterations": 4,
+    "projector_aware_endpoint_strength": 0.1
+  },
+  "control": {
+    "checkpoint": "outputs/chip_hierarchy/m36_hierarchy_token_bridge_v1/m36_control_quick/checkpoints/final.pt",
+    "cost": 1.138701604693825,
+    "v_rel": 0.03650970115869849
+  },
+  "evaluation": {
+    "manifest": "outputs/reports/chip_dev_screen_v45.json",
+    "nfe": 4,
+    "refiner_steps": 400,
+    "inference_seed": 19
+  },
+  "promotion_gate": "Joint legalized cost and V_rel improvement with feasibility 1.0 and no legalizer rung/solve escalation.",
+  "falsification": "Training remains outside the raw-x0 trust region, either primary metric regresses, or the inference path changes.",
+  "quick_result": {
+    "candidate_cost": 1.1804849309126264,
+    "cost_relative": 0.036694,
+    "v_rel_relative": 0.227308,
+    "v_rel_ci": [0.001631, 0.015571],
+    "area_gap_relative": 0.166,
+    "b2b_hpwl_relative": 0.208789,
+    "p2b_hpwl_relative": 12.555492,
+    "grouping_relative": 0.136364,
+    "boundary_relative": 0.261905,
+    "feasible_fraction": 1.0,
+    "decision": "Reject. A bounded projected-value mix avoids divergence but still worsens the legalized V_rel and boundary endpoint.",
+    "report": "outputs/reports/chip_m44_projector_endpoint01_quick_refiner400_dev32.json"
+  },
+  "boundary": "This is the only trust-region strength permitted before a decision; no scalar sweep."
+}

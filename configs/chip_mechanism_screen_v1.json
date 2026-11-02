@@ -1,0 +1,58 @@
+{
+  "version": "chip-mechanism-screen-v1",
+  "policy": "Every exploratory mechanism, architecture, loss, schedule, sampler, refiner or post-processing version is capped at the frozen 5k-case subset. Full data is used only once for one frozen registered finalist plus its matched control; it is never a variant-search budget.",
+  "iteration_policy": {
+    "exploratory_data_ceiling_cases": 5000,
+    "scaling_subset_cases": 20000,
+    "scaling_subset_rule": "Training-length and width/depth scaling may use one deterministic 20k-case subset only after the mechanism passes quick/confirmation. The 50k training cache remains finalist-only.",
+    "identical_subset_for_quick_and_confirmation": true,
+    "quick_failure_blocks_confirmation": true,
+    "confirmation_failure_blocks_full_data": true,
+    "full_data_variant_search_forbidden": true,
+    "full_data_finalists_per_mechanism": 1,
+    "full_data_runs_per_finalist": 2,
+    "full_data_runs_detail": "one candidate and one same-seed matched control"
+  },
+  "training": {
+    "subset_manifest": "configs/chip_train_screen_5k_v1.json",
+    "quick_steps": 2000,
+    "confirmation_steps": 5000,
+    "seeds": [
+      23
+    ],
+    "device": "cuda:0"
+  },
+  "validation": {
+    "case_manifest": "outputs/reports/chip_dev_screen_v45.json",
+    "cases": 32,
+    "nfe": 4,
+    "quick_refiner_steps": 400,
+    "confirmation_refiner_steps": 1600
+  },
+  "external_screen": {
+    "config": "configs/chip_v45_postprocess_v2_screen.json",
+    "cases": 3,
+    "purpose": "Only for mechanisms whose claim depends on routed-PPA transfer."
+  },
+  "promotion": {
+    "registry": "configs/chip_candidate_registry.json",
+    "quick_pass_is_candidate": false,
+    "confirmation_required": true,
+    "requires_all_primary_metrics": true,
+    "requires_feasible_fraction": 1.0,
+    "requires_no_official_selection": true,
+    "full_training_after_registration_only": true,
+    "full_data_is_not_an_iteration_budget": true,
+    "full_data": {
+      "steps": 20000,
+      "matched_control_required": true,
+      "same_training_seed_required": true,
+      "full_metrics_must_both_improve": true,
+      "frozen_finalist_only": true,
+      "no_variant_comparison_allowed": true,
+      "no_revision_after_result_within_same_finalist": true,
+      "multiseed_after_full_pass_only": true,
+      "external_holdout_after_multiseed_only": true
+    }
+  }
+}

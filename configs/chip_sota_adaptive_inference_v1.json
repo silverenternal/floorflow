@@ -1,0 +1,64 @@
+{
+  "version": "chip-sota-adaptive-inference-v1",
+  "date": "2026-10-30",
+  "status": "closed_negative_after_dev32_signal_and_selector_audit",
+  "source_plan": "configs/chip_sota_budget_ladder_v1.json",
+  "checkpoint_policy": "Use the exact checkpoint selected by S1 for calibration and validation. Do not retune the policy on Official-100 or external PPA outcomes.",
+  "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2/dev",
+  "calibration_manifest": {
+    "path": "outputs/reports/chip_sota_adaptive_manifests_v1/calibration8.json",
+    "sha256": "f9b8f9cbd96c37a74c25f88e417bae3af09678fec61f75473b5ad47d00617312",
+    "cases": 8
+  },
+  "validation_manifest": {
+    "path": "outputs/reports/chip_sota_adaptive_manifests_v1/validation8.json",
+    "sha256": "bad244ffafdb7076fa1210a5a70f7a305b3de80bc7ab6ef6b56005f2f8d495fc",
+    "cases": 8
+  },
+  "previous_opened_refiner_screen": "outputs/reports/chip_sota_refiner_budget_screen8_v1.json",
+  "selection_rule": "Both manifests exclude every previously opened refiner index and each contains one deterministic case from every approximately eight-block-wide stratum.",
+  "snapshot_collector": "scripts/collect_chip_adaptive_refiner_snapshots.py",
+  "calibration_and_validation": "scripts/calibrate_chip_adaptive_refiner.py",
+  "snapshot_smoke_report": "outputs/smoke/chip_sota_adaptive_snapshot_smoke_v1.json",
+  "nfe": 4,
+  "snapshots": [400, 800, 1600, 3200],
+  "observable_signals": [
+    "refiner energy terms and total",
+    "refiner energy change",
+    "latent displacement RMS",
+    "incremental latent RMS",
+    "trust-region distance"
+  ],
+  "forbidden_runtime_inputs": [
+    "target boxes",
+    "official cost",
+    "V_rel",
+    "case identity"
+  ],
+  "calibration_protocol": [
+    "Collect observable snapshots on calibration8 before reading validation outcomes.",
+    "Fit a predeclared threshold or monotone rule using calibration labels only through scripts/calibrate_chip_adaptive_refiner.py.",
+    "Serialize the selected rule, thresholds and all considered candidates before opening validation8.",
+    "Evaluate the frozen rule once on validation8 and charge the selected refiner step count.",
+    "Reject post-hoc case-specific thresholds and oracle snapshot selection."
+  ],
+  "deployable_search": {
+    "samples": [1, 4, 16],
+    "total_compute": "Report generation, refiner, scorer, legalization and EDA response separately.",
+    "selector": "Only a shared label-free scorer fitted without validation or target leakage may select candidates.",
+    "oracle_role": "diagnostic_upper_bound_only"
+  },
+  "promotion_gate": {
+    "metrics": ["legalized_hard_cost", "legalized_v_rel"],
+    "coverage": "pooled plus block-count 61-120 tail",
+    "feasibility": 1.0,
+    "comparison": "Beat or match fixed refiner1600 after total compute accounting.",
+    "reject_if": [
+      "The 103/112/120-block regression persists.",
+      "Low or mid-block cases regress.",
+      "The apparent gain depends on target labels, case identity or oracle snapshot selection.",
+      "Best-of-N cost omits failed draws or scorer calls."
+    ],
+    "development_result": "On the 32-case dev snapshot curve, fixed 3200 improves aggregate cost 0.10% and V_rel 6.43% over 1600, but 11/32 cases have non-improving cost and no label-free rank rule clears the quality guard while saving compute. This is not a promotion result."
+  }
+}

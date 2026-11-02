@@ -1,0 +1,61 @@
+{
+  "version": "chip-spatial-occupancy-warmstart-screen-v1",
+  "status": "frozen_quick_confirmation_ready",
+  "candidate": "differentiable spatial occupancy feedback warm-start",
+  "candidate_flag": "--hierarchy-spatial-occupancy",
+  "initial_checkpoint": "outputs/chip_hierarchy/v7_bbox_anneal_20k/typed_hierarchy_bbox_anneal_seed19_20k/checkpoints/final.pt",
+  "allow_new_params": true,
+  "train_indices": "configs/chip_train_screen_5k_v1.json",
+  "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2",
+  "case_indices": "outputs/reports/chip_dev_screen_v45.json",
+  "seed": 23,
+  "device": "cuda:1",
+  "architecture": {
+    "hidden": 192,
+    "heads": 3,
+    "depth": 10,
+    "typed_layers": 1,
+    "head_dim": 64,
+    "projector_iterations": 4
+  },
+  "training": {
+    "batch_size": 128,
+    "grad_accum_steps": 1,
+    "sampling_mode": "random",
+    "curve_per_count": 5,
+    "sampling_steps": 8,
+    "checkpoint_every": 500,
+    "overlap_weight_scale": 10.0,
+    "hierarchy_bbox_weight": 0.5,
+    "hierarchy_bbox_decay_steps": 10000
+  },
+  "quick": {
+    "steps": 2000,
+    "refiner_steps": 400
+  },
+  "confirmation": {
+    "steps": 5000,
+    "refiner_steps": 1600
+  },
+  "evaluation": {
+    "nfe": 4,
+    "refiner_lr": 0.001,
+    "refiner_schedule": "linear",
+    "projector_iterations": 8,
+    "legalizer_time_limit_ms": 2000,
+    "refiner_weights": {
+      "boundary": 2.0,
+      "group": 2.0,
+      "mib": 1.0,
+      "overlap": 10.0,
+      "wl": 1.0,
+      "area": 1.0
+    }
+  },
+  "promotion": {
+    "max_relative_regression": 0.002,
+    "min_relative_improvement_in_at_least_one_metric": 0.005,
+    "required": "Control and candidate warm-start from the same production checkpoint and use the frozen 5k subset, NFE4 and refiner budget. Only --hierarchy-spatial-occupancy differs."
+  },
+  "boundary": "Warm-start mechanism screen only. No full-data, external routed-PPA or SOTA claim."
+}

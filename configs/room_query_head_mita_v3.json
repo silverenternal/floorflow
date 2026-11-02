@@ -1,0 +1,93 @@
+{
+  "schema_version": "room-query-head-mita-v3",
+  "status": "implementation_ready_no_gpu_run",
+  "scope": "residential_cubicasa_room_identity_and_count",
+  "hypothesis": "A sparse query-set routing branch can improve room existence and count without replacing the confirmed dense query decoder.",
+  "model": {
+    "decoder_channels": 128,
+    "hidden_dim": 192,
+    "queries": 32,
+    "layers": 5,
+    "heads": 4,
+    "query_set_head": true,
+    "query_count_gate": true,
+    "query_set_hidden": 192,
+    "query_set_pool": 64,
+    "query_set_layers": 2,
+    "query_set_routing_attention": true,
+    "query_set_route_router_count": 12,
+    "query_set_route_top_k": 4,
+    "estimated_parameters": 16333832
+  },
+  "parameter_audit": {
+    "room_encoder": 12385240,
+    "query_decoder": 2423450,
+    "query_set_head": 1525142,
+    "query_set_share": 0.09337
+  },
+  "budget": {
+    "screen": {
+      "train_cases": 512,
+      "calibration_cases": 64,
+      "holdout_cases": 64,
+      "holdout_offset": 64,
+      "epochs": 16,
+      "batch_size": 8,
+      "sample_exposures": 8192,
+      "optimizer_updates": 1024
+    },
+    "promotion": {
+      "train_cases": 1024,
+      "calibration_cases": 256,
+      "holdout_cases": 128,
+      "holdout_offset": 256,
+      "epochs": 20,
+      "batch_size": 8,
+      "sample_exposures": 20480,
+      "optimizer_updates": 2560,
+      "seeds": [19, 20]
+    },
+    "confirmation": {
+      "train_cases": 5122,
+      "calibration_cases": 384,
+      "holdout_cases": 107,
+      "holdout_offset": 384,
+      "epochs": 20,
+      "batch_size": 8,
+      "sample_exposures": 102440,
+      "optimizer_updates": 12820,
+      "seeds": [19, 20, 21, 22, 23]
+    },
+    "extension_rule": "Stop at a documented plateau; route entropy collapse or count-only gains reject the arm."
+  },
+  "controls": [
+    "confirmed dense query set at matched total parameters",
+    "routing attention without dynamic budgets",
+    "dynamic budgets without routing attention",
+    "query-set routing with one versus two layers",
+    "room decoder unchanged versus stronger decoder"
+  ],
+  "measurements": [
+    "room_macro_iou",
+    "instance_f1",
+    "instance_geometric_iou",
+    "room_count_abs_error",
+    "instance_type_accuracy",
+    "node_f1",
+    "edge_overlap",
+    "unit_ged",
+    "validity",
+    "functional_watertight",
+    "outside_footprint_fraction",
+    "query_route_entropy",
+    "query_route_budget",
+    "query_route_effective_expert_fraction"
+  ],
+  "gate": {
+    "screen": "Room IoU and instance F1 do not regress while count MAE or type accuracy improves.",
+    "promotion": "The full route branch beats parameter-matched dense and static-budget controls on calibration and disjoint holdout.",
+    "confirmation": "At least 4/5 seeds preserve direction; paired 95% CI excludes zero.",
+    "safety": "Validity 1.0, functional watertightness >=0.99, outside footprint 0.0."
+  },
+  "claim_boundary": "Architecture and training contract only; the confirmed v2 room checkpoint remains canonical until this screen passes."
+}

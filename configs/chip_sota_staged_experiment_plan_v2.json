@@ -1,0 +1,136 @@
+{
+  "version": "chip-sota-staged-experiment-plan-v2",
+  "status": "frozen_before_gpu_execution",
+  "policy": "Do not train all hardening branches together. Each mechanism receives a matched parent and off/on ablation before fusion.",
+  "shared_protocol": {
+    "training_subset": "configs/chip_train_screen_5k_v1.json",
+    "dev_screen": "outputs/reports/chip_dev_screen_v45.json",
+    "primary_endpoint": "NFE4 + refiner400 quick gate",
+    "confirmation_endpoint": "5k + NFE4 + refiner1600",
+    "official_endpoint": "Official-100 only after confirmation"
+  },
+  "stages": [
+    {
+      "id": "S0-LEGALIZER-COUNTERFACTUAL",
+      "gpu": false,
+      "purpose": "Measure reshape/trust/relation sensitivity on identical refined layouts.",
+      "config": "configs/chip_legalizer_ablation_v1.json",
+      "runner": "scripts/run_chip_legalizer_counterfactual.py",
+      "promotion": "Carry only policies that preserve feasibility and jointly improve cost, V_rel, area and b2b."
+    },
+    {
+      "id": "S1-COORDINATE-WARMSTART",
+      "gpu": true,
+      "purpose": "Test zero-initialized coordinate blend without changing graph/semantic branches.",
+      "parent": "M27 seed21 canonical checkpoint",
+      "flags": {
+        "hierarchy_coordinate_parameterization": true,
+        "hierarchy_coordinate_mode": "envelope",
+        "hierarchy_source_mode": "random",
+        "hierarchy_source_levels": "random",
+        "nfe_consistency_weight": 0.0,
+        "global_spec_conditioning": false,
+        "node_semantic_dim": 0,
+        "port_semantic_dim": 0,
+        "netlist_hyperedge_conditioning": false
+      },
+      "control": "coordinate parameterization off; all other settings identical",
+      "promotion": "Joint legalized cost/V_rel gain with unchanged feasibility and legalizer work."
+    },
+    {
+      "id": "S2-CLUSTER-COORDINATES",
+      "gpu": true,
+      "purpose": "Add active L1 cluster frames after the envelope-only arm passes.",
+      "parent": "S1 selected checkpoint",
+      "flags": {
+        "hierarchy_coordinate_parameterization": true,
+        "hierarchy_coordinate_mode": "envelope_cluster"
+      },
+      "control": "S1 envelope-only checkpoint",
+      "promotion": "Grouping or b2b improvement without area/p2b regression."
+    },
+    {
+      "id": "S3-SOURCE-NFE",
+      "gpu": true,
+      "purpose": "Test deployment-source and short-NFE consistency on the selected coordinate arm.",
+      "parent": "S1/S2 selected checkpoint",
+      "flags": {
+        "hierarchy_source_mode": "mixed",
+        "hierarchy_source_levels": "derived",
+        "hierarchy_source_shelf_probability": 0.25,
+        "hierarchy_source_shelf_probability_final": 0.5,
+        "hierarchy_source_shelf_probability_steps": 4000,
+        "require_deployment_source": true,
+        "nfe_consistency_weight": 0.1,
+        "nfe_consistency_steps": 2
+      },
+      "control": "random source and NFE consistency off",
+      "promotion": "Improved NFE1/NFE4/refiner curves, not only the 2k training loss."
+    },
+    {
+      "id": "S4-SHAPE-PIN-MIB",
+      "gpu": true,
+      "purpose": "Add endpoint shape terms independently from graph capacity.",
+      "parent": "S3 selected checkpoint",
+      "flags": {
+        "endpoint_compatibility_weight": 0.1,
+        "endpoint_mib_share_weight": 0.1,
+        "endpoint_pin_tail_weight": 0.1,
+        "endpoint_rho_trust_weight": 0.1,
+        "endpoint_rho_trust_radius": 0.1
+      },
+      "control": "all shape-pin weights zero",
+      "promotion": "Area/p2b/rho improvement after legalization with no MIB regression."
+    },
+    {
+      "id": "S4B-OFFICIAL-COST-SURROGATE",
+      "gpu": true,
+      "purpose": "Align training with the exponential official cost without changing model width.",
+      "parent": "S4 selected checkpoint",
+      "flags": {
+        "official_cost_weight": 0.0,
+        "official_cost_final_weight": 0.1,
+        "official_cost_delay_steps": 500,
+        "official_cost_anneal_steps": 1000,
+        "official_cost_violation_temperature": 0.1
+      },
+      "control": "official cost weight zero",
+      "promotion": "Improves cost p90/p95 and V_rel p75/p90 without a feasibility regression."
+    },
+    {
+      "id": "S5-GRAPH-SEMANTIC-HYPEREDGE",
+      "gpu": true,
+      "purpose": "Test global spec, semantic and dynamic hyperedge only after coordinate/source stability.",
+      "parent": "S4B selected checkpoint",
+      "flags": {
+        "global_spec_conditioning": true,
+        "node_semantic_dim": 12,
+        "port_semantic_dim": 5,
+        "netlist_hyperedge_conditioning": true
+      },
+      "control": "conditioning branches off",
+      "promotion": "Stable b2b/pin/high-complexity gains under the same legalizer policy."
+    },
+    {
+      "id": "S6-CONSENSUS-DISTILLATION",
+      "gpu": false,
+      "purpose": "Distill M75 candidate states into one model after a larger cohort exists.",
+      "config": "configs/chip_candidate_consensus_v1.json",
+      "cohort_builder": "scripts/build_chip_candidate_consensus_cohort.py",
+      "runner": "scripts/train_chip_candidate_consensus.py",
+      "promotion": "Single fused layout followed by projection and legalization beats the strongest single checkpoint at equal inference."
+    },
+    {
+      "id": "S7-PROGRESSIVE-COMPLEXITY",
+      "gpu": true,
+      "purpose": "Expand block-count coverage without abandoning low-complexity performance.",
+      "parent": "strongest stable single-model checkpoint",
+      "flags": {
+        "sampling_mode": "progressive_complexity"
+      },
+      "control": "random sampling at equal exposure",
+      "promotion": "High-block tail improves while low-block cost and V_rel remain within the preregistered tolerance."
+    }
+  ],
+  "all_on_config_boundary": "configs/chip_sota_architecture_hardening_v1.json is an integration contract, not the first training arm."
+}

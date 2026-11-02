@@ -1,0 +1,15 @@
+{
+  "schema_version": "predicted-channel-v6-room-graph-adapter-joint",
+  "extends": "predicted_channel_v6_room_graph_adapter_control.json",
+  "status": "adapter_preserving_candidate",
+  "model": {
+    "room_instance_relational_adjacency": true,
+    "room_instance_class_count_prior": true,
+    "count_aware_second_graph": true
+  },
+  "loss_policy": {
+    "room_instance_class_balance": true,
+    "room_query_support_assignment_weight": 0.1
+  },
+  "claim_boundary": "Joint graph-only adapter screen; only matching graph control may be paired."
+}

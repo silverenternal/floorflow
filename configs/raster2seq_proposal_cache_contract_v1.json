@@ -1,0 +1,114 @@
+{
+  "schema_version": "raster2seq-proposal-cache-contract-v1",
+  "cache_schema": "raster2seq-proposal-cache-v1",
+  "manifest_schema": "raster2seq-proposal-cache-manifest-v1",
+  "scope": "Class-agnostic structure-conditioned Raster2Seq proposal teacher for native FloorFlow room-query distillation",
+  "source": {
+    "repository": "https://github.com/Cornell-VAILab/Raster2Seq",
+    "commit": "a6c4e27a68d11d7a459f6e4a2601fd887227dd1a",
+    "paper": "https://arxiv.org/abs/2602.09016",
+    "checkpoint": "outputs/external_baselines/raster2seq/cubicasa5k/checkpoint.pth",
+    "checkpoint_sha256_required": true,
+    "source_code_dirty_tracked_files_must_be_empty": true
+  },
+  "sample_contract": {
+    "sample_key": "relative_case + '__' + floor_id",
+    "split_values": [
+      "train",
+      "val"
+    ],
+    "split_index": "zero-based index in the deterministic CubiCasaFloorplanDataset sample order",
+    "train_mechanism_cases": 256,
+    "calibration_cases": {
+      "split": "val",
+      "start": 0,
+      "stop": 64
+    },
+    "holdout_cases": {
+      "split": "val",
+      "start": 128,
+      "stop": 192
+    },
+    "full_validation": {
+      "split": "val",
+      "start": 0,
+      "stop": 491
+    }
+  },
+  "input_contract": {
+    "kind": "privileged_non_room_structural_control",
+    "source_field": "FloorFlow target structural, opening, furniture, wall, and footprint channels",
+    "resize": [
+      256,
+      256
+    ],
+    "resampling": "bilinear",
+    "channels": "RGB",
+    "scale": "float32 [0,1]",
+    "target_room_class_pixels_used": false,
+    "target_non_room_control_channels_used": true,
+    "target_room_masks_used_for_teacher_output": false,
+    "room_class_control_tensor_used": false,
+    "target_used_at_inference": false,
+    "deployable_student_target_free": true
+  },
+  "output_contract": {
+    "proposal_scope": "room polygons only",
+    "room_class_id": "integer FloorFlow taxonomy class id",
+    "room_class_index": "derived from taxonomy room_ids order",
+    "class_names": "stored per proposal and validated against taxonomy; not trusted as a class teacher",
+    "polygon_coordinates": "normalized [0,1] in image frame",
+    "polygon_vertex_order": "Raster2Seq decoded sequence order without reordering",
+    "polygon_masks": "bool [rooms,256,256], rasterized from the stored polygons",
+    "existence_score": "softmax probability of the selected class at the final room token",
+    "invalid_or_duplicate_targets_are_not_filtered": true
+  },
+  "cache_files": {
+    "case_format": "compressed NPZ with allow_pickle=false",
+    "manifest": "one JSON manifest per split with cache SHA-256 and source raster SHA-256",
+    "required_npz_fields": [
+      "schema_version",
+      "sample_key",
+      "split",
+      "split_index",
+      "image_size",
+      "polygon_points",
+      "polygon_offsets",
+      "class_ids",
+      "class_names",
+      "existence_scores",
+      "proposal_masks",
+      "sequence_length",
+      "source_image_sha256"
+    ]
+  },
+  "downstream_consumers": {
+    "training": "floorflow training adapter for RoomMaskDecoder proposal distillation",
+    "evaluation": "target-only teacher quality audit",
+    "standalone_floorflow_inference": "forbidden: cache and Raster2Seq weights are not loaded"
+  },
+  "integration_gate": {
+    "same_sample_key": true,
+    "same_taxonomy": true,
+    "same_coordinate_frame": true,
+    "same_mask_orientation": true,
+    "one_batch_forward_required": true,
+    "one_batch_backward_required": true,
+    "explicit_plan_decode_required": true
+  },
+  "teacher_quality_gate": {
+    "calibration64_room_support_iou_min": 0.7,
+    "calibration64_instance_f1_min": 0.38,
+    "calibration64_instance_geometric_iou_min": 0.65,
+    "calibration64_count_abs_error_max": 4.5,
+    "teacher_class_accuracy_gate": false,
+    "student_must_learn_classes_from_supervision": true
+  },
+  "safety": {
+    "test503_open": false,
+    "teacher_is_predicted_control_not_ground_truth": true,
+    "privileged_teacher_input_is_not_available_to_student_inference": true,
+    "target_room_masks_are_evaluation_only": true,
+    "silent_taxonomy_remap_forbidden": true
+  }
+}

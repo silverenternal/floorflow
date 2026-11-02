@@ -1,0 +1,49 @@
+{
+  "schema_version": "room-owner-soft-count-budget-v1",
+  "status": "implementation_ready_no_gpu_run",
+  "scope": "residential_cubicasa_room_owner_readout",
+  "mechanism": [
+    "query owner map",
+    "owner-change boundaries",
+    "owner-preserving logits",
+    "expected-top-k soft count routing during training",
+    "hard top-k routing during evaluation"
+  ],
+  "screen": {
+    "train_cases": 512,
+    "calibration_cases": 64,
+    "holdout_cases": 64,
+    "holdout_offset": 64,
+    "epochs": 12,
+    "batch_size": 8,
+    "sample_exposures": 6144,
+    "optimizer_updates": 768
+  },
+  "promotion": {
+    "train_cases": 1024,
+    "calibration_cases": 256,
+    "holdout_cases": 128,
+    "holdout_offset": 256,
+    "epochs": 16,
+    "batch_size": 8,
+    "sample_exposures": 16384,
+    "optimizer_updates": 2048
+  },
+  "confirmation": {
+    "train_cases": 5122,
+    "calibration_cases": 384,
+    "holdout_cases": 107,
+    "holdout_offset": 384,
+    "epochs": 16,
+    "batch_size": 8,
+    "sample_exposures": 81952,
+    "optimizer_updates": 10256
+  },
+  "gates": {
+    "screen": "Owner boundary and soft count improve same-class instance separation, Room IoU, F1, and count without regressing type or support.",
+    "promotion": "The direction holds on calibration and disjoint holdout with paired 95% CI excluding zero.",
+    "confirmation": "At least 4/5 seeds preserve direction.",
+    "safety": "Validity 1.0, functional watertightness >=0.99, outside footprint 0.0."
+  },
+  "claim_boundary": "Budget contract only; no metric claim before matched runs."
+}

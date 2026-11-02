@@ -1,0 +1,55 @@
+{
+  "version": "chip-external-holdout-chipbench-ppa-v1",
+  "status": "frozen_before_adapter_candidate_control_outcomes",
+  "manifest": "outputs/reports/chip_chipbench_holdout_manifest_v1_verified.json",
+  "primary_protocol": {
+    "protocol_tag": "chipbench_holdout_v1",
+    "nfe": 4,
+    "refiner_steps": 1600,
+    "refiner_lr": 0.001,
+    "refiner_schedule": "linear",
+    "refiner_shape": true,
+    "refiner_optimizer": "adam",
+    "refiner_chunk": 5,
+    "projector_iterations": 8,
+    "legalizer_relation": "expanded",
+    "instance_hierarchy": true,
+    "preserve_reference_orientation": true,
+    "deterministic": true,
+    "refiner_weights": [
+      "boundary=2.0",
+      "group=2.0",
+      "mib=1.0",
+      "overlap=10.0",
+      "wl=1.0",
+      "area=1.0"
+    ],
+    "pairwise_common_route": "If candidate/control legalizer routes differ, regenerate both arms with the deterministic shelf fallback."
+  },
+  "candidate": {
+    "architecture": "typed_hierarchy",
+    "checkpoint": "outputs/chip_hierarchy/v7_bbox_anneal_20k/typed_hierarchy_bbox_anneal_seed19_20k/checkpoints/final.pt"
+  },
+  "control": {
+    "architecture": "trinity_token",
+    "checkpoint": "outputs/chip_trinity/rescue_20k/trinity_token_seed19_20k/checkpoints/final.pt"
+  },
+  "seed": 19,
+  "output_root": "outputs/chipbench_holdout_ppa_v1",
+  "report_root": "outputs/reports/chipbench_holdout_ppa_v1",
+  "claim_boundary": {
+    "candidate_outcomes_unopened_at_freeze": true,
+    "independent_designs": 15,
+    "independent_rtl_families": 10,
+    "primary_endpoint": "detailed routed wirelength",
+    "guards": [
+      "global-route congestion",
+      "DRC",
+      "setup WNS/TNS",
+      "power",
+      "area"
+    ],
+    "pairwise_common_legalizer_route_required": true,
+    "no_paper_or_ppa_claim_from_adapter_or_one_seed": true
+  }
+}

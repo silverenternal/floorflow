@@ -1,0 +1,62 @@
+{
+  "schema_version": "room-instance-control-direct-gt-v1",
+  "superseded_by": "configs/room_query_head_full_v2.json",
+  "reuse": {
+    "trainer": "scripts/train_raster_instance_control.py",
+    "model": "src/floorflow/heads/raster_control_bank.py::RasterInstanceControl",
+    "query_decoder": "src/floorflow/heads/room_mask_decoder.py::RoomMaskDecoder",
+    "dense_loss": "src/floorflow/heads/predicted_room_identity.py::room_identity_loss",
+    "query_loss": "src/floorflow/heads/room_mask_decoder.py::room_mask_loss",
+    "fusion": "src/floorflow/heads/room_mask_fusion.py"
+  },
+  "hypothesis": "Direct GT query-mask supervision can separate same-class rooms and reduce the 310-case over-count without replacing the dense semantic path.",
+  "evidence_basis": {
+    "canonical_over_count_cases": 310,
+    "canonical_under_count_cases": 126,
+    "canonical_semantic_mismatch_fraction": 0.3120929713381321,
+    "failed_teacher_distillation_room_iou": 0.19273,
+    "failed_teacher_distillation_instance_f1": 0.17718,
+    "distinction": "PC-04 used Raster2Seq proposal distillation; this run uses only GT room instances and the native raster encoder."
+  },
+  "screen": {
+    "data_root": ".data/cubicasa5k",
+    "cache_root": "outputs/cache/cubicasa5k_full_v2_384",
+    "room_checkpoint": "outputs/train/native_room_384_full_32ep_v1/best.pt",
+    "train_cases": 256,
+    "validation_cases": 64,
+    "image_size": 384,
+    "epochs": 8,
+    "batch_size": 8,
+    "decoder_channels": 128,
+    "hidden_dim": 128,
+    "queries": 24,
+    "layers": 3,
+    "heads": 4,
+    "learning_rate": 2e-4,
+    "weight_decay": 1e-4,
+    "partition_weight": 0.5,
+    "dense_weight": 0.5,
+    "train_encoder": false,
+    "teacher_manifest": null,
+    "seed": 2905,
+    "device": "cuda:0"
+  },
+  "budget_review": {
+    "smoke": "One batch forward, assignment, query loss, dense loss, backward, and fused decode.",
+    "trend": "Eight epochs on train256/cal64, identical to the frozen 384px control.",
+    "promotion": "Twenty-four epochs or a documented plateau only after the screen passes.",
+    "reject_rule": "Do not reject from a one-to-three epoch smoke result; do not promote from a single best epoch without the full curve.",
+    "estimated_screen_minutes_max": 15,
+    "estimated_promotion_minutes_max": 75
+  },
+  "gates": {
+    "count_mae_delta_max": -0.5,
+    "room_iou_delta_min": 0.0,
+    "instance_f1_delta_min": 0.0,
+    "type_accuracy_delta_min": -0.005,
+    "reasonableness_validity": 1.0,
+    "functional_watertight_min": 0.95,
+    "wall_continuity_min": 0.95,
+    "plan_plausibility_min": 0.95
+  }
+}

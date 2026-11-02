@@ -1,0 +1,10 @@
+[package]
+name = "nlp_flow_codegen"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+nlp_flow_core = { path = "../nlp_flow_core" }
+nlp_flow_macros = { path = "../nlp_flow_macros" }
+serde_json = "1"

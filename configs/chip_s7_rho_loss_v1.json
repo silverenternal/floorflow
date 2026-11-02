@@ -1,0 +1,31 @@
+{
+  "version": "chip-s7-rho-loss-v1",
+  "parent": "M27 canonical seed21",
+  "purpose": "Test whether direct shape supervision improves rho without collapsing legality or grouping.",
+  "architecture": {
+    "architecture": "typed_hierarchy",
+    "hidden": 192,
+    "heads": 3,
+    "depth": 12,
+    "typed_layers": 1,
+    "head_dim": 64
+  },
+  "branches": {
+    "structural_relation_head": true,
+    "group_moment_conditioning": false
+  },
+  "objective": {
+    "rho_weight": 0.25,
+    "structural_relation_weight": 0.1,
+    "relation_gate_weight": 0.01,
+    "hierarchy_bbox_weight": 0.5,
+    "hierarchy_bbox_decay_steps": 10000
+  },
+  "training": {
+    "scope": "b2b+downstream",
+    "subset": "configs/chip_m63_response_indices1k_v1.json",
+    "probe_steps": 300,
+    "eval_budget": "NFE4/refiner400 on the frozen 32-case screen"
+  },
+  "claim_boundary": "Single-variable training-head screen; no promotion before matched official evaluation."
+}

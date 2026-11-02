@@ -1,0 +1,23 @@
+{
+  "mode": "composer",
+  "value": 1.0,
+  "end": 1600,
+  "schedules": [
+    {
+      "mode": "polynomial",
+      "power": 1,
+      "start": 0,
+      "end": 800,
+      "value": 1.0,
+      "min_value": 0.5
+    },
+    {
+      "mode": "polynomial",
+      "power": 1,
+      "start": 800,
+      "end": 1600,
+      "value": 0.5,
+      "min_value": 0.05
+    }
+  ]
+}

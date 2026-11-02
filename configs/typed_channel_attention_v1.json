@@ -1,0 +1,43 @@
+{
+  "schema_version": "typed-channel-attention-config-v1",
+  "scope": "real_predicted_control_all_channel_prediction",
+  "predicted_root": "outputs/control_contracts/model_predicted_full_v1",
+  "cache_root": "outputs/cache/cubicasa5k_full_v2_384",
+  "train_cases": 256,
+  "calibration_cases": 64,
+  "epochs": 8,
+  "batch_size": 4,
+  "field_grid": 128,
+  "field_channels": 48,
+  "head_channels": 96,
+  "attention_grid": 16,
+  "full_resolution_output": true,
+  "layers": 2,
+  "attention_mode": "typed",
+  "use_action_graph": true,
+  "preserve_room_stage": true,
+  "layer_contract": {
+    "rooms": "independent partition layer",
+    "walls": "independent wall layer",
+    "openings": "wall-conditioned opening layer",
+    "furniture": "room-conditioned furniture layer",
+    "support": "auxiliary structure layer"
+  },
+  "loss": {
+    "ce": 1.0,
+    "room_iou": 0.5,
+    "tversky": 0.2,
+    "boundary": 0.1,
+    "family_iou": 0.5,
+    "stage_family": 1.0
+  },
+  "gate": {
+    "room_or_instance": "improve",
+    "wall_opening_graph": "co-improve",
+    "validity": 1.0,
+    "functional_watertight": 0.95
+  },
+  "test_opened": false,
+  "target_used_at_inference": false,
+  "device": "cuda:0"
+}

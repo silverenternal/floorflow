@@ -1,0 +1,25 @@
+{
+  "version": "chip-candidate-consensus-v1",
+  "cohort_dir": "outputs/cohorts/chip_m75_candidate_consensus_v1",
+  "reference_source": "M48-s19",
+  "output_dir": "outputs/train/chip_candidate_consensus_v1",
+  "hidden": 32,
+  "epochs": 20,
+  "lr": 0.001,
+  "weight_decay": 0.0001,
+  "grad_clip": 1.0,
+  "teacher_temperature": 0.1,
+  "endpoint_weight": 1.0,
+  "teacher_weight": 0.1,
+  "entropy_weight": 0.001,
+  "device": "cpu",
+  "cohort_contract": {
+    "candidate_states": "(batch, candidates, blocks, 3)",
+    "candidate_features": "(batch, candidates, features)",
+    "quality": "lower-is-better legalized teacher utility or cost",
+    "target_state": "best-candidate or target endpoint",
+    "candidate_mask": "reference candidate 0 must be valid",
+    "context": "optional (batch, context_features)"
+  },
+  "promotion_boundary": "The 32-case M76 cohort remains closed; distillation requires a materially larger independent cohort."
+}

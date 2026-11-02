@@ -1,0 +1,743 @@
+{
+  "cycles": [],
+  "flat_module_files": [],
+  "module_count": 99,
+  "modules": {
+    "floorflow._compat": {
+      "dependencies": [
+        "floorflow._module_map"
+      ],
+      "package": "",
+      "path": "src/floorflow/_compat.py"
+    },
+    "floorflow._module_map": {
+      "dependencies": [],
+      "package": "",
+      "path": "src/floorflow/_module_map.py"
+    },
+    "floorflow.data.class_balance": {
+      "dependencies": [],
+      "package": "data",
+      "path": "src/floorflow/data/class_balance.py"
+    },
+    "floorflow.data.classes": {
+      "dependencies": [],
+      "package": "data",
+      "path": "src/floorflow/data/classes.py"
+    },
+    "floorflow.data.data_balance": {
+      "dependencies": [],
+      "package": "data",
+      "path": "src/floorflow/data/data_balance.py"
+    },
+    "floorflow.data.dataset": {
+      "dependencies": [
+        "floorflow.data.geometry_cache",
+        "floorflow.data.svg",
+        "floorflow.data.taxonomy"
+      ],
+      "package": "data",
+      "path": "src/floorflow/data/dataset.py"
+    },
+    "floorflow.data.domain_alignment": {
+      "dependencies": [],
+      "package": "data",
+      "path": "src/floorflow/data/domain_alignment.py"
+    },
+    "floorflow.data.geometry_cache": {
+      "dependencies": [
+        "floorflow.data.svg",
+        "floorflow.data.taxonomy"
+      ],
+      "package": "data",
+      "path": "src/floorflow/data/geometry_cache.py"
+    },
+    "floorflow.data.mixed_dataset": {
+      "dependencies": [],
+      "package": "data",
+      "path": "src/floorflow/data/mixed_dataset.py"
+    },
+    "floorflow.data.svg": {
+      "dependencies": [
+        "floorflow.data.classes",
+        "floorflow.data.taxonomy"
+      ],
+      "package": "data",
+      "path": "src/floorflow/data/svg.py"
+    },
+    "floorflow.data.synthetic_data": {
+      "dependencies": [
+        "floorflow.data.taxonomy"
+      ],
+      "package": "data",
+      "path": "src/floorflow/data/synthetic_data.py"
+    },
+    "floorflow.data.taxonomy": {
+      "dependencies": [],
+      "package": "data",
+      "path": "src/floorflow/data/taxonomy.py"
+    },
+    "floorflow.evaluation.condition_evaluation": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.evaluation.metrics",
+        "floorflow.flow.core",
+        "floorflow.heads.room_mask_decoder",
+        "floorflow.heads.room_partition",
+        "floorflow.heads.structured_objects",
+        "floorflow.objectives.condition_objective",
+        "floorflow.representation.contour_memory",
+        "floorflow.training.runtime_acceleration"
+      ],
+      "package": "evaluation",
+      "path": "src/floorflow/evaluation/condition_evaluation.py"
+    },
+    "floorflow.evaluation.conditional_ceiling": {
+      "dependencies": [
+        "floorflow.data.taxonomy"
+      ],
+      "package": "evaluation",
+      "path": "src/floorflow/evaluation/conditional_ceiling.py"
+    },
+    "floorflow.evaluation.failure_taxonomy": {
+      "dependencies": [],
+      "package": "evaluation",
+      "path": "src/floorflow/evaluation/failure_taxonomy.py"
+    },
+    "floorflow.evaluation.fpeval_bridge": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.geometry.wall_graph_readout"
+      ],
+      "package": "evaluation",
+      "path": "src/floorflow/evaluation/fpeval_bridge.py"
+    },
+    "floorflow.evaluation.metrics": {
+      "dependencies": [
+        "floorflow.data.classes",
+        "floorflow.data.taxonomy",
+        "floorflow.evaluation.structural_metrics",
+        "floorflow.evaluation.wall_metrics",
+        "floorflow.geometry.core",
+        "floorflow.heads.room_groups"
+      ],
+      "package": "evaluation",
+      "path": "src/floorflow/evaluation/metrics.py"
+    },
+    "floorflow.evaluation.room_error_decomposition": {
+      "dependencies": [
+        "floorflow.data.taxonomy"
+      ],
+      "package": "evaluation",
+      "path": "src/floorflow/evaluation/room_error_decomposition.py"
+    },
+    "floorflow.evaluation.room_metric_suite": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.evaluation.conditional_ceiling",
+        "floorflow.representation.core"
+      ],
+      "package": "evaluation",
+      "path": "src/floorflow/evaluation/room_metric_suite.py"
+    },
+    "floorflow.evaluation.room_module_attribution": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.heads.structured_objects",
+        "floorflow.objectives.condition_objective"
+      ],
+      "package": "evaluation",
+      "path": "src/floorflow/evaluation/room_module_attribution.py"
+    },
+    "floorflow.evaluation.structural_metrics": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.geometry.core"
+      ],
+      "package": "evaluation",
+      "path": "src/floorflow/evaluation/structural_metrics.py"
+    },
+    "floorflow.evaluation.visualize": {
+      "dependencies": [
+        "floorflow.data.classes",
+        "floorflow.data.taxonomy"
+      ],
+      "package": "evaluation",
+      "path": "src/floorflow/evaluation/visualize.py"
+    },
+    "floorflow.evaluation.wall_metrics": {
+      "dependencies": [
+        "floorflow.data.taxonomy"
+      ],
+      "package": "evaluation",
+      "path": "src/floorflow/evaluation/wall_metrics.py"
+    },
+    "floorflow.flow.cfm_backend": {
+      "dependencies": [],
+      "package": "flow",
+      "path": "src/floorflow/flow/cfm_backend.py"
+    },
+    "floorflow.flow.coarse_to_face": {
+      "dependencies": [],
+      "package": "flow",
+      "path": "src/floorflow/flow/coarse_to_face.py"
+    },
+    "floorflow.flow.condition_training": {
+      "dependencies": [
+        "floorflow.flow.cfm_backend",
+        "floorflow.flow.core"
+      ],
+      "package": "flow",
+      "path": "src/floorflow/flow/condition_training.py"
+    },
+    "floorflow.flow.core": {
+      "dependencies": [
+        "floorflow.data.classes",
+        "floorflow.data.taxonomy",
+        "floorflow.flow.cfm_backend",
+        "floorflow.geometry.core",
+        "floorflow.heads.room_mask_decoder",
+        "floorflow.heads.room_partition",
+        "floorflow.heads.structured_objects",
+        "floorflow.heads.topology",
+        "floorflow.model.layoutbridge_adapters",
+        "floorflow.objectives.semantic_losses"
+      ],
+      "package": "flow",
+      "path": "src/floorflow/flow/core.py"
+    },
+    "floorflow.geometry.boundary_geometry": {
+      "dependencies": [],
+      "package": "geometry",
+      "path": "src/floorflow/geometry/boundary_geometry.py"
+    },
+    "floorflow.geometry.core": {
+      "dependencies": [
+        "floorflow.data.classes"
+      ],
+      "package": "geometry",
+      "path": "src/floorflow/geometry/core.py"
+    },
+    "floorflow.geometry.geometry_graph": {
+      "dependencies": [
+        "floorflow.data.geometry_cache",
+        "floorflow.data.taxonomy",
+        "floorflow.geometry.wall_graph_readout",
+        "floorflow.heads.room_partition"
+      ],
+      "package": "geometry",
+      "path": "src/floorflow/geometry/geometry_graph.py"
+    },
+    "floorflow.geometry.interior_wall": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.geometry.core"
+      ],
+      "package": "geometry",
+      "path": "src/floorflow/geometry/interior_wall.py"
+    },
+    "floorflow.geometry.opening_readout": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.geometry.wall_graph_readout"
+      ],
+      "package": "geometry",
+      "path": "src/floorflow/geometry/opening_readout.py"
+    },
+    "floorflow.geometry.reconciliation": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.geometry.wall_graph_readout"
+      ],
+      "package": "geometry",
+      "path": "src/floorflow/geometry/reconciliation.py"
+    },
+    "floorflow.geometry.wall_graph_readout": {
+      "dependencies": [
+        "floorflow.data.taxonomy"
+      ],
+      "package": "geometry",
+      "path": "src/floorflow/geometry/wall_graph_readout.py"
+    },
+    "floorflow.heads.dynamic_output": {
+      "dependencies": [],
+      "package": "heads",
+      "path": "src/floorflow/heads/dynamic_output.py"
+    },
+    "floorflow.heads.face_semantics": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.geometry.wall_graph_readout"
+      ],
+      "package": "heads",
+      "path": "src/floorflow/heads/face_semantics.py"
+    },
+    "floorflow.heads.furniture_action": {
+      "dependencies": [],
+      "package": "heads",
+      "path": "src/floorflow/heads/furniture_action.py"
+    },
+    "floorflow.heads.geometry_heads": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.heads.topology_moe"
+      ],
+      "package": "heads",
+      "path": "src/floorflow/heads/geometry_heads.py"
+    },
+    "floorflow.heads.opening_interval_head": {
+      "dependencies": [],
+      "package": "heads",
+      "path": "src/floorflow/heads/opening_interval_head.py"
+    },
+    "floorflow.heads.polygon_loop": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.evaluation.room_metric_suite",
+        "floorflow.representation.polygon_targets"
+      ],
+      "package": "heads",
+      "path": "src/floorflow/heads/polygon_loop.py"
+    },
+    "floorflow.heads.registry": {
+      "dependencies": [],
+      "package": "heads",
+      "path": "src/floorflow/heads/registry.py"
+    },
+    "floorflow.heads.room_groups": {
+      "dependencies": [
+        "floorflow.data.taxonomy"
+      ],
+      "package": "heads",
+      "path": "src/floorflow/heads/room_groups.py"
+    },
+    "floorflow.heads.room_mask_decoder": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.heads.room_partition",
+        "floorflow.representation.core"
+      ],
+      "package": "heads",
+      "path": "src/floorflow/heads/room_mask_decoder.py"
+    },
+    "floorflow.heads.room_partition": {
+      "dependencies": [
+        "floorflow.data.taxonomy"
+      ],
+      "package": "heads",
+      "path": "src/floorflow/heads/room_partition.py"
+    },
+    "floorflow.heads.room_program": {
+      "dependencies": [
+        "floorflow.data.taxonomy"
+      ],
+      "package": "heads",
+      "path": "src/floorflow/heads/room_program.py"
+    },
+    "floorflow.heads.room_region_refiner": {
+      "dependencies": [],
+      "package": "heads",
+      "path": "src/floorflow/heads/room_region_refiner.py"
+    },
+    "floorflow.heads.room_segmenter": {
+      "dependencies": [],
+      "package": "heads",
+      "path": "src/floorflow/heads/room_segmenter.py"
+    },
+    "floorflow.heads.room_set": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.model.backbone",
+        "floorflow.representation.core"
+      ],
+      "package": "heads",
+      "path": "src/floorflow/heads/room_set.py"
+    },
+    "floorflow.heads.semantic_head": {
+      "dependencies": [],
+      "package": "heads",
+      "path": "src/floorflow/heads/semantic_head.py"
+    },
+    "floorflow.heads.spatial_velocity_head": {
+      "dependencies": [],
+      "package": "heads",
+      "path": "src/floorflow/heads/spatial_velocity_head.py"
+    },
+    "floorflow.heads.structured_objects": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.geometry.interior_wall",
+        "floorflow.objectives.semantic_losses"
+      ],
+      "package": "heads",
+      "path": "src/floorflow/heads/structured_objects.py"
+    },
+    "floorflow.heads.topology": {
+      "dependencies": [
+        "floorflow.data.taxonomy"
+      ],
+      "package": "heads",
+      "path": "src/floorflow/heads/topology.py"
+    },
+    "floorflow.heads.topology_moe": {
+      "dependencies": [
+        "floorflow.representation.gate_diagnostics"
+      ],
+      "package": "heads",
+      "path": "src/floorflow/heads/topology_moe.py"
+    },
+    "floorflow.inference.core": {
+      "dependencies": [],
+      "package": "inference",
+      "path": "src/floorflow/inference/core.py"
+    },
+    "floorflow.inference.hybrid_decode": {
+      "dependencies": [
+        "floorflow.data.taxonomy"
+      ],
+      "package": "inference",
+      "path": "src/floorflow/inference/hybrid_decode.py"
+    },
+    "floorflow.inference.repair_acceptance": {
+      "dependencies": [],
+      "package": "inference",
+      "path": "src/floorflow/inference/repair_acceptance.py"
+    },
+    "floorflow.inference.repair_features": {
+      "dependencies": [
+        "floorflow.data.taxonomy"
+      ],
+      "package": "inference",
+      "path": "src/floorflow/inference/repair_features.py"
+    },
+    "floorflow.inference.repair_registry": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.inference.room_repair"
+      ],
+      "package": "inference",
+      "path": "src/floorflow/inference/repair_registry.py"
+    },
+    "floorflow.inference.retrieval_prior": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.heads.room_partition",
+        "floorflow.representation.core"
+      ],
+      "package": "inference",
+      "path": "src/floorflow/inference/retrieval_prior.py"
+    },
+    "floorflow.inference.room_repair": {
+      "dependencies": [
+        "floorflow.data.taxonomy"
+      ],
+      "package": "inference",
+      "path": "src/floorflow/inference/room_repair.py"
+    },
+    "floorflow.inference.sampling_policy": {
+      "dependencies": [],
+      "package": "inference",
+      "path": "src/floorflow/inference/sampling_policy.py"
+    },
+    "floorflow.inference.structural_attention_repair": {
+      "dependencies": [],
+      "package": "inference",
+      "path": "src/floorflow/inference/structural_attention_repair.py"
+    },
+    "floorflow.inference.structured_decode": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.geometry.core",
+        "floorflow.heads.room_mask_decoder",
+        "floorflow.heads.structured_objects",
+        "floorflow.representation.polygon_targets"
+      ],
+      "package": "inference",
+      "path": "src/floorflow/inference/structured_decode.py"
+    },
+    "floorflow.model.anchor_fusion": {
+      "dependencies": [],
+      "package": "model",
+      "path": "src/floorflow/model/anchor_fusion.py"
+    },
+    "floorflow.model.backbone": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.flow.coarse_to_face",
+        "floorflow.heads.dynamic_output",
+        "floorflow.heads.geometry_heads",
+        "floorflow.heads.polygon_loop",
+        "floorflow.heads.room_groups",
+        "floorflow.heads.room_mask_decoder",
+        "floorflow.heads.room_partition",
+        "floorflow.heads.room_program",
+        "floorflow.heads.semantic_head",
+        "floorflow.heads.spatial_velocity_head",
+        "floorflow.heads.structured_objects",
+        "floorflow.heads.topology",
+        "floorflow.model.anchor_fusion",
+        "floorflow.model.backbone_ops",
+        "floorflow.model.budget",
+        "floorflow.model.family_stream_mixer",
+        "floorflow.model.flow_blocks",
+        "floorflow.model.hierarchical_pipeline",
+        "floorflow.model.layout_stream_mixer",
+        "floorflow.model.layoutbridge_adapters",
+        "floorflow.model.semantic_attention"
+      ],
+      "package": "model",
+      "path": "src/floorflow/model/backbone.py"
+    },
+    "floorflow.model.backbone_ops": {
+      "dependencies": [
+        "floorflow.representation.conditioning"
+      ],
+      "package": "model",
+      "path": "src/floorflow/model/backbone_ops.py"
+    },
+    "floorflow.model.budget": {
+      "dependencies": [],
+      "package": "model",
+      "path": "src/floorflow/model/budget.py"
+    },
+    "floorflow.model.builder": {
+      "dependencies": [
+        "floorflow.model.backbone",
+        "floorflow.model.budget",
+        "floorflow.model.registries",
+        "floorflow.model.specs"
+      ],
+      "package": "model",
+      "path": "src/floorflow/model/builder.py"
+    },
+    "floorflow.model.family_stream_mixer": {
+      "dependencies": [
+        "floorflow.representation.gate_diagnostics"
+      ],
+      "package": "model",
+      "path": "src/floorflow/model/family_stream_mixer.py"
+    },
+    "floorflow.model.flow_blocks": {
+      "dependencies": [],
+      "package": "model",
+      "path": "src/floorflow/model/flow_blocks.py"
+    },
+    "floorflow.model.hierarchical_pipeline": {
+      "dependencies": [
+        "floorflow.geometry.boundary_geometry",
+        "floorflow.heads.room_program",
+        "floorflow.heads.room_region_refiner"
+      ],
+      "package": "model",
+      "path": "src/floorflow/model/hierarchical_pipeline.py"
+    },
+    "floorflow.model.layout_router": {
+      "dependencies": [],
+      "package": "model",
+      "path": "src/floorflow/model/layout_router.py"
+    },
+    "floorflow.model.layout_stream_mixer": {
+      "dependencies": [
+        "floorflow.representation.gate_diagnostics"
+      ],
+      "package": "model",
+      "path": "src/floorflow/model/layout_stream_mixer.py"
+    },
+    "floorflow.model.layoutbridge_adapters": {
+      "dependencies": [],
+      "package": "model",
+      "path": "src/floorflow/model/layoutbridge_adapters.py"
+    },
+    "floorflow.model.modality_encoders": {
+      "dependencies": [],
+      "package": "model",
+      "path": "src/floorflow/model/modality_encoders.py"
+    },
+    "floorflow.model.registries": {
+      "dependencies": [
+        "floorflow.model.specs"
+      ],
+      "package": "model",
+      "path": "src/floorflow/model/registries.py"
+    },
+    "floorflow.model.room_graph_transport": {
+      "dependencies": [],
+      "package": "model",
+      "path": "src/floorflow/model/room_graph_transport.py"
+    },
+    "floorflow.model.semantic_attention": {
+      "dependencies": [
+        "floorflow.data.classes",
+        "floorflow.representation.slots"
+      ],
+      "package": "model",
+      "path": "src/floorflow/model/semantic_attention.py"
+    },
+    "floorflow.model.specs": {
+      "dependencies": [],
+      "package": "model",
+      "path": "src/floorflow/model/specs.py"
+    },
+    "floorflow.objectives.condition_objective": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.geometry.interior_wall",
+        "floorflow.heads.geometry_heads",
+        "floorflow.heads.polygon_loop",
+        "floorflow.heads.room_groups",
+        "floorflow.heads.room_mask_decoder",
+        "floorflow.heads.room_partition",
+        "floorflow.heads.room_program",
+        "floorflow.heads.structured_objects",
+        "floorflow.objectives.loss_audit",
+        "floorflow.objectives.observable_room_loss",
+        "floorflow.objectives.structural_consistency",
+        "floorflow.objectives.token_optimal_transport",
+        "floorflow.representation.polygon_targets"
+      ],
+      "package": "objectives",
+      "path": "src/floorflow/objectives/condition_objective.py"
+    },
+    "floorflow.objectives.design_reward": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.evaluation.metrics"
+      ],
+      "package": "objectives",
+      "path": "src/floorflow/objectives/design_reward.py"
+    },
+    "floorflow.objectives.loss_audit": {
+      "dependencies": [],
+      "package": "objectives",
+      "path": "src/floorflow/objectives/loss_audit.py"
+    },
+    "floorflow.objectives.observable_room_loss": {
+      "dependencies": [
+        "floorflow.data.taxonomy"
+      ],
+      "package": "objectives",
+      "path": "src/floorflow/objectives/observable_room_loss.py"
+    },
+    "floorflow.objectives.semantic_losses": {
+      "dependencies": [
+        "floorflow.data.taxonomy"
+      ],
+      "package": "objectives",
+      "path": "src/floorflow/objectives/semantic_losses.py"
+    },
+    "floorflow.objectives.structural_consistency": {
+      "dependencies": [
+        "floorflow.data.taxonomy"
+      ],
+      "package": "objectives",
+      "path": "src/floorflow/objectives/structural_consistency.py"
+    },
+    "floorflow.objectives.token_optimal_transport": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.representation.core"
+      ],
+      "package": "objectives",
+      "path": "src/floorflow/objectives/token_optimal_transport.py"
+    },
+    "floorflow.representation.conditioning": {
+      "dependencies": [],
+      "package": "representation",
+      "path": "src/floorflow/representation/conditioning.py"
+    },
+    "floorflow.representation.contour_memory": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.heads.room_partition",
+        "floorflow.representation.core"
+      ],
+      "package": "representation",
+      "path": "src/floorflow/representation/contour_memory.py"
+    },
+    "floorflow.representation.core": {
+      "dependencies": [
+        "floorflow.data.taxonomy"
+      ],
+      "package": "representation",
+      "path": "src/floorflow/representation/core.py"
+    },
+    "floorflow.representation.gate_diagnostics": {
+      "dependencies": [],
+      "package": "representation",
+      "path": "src/floorflow/representation/gate_diagnostics.py"
+    },
+    "floorflow.representation.masks": {
+      "dependencies": [],
+      "package": "representation",
+      "path": "src/floorflow/representation/masks.py"
+    },
+    "floorflow.representation.polygon_targets": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.representation.core"
+      ],
+      "package": "representation",
+      "path": "src/floorflow/representation/polygon_targets.py"
+    },
+    "floorflow.representation.slots": {
+      "dependencies": [],
+      "package": "representation",
+      "path": "src/floorflow/representation/slots.py"
+    },
+    "floorflow.training.checkpoint": {
+      "dependencies": [
+        "floorflow.data.taxonomy",
+        "floorflow.model.builder",
+        "floorflow.model.specs"
+      ],
+      "package": "training",
+      "path": "src/floorflow/training/checkpoint.py"
+    },
+    "floorflow.training.cli": {
+      "dependencies": [
+        "floorflow.training.runtime_acceleration"
+      ],
+      "package": "training",
+      "path": "src/floorflow/training/cli.py"
+    },
+    "floorflow.training.io": {
+      "dependencies": [
+        "floorflow.representation.contour_memory"
+      ],
+      "package": "training",
+      "path": "src/floorflow/training/io.py"
+    },
+    "floorflow.training.optimizer": {
+      "dependencies": [
+        "floorflow.model.backbone"
+      ],
+      "package": "training",
+      "path": "src/floorflow/training/optimizer.py"
+    },
+    "floorflow.training.runtime_acceleration": {
+      "dependencies": [],
+      "package": "training",
+      "path": "src/floorflow/training/runtime_acceleration.py"
+    },
+    "floorflow.training.training": {
+      "dependencies": [],
+      "package": "training",
+      "path": "src/floorflow/training/training.py"
+    }
+  },
+  "packages": [
+    "data",
+    "evaluation",
+    "flow",
+    "geometry",
+    "heads",
+    "inference",
+    "model",
+    "objectives",
+    "representation",
+    "training"
+  ],
+  "root": "src/floorflow",
+  "schema_version": 1,
+  "uncovered_legacy_aliases": []
+}

@@ -1,0 +1,36 @@
+{
+  "version": "chip-s205-sparse-consensus-v1",
+  "purpose": "Reduce the M75 candidate budget with sparse selection and a bounded residual.",
+  "candidate_views": [
+    "M48-s19:baseline",
+    "M48-s20:expanded",
+    "M61B:projector32",
+    "M65:baseline"
+  ],
+  "cohort": {
+    "train_manifest": "outputs/cohorts/chip_s205_consensus_500_manifest_v2.json",
+    "minimum_cases": 500,
+    "case_split": "case-level disjoint"
+  },
+  "model": {
+    "selection_mode": "topk_residual",
+    "top_k": 1,
+    "residual_limit": 0.05,
+    "hidden": 16,
+    "legalizer_aware_feature_dim": 14
+  },
+  "training": {
+    "epochs": 40,
+    "teacher_weight": 1.0,
+    "endpoint_weight": 0.1,
+    "entropy_weight": 0.0001,
+    "teacher_temperature": 0.1
+  },
+  "gate": {
+    "selection": "consensus must beat the fixed reference and approach the per-case best single under case-disjoint evaluation",
+    "primary": "cost and V_rel paired intervals exclude zero versus the matched reference",
+    "guard": "legalizer rung/solves and area/b2b/grouping do not regress",
+    "budget": "K <= 4 trajectories with all projection and legalizer calls counted"
+  },
+  "claim_boundary": "Learned sparse fusion is rejected. The frozen target-free min-B2B policy is retained for a fresh case-disjoint confirmation; no SOTA or external-PPA claim follows from the current 92-case holdout."
+}

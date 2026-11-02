@@ -1,0 +1,153 @@
+{
+  "schema_version": "fevp-metric-contract-v2",
+  "protocol": "FloorPlan Editing Verification Protocol",
+  "protocol_version": "1.0-hardened",
+  "implementation_version": "2.0",
+  "canonical_grid": {
+    "image_size": 256,
+    "label_dtype": "uint8",
+    "outside_pixel_tolerance": 0.0,
+    "wall_exclusion_dilation_px": 1
+  },
+  "tolerances": {
+    "room_match_min_iou": 0.5,
+    "room_polygon_hausdorff_px": 0.5,
+    "room_min_area_px": 4.0,
+    "room_overlap_area_px2": 4.0,
+    "edge_contact_px": 2.0,
+    "edge_snap_px": 1.5,
+    "wall_junction_cluster_px": 2.0,
+    "hole_min_area_px": 0.25,
+    "changed_pixel_epsilon": 0.0,
+    "float_report_decimals": 6
+  },
+  "metrics": {
+    "outside_exact": {
+      "input": "before labels, routed after labels, changed mask, edit region, footprint, taxonomy",
+      "output": [
+        "outside_pixel_exact",
+        "outside_room_level_exact",
+        "outside_room_label_exact",
+        "outside_room_polygon_exact",
+        "outside_edge_exact",
+        "locality_violation_rate"
+      ],
+      "definition": {
+        "outside_pixel_exact": "Fraction of valid outside pixels whose uint8 label is exactly unchanged; tolerance is zero pixels.",
+        "outside_room_level_exact": "Binary conjunction over all untouched before-edit room instances after one-to-one room matching, label equality, polygon tolerance, and adjacency preservation.",
+        "outside_room_label_exact": "All matched untouched room instances preserve their semantic room label.",
+        "outside_room_polygon_exact": "All matched untouched room polygons have boundary Hausdorff distance <= 0.5 px.",
+        "outside_edge_exact": "The induced adjacency edge set among untouched room instances is identical after one-to-one mapping.",
+        "locality_violation_rate": "Changed valid outside pixels divided by all valid outside pixels."
+      },
+      "matching": "One-to-one Hungarian matching; same semantic room type required; IoU >= 0.5; no many-to-one match.",
+      "negative_controls": [
+        "Move one untouched room mask by 1 px.",
+        "Change one untouched room semantic label.",
+        "Change one adjacency relation without moving pixels."
+      ]
+    },
+    "validity": {
+      "input": "predicted wall plan, room instances, taxonomy",
+      "output": [
+        "validity",
+        "outer_boundary_closed",
+        "room_polygon_closed",
+        "no_self_intersection",
+        "no_room_overlap",
+        "semantic_complete",
+        "validity_errors"
+      ],
+      "definition": {
+        "validity": "Conjunction of all five validity checks.",
+        "outer_boundary_closed": "Footprint contains a non-degenerate closed exterior ring.",
+        "room_polygon_closed": "Every room resolves to a non-degenerate closed ring.",
+        "no_self_intersection": "No room polygon self-intersects.",
+        "no_room_overlap": "No pairwise room interior overlap exceeds 4 px2 (a 2x2 grid-snap sliver).",
+        "semantic_complete": "Every room has a legal taxonomy room label."
+      },
+      "negative_controls": [
+        "Open the exterior boundary.",
+        "Make one room ring degenerate or non-closed.",
+        "Create a self-intersecting room polygon.",
+        "Overlap two rooms.",
+        "Replace one room label with an illegal label."
+      ]
+    },
+    "conditional_watertightness": {
+      "input": "predicted room polygons and wall graph plus target-watertight eligibility",
+      "output": [
+        "conditional_watertightness",
+        "watertight_rate",
+        "hole_count",
+        "hole_area_ratio",
+        "disconnected_component_count",
+        "dangling_endpoint_rate",
+        "watertight_issue_codes"
+      ],
+      "definition": "On eligible cases, rooms form a valid non-overlapping tiling of one connected interior without holes larger than 0.25 px2 and the wall graph is free of unclosed cycles.",
+      "negative_controls": [
+        "Inject a one-pixel interior hole.",
+        "Disconnect one room component.",
+        "Open one wall cycle."
+      ]
+    },
+    "node_f1": {
+      "input": "predicted and target room-type graph",
+      "output": [
+        "node_precision",
+        "node_recall",
+        "node_f1"
+      ],
+      "matching": "Unique semantic room types; set membership; no positional tolerance and no many-to-one.",
+      "negative_controls": [
+        "Delete one predicted node type.",
+        "Add one spurious node type.",
+        "Replace one room-type label."
+      ]
+    },
+    "edge_overlap": {
+      "input": "predicted and target room-type adjacency graph",
+      "output": [
+        "edge_precision",
+        "edge_recall",
+        "edge_f1",
+        "edge_overlap"
+      ],
+      "matching": "Undirected canonical semantic type pairs; adjacency means polygon boundaries within 2 px; no many-to-one.",
+      "negative_controls": [
+        "Delete one target adjacency edge.",
+        "Insert one spurious adjacency edge.",
+        "Shift a shared edge beyond 2 px."
+      ]
+    },
+    "delta_iou": {
+      "definition": "Change-map IoU inside the declared valid edit region.",
+      "aggregation": "Per-case values, operation distributions, room-count strata, edit-area strata, and hardest decile."
+    },
+    "delta_mse": {
+      "definition": "Binary change-map mean squared error inside the declared valid edit region.",
+      "aggregation": "Per-case values, operation distributions, room-count strata, edit-area strata, and hardest decile."
+    },
+    "ged": {
+      "definition": "Unit-cost attributed GED over room-type nodes with unit edge insertion/deletion and zero-cost matching edges.",
+      "evaluator": "floorflow.evaluation.housemind_structure.housemind_style_ged",
+      "fixed_configuration": {
+        "node_substitution_cost": "0 same room type, otherwise 1",
+        "node_insert_delete": 1,
+        "edge_insert_delete": 1,
+        "edge_substitution": 0,
+        "timeout_seconds": 0.5,
+        "fallback": "recorded and excluded from exact comparisons"
+      },
+      "aggregation": "Paired case differences, bootstrap CI, Wilcoxon signed-rank test; absolute values are not cross-paper comparisons."
+    }
+  },
+  "aggregation": {
+    "validity": "Mean of case-level binary conjunction.",
+    "conditional_watertightness": "Mean over target-watertight cases only.",
+    "outside_exact": "Mean of case-level binary exactness plus continuous violation rate separately.",
+    "node_and_edge": "Report precision, recall, F1, mean, SD, five-seed CI, and extrema.",
+    "hard_tail": "Lowest 10% Delta-IoU cases by seed."
+  }
+}

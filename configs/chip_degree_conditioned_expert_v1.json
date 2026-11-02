@@ -1,0 +1,47 @@
+{
+  "version": "chip-degree-conditioned-expert-v1",
+  "status": "rejected_frozen_adapter_screen",
+  "candidate": "degree-conditioned relational expert",
+  "candidate_flag": "--degree-conditioned-expert",
+  "base_checkpoint": "outputs/chip_hierarchy/v7_bbox_anneal_20k/typed_hierarchy_bbox_anneal_seed19_20k/checkpoints/final.pt",
+  "base_evaluation": "outputs/chip_hierarchy/sota_budget_v1/eval_old_v7_20k_dev32_cuda1.json",
+  "train_indices": "configs/chip_train_screen_5k_v1.json",
+  "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2",
+  "case_indices": "outputs/reports/chip_dev_screen_v45.json",
+  "seed": 23,
+  "device": "cuda:0",
+  "training": {
+    "steps": 2000,
+    "batch_size": 128,
+    "freeze_existing": true,
+    "architecture": "typed_hierarchy",
+    "hidden": 192,
+    "heads": 3,
+    "depth": 10,
+    "typed_layers": 1,
+    "head_dim": 64,
+    "projector_iterations": 4
+  },
+  "evaluation": {
+    "nfe": 4,
+    "refiner_steps": 400,
+    "refiner_lr": 0.001,
+    "refiner_schedule": "linear",
+    "projector_iterations": 8,
+    "legalizer_time_limit_ms": 2000,
+    "refiner_weights": {
+      "boundary": 2.0,
+      "group": 2.0,
+      "mib": 1.0,
+      "overlap": 10.0,
+      "wl": 1.0,
+      "area": 1.0
+    }
+  },
+  "gate": {
+    "max_relative_regression": 0.002,
+    "min_relative_improvement_in_at_least_one_metric": 0.005,
+    "required_feasibility": 1.0
+  },
+  "boundary": "Frozen-base adapter screen only. No full-data, routed-PPA or SOTA claim."
+}

@@ -1,0 +1,36 @@
+{
+  "schema_version": "opening-center-width-ranker-v1",
+  "status": "promoted_relative_opening_consumer_gate_open",
+  "model": {
+    "head_checkpoint": "outputs/train/opening_interval_centerwidth_promotion1024_seed19_v1/best.pt",
+    "candidate_ranker": "outputs/train/opening_centerwidth_candidate_ranker_v1/ranker.joblib",
+    "center_threshold": 0.5,
+    "verifier_threshold": 0.65,
+    "min_peak_distance_px": 20.0,
+    "decode_mode": "wall"
+  },
+  "training": {
+    "head_budget": "1024 train / 64 calibration, 8 epochs",
+    "ranker_train_cases": 1024,
+    "ranker_train_candidates": 141626,
+    "ranker_calibration": "val[0:96]",
+    "ranker_holdout": "val[96:288]",
+    "target_used_at_inference": false,
+    "test_opened": false
+  },
+  "oracle_host_val491": {
+    "vector_f1": 0.3805654637660137,
+    "vector_precision": 0.3156828437553534,
+    "vector_recall": 0.5053082193221305,
+    "geometry_matched": 8.627291242362526,
+    "family_consistent": 7.588594704684318
+  },
+  "full_consumer_val491": {
+    "opening_f1": 0.3379770374180755,
+    "delta_vs_previous_branch": 0.05567545060294388,
+    "paired_ci95": [0.03325914183868565, 0.07856526208546152],
+    "wilcoxon_p_greater": 0.000003145312201284882,
+    "non_opening_metrics": "unchanged_on_491_cases"
+  },
+  "claim_boundary": "Relative mechanism gain only; the full consumer remains below the absolute 0.35 opening gate."
+}

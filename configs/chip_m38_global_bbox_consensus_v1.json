@@ -1,0 +1,46 @@
+{
+  "version": "chip-m38-global-bbox-consensus-v1",
+  "status": "rejected_quick_gate",
+  "candidate": "M27 plus zero-initialized L0 envelope consensus at the L2 output",
+  "priority": "P0",
+  "pain_point": "M27's largest anchor deficit is the area/outline component, while hidden-token hierarchy bridges destabilize b2b and p2b geometry.",
+  "minimal_change": "After the Trinity backbone predicts L2 tokens, blend their global center and scale toward the model's L0 bbox forecast with one learned scalar. Relative block displacement and rho are preserved.",
+  "reuse": [
+    "M27 Trinity-initialized typed hierarchy",
+    "existing global_head prediction",
+    "exact-area decoder",
+    "hard constraint projector and refiner"
+  ],
+  "initialization": {
+    "source_checkpoint": "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed21_5k/checkpoints/final.pt",
+    "new_parameters": 1,
+    "initial_output_equivalence": true
+  },
+  "screen": {
+    "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2",
+    "train_indices": "configs/chip_train_screen_5k_v1.json",
+    "steps": 2000,
+    "batch_size": 128,
+    "seed": 21,
+    "control_arm": "outputs/chip_hierarchy/m36_hierarchy_token_bridge_v1/m36_control_quick/checkpoints/final.pt",
+    "candidate_arm": "outputs/chip_hierarchy/m36_hierarchy_token_bridge_v1/m38_bbox_consensus_quick/checkpoints/final.pt",
+    "refiner_steps": 400
+  },
+  "promotion_gate": "Joint legalized cost and V_rel improvement over M36 control, feasibility 1.0, and an area/outline gain.",
+  "falsification": "Area improves while either primary metric regresses, or the learned gate remains inactive.",
+  "quick_result": {
+    "control_cost": 1.138701604693825,
+    "candidate_cost": 1.1717688073985482,
+    "cost_relative": 0.029039,
+    "control_v_rel": 0.03650970115869849,
+    "candidate_v_rel": 0.03540010706775158,
+    "v_rel_relative": -0.030392,
+    "area_gap_relative": 0.453199,
+    "b2b_hpwl_relative": 0.674295,
+    "grouping_relative": -0.181818,
+    "learned_gate": 0.03294984996318817,
+    "decision": "Reject. The global envelope operator improves mean V_rel and grouping but regresses legalized cost, area, and b2b.",
+    "report": "outputs/reports/chip_m38_bbox_consensus_quick_refiner400_dev32.json"
+  },
+  "boundary": "Frozen subset mechanism screen only."
+}

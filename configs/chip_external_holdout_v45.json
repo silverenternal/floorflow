@@ -1,0 +1,170 @@
+{
+  "version": "2026-10-29-chip-external-holdout-v45",
+  "status": "frozen_before_new_ppa_outcomes",
+  "parent_policy": "configs/chip_external_holdout_adapter_v44.json",
+  "primary_protocol": {
+    "protocol_tag": "v45",
+    "nfe": 4,
+    "refiner_steps": 1600,
+    "refiner_learning_rate": 0.001,
+    "refiner_schedule": "linear",
+    "refiner_weights": {
+      "boundary": 2.0
+    },
+    "refiner_shape_update": true,
+    "refiner_optimizer": "adam",
+    "refiner_chunk": 5,
+    "candidate_projector_iterations": 8,
+    "legalizer_relation": "expanded",
+    "legalizer_time_limit_ms": 2000,
+    "deterministic": true,
+    "instance_hierarchy": true,
+    "preserve_reference_orientation": true,
+    "pairwise_common_route": "If either arm cannot use scale_pack, regenerate both arms with the existing deterministic shelf fallback.",
+    "same_refiner": "third_party/Trinity/src/trinity/sampling/refine_closed.py",
+    "same_legalizer": "src/floorflow/chip_flow/legalization.py"
+  },
+  "candidate": {
+    "architecture": "typed_hierarchy",
+    "seeds": {
+      "19": "outputs/chip_hierarchy/v7_bbox_anneal_20k/typed_hierarchy_bbox_anneal_seed19_20k/checkpoints/final.pt",
+      "20": "outputs/chip_hierarchy/v10_three_seed/typed_hierarchy_seed20_20k/checkpoints/final.pt",
+      "21": "outputs/chip_hierarchy/v10_three_seed/typed_hierarchy_seed21_20k/checkpoints/final.pt"
+    }
+  },
+  "control": {
+    "architecture": "trinity_token",
+    "seeds": {
+      "19": "outputs/chip_trinity/rescue_20k/trinity_token_seed19_20k/checkpoints/final.pt",
+      "20": "outputs/chip_trinity/rescue_20k/trinity_token_seed20_20k/checkpoints/final.pt",
+      "21": "outputs/chip_trinity/rescue_20k/trinity_token_seed21_20k/checkpoints/final.pt"
+    }
+  },
+  "cases": {
+    "nangate45/mempool_group": {
+      "input_odb": "outputs/chip_ppa/orfs/results/nangate45/mempool_group/macro_count/2_floorplan.odb",
+      "macro_halo_um": 20.0,
+      "coordinate_roundtrip_tolerance_um": 0.19,
+      "source_family": "mempool"
+    },
+    "nangate45/ariane133": {
+      "input_odb": "outputs/chip_ppa/orfs/results/nangate45/ariane133/macro_count/2_floorplan.odb",
+      "macro_halo_um": 20.0,
+      "coordinate_roundtrip_tolerance_um": 0.19,
+      "source_family": "ariane"
+    },
+    "nangate45/ariane136": {
+      "input_odb": "outputs/chip_ppa/orfs/results/nangate45/ariane136/macro_count/3_2_place_iop.odb",
+      "macro_halo_um": 20.0,
+      "coordinate_roundtrip_tolerance_um": 0.19,
+      "source_family": "ariane"
+    },
+    "nangate45/black_parrot": {
+      "input_odb": "outputs/chip_ppa/orfs/results/nangate45/bp/baseline/3_2_place_iop.odb",
+      "macro_halo_um": 20.0,
+      "coordinate_roundtrip_tolerance_um": 0.19,
+      "source_family": "black_parrot"
+    },
+    "nangate45/bp_be_top": {
+      "input_odb": "outputs/chip_ppa/orfs/results/nangate45/bp_be/macro_count/3_2_place_iop.odb",
+      "macro_halo_um": 20.0,
+      "coordinate_roundtrip_tolerance_um": 0.19,
+      "source_family": "black_parrot"
+    },
+    "nangate45/bp_fe_top": {
+      "input_odb": "outputs/chip_ppa/orfs/results/nangate45/bp_fe/macro_count/3_2_place_iop.odb",
+      "macro_halo_um": 20.0,
+      "coordinate_roundtrip_tolerance_um": 0.19,
+      "source_family": "black_parrot"
+    },
+    "nangate45/bp_multi_top": {
+      "input_odb": "outputs/chip_ppa/orfs/results/nangate45/bp_multi/macro_count/3_2_place_iop.odb",
+      "macro_halo_um": 20.0,
+      "coordinate_roundtrip_tolerance_um": 0.19,
+      "source_family": "black_parrot"
+    },
+    "nangate45/cva6": {
+      "input_odb": "outputs/chip_ppa/orfs/results/nangate45/cva6/macro_count/3_2_place_iop.odb",
+      "macro_halo_um": 20.0,
+      "coordinate_roundtrip_tolerance_um": 0.19,
+      "source_family": "cva6"
+    },
+    "nangate45/swerv_wrapper": {
+      "input_odb": "outputs/chip_ppa/orfs/results/nangate45/swerv_wrapper/macro_count/3_2_place_iop.odb",
+      "macro_halo_um": 20.0,
+      "coordinate_roundtrip_tolerance_um": 0.19,
+      "source_family": "swerv"
+    },
+    "nangate45/tinyRocket": {
+      "input_odb": "outputs/chip_ppa/orfs/results/nangate45/tinyRocket/baseline/3_2_place_iop.odb",
+      "macro_halo_um": 20.0,
+      "coordinate_roundtrip_tolerance_um": 0.19,
+      "source_family": "rocket"
+    },
+    "asap7/cva6": {
+      "input_odb": "outputs/chip_ppa/orfs/results/asap7/cva6/macro_count/2_floorplan.odb",
+      "macro_halo_um": 1.08,
+      "coordinate_roundtrip_tolerance_um": 0.054,
+      "source_family": "cva6"
+    },
+    "asap7/swerv_wrapper": {
+      "input_odb": "outputs/chip_ppa/orfs/results/asap7/swerv_wrapper/macro_count/2_floorplan.odb",
+      "macro_halo_um": 1.08,
+      "coordinate_roundtrip_tolerance_um": 0.054,
+      "source_family": "swerv"
+    },
+    "asap7/riscv32i": {
+      "input_odb": "outputs/chip_ppa/orfs/results/asap7/riscv32i/macro_count/2_floorplan.odb",
+      "macro_halo_um": 1.08,
+      "coordinate_roundtrip_tolerance_um": 0.054,
+      "source_family": "riscv32i"
+    },
+    "asap7/coralnpu": {
+      "input_odb": "outputs/chip_ppa/orfs/results/asap7/coralnpu/macro_count/2_floorplan.odb",
+      "macro_halo_um": 1.08,
+      "coordinate_roundtrip_tolerance_um": 0.054,
+      "source_family": "coralnpu"
+    },
+    "sky130hd/microwatt": {
+      "input_odb": "outputs/chip_ppa/orfs/results/sky130hd/microwatt/macro_count/2_floorplan.odb",
+      "macro_halo_um": 2.0,
+      "coordinate_roundtrip_tolerance_um": 2.72,
+      "source_family": "microwatt"
+    }
+  },
+  "hard_constraint_policy": {
+    "shape_inflation": "platform-specific symmetric macro halo before packing",
+    "coordinate_roundtrip_tolerance_um": 0.19,
+    "required_checks": [
+      "one-to-one macro names",
+      "fixed width and height",
+      "inside core",
+      "zero overlap",
+      "ORFS macro placement parse",
+      "ORFS PDN/place preflight",
+      "DEF coordinate round-trip"
+    ],
+    "failure_policy": "A placement that fails any check remains a reported failure and is not sent to routed PPA."
+  },
+  "claim_boundary": {
+    "holdout_was_unseen_before_freeze": true,
+    "selection_independent_of_candidate_outcome": true,
+    "no_case_replacement_by_outcome": true,
+    "independent_design_count": 15,
+    "independent_rtl_family_count": 9,
+    "families": {
+      "ariane": ["nangate45/ariane133", "nangate45/ariane136"],
+      "black_parrot": ["nangate45/black_parrot", "nangate45/bp_be_top", "nangate45/bp_fe_top", "nangate45/bp_multi_top"],
+      "cva6": ["nangate45/cva6", "asap7/cva6"],
+      "swerv": ["nangate45/swerv_wrapper", "asap7/swerv_wrapper"],
+      "rocket": ["nangate45/tinyRocket"],
+      "mempool": ["nangate45/mempool_group"],
+      "riscv32i": ["asap7/riscv32i"],
+      "coralnpu": ["asap7/coralnpu"],
+      "microwatt": ["sky130hd/microwatt"]
+    },
+    "do_not_describe_seeds_as_independent_cases": true,
+    "cross_platform_units_must_be_reported_per_platform": true,
+    "no_paper_or_ppa_claim_from_seed19_screen_alone": true
+  }
+}

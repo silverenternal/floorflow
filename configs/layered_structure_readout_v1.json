@@ -1,0 +1,58 @@
+{
+  "schema_version": "layered-structure-readout-v1",
+  "hypothesis": "Keep room cells independent from wall and opening evidence, then decode openings as host-wall intervals; this should preserve room identity while improving wall precision and opening recall.",
+  "reuse": {
+    "room_route": "outputs/reports/room_identity_safety_global_val491_v1.json",
+    "wall_evidence": "outputs/train/p6_geometry_full_v1/best.pt",
+    "opening_interval": "src/floorflow/heads/opening_interval_head.py",
+    "canonical_decoder": "src/floorflow/geometry/partition_polygons.py",
+    "reasonableness": "src/floorflow/evaluation/generated_plan_plausibility.py"
+  },
+  "baseline": {
+    "room_iou": 0.3338266971802452,
+    "instance_f1": 0.2927073705715303,
+    "wall_f1": 0.4646299993215231,
+    "wall_precision": 0.37224273902260435,
+    "opening_f1": 0.0980724213872631,
+    "node_f1": 0.7156201294861988,
+    "edge_f1": 0.47078964078778984,
+    "ged": 10.90020366598778
+  },
+  "preflight_evidence": {
+    "centerline_precision_cal64": 0.59573,
+    "consensus_wall_precision_cal64": 0.70170,
+    "consensus_wall_f1_cal64": 0.47031,
+    "opening_overlay_f1_cal64": 0.05325,
+    "existing_interval_best_f1_cal64": 0.11262,
+    "standalone_centerline_wall_f1_cal64": 0.28441,
+    "standalone_centerline_opening_f1_cal64": 0.00240,
+    "decision": "Do not fuse wall or opening evidence into the room raster; train a host-wall interval decoder against GT intervals."
+  },
+  "probe_order": [
+    "Canonical room layer from the safe-routing candidate.",
+    "Wall layer from centerline-vs-structure consensus at threshold 0.8.",
+    "Opening intervals anchored to decoded wall segments.",
+    "Canonical CAD composition and reasonableness evaluation.",
+    "Only after a positive zero-training probe, train an 8-epoch-or-plateau refiner."
+  ],
+  "budget_gate": {
+    "zero_training_required": true,
+    "screen_epochs_if_positive": 8,
+    "promotion_epochs_or_plateau": 24,
+    "gpu": "cuda:0",
+    "test_opened": false
+  },
+  "gates": {
+    "room_non_regression": "Room IoU and Instance F1 paired CIs must not show material regression.",
+    "wall": "Precision >= 0.55 and F1 improves.",
+    "opening": "F1 >= 0.30 and improves.",
+    "graph": "Node F1 and Edge F1 improve; GED decreases.",
+    "safety": "Validity 1.0, wall continuity >= 0.95, functional watertightness >= 0.95, plan plausibility >= 0.95."
+  },
+  "outcome": {
+    "zero_training_readout": "rejected_for_opening",
+    "supported_component": "wall-centerline is retained as a separate wall layer",
+    "unsupported_component": "thresholded opening-center and existing interval fusion do not improve opening F1",
+    "next_route": "train the existing WallIntervalHead on host-wall start/length/type targets while using centerline only to refine a validated wall plan"
+  }
+}

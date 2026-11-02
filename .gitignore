@@ -1,0 +1,52 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+rust/target/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv
+.external_envs/
+
+# Local data mounts and generated artifacts
+.data/
+outputs/
+checkpoints/
+wandb/
+logs/
+*.log
+*.sqlite
+*.sqlite3
+*.npz
+*.npy
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.safetensors
+*.h5
+*.keras
+*.zip
+*.tar
+*.tar.*
+*.tgz
+
+# Vendored third-party trees contain data, checkpoints, and nested repositories.
+# Keep the provenance/license index, but do not commit the source trees.
+third_party/*
+!third_party/README.md
+
+# Local secrets and OS files
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db

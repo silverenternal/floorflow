@@ -1,0 +1,54 @@
+{
+  "version": "chip-m75-tail-safe-selection-v1",
+  "date": "2026-11-01",
+  "status": "pass_absolute_budget_candidate",
+  "policy": "legality_guarded_consensus",
+  "uses_target": false,
+  "uses_trinity_outcomes": false,
+  "sources": {
+    "m48_inference_seeds": [19, 20, 21],
+    "deterministic": ["M61B", "M65"]
+  },
+  "variants": ["baseline", "expanded", "projector32"],
+  "eligibility": {
+    "solver_reference": "per-case M48 seed19 baseline",
+    "rung_non_escalation": true,
+    "solves_non_escalation": true,
+    "complete_target_free_geometry_required_for_rescue": true
+  },
+  "risk_gate": {
+    "outline_compactness_below": 0.65,
+    "absolute_outline_aspect_above": 0.75,
+    "b2b_hpwl_above_median_multiplier": 1.25,
+    "p2b_hpwl_above_median_multiplier": 1.25,
+    "trigger": "any"
+  },
+  "consensus_rank": [
+    "v_rel_ascending",
+    "b2b_hpwl_ascending",
+    "p2b_hpwl_ascending",
+    "outline_compactness_descending",
+    "absolute_outline_aspect_ascending"
+  ],
+  "selection": {
+    "default": "legality_first",
+    "risk_rescue": "geometry_consensus",
+    "within_case_only": true,
+    "candidate_permutation_invariant": true
+  },
+  "budget": {
+    "trajectories": 10,
+    "nfe_total": 14,
+    "refiner_steps_total": 16000,
+    "legalizer_calls": 15
+  },
+  "primary_gate": {
+    "candidate_feasibility": 1.0,
+    "solver_escalations": 0,
+    "cost_mean_anchor_wins_required": 3,
+    "v_rel_mean_anchor_wins_required": 3,
+    "pooled_case_cluster_cost_ci_high": 0.0,
+    "pooled_case_cluster_v_rel_ci_high": 0.0
+  },
+  "claim_boundary": "Absolute multi-seed candidate-search budget only. Not same-inference, not training-seed replication and not external routed-PPA evidence."
+}

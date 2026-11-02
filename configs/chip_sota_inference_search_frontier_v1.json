@@ -1,0 +1,134 @@
+{
+  "version": "chip-sota-inference-search-frontier-v1",
+  "date": "2026-10-30",
+  "status": "frozen_waiting_for_s1_checkpoint_and_m6_selector",
+  "source_plan": "docs/chip_sota_budget_comparison_v1.md",
+  "candidate_selection": {
+    "source_report": "outputs/reports/chip_sota_training_range_compute_ladder_v1.json",
+    "fallback_report": "outputs/reports/chip_sota_training_compute_ladder_v1.json",
+    "rule": "Use the final completed S1 arm that passed its advance gate. Never choose a checkpoint from the inference outcomes.",
+    "required_parameter_count": 5836447,
+    "required_use_ema": true,
+    "required_feasible_fraction": 1.0
+  },
+  "manifests": {
+    "screen32": "outputs/reports/chip_dev_screen_v45.json",
+    "official100": "outputs/cache/chip_official_test_100_v1/metadata.json",
+    "highblock8": "outputs/reports/chip_sota_official_highblock8_manifest_v1.json"
+  },
+  "grids": {
+    "one_sample": {
+      "nfe_curve": {
+        "nfe": [1, 2, 4, 8, 16, 32],
+        "refiner_steps": 400,
+        "draws": 1
+      },
+      "refiner_curve": {
+        "nfe": 4,
+        "refiner_steps": [0, 50, 100, 200, 400, 800, 1600, 3200],
+        "draws": 1
+      }
+    },
+    "multi_draw": {
+      "nfe": 4,
+      "refiner_steps": 400,
+      "draws": [1, 4, 16, 48],
+      "selection_modes": [
+        "oracle_diagnostic",
+        "deployable_selector"
+      ]
+    }
+  },
+  "stages": [
+    {
+      "id": "S4-a-nfe-screen",
+      "manifest": "screen32",
+      "candidate_and_anchor": true,
+      "promotion": "Keep every point. Advance only Pareto points plus any retained negative boundary."
+    },
+    {
+      "id": "S4-b-refiner-screen",
+      "manifest": "screen32",
+      "candidate_and_anchor": true,
+      "promotion": "Keep all points, including non-monotonic 3200 and zero-step refiner."
+    },
+    {
+      "id": "S4-c-official-confirmation",
+      "manifest": "official100",
+      "candidate_and_anchor": true,
+      "promotion": "Evaluate frozen Pareto points on Official-100; do not search the grid on Official-100."
+    },
+    {
+      "id": "S4-d-highblock-tail",
+      "manifest": "highblock8",
+      "candidate_and_anchor": true,
+      "promotion": "A pooled win fails if the high-block outlier materially regresses."
+    },
+    {
+      "id": "S4-e-oracle-draw-ceiling",
+      "manifest": "official100",
+      "candidate_and_anchor": true,
+      "selection_mode": "oracle_diagnostic",
+      "promotion": "Appendix ceiling only; never supports a deployable claim."
+    },
+    {
+      "id": "S4-f-deployable-draws",
+      "manifest": "official100",
+      "candidate_and_anchor": true,
+      "selection_mode": "deployable_selector",
+      "promotion": "Blocked until M6 validates a selector beyond p2b on untouched proposals."
+    }
+  ],
+  "training": {
+    "steps": 0,
+    "comment": "Inference-only frontier; use one frozen S1 checkpoint."
+  },
+  "inference": {
+    "device": "cuda:0",
+    "seed": 19,
+    "refiner_lr": 0.001,
+    "refiner_schedule": "linear",
+    "refiner_weights": {
+      "boundary": 2.0,
+      "group": 2.0,
+      "mib": 1.0,
+      "overlap": 10.0,
+      "wl": 1.0,
+      "area": 1.0
+    },
+    "projector_iterations": 8,
+    "legalizer_time_limit_ms": 2000,
+    "deterministic": true
+  },
+  "budget_ledger": {
+    "required_fields": [
+      "parameters",
+      "network_evaluations_per_draw",
+      "refiner_steps_per_draw",
+      "draws",
+      "legalizer_calls",
+      "selector_calls",
+      "eda_response_seconds",
+      "generation_seconds",
+      "total_seconds",
+      "gpu",
+      "peak_gpu_memory_mb"
+    ],
+    "oracle_compute_rule": "Charge every generated draw whose output or score is inspected.",
+    "single_sample_quality_threshold": "Exact Trinity d192 on the same NFE/refiner point.",
+    "equal_quality_threshold": "Frozen anchor quality before evaluating higher draw counts."
+  },
+  "claim_gates": {
+    "same_inference_win": "Both cost and V_rel are lower than the exact anchor at identical NFE, refiner, draws, selector and legalizer budget.",
+    "equal_quality_efficiency_win": "A paired case-clustered interval excludes zero for the total-budget saving at a frozen anchor quality threshold.",
+    "absolute_budget_win": "Both metrics beat the strongest exact same-protocol anchor with parameters, training, NFE, refiner, draws, selector, EDA response and wall time disclosed.",
+    "required_guard": "Legalized feasibility remains 1.0; high-block and Official-100 negative points remain in the ledger.",
+    "forbidden": [
+      "using Official-100 outcomes to choose the grid",
+      "using target-derived oracle selection as deployment evidence",
+      "hiding legalizer, selector or EDA-response cost",
+      "combining different budget points into one unconditional SOTA claim"
+    ]
+  },
+  "boundary": "Frozen planning configuration only; no inference-budget or SOTA claim exists before measured reports complete."
+}

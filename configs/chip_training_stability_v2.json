@@ -1,0 +1,42 @@
+{
+  "version": "chip-training-stability-v2",
+  "status": "cpu_recipe_ready_gpu_unrun",
+  "parent": "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed21_5k/checkpoints/final.pt",
+  "seeds": [19, 20, 21],
+  "data": {
+    "train_indices": "configs/chip_train_scaling_20k_v1.json",
+    "eval_curve": "configs/chip_eval_curve_v1.json",
+    "source_mode": "mixed",
+    "source_levels": "derived",
+    "source_shelf_probability": 0.25,
+    "source_shelf_probability_final": 0.75,
+    "source_shelf_probability_steps": 4000,
+    "geometry_augment": "dihedral",
+    "geometry_augment_probability": 0.25
+  },
+  "optimizer": {
+    "backbone_unfreeze_step": 1000,
+    "backbone_lr_scale": 0.1,
+    "structured_head_lr_scale": 1.0,
+    "legalizer_head_lr_scale": 1.0,
+    "ema_mode": "warmup",
+    "ema_warmup_steps": 1000,
+    "grad_clip_per_group": true
+  },
+  "gates": {
+    "quick": {
+      "steps": 2000,
+      "nfe": 1,
+      "refiner_steps": 400,
+      "feasibility": 1.0,
+      "require_all_training_seeds_both_primary_non_regressing": true
+    },
+    "confirmation": {
+      "steps": 5000,
+      "nfe": 4,
+      "refiner_steps": 1600,
+      "paired_ci_must_exclude_zero": true
+    }
+  },
+  "boundary": "Recipe and CPU checks only. Do not claim stabilization before all three training seeds pass."
+}

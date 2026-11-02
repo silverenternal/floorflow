@@ -1,0 +1,327 @@
+{
+  "version": "chip-protocol-actions-v2",
+  "date": "2026-10-30",
+  "status": "active",
+  "scope": "FloorSet block-level floorplanning plus explicitly budgeted ORFS downstream feedback",
+  "decision_rule": "Map every real design action to a protocol input, model state or operator, sampler stage, objective, projector, or external evaluator before adding a module. External EDA stages remain external unless matched trainable data exists.",
+  "action_sequence": [
+    {
+      "id": "synthesis",
+      "real_action": "Synthesize RTL into a gate-level netlist, block hierarchy, standard-cell demand and multi-pin nets.",
+      "protocol_visibility": "Reduced to block areas, pairwise b2b edges, pin-to-block edges, fixed ports and hierarchy-derived constraints.",
+      "coverage": "partial",
+      "model_mappings": [
+        {
+          "stage": "typed_encoder_input",
+          "source": "src/floorflow/chip_flow/graph_conditioning.py",
+          "symbols": ["graph_conditioned_features", "dense_b2b_adjacency"]
+        },
+        {
+          "stage": "pairwise_netlist_messages",
+          "source": "src/floorflow/chip_flow/sparse_layers.py",
+          "symbols": ["GraphMessageBlock", "_b2b_context", "_pin_context"]
+        },
+        {
+          "stage": "typed_memory",
+          "source": "src/floorflow/chip_flow/typed_graph_encoder.py",
+          "symbols": ["TypedGraphOutput", "TypedGraphEncoder"]
+        }
+      ],
+      "gap": "FloorSet supplies pairwise b2b edges rather than training labels for true net hyperedges. ORFS can export multi-pin nets, but adding a hyperedge path without matched FloorSet training data would create a protocol shift.",
+      "next_action": "Retain pairwise training. Revisit hyperedge tokens only after a matched hyperedge-enabled benchmark or a validated external-only adaptation."
+    },
+    {
+      "id": "floorplan_setup",
+      "real_action": "Choose die/core scale, aspect, utilization and the global placement envelope.",
+      "protocol_visibility": "Target block areas and the reference placement bounding box; FloorSet has no fixed outline.",
+      "coverage": "strong",
+      "model_mappings": [
+        {
+          "stage": "exact_area_decode",
+          "source": "src/floorflow/chip_flow/model.py",
+          "symbols": ["decode_boxes_batch"]
+        },
+        {
+          "stage": "L0_global_state",
+          "source": "src/floorflow/chip_flow/hierarchical_flow.py",
+          "symbols": [
+            "HierarchyState",
+            "build_hierarchy_targets",
+            "global_head",
+            "outline_condition_from_boxes",
+            "outline_condition_from_hw"
+          ]
+        },
+        {
+          "stage": "bbox_objective",
+          "source": "src/floorflow/chip_flow/train_objective.py",
+          "symbols": ["hierarchy_bbox_schedule"]
+        }
+      ],
+      "gap": "The global envelope is learned rather than coupled to a user-specified utilization target.",
+      "next_action": "Strengthen this path only if utilization-constrained cases are added to the protocol."
+    },
+    {
+      "id": "io_pin_planning",
+      "real_action": "Plan and orient IO terminals, ports and their block connections.",
+      "protocol_visibility": "Fixed pin coordinates and weighted p2b incidence; port direction and model-generated port placement are unavailable.",
+      "coverage": "conditioned_not_generated",
+      "model_mappings": [
+        {
+          "stage": "L3_port_tokens",
+          "source": "src/floorflow/chip_flow/typed_graph_encoder.py",
+          "symbols": ["_port_tokens", "port_block_incidence", "constraint_to_port"]
+        },
+        {
+          "stage": "L3_alignment_state",
+          "source": "src/floorflow/chip_flow/hierarchical_flow.py",
+          "symbols": ["port_head", "port_state"]
+        }
+      ],
+      "gap": "Pins condition block placement but are not generated or oriented. Direction is absent from the current FloorSet schema.",
+      "next_action": "Do not generate ports under the current protocol. If direction-aware external designs become a target, add it once to the existing port tokens after a matched probe."
+    },
+    {
+      "id": "macro_placement_and_shape",
+      "real_action": "Place macros or block partitions and select their aspect ratios and orientations.",
+      "protocol_visibility": "Block centers and aspect ratios are generated; target area is exact. ORFS reference orientation is preserved because orientation is not a FloorSet label.",
+      "coverage": "strong_for_position_shape_partial_for_orientation",
+      "model_mappings": [
+        {
+          "stage": "L2_per_block_trajectory",
+          "source": "src/floorflow/chip_flow/hierarchical_flow.py",
+          "symbols": ["HierarchicalTokenFlowModel", "block_prediction", "HierarchyPrediction"]
+        },
+        {
+          "stage": "flow_ode",
+          "source": "src/floorflow/chip_flow/hierarchical_flow_runtime.py",
+          "symbols": ["integrate_hierarchy_step", "sample_hierarchy_flow"]
+        },
+        {
+          "stage": "external_orientation_export",
+          "source": "src/floorflow/chip_flow/ppa_external.py",
+          "symbols": ["export_macro_tcl", "preserve_reference_orientation"]
+        },
+        {
+          "stage": "U1_state_to_active_edge_trajectory",
+          "source": "src/floorflow/chip_flow/sparse_layers.py",
+          "symbols": ["StateEdgeRelay", "prepare_state_edge_cache"]
+        }
+      ],
+      "gap": "Position and shape have a native trajectory path. Orientation has no protocol label and no corresponding trained action.",
+      "next_action": "Keep reference orientation. Add an orientation decision only after matched orientation labels and a routed-PPA probe show that it matters."
+    },
+    {
+      "id": "macro_spacing_halo_and_legality",
+      "real_action": "Enforce macro halos, channels, blockages, fixed shapes, preplacement and non-overlap.",
+      "protocol_visibility": "Fixed/preplaced constraints and overlap are native. Halo and channel geometry are introduced by the external ORFS adapter, not FloorSet.",
+      "coverage": "native_overlap_external_halo",
+      "model_mappings": [
+        {
+          "stage": "hard_projection",
+          "source": "src/floorflow/chip_flow/hard_constraint_projector.py",
+          "symbols": ["project_hard_constraints", "project_hard_constraints_latent", "corrected_velocity"]
+        },
+        {
+          "stage": "conditioned_projection_plan",
+          "source": "src/floorflow/chip_flow/projections.py",
+          "symbols": ["prepare_conditioned_projection", "project_conditioned_latent"]
+        },
+        {
+          "stage": "external_halo_adapter",
+          "source": "src/floorflow/chip_flow/ppa_external.py",
+          "symbols": ["inflate_boxes", "deflate_boxes", "shelf_pack_fixed"]
+        },
+        {
+          "stage": "core_fit_repair",
+          "source": "src/floorflow/chip_flow/legalization.py",
+          "symbols": ["scale_pack_legalize_reproducible", "translate_into_core"]
+        }
+      ],
+      "gap": "The model does not observe task-specific halo/channel tokens before generation. A feasible scale-pack layout that exceeded the core was previously replaced by canonical shelf packing, collapsing distinct proposals.",
+      "next_action": "The external legalizer now rigidly translates a feasible scale-pack layout into the core before shelf fallback and verifies pair identity. Add halo/channel tokens only if halo conflicts remain the measured model failure."
+    },
+    {
+      "id": "constraint_repair_before_route",
+      "real_action": "Repair cluster, multi-instance shape and outer-boundary constraints before signoff.",
+      "protocol_visibility": "Native cluster, MIB and boundary-coded block fields.",
+      "coverage": "native_but_seed_sensitive",
+      "model_mappings": [
+        {
+          "stage": "L1_structural_state",
+          "source": "src/floorflow/chip_flow/hierarchical_flow.py",
+          "symbols": ["structural_membership", "structural_head"]
+        },
+        {
+          "stage": "constraint_energy",
+          "source": "src/floorflow/chip_flow/batched.py",
+          "symbols": ["batch_physics_terms", "batch_grouping_proxy"]
+        },
+        {
+          "stage": "final_legalization",
+          "source": "src/floorflow/chip_flow/legalization.py",
+          "symbols": ["scale_pack_legalize_reproducible"]
+        },
+        {
+          "stage": "U1_structural_state_to_edge_trajectory",
+          "source": "src/floorflow/chip_flow/hierarchical_flow.py",
+          "symbols": ["dynamic_graph_relay", "StateEdgeContext"]
+        }
+      ],
+      "gap": "Paths exist, but grouping and MIB evidence is weak and boundary behavior is seed-sensitive.",
+      "next_action": "Require matched ablations on the existing L1 state and refiner. Reject scalar grouping-weight sweeps and extra typed layers already shown ineffective."
+    },
+    {
+      "id": "pdn",
+      "real_action": "Construct power distribution networks, rails and straps.",
+      "protocol_visibility": "ORFS stage after block placement.",
+      "coverage": "external_only",
+      "model_mappings": [],
+      "gap": "No model state or training target exists.",
+      "next_action": "Keep PDN external. A PDN-named head would not correspond to a learned protocol action."
+    },
+    {
+      "id": "standard_cell_global_placement",
+      "real_action": "Place standard cells using density, routability and timing objectives around fixed macros.",
+      "protocol_visibility": "ORFS 3_3_place_gp response after a legalized macro proposal.",
+      "coverage": "external_feedback",
+      "model_mappings": [
+        {
+          "stage": "bounded_response",
+          "source": "scripts/run_chip_analytical_response.py",
+          "symbols": ["3_3_place_gp", "seed_variant"]
+        },
+        {
+          "stage": "response_parser",
+          "source": "src/floorflow/chip_flow/analytical_feedback.py",
+          "symbols": ["summarize_analytical_response"]
+        },
+        {
+          "stage": "proposal_search",
+          "source": "scripts/evaluate_chip_analytical_search.py",
+          "symbols": ["selection_policy", "response_only"]
+        }
+      ],
+      "gap": "A validated global-place response can rank proposals, but the current network has no standard-cell density field.",
+      "next_action": "First complete matched-flow proposal ranking. Only a validated response may be distilled into the existing L1/L2 path or used as a scoped sampler response."
+    },
+    {
+      "id": "standard_cell_detail_placement",
+      "real_action": "Legalize and optimize standard cells after global placement.",
+      "protocol_visibility": "ORFS placement stages.",
+      "coverage": "external_only",
+      "model_mappings": [],
+      "gap": "No model-side standard-cell nodes exist.",
+      "next_action": "Keep external. Revisit only with a full-netlist or standard-cell-aware protocol."
+    },
+    {
+      "id": "clock_tree_synthesis",
+      "real_action": "Build and buffer the clock tree.",
+      "protocol_visibility": "ORFS CTS stage.",
+      "coverage": "external_only",
+      "model_mappings": [],
+      "gap": "No clock tree or buffering action is represented.",
+      "next_action": "Remain external."
+    },
+    {
+      "id": "global_and_detail_routing",
+      "real_action": "Assign routing resources, then construct wires and vias while satisfying DRC.",
+      "protocol_visibility": "ORFS global and detailed routing plus congestion and DRC endpoints.",
+      "coverage": "external_only",
+      "model_mappings": [],
+      "gap": "No routing-capacity grid or detailed-route geometry path exists in the generator.",
+      "next_action": "Use routed WL, overflow and DRC as independent guards. Do not claim in-model congestion awareness without a validated signal."
+    },
+    {
+      "id": "signoff",
+      "real_action": "Check timing, power, area and design-rule correctness.",
+      "protocol_visibility": "Certified post-route ORFS Metrics and DRC artifacts.",
+      "coverage": "external_only",
+      "model_mappings": [],
+      "gap": "No timing or power conditioning exists in the model.",
+      "next_action": "Keep timing/power/DRC as post-route endpoints and do not infer them from global-place timing."
+    }
+  ],
+  "active_gap_queue": [
+    {
+      "id": "validated_globalplace_response",
+      "priority": "P0",
+      "action_id": "standard_cell_global_placement",
+      "existing_path": "proposal search after legalized generation",
+      "status": "matched-flow pilot pending response",
+      "promotion_rule": "Promote only if analytical ranking beats p2b on new proposals under fixed NFE/refiner budget and preserves legality."
+    },
+    {
+      "id": "L1_constraint_necessity",
+      "priority": "P1",
+      "action_id": "constraint_repair_before_route",
+      "existing_path": "L1 structural tokens and refiner energies",
+      "status": "existing weak or non-discriminative",
+      "promotion_rule": "Run a matched L1 ablation before adding another structural layer or loss."
+    },
+    {
+      "id": "routing_feedback_after_response",
+      "priority": "P1",
+      "action_id": "standard_cell_global_placement",
+      "existing_path": "L1/L2 conditioning or bounded sampler feedback",
+      "status": "blocked_on_validated_globalplace_response",
+      "promotion_rule": "Use one field/token path grounded in a pre-generation feature or one explicitly budgeted test-time response. No scalar routing proxy."
+    },
+    {
+      "id": "dynamic_state_graph_relay",
+      "priority": "P0",
+      "action_id": "macro_placement_and_shape",
+      "existing_path": "GraphMessageBlock and typed graph context",
+      "status": "static_context_reused_across_ode_steps",
+      "promotion_rule": "Extend the existing active-edge sparse path with a zero-init geometry relay driven by the current flow state. Require a representation-sensitivity probe and reject any dense per-step typed re-encoding or static-equivalent gate."
+    },
+    {
+      "id": "response_critical_partial_reflow",
+      "priority": "P1",
+      "action_id": "standard_cell_global_placement",
+      "existing_path": "frozen-budget sampler plus post-generation response ranking",
+      "status": "blocked_on_validated_globalplace_response",
+      "promotion_rule": "Preserve a legal parent, select critical blocks without post-route oracle data, and spend the remaining fixed NFE/refiner budget on a partial trajectory. Report EDA response and legalization cost separately."
+    },
+    {
+      "id": "legalized_pair_identity",
+      "priority": "P0",
+      "action_id": "macro_spacing_halo_and_legality",
+      "existing_path": "scale_pack and deterministic shelf fallback",
+      "status": "core_translation_repair_passed_on_v45_sensitivity",
+      "promotion_rule": "Every external candidate/control pair must have distinct TCL hashes and a common route before ORFS. Preserve rigid core translation and retain any unresolved shelf collapse."
+    },
+    {
+      "id": "fixed_outline_l0_conditioning",
+      "priority": "P1",
+      "action_id": "floorplan_setup",
+      "existing_path": "L0 global_state and bbox prediction",
+      "status": "opt_in_l0_conditioning_implemented_untrained",
+      "promotion_rule": "Add a normalized desired-outline vector to L0 conditioning and train it on a frozen subset. If feasibility remains zero, add a deterministic outline-manifold fit/projection after exact-area decode. Require outline-feasible fraction improvement beyond refiner-weight-only adaptation while preserving fixed blocks, MIB sharing and exact area."
+    },
+    {
+      "id": "hyperedge_data_gap",
+      "priority": "P2",
+      "action_id": "synthesis",
+      "existing_path": "typed structural memory",
+      "status": "deferred_protocol_mismatch",
+      "promotion_rule": "Requires matched hyperedge training data or an external-only claim."
+    },
+    {
+      "id": "orientation_data_gap",
+      "priority": "P2",
+      "action_id": "macro_placement_and_shape",
+      "existing_path": "L2 block trajectory",
+      "status": "deferred_no_protocol_label",
+      "promotion_rule": "Requires matched orientation labels and a demonstrated routed-PPA failure."
+    },
+    {
+      "id": "halo_channel_data_gap",
+      "priority": "P2",
+      "action_id": "macro_spacing_halo_and_legality",
+      "existing_path": "constraint tokens and hard projector",
+      "status": "external_adapter_only",
+      "promotion_rule": "Requires halo-aware training cases or a frozen external adaptation probe."
+    }
+  ]
+}

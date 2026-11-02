@@ -1,0 +1,67 @@
+{
+  "schema_version": "raster2seq-hybrid-tail-repair-v1",
+  "scope": "Raster2Seq-proposal plus FloorFlow-legalizer hybrid; not standalone FloorFlow",
+  "base_configuration": {
+    "audit_size": 256,
+    "boundary_width": 7,
+    "reconcile_gap_fraction": 0.06,
+    "room_source": "Raster2Seq proposals",
+    "footprint_source": "predicted room support after 32px fragment merge"
+  },
+  "candidate": {
+    "repair_open_endpoints": true,
+    "prune_short_open_spur": true,
+    "open_spur_length_fraction": 0.02,
+    "frame_endpoint_tolerance_fraction": 0.012,
+    "frame_border_connectors": true,
+    "rooms_are_not_changed": true,
+    "openings_are_not_retargeted_beyond_existing_projection": true
+  },
+  "mechanism_screen": {
+    "tail_images": [4, 26, 54, 55, 73, 76, 96, 107],
+    "tail_passes_before": 0,
+    "tail_passes_after": 5,
+    "repaired_cases": [4, 26, 54, 55],
+    "persistent_unrepaired_cases": [73, 76, 96, 107],
+    "control_images": [0, 1, 2, 3, 5, 6, 7, 8, 25, 27, 53, 56, 72, 74, 95, 97, 106, 108],
+    "control_regressions": 0,
+    "control_official_metric_changes": 0,
+    "control_wall_area_changes": 0,
+    "control_wall_count_delta_sum": -4
+  },
+  "full_result": {
+    "report": "outputs/reports/raster2seq_floorflow_audit_val503_final_v6.json",
+    "status": "pass",
+    "cases": 503,
+    "plan_failures_before": 26,
+    "plan_failures_after": 13,
+    "plan_plausibility_before": 0.94831013916501,
+    "plan_plausibility_after": 0.974155069582505,
+    "wall_continuity_case_pass_before": 0.9602385685884692,
+    "wall_continuity_case_pass_after": 0.9860834990059643,
+    "validity": 1.0,
+    "functional_watertight": 0.9880715705765407,
+    "official_casewise_metric_changes": 0,
+    "adapter_fidelity_changes": 0,
+    "wall_area_fraction_casewise_changes": 0,
+    "wall_count_mean_before": 113.1868787276342,
+    "wall_count_mean_after": 112.95228628230616,
+    "remaining_failure_modes": {
+      "multi_component_wall_continuity": 7,
+      "multi_component_room_face_collapse": 2,
+      "multi_component_partition_protocol_boundary": 3,
+      "single_component_room_face_collapse": 1
+    }
+  },
+  "full_gate": {
+    "plan_plausibility_min": 0.95,
+    "wall_continuity_case_pass_min": 0.95,
+    "functional_watertight_min": 0.95,
+    "validity": 1.0,
+    "official_raster2seq_metrics_must_be_unchanged": true,
+    "wall_area_fraction_must_not_increase": true,
+    "wall_count_may_not_exceed_gap006_by_more_than_fraction": 0.10
+  },
+  "role": "Bounded structural repair candidate; not evidence of Room IoU improvement",
+  "test503_open": false
+}

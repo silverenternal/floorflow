@@ -1,0 +1,44 @@
+{
+  "version": "chip-m28-anchor-preserving-finetune-v1",
+  "status": "seed20_partial_repair_not_anchor_win",
+  "candidate": "M28 Trinity-initialized typed hierarchy with 0.1x backbone LR",
+  "trinity_backbone_init": "third_party/Trinity/checkpoints/d192",
+  "architecture": {
+    "hidden": 192,
+    "heads": 3,
+    "depth": 12,
+    "typed_layers": 1,
+    "head_dim": 64,
+    "projector_iterations": 4
+  },
+  "training": {
+    "train_indices": "configs/chip_train_scaling_20k_v1.json",
+    "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2",
+    "steps": 5000,
+    "batch_size": 128,
+    "sampling_mode": "random",
+    "lr": 0.0002,
+    "backbone_lr_scale": 0.1,
+    "seed": 20,
+    "device": "cuda:1"
+  },
+  "evaluation": {
+    "official_cache": "outputs/cache/chip_official_test_100_v1",
+    "inference_seed": 19,
+    "nfe": 4,
+    "refiner_steps": 1600,
+    "refiner_weights": {
+      "boundary": 2.0,
+      "group": 2.0,
+      "mib": 1.0,
+      "overlap": 10.0,
+      "wl": 1.0,
+      "area": 1.0
+    }
+  },
+  "promotion": {
+    "seed20_gate": "Cost and V_rel both no worse than the group2 anchor seed19 means.",
+    "all_seed_gate": "Repeat the same frozen recipe on training seeds 19 and 21; all-seed mean and pooled intervals must support the claim.",
+    "selection_boundary": "Official-100 cannot select training seeds or hyperparameters."
+  }
+}

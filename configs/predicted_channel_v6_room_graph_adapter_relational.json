@@ -1,0 +1,11 @@
+{
+  "schema_version": "predicted-channel-v6-room-graph-adapter-relational",
+  "extends": "predicted_channel_v6_room_graph_adapter_control.json",
+  "status": "adapter_preserving_candidate",
+  "model": {
+    "room_instance_relational_adjacency": true,
+    "room_instance_class_count_prior": false,
+    "count_aware_second_graph": true
+  },
+  "claim_boundary": "Relational pair plus closed-loop second graph pass; no score is inherited."
+}

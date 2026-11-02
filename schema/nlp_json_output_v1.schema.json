@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://floorflow.local/schema/nlp-json-output-v1.schema.json",
+  "title": "NLP Flow structured output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "payload"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": [
+        "nlp-json-output-v1"
+      ]
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "ast",
+        "patch",
+        "tool_action",
+        "diagnostic",
+        "engineering_result"
+      ]
+    },
+    "payload": {
+      "type": "object"
+    },
+    "constraints": {
+      "type": "object"
+    }
+  }
+}

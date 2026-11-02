@@ -1,0 +1,74 @@
+{
+  "version": "chip-m23-depth-parity-v1",
+  "status": "rejected_confirmation_on_5k_subset",
+  "candidate": "M23 typed hierarchy with Trinity-parity backbone depth",
+  "candidate_flag": null,
+  "candidate_args": [
+    "--hierarchy-depth",
+    "12"
+  ],
+  "train_indices": "configs/chip_train_screen_5k_v1.json",
+  "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2",
+  "case_indices": "outputs/reports/chip_dev_screen_v45.json",
+  "seed": 23,
+  "device": "cuda:1",
+  "architecture": {
+    "hidden": 192,
+    "heads": 3,
+    "depth": 10,
+    "typed_layers": 1,
+    "head_dim": 64,
+    "projector_iterations": 4
+  },
+  "training": {
+    "batch_size": 128,
+    "grad_accum_steps": 1,
+    "sampling_mode": "random",
+    "curve_per_count": 5,
+    "sampling_steps": 8,
+    "checkpoint_every": 500,
+    "overlap_weight_scale": 10.0,
+    "hierarchy_bbox_weight": 0.5,
+    "hierarchy_bbox_decay_steps": 10000
+  },
+  "quick": {
+    "steps": 2000,
+    "refiner_steps": 400
+  },
+  "confirmation": {
+    "steps": 5000,
+    "refiner_steps": 1600
+  },
+  "evaluation": {
+    "nfe": 4,
+    "refiner_lr": 0.001,
+    "refiner_schedule": "linear",
+    "projector_iterations": 8,
+    "legalizer_time_limit_ms": 2000,
+    "refiner_weights": {
+      "boundary": 2.0,
+      "group": 2.0,
+      "mib": 1.0,
+      "overlap": 10.0,
+      "wl": 1.0,
+      "area": 1.0
+    }
+  },
+  "promotion": {
+    "max_relative_regression": 0.002,
+    "min_relative_improvement_in_at_least_one_metric": 0.005,
+    "required": "Control is the existing scratch-trained d192-depth10 arm from the U1 frozen screen. Candidate changes only the backbone depth from 10 to the d192 anchor's 12 layers."
+  },
+  "diagnosis": {
+    "pain_point": "The total parameter budget is matched to Trinity d192, but the typed encoder consumes capacity while the backbone remains 2 layers shallower than the exact anchor.",
+    "hypothesis": "Depth parity removes the long-budget convergence ceiling while retaining typed per-block graph conditioning.",
+    "falsification": "No joint gain at 2k/refiner400 or reversal at 5k/refiner1600.",
+    "parameter_delta": {
+      "base": 5836447,
+      "candidate": 6797217,
+      "added": 960770,
+      "ratio": 1.164615561488008
+    }
+  },
+  "boundary": "Frozen-subset architecture screen only. No full-data, routed-PPA or SOTA claim."
+}

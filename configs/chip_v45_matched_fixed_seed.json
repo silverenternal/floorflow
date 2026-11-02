@@ -1,0 +1,44 @@
+{
+  "version": "chip-v45-matched-fixed-seed-v1",
+  "status": "frozen_before_seed21_confirmation",
+  "protocol": {
+    "cache": "outputs/cache/chip_official_test_100_v1",
+    "cases": 100,
+    "nfe": 4,
+    "refiner_steps": 1600,
+    "refiner_lr": 0.001,
+    "refiner_schedule": "linear",
+    "refiner_weights": {
+      "boundary": 2.0,
+      "group": 2.0
+    },
+    "refiner_shape": true,
+    "refiner_optimizer": "adam",
+    "refiner_chunk": 5,
+    "projector_iterations": 8,
+    "legalizer_time_limit_ms": 2000,
+    "use_ema": true,
+    "deterministic": true
+  },
+  "candidate_training_seeds": [19, 20, 21],
+  "inference_seed": 19,
+  "candidate_reports": {
+    "19": "outputs/reports/chip_v45_candidate_official_1600_seed19_sample19_group2_cuda0.json",
+    "20": "outputs/reports/chip_v45_candidate_official_1600_seed20_sample19_group2_cuda0.json",
+    "21": "outputs/reports/chip_v45_candidate_official_1600_seed21_sample19_group2_cuda0.json"
+  },
+  "anchor_report": "outputs/reports/chip_v45_trinity_d192_official_1600_seed19_group2_cuda0.json",
+  "gates": {
+    "protocol": [
+      "candidate seed 19, 20 and 21 reports use inference seed 19",
+      "candidate reports use projector_iterations 8",
+      "candidate and anchor use identical group=2 boundary=2 refiner settings"
+    ],
+    "metrics": [
+      "legalized cost",
+      "legalized V_rel"
+    ],
+    "confirmation": "All three training seeds must beat the same anchor on both metrics; pooled case-cluster confidence intervals must exclude zero."
+  },
+  "negative_result_policy": "The earlier tied training/inference seed and mixed projector run remains archived and cannot be used as confirmation."
+}

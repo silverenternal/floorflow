@@ -1,0 +1,98 @@
+{
+  "version": "chip-hard-gates-v45",
+  "status": "contract_frozen_with_protocol_audit",
+  "scope": "pure_chips_only",
+  "objective": "Resolve matched-compute and external routed-PPA blockers before any new SOTA claim.",
+  "seeds": [19, 20, 21],
+  "candidate_train_seeds": [19, 20, 21],
+  "inference_seed": 19,
+  "screen_seed": 19,
+  "primary_nfe": 4,
+  "screen_refiner_steps": [400, 800, 1200, 1600],
+  "saturation_refiner_steps": [400, 800, 1200, 1600, 2400, 3200],
+  "matched_refiner_steps": 1600,
+  "projector_iterations": 8,
+  "use_ema": true,
+  "refiner": {
+    "learning_rate": 0.001,
+    "schedule": "linear",
+    "optimizer": "adam",
+    "chunk": 5,
+    "shape_update": true,
+    "weights": {
+      "boundary": 2.0
+    }
+  },
+  "matched_refiner_weights": {
+    "boundary": 2.0,
+    "group": 2.0
+  },
+  "legalizer": {
+    "name": "scale_pack",
+    "time_limit_ms": 2000,
+    "glop_threads": 1
+  },
+  "dev": {
+    "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2/dev",
+    "screen_cases": 32,
+    "screen_salt": "chip-hard-gates-v45",
+    "screen_manifest": "outputs/reports/chip_dev_screen_v45.json"
+  },
+  "official": {
+    "cache": "outputs/cache/chip_official_test_100_v1",
+    "cases": 100
+  },
+  "candidate_checkpoints": {
+    "19": "outputs/chip_hierarchy/v7_bbox_anneal_20k/typed_hierarchy_bbox_anneal_seed19_20k/checkpoints/final.pt",
+    "20": "outputs/chip_hierarchy/v10_three_seed/typed_hierarchy_seed20_20k/checkpoints/final.pt",
+    "21": "outputs/chip_hierarchy/v10_three_seed/typed_hierarchy_seed21_20k/checkpoints/final.pt"
+  },
+  "matched_control_checkpoints": {
+    "19": "outputs/chip_trinity/rescue_20k/trinity_token_seed19_20k/checkpoints/final.pt",
+    "20": "outputs/chip_trinity/rescue_20k/trinity_token_seed20_20k/checkpoints/final.pt",
+    "21": "outputs/chip_trinity/rescue_20k/trinity_token_seed21_20k/checkpoints/final.pt"
+  },
+  "baseline_evidence": [
+    "outputs/reports/chip_refiner_official_1600_three_seed_v44.json",
+    "outputs/reports/chip_matched_budget_1600_detglop_seed19_v44.json",
+    "outputs/reports/chip_external_ppa_holdout_v44_all.json",
+    "outputs/reports/chip_p2b_routing_rootcause_v44_holdout18.json",
+    "outputs/reports/chip_final_sota_gate_v44.json"
+  ],
+  "matched_compute_gate": {
+    "metrics": ["legalized_hard_cost", "legalized_v_rel"],
+    "direction": "lower_is_better",
+    "screen_requirement": "candidate_strictly_better_on_both",
+    "official_requirement": "candidate_strictly_better_on_both_for_all_three_seeds",
+    "pooled_interval_requirement": "paired_ci_upper_below_zero",
+    "legality_requirement": "legalized_feasible_fraction_equals_1"
+  },
+  "external_gate": {
+    "minimum_independent_designs": 15,
+    "multi_seed_designs": 6,
+    "primary_metric": "detailedroute__route__wirelength",
+    "minimum_relative_improvement": -0.02,
+    "congestion_max_relative_mean": 0.0,
+    "timing_max_mean_regression_ns": 0.02,
+    "power_max_relative_regression": 0.05,
+    "area_max_relative_regression": 0.05,
+    "drc": "zero_regression"
+  },
+  "external_holdout": {
+    "config": "configs/chip_external_holdout_v45.json",
+    "manifest": "outputs/reports/chip_external_holdout_v45_manifest.json",
+    "independent_designs": 15,
+    "independent_rtl_families": 9
+  },
+  "protocol_audit": {
+    "rejected": "The first v45 three-seed comparison mixed projector_iterations=4 for seed 19 with 8 for seeds 20-21 and also tied the inference seed to the training seed.",
+    "repair": "Use one inference seed 19 for all candidate training seeds and the released anchor; require projector_iterations=8 in every compared report."
+  },
+  "selection_policy": {
+    "official_outcomes_for_selection": false,
+    "frozen_before_v45_screen": true,
+    "same_budget_candidate_and_control": true,
+    "best_of_n_official_rerank_for_primary_claim": false,
+    "subgroup_confirmation_must_be_untouched": true
+  }
+}

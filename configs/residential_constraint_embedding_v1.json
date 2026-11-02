@@ -1,0 +1,55 @@
+{
+  "schema_version": "residential-constraint-embedding-config-v1",
+  "scope": "residential_floorplan_only",
+  "features": {
+    "node_features": 8,
+    "global_features": 8,
+    "action_features": 15,
+    "hard_mask_features": 8,
+    "constraint_diagnostics": 7,
+    "typed_layers": 6,
+    "negative_per_group": 2,
+    "train_rows": 95092,
+    "validation_rows": 9152
+  },
+  "model": {
+    "hidden_dim": 384,
+    "embedding_dim": 192,
+    "parameter_budget": [2000000, 5000000],
+    "heads": [
+      "legal",
+      "seven_family_violation",
+      "normality_energy"
+    ]
+  },
+  "optimization": {
+    "device": "cuda:0",
+    "epochs": 40,
+    "batch_size": 256,
+    "learning_rate": 0.0005,
+    "weight_decay": 0.0001,
+    "gradient_clip": 5.0,
+    "amp": true,
+    "losses": {
+      "multi_positive_infonce": 0.25,
+      "multi_label_violation_bce": 1.0,
+      "legal_bce": 1.0,
+      "energy_ranking": 0.1
+    }
+  },
+  "selection": {
+    "split": "even/odd validation group index",
+    "head": "legal",
+    "threshold": "calibration split under false-feasible rate <= 0.05",
+    "temperature": "single positive scalar fitted on calibration split",
+    "gate": {
+      "auroc_min": 0.90,
+      "false_feasible_rate_max": 0.05,
+      "ece_max": 0.05
+    }
+  },
+  "boundaries": {
+    "test503_locked": true,
+    "soft_metrics_not_fevp": true
+  }
+}

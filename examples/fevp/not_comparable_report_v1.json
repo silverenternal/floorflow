@@ -1,0 +1,51 @@
+{
+  "schema_version": "fevp-report-v1",
+  "protocol_version": "1.0",
+  "report_id": "housemind-public-context",
+  "method": "HouseMind",
+  "dataset": "RPLAN natural-language editing",
+  "task": "natural-language floorplan editing",
+  "comparability": {
+    "status": "not_comparable",
+    "notes": "No matched FEVP report or released official inference pipeline."
+  },
+  "edit_region": {
+    "definition": "Not exposed as a matched edit rectangle.",
+    "rasterization_rule": "Not applicable to the current report.",
+    "valid_outside_rule": "Not reported under FEVP."
+  },
+  "scorer": {
+    "implementation": "public paper/demo audit",
+    "version": "2026-10-27",
+    "code_commit": "code-soon"
+  },
+  "mandatory": {
+    "outside_exact": {
+      "status": "not_comparable"
+    },
+    "validity": {
+      "status": "not_comparable"
+    },
+    "conditional_watertightness": {
+      "status": "not_comparable"
+    },
+    "node_f1": {
+      "status": "reported_outside_fevp",
+      "value": 0.998
+    },
+    "edge_overlap": {
+      "status": "reported_outside_fevp",
+      "value": 0.934
+    }
+  },
+  "optional": {
+    "ged": {
+      "status": "reported_outside_fevp",
+      "value": 0.467
+    }
+  },
+  "cases": {
+    "count": 2308
+  },
+  "source_map": {}
+}

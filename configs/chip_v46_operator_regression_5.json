@@ -1,0 +1,12 @@
+{
+  "version": "chip-v46-operator-regression-5",
+  "purpose": "Deterministic prefix of the frozen 32-case dev manifest for operator-equivalence regression only.",
+  "source": "outputs/reports/chip_dev_screen_v45.json",
+  "indices": [
+    6146,
+    124,
+    3335,
+    9512,
+    3913
+  ]
+}

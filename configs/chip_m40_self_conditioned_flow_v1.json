@@ -1,0 +1,54 @@
+{
+  "version": "chip-m40-self-conditioned-flow-v1",
+  "status": "rejected_quick_gate",
+  "candidate": "M27 plus zero-initialized prior-x0 self-conditioning",
+  "priority": "P0",
+  "pain_point": "Later Euler calls are stateless even though the first M27 call is strong. Multi-step and long-refiner quality can therefore fail to preserve a good initial estimate.",
+  "minimal_change": "Store the previous detached x0 block estimate in HierarchyState and map it through a zero-initialized low-rank 3D residual before the next backbone call. The first call has no history and is exactly M27.",
+  "initialization": {
+    "source_checkpoint": "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed21_5k/checkpoints/final.pt",
+    "new_parameter_prefix": "history_to_latent.",
+    "first_call_equivalence": true
+  },
+  "training": {
+    "train_indices": "configs/chip_train_screen_5k_v1.json",
+    "steps": 2000,
+    "batch_size": 128,
+    "seed": 21,
+    "data_seed": 21,
+    "self_conditioning_keep_probability": 0.5,
+    "device": "cuda:0"
+  },
+  "control": {
+    "checkpoint": "outputs/chip_hierarchy/m36_hierarchy_token_bridge_v1/m36_control_quick/checkpoints/final.pt",
+    "cost": 1.138701604693825,
+    "v_rel": 0.03650970115869849
+  },
+  "evaluation": {
+    "manifest": "outputs/reports/chip_dev_screen_v45.json",
+    "nfe": 4,
+    "refiner_steps": 400,
+    "inference_seed": 19
+  },
+  "promotion_gate": "Joint legalized cost and V_rel improvement over the matched control with feasibility 1.0 and no area/b2b collapse.",
+  "falsification": "Non-identical first-call output, either primary metric regresses, or only the training curve improves.",
+  "quick_result": {
+    "candidate_cost": 1.237285181249375,
+    "cost_relative": 0.086575,
+    "cost_ci": [0.021921, 0.200445],
+    "candidate_v_rel": 0.04291366713059068,
+    "v_rel_relative": 0.175405,
+    "area_gap_relative": 0.79178,
+    "area_ci": [0.010433, 0.115837],
+    "b2b_hpwl_relative": 1.194254,
+    "b2b_ci": [0.004667, 0.063028],
+    "p2b_hpwl_relative": 52.34361,
+    "grouping_relative": 0.227273,
+    "boundary_relative": 0.095238,
+    "rho_mae_relative": 0.020813,
+    "feasible_fraction": 1.0,
+    "decision": "Reject M40. Latent/rho/area training-curve gains reverse at the legalized endpoint; cost, area, and b2b intervals all exclude zero in the harmful direction.",
+    "report": "outputs/reports/chip_m40_self_conditioned_quick_refiner400_dev32.json"
+  },
+  "boundary": "Frozen subset mechanism screen only; no full-data or SOTA claim."
+}

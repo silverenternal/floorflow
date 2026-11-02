@@ -1,0 +1,1 @@
+Direct-tiled graph refinement improves room identity and adjacency across edit operations and room-count strata while moving the predicted graph distribution closer to the fixed target. The worst candidate-node decile remains a reported limitation.

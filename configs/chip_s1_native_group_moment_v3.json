@@ -1,0 +1,30 @@
+{
+  "version": "chip-s1-native-group-moment-v3",
+  "parent": "M27 canonical seed21",
+  "purpose": "Flow typed group moments as a native hierarchy state before conditioning per-block geometry.",
+  "architecture": {
+    "architecture": "typed_hierarchy",
+    "hidden": 192,
+    "heads": 3,
+    "depth": 12,
+    "typed_layers": 1,
+    "head_dim": 64
+  },
+  "branches": {
+    "structural_relation_head": true,
+    "group_moment_conditioning": true
+  },
+  "objective": {
+    "structural_relation_weight": 0.1,
+    "relation_gate_weight": 0.01,
+    "hierarchy_bbox_weight": 0.5,
+    "hierarchy_bbox_decay_steps": 10000
+  },
+  "training": {
+    "scope": "b2b+downstream",
+    "subset": "configs/chip_m63_response_indices1k_v1.json",
+    "probe_steps": 300,
+    "eval_budget": "NFE4/refiner400 on the 500-case frozen dev curve"
+  },
+  "claim_boundary": "Native-state implementation candidate only; no quality claim before matched GPU screening."
+}

@@ -1,0 +1,118 @@
+{
+  "schema_version": "weak-metric-balanced-budget-v1",
+  "status": "superseded_by_stage_mita_v2_and_room_mita_v3",
+  "scope": "residential_cubicasa_only",
+  "diagnosis": {
+    "room_model_parameter_share": {
+      "encoder": 0.9397,
+      "query_decoder": 0.0524,
+      "count_head": 0.0079
+    },
+    "predicted_stage_heads_before": {
+      "rooms": "1x1 conv over shared 64-channel trunk",
+      "walls": "1x1 conv over shared 64-channel trunk",
+      "openings": "1x1 conv over shared 64-channel trunk",
+      "furniture": "1x1 conv over shared 64-channel trunk"
+    },
+    "weak_metrics": {
+      "room_iou": "readout-limited rather than encoder-limited",
+      "wall_f1": "shared one-channel stage head and insufficient structure-bridge exposure",
+      "opening_f1": "shared generic stage head without spatially dynamic host conditioning",
+      "furniture_f1": "generic stage head without room-conditioned spatial gating",
+      "node_edge_ged": "static stage links and class-mass readout erase owner identity"
+    }
+  },
+  "room_head_budget": {
+    "architecture": {
+      "decoder_channels": 128,
+      "hidden_dim": 192,
+      "queries": 32,
+      "layers": 5,
+      "heads": 4,
+      "query_set_hidden": 128,
+      "query_set_pool": 64,
+      "query_set_layers": 1,
+      "estimated_parameters": 15256748,
+      "query_decoder_share": 0.1588,
+      "query_set_head_parameters": 448058,
+      "query_set_head_share": 0.0294
+    },
+    "screen": {
+      "train_cases": 512,
+      "epochs": 12,
+      "batch_size": 8,
+      "sample_exposures": 6144,
+      "optimizer_updates": 768
+    },
+    "promotion": {
+      "train_cases": 1024,
+      "epochs": 16,
+      "batch_size": 8,
+      "sample_exposures": 16384,
+      "optimizer_updates": 2048
+    },
+    "confirmation": {
+      "train_cases": 5122,
+      "epochs": 16,
+      "batch_size": 8,
+      "sample_exposures": 81952,
+      "optimizer_updates": 10256
+    }
+  },
+  "predicted_stage_budget": {
+    "architecture": {
+      "field_channels": 64,
+      "head_channels": 128,
+      "attention_grid": 24,
+      "typed_layers": 3,
+      "dynamic_stage_heads": true,
+      "stage_head_hidden": 96,
+      "dynamic_stage_links": true,
+      "estimated_parameters": 2233051
+    },
+    "screen": {
+      "train_cases": 512,
+      "epochs": 12,
+      "batch_size": 4,
+      "sample_exposures": 6144,
+      "optimizer_updates": 1536
+    },
+    "promotion": {
+      "train_cases": 1024,
+      "epochs": 16,
+      "batch_size": 8,
+      "sample_exposures": 16384,
+      "optimizer_updates": 2048
+    }
+  },
+  "structure_bridge_budget": {
+    "parameters": 774261,
+    "screen": {
+      "train_cases": 512,
+      "epochs": 12,
+      "batch_size": 8
+    },
+    "aligned_full": {
+      "train_cases": 5126,
+      "epochs": 12,
+      "batch_size": 16,
+      "sample_exposures": 61512,
+      "optimizer_updates": 3852
+    }
+  },
+  "balanced_ablations": [
+    "room decoder capacity only",
+    "dynamic stage heads only",
+    "dynamic stage links only",
+    "full weak-metric arm",
+    "parameter-matched random-capacity control"
+  ],
+  "global_dynamics": [
+    "owner map and owner-change boundaries",
+    "predicted-control evidence context",
+    "per-image channel graph bias",
+    "per-pixel stage gates",
+    "per-image CAD stage link bias"
+  ],
+  "claim_boundary": "Budget and architecture contract only; no weak-metric improvement claim before matched runs."
+}

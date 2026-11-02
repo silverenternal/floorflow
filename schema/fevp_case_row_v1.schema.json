@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://floorflow.dev/schema/fevp-case-row-v1.schema.json",
+  "title": "FloorPlan Editing Verification Protocol Case Row v1.0",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "case_id",
+    "operation",
+    "source_hash",
+    "outside_pixel_exact",
+    "outside_room_label_exact",
+    "validity",
+    "target_watertight",
+    "conditional_watertightness",
+    "node_f1",
+    "edge_overlap"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "fevp-case-row-v1"
+    },
+    "case_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "operation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "outside_pixel_exact": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "outside_room_label_exact": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "validity": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "target_watertight": {
+      "type": "boolean"
+    },
+    "conditional_watertightness": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "node_f1": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "edge_overlap": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "optional": {
+      "type": "object",
+      "properties": {
+        "delta_iou": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "ged": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0.0
+        },
+        "delta_mse": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      }
+    },
+    "denominators": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}

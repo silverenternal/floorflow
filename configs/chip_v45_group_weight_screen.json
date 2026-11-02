@@ -1,0 +1,39 @@
+{
+  "version": "chip-v45-group-weight-screen-v1",
+  "status": "frozen_before_robustness_runs",
+  "scope": "Frozen 32-case dev only; no Official-100 outcomes may select a weight.",
+  "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2/dev",
+  "case_indices": "outputs/reports/chip_dev_screen_v45.json",
+  "checkpoints": {
+    "19": "outputs/chip_hierarchy/v7_bbox_anneal_20k/typed_hierarchy_bbox_anneal_seed19_20k/checkpoints/final.pt",
+    "20": "outputs/chip_hierarchy/v10_three_seed/typed_hierarchy_seed20_20k/checkpoints/final.pt",
+    "21": "outputs/chip_hierarchy/v10_three_seed/typed_hierarchy_seed21_20k/checkpoints/final.pt"
+  },
+  "common_protocol": {
+    "nfe": 4,
+    "refiner_steps": 1600,
+    "refiner_lr": 0.001,
+    "refiner_schedule": "linear",
+    "boundary_weight": 2.0,
+    "refiner_shape": true,
+    "refiner_optimizer": "adam",
+    "refiner_chunk": 5,
+    "projector_iterations": 8,
+    "legalizer_time_limit_ms": 2000,
+    "use_ema": true,
+    "deterministic": true
+  },
+  "group_weights": [1.0, 1.25, 1.5, 2.0],
+  "selection_rule": {
+    "baseline_weight": 1.0,
+    "one_weight_must_be_shared_by_all_training_seeds": true,
+    "primary": "Choose the admissible weight with the lowest mean relative legalized cost across seeds, then break ties by mean relative V_rel.",
+    "admissibility": [
+      "mean relative cost is below zero against group=1.0",
+      "mean relative V_rel is below zero against group=1.0",
+      "pooled V_rel is not worse than zero",
+      "legalized feasible fraction equals 1.0 for every seed and arm"
+    ],
+    "stop_rule": "If no non-baseline weight is admissible, retain group=1.0 or group=2.0 only as a matched control recipe and do not attribute its gain to the model."
+  }
+}

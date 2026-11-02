@@ -1,0 +1,80 @@
+"""Build reproducible manifests for joint distribution-CFM training runs."""
+
+from __future__ import annotations
+
+
+def build_joint_run_manifest(
+    *,
+    args,
+    model,
+    runtime,
+    convergence,
+    flow_preset: str,
+    flow_backend: str,
+    flow_backend_version: str,
+    batches_per_epoch: int,
+    updates_per_epoch: int,
+    total_updates: int,
+    joint_updates: int,
+) -> dict:
+    return {
+        "dataset": args.dataset,
+        "skv4_root": str(args.skv4_root),
+        "flow_preset": flow_preset,
+        "flow_matcher": args.flow_matcher,
+        "flow_backend": flow_backend,
+        "flow_backend_version": flow_backend_version,
+        "time_sampling": args.time_sampling,
+        "time_sampling_mean": args.time_sampling_mean,
+        "time_sampling_std": args.time_sampling_std,
+        "minibatch_ot": args.minibatch_ot,
+        "ot_token_grid": args.ot_token_grid,
+        "flow_sigma": args.flow_sigma,
+        "flow_endpoint_weight": args.flow_endpoint_weight,
+        "flow_change_weight": args.flow_change_weight,
+        "optimizer": convergence.manifest(),
+        "runtime": runtime.manifest(),
+        "batches_per_epoch": batches_per_epoch,
+        "updates_per_epoch": updates_per_epoch,
+        "total_updates": total_updates,
+        "joint_updates": joint_updates,
+        "effective_batch_size": (
+            args.batch_size * args.gradient_accumulation_steps
+        ),
+        "element_warmup_updates": args.element_warmup_updates,
+        "element_warmup_lr": args.element_warmup_lr,
+        "selection": args.selection,
+        "gradient_balance_interval": args.gradient_balance_interval,
+        "gradient_balance_min_scale": args.gradient_balance_min_scale,
+        "gradient_balance_max_scale": args.gradient_balance_max_scale,
+        "loss_metric_patience": args.loss_metric_patience,
+        "loss_metric_drop": args.loss_metric_drop,
+        "validation_metric_drop": args.validation_metric_drop,
+        "element_mask_version": model.element_mask_version,
+        "pixel_loss_weights": {
+            "family": args.family_iou_weight,
+            "room": args.room_iou_weight,
+            "tversky": args.tversky_weight,
+            "boundary": args.boundary_weight,
+            "clip": args.positive_weight_clip,
+        },
+        "dynamic_route_weight": args.dynamic_route_weight,
+        "num_styles": model.num_styles,
+        "style_rank": model.style_rank,
+        "style_manifest": str(args.style_manifest or ""),
+        "style_contrast_weight": args.style_contrast_weight,
+        "style_contrast_margin": args.style_contrast_margin,
+        "style_semantic_weight": args.style_semantic_weight,
+        "style_orthogonality_weight": args.style_orthogonality_weight,
+        "style_dropout": args.style_dropout,
+        "style_lr": args.style_lr,
+        "parent_reliability_init": args.parent_reliability_init,
+        "hierarchy_support_strength": model.hierarchy_support_strength,
+        "element_blend_init": model.element_blend_init,
+        "element_feedback_init": model.element_feedback_init,
+        "dynamic_head_variant": model.dynamic_head_variant,
+        "condition_mode": "contour_only",
+    }
+
+
+__all__ = ["build_joint_run_manifest"]

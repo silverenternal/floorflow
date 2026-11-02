@@ -1,0 +1,91 @@
+{
+  "schema_version": "predicted-raster-control-v1",
+  "scope": "CubiCasa raster-conditioned reconstruction",
+  "track_label": "raster_conditioned_reconstruction",
+  "device": "cuda:0",
+  "test_access": "forbidden_until_validation_freeze",
+  "input_contract": {
+    "channels": [
+      "walls, doors, windows, and structure",
+      "fixed furniture",
+      "footprint boundary and outside region"
+    ],
+    "forbidden_channels": [
+      "room class map",
+      "room instance map",
+      "room program read from target"
+    ],
+    "reference_audit": "src/floorflow/data/raster_control.py"
+  },
+  "frozen_baseline": {
+    "model": "DMD-v11 plus contour room segmenter",
+    "split": "CubiCasa val491",
+    "room_macro_iou": 0.1698359609696591,
+    "instance_geometric_iou": 0.5144348828183483,
+    "instance_room_f1": 0.17873924679925549,
+    "instance_type_accuracy": 0.45485403937542435,
+    "room_support_iou": 0.7532600746902124,
+    "validity": 1.0,
+    "watertight": 0.9063136456211812
+  },
+  "model": {
+    "implementation": "existing ContourRoomSegmenter",
+    "initialization": "outputs/train/room_segmenter_r18_uniform_full40_v2/best.pt",
+    "decoder_channels": 96,
+    "output": "room-class logits"
+  },
+  "training": {
+    "screen_cases": 1024,
+    "screen_validation_cases": 191,
+    "full_cases": 5126,
+    "full_validation_cases": 491,
+    "epochs_screen": 5,
+    "batch_size": 8,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0001,
+    "dice_weight": 0.5,
+    "boundary_weight": 0.5,
+    "class_balance": true,
+    "gradient_clip": 1.0
+  },
+  "selection": {
+    "split": "val only",
+    "metric": "room_macro_iou + 0.25 * instance_room_f1 + 0.1 * instance_type_accuracy",
+    "best_of_n": false
+  },
+  "screen_gate": {
+    "room_macro_iou_min": 0.25,
+    "instance_room_f1_min": 0.25,
+    "instance_geometric_iou_min": 0.6,
+    "support_retention_min": 0.98,
+    "validity": 1.0
+  },
+  "screen_result": {
+    "input_protocol": "non_room_annotation_rendering",
+    "train_cases": 5126,
+    "validation_cases": 491,
+    "room_macro_iou": 0.3971694235148796,
+    "instance_geometric_iou": 0.6844661295628364,
+    "instance_room_f1": 0.38628682920585544,
+    "instance_type_accuracy": 0.6751408469331076,
+    "room_support_iou": 0.7532600746902124,
+    "validity": 1.0,
+    "conditional_watertight": 0.9808612440191387,
+    "passed": true
+  },
+  "native_image_screen": {
+    "input_protocol": "native_cubicasa_raster",
+    "train_cases": 5126,
+    "validation_cases": 491,
+    "room_macro_iou": 0.27575427978247957,
+    "instance_geometric_iou": 0.5865625711283994,
+    "instance_room_f1": 0.24450768396839948,
+    "instance_type_accuracy": 0.5938997187469691,
+    "room_support_iou": 0.7532600746902124,
+    "validity": 1.0,
+    "conditional_watertight": 0.9808612440191387,
+    "passed": false,
+    "boundary": "Below the clean-render result; native-image domain adaptation remains an RC-02 task."
+  },
+  "claim_boundary": "This branch consumes the floorplan raster and is not contour-only generation or target-free editing. The source raster may contain structural lines but must not encode room-class identity."
+}

@@ -1,0 +1,21 @@
+{
+  "version": "chip-m33-fixed-typed-init-v1",
+  "status": "data_order_probe_rejected",
+  "candidate": "M27 with fixed typed initialization seed21 and varying data order",
+  "parameter_seed": 21,
+  "data_seeds": [19, 20, 21],
+  "trinity_backbone_init": "third_party/Trinity/checkpoints/d192",
+  "training": {
+    "train_indices": "configs/chip_train_scaling_20k_v1.json",
+    "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2",
+    "steps": 5000,
+    "device": "cuda:1"
+  },
+  "reference_data_order_21": "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed21_5k",
+  "evaluation": {
+    "inference_seed": 19,
+    "nfe": 4,
+    "refiner_steps": 1600
+  },
+  "boundary": "Three predeclared data-order replicates with fixed typed initialization; no further random-seed search."
+}

@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "name": "distribution_adapter_v1",
+  "checkpoint": "outputs/train/distribution_element_adapter_v1/best.pt",
+  "architecture": "contour_conditioned_coupled_distribution_cfm",
+  "training_scope": "pixel_first_frozen_element_adapter",
+  "element_mask_version": "v2",
+  "condition": {
+    "inputs": ["footprint", "floor_id", "contour_features"],
+    "target_derived_control": false,
+    "coarse_layout_input": false
+  },
+  "evaluation": {
+    "split": "val",
+    "offset": 191,
+    "limit": 300,
+    "retrieval_prior_weight": 0.5,
+    "retrieval_weights_report": "outputs/reports/a1_retrieval_weights_calib191.json",
+    "overlay": {
+      "room_logit_weight": 0.0,
+      "room_support_threshold": 0.1,
+      "wall_threshold": 0.3,
+      "opening_threshold": 0.2,
+      "furniture_threshold": 0.2,
+      "wall_element_weight": 0.0,
+      "opening_element_weight": 0.0,
+      "furniture_element_weight": 0.0
+    }
+  },
+  "selection": {
+    "metric": "val_room_macro_iou",
+    "best_of_n": false,
+    "test_used_for_selection": false
+  },
+  "seed": 19
+}

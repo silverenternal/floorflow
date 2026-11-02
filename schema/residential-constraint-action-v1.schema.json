@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://floorflow.dev/schema/residential-constraint-action-v1.schema.json",
+  "title": "Residential Constraint Candidate Group Manifest",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "status",
+    "scope",
+    "split",
+    "control_root",
+    "action_vocabulary",
+    "violation_families",
+    "candidate_policy",
+    "counts",
+    "groups"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "residential-constraint-candidate-groups-v1"
+    },
+    "status": {
+      "enum": ["complete", "failed"]
+    },
+    "scope": {
+      "const": "residential_floorplan_only"
+    },
+    "split": {
+      "enum": ["train", "val"]
+    },
+    "control_root": {
+      "type": "string",
+      "minLength": 1
+    },
+    "action_vocabulary": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "violation_families": {
+      "type": "array",
+      "minItems": 7,
+      "items": {
+        "type": "string"
+      }
+    },
+    "candidate_policy": {
+      "type": "object"
+    },
+    "counts": {
+      "type": "object"
+    },
+    "groups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["group_id", "record", "candidates"],
+        "properties": {
+          "group_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "record": {
+            "type": "object",
+            "required": [
+              "name",
+              "split",
+              "source",
+              "operation",
+              "seed",
+              "bbox",
+              "control_size"
+            ]
+          },
+          "candidates": {
+            "type": "array",
+            "minItems": 9,
+            "maxItems": 9,
+            "items": {
+              "type": "object",
+              "required": [
+                "candidate_id",
+                "group_id",
+                "role",
+                "violation_family",
+                "severity",
+                "transform",
+                "seed",
+                "operation"
+              ],
+              "properties": {
+                "candidate_id": {
+                  "type": "string"
+                },
+                "group_id": {
+                  "type": "string"
+                },
+                "role": {
+                  "enum": [
+                    "positive",
+                    "legal_alternative",
+                    "near_violation"
+                  ]
+                },
+                "violation_family": {
+                  "type": ["string", "null"]
+                },
+                "severity": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 3
+                },
+                "transform": {
+                  "type": "string"
+                },
+                "seed": {
+                  "type": "integer"
+                },
+                "operation": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

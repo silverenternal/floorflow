@@ -1,0 +1,50 @@
+{
+  "schema_version": "residential-constraint-flow-config-v1",
+  "scope": "residential_floorplan_only",
+  "test_access": "forbidden_for_screen",
+  "device": "cuda:0",
+  "seed": 19,
+  "data": {
+    "train_limit": 192,
+    "validation_limit": 191,
+    "room_size": 224,
+    "structure_size": 128
+  },
+  "initialization": "outputs/train/fp_joint_control_repair_prefill_seed19_v2/best.pt",
+  "training": {
+    "epochs": 4,
+    "batch_size": 8,
+    "learning_rate": 0.00003,
+    "max_dropout": 0.4,
+    "gradient_clip": 1.0
+  },
+  "constraint_terms": {
+    "soft_fevp_weight": 0.05,
+    "soft_ged_weight": 0.05,
+    "constraint_scale": 8.0
+  },
+  "arms": [
+    "base",
+    "scalar",
+    "projection"
+  ],
+  "evaluation": {
+    "mask_fractions": [0.1, 0.25],
+    "primary_endpoints": [
+      "selection_score",
+      "room_accuracy",
+      "wall_f1",
+      "opening_f1"
+    ],
+    "hard_guards": [
+      "room_valid_exact_max_abs",
+      "structure_valid_exact_max_abs"
+    ],
+    "bootstrap_iterations": 4000
+  },
+  "claim_boundary": {
+    "soft_metrics_are_training_proxies_only": true,
+    "no_test_selection": true,
+    "no_external_sota_claim_from_screen": true
+  }
+}

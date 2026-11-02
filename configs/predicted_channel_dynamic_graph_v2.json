@@ -1,0 +1,133 @@
+{
+  "schema_version": "predicted-channel-dynamic-graph-v2",
+  "status": "superseded_by_predicted_channel_source_router_v3",
+  "scope": "residential_cubicasa_predicted_control_channels",
+  "hypothesis": "Wall, opening, and furniture errors need global sparse stage routing in addition to local convolution; dense channel routing is insufficient.",
+  "model": {
+    "field_grid": 128,
+    "field_channels": 64,
+    "head_channels": 128,
+    "attention_grid": 24,
+    "layers": 3,
+    "heads": 4,
+    "full_resolution_output": true,
+    "use_action_graph": true,
+    "typed_channel_links": true,
+    "control_evidence_context": true,
+    "dynamic_channel_links": true,
+    "dynamic_stage_heads": true,
+    "stage_head_hidden": 128,
+    "dynamic_stage_links": true,
+    "action_route_attention": true,
+    "action_route_router_count": 8,
+    "action_route_top_k": 4,
+    "stage_route_attention": true,
+    "stage_route_grid": 8,
+    "stage_route_router_count": 12,
+    "stage_route_top_k": 6,
+    "stage_route_heads": 4,
+    "preserve_room_stage": true,
+    "route_stages": ["walls", "openings", "furniture"],
+    "estimated_parameters": 4212686
+  },
+  "parameter_audit": {
+    "field": 278720,
+    "typed_channel_head": 881158,
+    "cad_action_graph": 253010,
+    "dynamic_stage_heads": 2799793,
+    "rooms_stage": 400730,
+    "walls_stage": 797585,
+    "openings_stage": 797211,
+    "furniture_stage": 804267
+  },
+  "budget": {
+    "screen": {
+      "train_cases": 512,
+      "calibration_cases": 64,
+      "holdout_cases": 64,
+      "epochs": 16,
+      "batch_size": 4,
+      "sample_exposures": 8192,
+      "optimizer_updates": 2048
+    },
+    "promotion": {
+      "train_cases": 1024,
+      "calibration_cases": 256,
+      "holdout_cases": 128,
+      "epochs": 20,
+      "batch_size": 8,
+      "sample_exposures": 20480,
+      "optimizer_updates": 2560
+    },
+    "confirmation": {
+      "train_cases": 5126,
+      "epochs": 20,
+      "batch_size": 16,
+      "sample_exposures": 102520,
+      "optimizer_updates": 6420
+    },
+    "extension_rule": "Extend only when the final three epochs improve at least two weak stages and route-budget entropy has not collapsed."
+  },
+  "ablation_arms": [
+    {
+      "name": "dense_channel_no_context",
+      "attention_mode": "dense",
+      "control_evidence_context": false,
+      "dynamic_channel_links": false,
+      "stage_route_attention": false
+    },
+    {
+      "name": "typed_static",
+      "attention_mode": "typed",
+      "control_evidence_context": false,
+      "dynamic_channel_links": false,
+      "stage_route_attention": false
+    },
+    {
+      "name": "typed_evidence_context",
+      "attention_mode": "typed",
+      "control_evidence_context": true,
+      "dynamic_channel_links": false,
+      "stage_route_attention": false
+    },
+    {
+      "name": "typed_dynamic_graph",
+      "attention_mode": "typed",
+      "control_evidence_context": true,
+      "dynamic_channel_links": true,
+      "stage_route_attention": false
+    },
+    {
+      "name": "full_stage_mita",
+      "attention_mode": "typed",
+      "control_evidence_context": true,
+      "dynamic_channel_links": true,
+      "stage_route_attention": true
+    }
+  ],
+  "measurements": [
+    "room_macro_iou",
+    "instance_f1",
+    "room_count_abs_error",
+    "wall_f1",
+    "opening_f1",
+    "furniture_f1",
+    "node_f1",
+    "edge_overlap",
+    "unit_ged",
+    "validity",
+    "functional_watertight",
+    "outside_footprint_fraction",
+    "route_budget_mean",
+    "route_entropy",
+    "route_effective_expert_fraction"
+  ],
+  "gate": {
+    "screen": "Stage-MIta improves at least two of wall, opening, furniture, and graph metrics without regressing room identity, instance F1, or safety.",
+    "promotion": "Stage-MIta exceeds dynamic-graph control on calibration and disjoint holdout.",
+    "confirmation": "At least 4/5 seeds preserve direction; paired 95% CI excludes zero.",
+    "route_health": "Dynamic budgets vary across samples and route entropy does not collapse in the final three epochs.",
+    "safety": "Validity 1.0, functional watertightness >=0.99, outside footprint 0.0."
+  },
+  "claim_boundary": "Architecture and budget contract only; no metric claim before matched runs."
+}

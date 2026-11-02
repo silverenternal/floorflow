@@ -1,0 +1,32 @@
+{
+  "schema_version": "housemind-style-ged-deterministic-v2",
+  "status": "frozen",
+  "graph_unit": "unique_room_type_adjacency_graph",
+  "node_substitution_cost": {
+    "same_room_type": 0,
+    "different_room_type": 1
+  },
+  "node_deletion_cost": 1,
+  "node_insertion_cost": 1,
+  "edge_substitution_cost": 0,
+  "edge_deletion_cost": 1,
+  "edge_insertion_cost": 1,
+  "exact_search": {
+    "node_product_limit": 36,
+    "wall_clock_timeout": null,
+    "tie_breaking": "sorted_room_type_labels"
+  },
+  "bounded_search": {
+    "trigger": "predicted_nodes_times_target_nodes_greater_than_limit",
+    "candidate_generators": [
+      "exact_label_mapping",
+      "label_hungarian",
+      "label_degree_hungarian"
+    ],
+    "local_search_steps": 256,
+    "decision_rule": "strictly_lower_ged_then_lexicographic_mapping",
+    "fallback_reason": "deterministic_bounded_matching"
+  },
+  "reproducibility_rule": "The evaluator never depends on elapsed wall-clock time, hash iteration order, or worker scheduling.",
+  "claim_boundary": "bounded_search is deterministic but not certified exact; reports expose exact=false and must not be described as exact GED."
+}

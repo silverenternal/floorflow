@@ -1,0 +1,73 @@
+{
+  "schema_version": "opening-host-mita-v2",
+  "status": "implementation_ready_no_gpu_run",
+  "scope": "residential_cubicasa_opening_host_router",
+  "hypothesis": "Dense opening-to-wall attention is insufficient for globally competing wall hosts; a hybrid sparse MIta host route with dynamic budget should improve host accuracy and opening quality.",
+  "model": {
+    "hidden_dim": 96,
+    "num_types": 11,
+    "route_attention": true,
+    "route_router_count": 16,
+    "route_top_k": 8,
+    "estimated_parameters": 142977,
+    "mita_route_parameters": 37248
+  },
+  "budget": {
+    "screen": {
+      "train_cases": 256,
+      "calibration_cases": 64,
+      "epochs": 16,
+      "batch_size": 4,
+      "sample_exposures": 4096,
+      "optimizer_updates": 1024
+    },
+    "promotion": {
+      "train_cases": 1024,
+      "calibration_cases": 256,
+      "holdout_cases": 128,
+      "epochs": 20,
+      "batch_size": 4,
+      "sample_exposures": 20480,
+      "optimizer_updates": 5120,
+      "seeds": [19, 20]
+    },
+    "confirmation": {
+      "train_cases": 5126,
+      "epochs": 16,
+      "batch_size": 8,
+      "sample_exposures": 82016,
+      "optimizer_updates": 10256,
+      "seeds": [19, 20, 21, 22, 23]
+    }
+  },
+  "controls": [
+    "dense opening-to-wall cross-attention",
+    "hybrid MIta host route",
+    "hybrid MIta with static top-k",
+    "hybrid MIta without geometric distance prior",
+    "hybrid MIta with shuffled opening tokens"
+  ],
+  "measurements": [
+    "opening_f1",
+    "opening_precision",
+    "opening_recall",
+    "host_accuracy",
+    "teacher_host_accuracy",
+    "center_fraction_error",
+    "width_fraction_error",
+    "opening_type_accuracy",
+    "routed_validity",
+    "routed_watertight",
+    "route_budget",
+    "route_entropy",
+    "route_effective_expert_fraction",
+    "route_gate_mean"
+  ],
+  "gate": {
+    "screen": "Host accuracy or routed Opening F1 improves without opening presence, interval, type, validity, or watertightness regression.",
+    "promotion": "Hybrid MIta beats dense and static-budget controls on calibration and disjoint holdout.",
+    "confirmation": "At least 4/5 seeds preserve direction; paired 95% CI excludes zero.",
+    "mechanism": "Route budget varies by case and shuffled opening tokens degrade host accuracy."
+  },
+  "claim_boundary": "Architecture and budget contract only; Opening F1 remains at the established consumer baseline until matched runs pass."
+}

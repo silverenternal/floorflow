@@ -1,0 +1,35 @@
+{
+  "version": "residential_identity_consensus_v1",
+  "scope": "residential_floorplan_only",
+  "base_checkpoint": "outputs/external_baselines/raster2seq/checkpoint_blends_v2/ema_alpha_0.75.pth",
+  "checkpoint_sha256": "5c738ba5cda8842856a945aba67e60e8b373a8f5c86047af0c1c23c19e362311",
+  "views": [
+    "original",
+    "hflip",
+    "vflip",
+    "rot180"
+  ],
+  "selection_policy": {
+    "name": "room_count_consensus",
+    "agreement": "mean best per-room polygon IoU across other views",
+    "room_count_target": "median of the four view room counts",
+    "maximum_room_count_deviation": 2,
+    "tie_preference": "original",
+    "validation_selected_only": true
+  },
+  "validation": {
+    "split": "val503",
+    "room_f1": 0.902865125460115,
+    "room_iou": 0.6349046126060215,
+    "corner_f1": 0.6131776615717239,
+    "paired_room_f1_ci95": [
+      0.008824350910813772,
+      0.01988465032729619
+    ],
+    "threshold_sensitivity": "thresholds 2 and 3 produce the same selected outputs"
+  },
+  "test_lockbox": {
+    "policy_was_frozen_before_count_consensus_scoring": true,
+    "run_once": true
+  }
+}

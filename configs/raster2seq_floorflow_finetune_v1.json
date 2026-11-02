@@ -1,0 +1,41 @@
+{
+  "schema_version": "raster2seq-floorflow-finetune-v1",
+  "scope": "Supervised domain adaptation of SIGGRAPH 2026 Raster2Seq to FloorFlow native raster inputs",
+  "data_root": "outputs/cache/raster2seq_floorflow_coco_v1",
+  "train_cases": 256,
+  "validation_cases": 64,
+  "base_checkpoint": "outputs/external_baselines/raster2seq/checkpoint_blends_v2/ema_alpha_0.50.pth",
+  "source_commit": "a6c4e27a68d11d7a459f6e4a2601fd887227dd1a",
+  "training": {
+    "epochs_trend": 8,
+    "epochs_promotion": 24,
+    "batch_size": 4,
+    "learning_rate": 2e-5,
+    "backbone_learning_rate": 2e-6,
+    "weight_decay": 1e-4,
+    "gradient_clip_norm": 0.1,
+    "label_smoothing": 0.1,
+    "class_loss_coefficient": 5.0,
+    "coordinate_loss_coefficient": 20.0,
+    "room_class_loss_coefficient": 1.0,
+    "image_size": 256,
+    "sequence_length": 512,
+    "coordinate_bins": 32,
+    "semantic_classes": 12,
+    "input_channels": 3,
+    "gpu": "cuda:0",
+    "wandb_mode": "offline"
+  },
+  "inference_contract": {
+    "input": "native CubiCasa raster resized to 256x256 RGB",
+    "target_used_at_inference": false,
+    "postprocessing": "Raster2Seq decode followed by FloorFlow explicit-room conversion",
+    "test503_open": false
+  },
+  "gates": {
+    "trend": "Beat matched zero-shot Raster2Seq on the same native raster in Room IoU and instance F1 after 8 epochs or a documented plateau.",
+    "promotion": "Calibration64 Room IoU >= 0.35, instance F1 >= 0.30, type accuracy >= 0.55, and count MAE <= 3.0.",
+    "holdout": "Offset128 agrees within 0.03 absolute Room IoU and instance F1.",
+    "reasonableness": "Validity 1.0, wall continuity >= 0.95, functional watertightness >= 0.95, plan plausibility >= 0.95 after explicit-plan conversion."
+  }
+}

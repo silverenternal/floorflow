@@ -1,0 +1,21 @@
+{
+  "schema_version": "dense-colorized-raster2seq-v1",
+  "dense_checkpoint": "outputs/train/raster_full_cad_bank_frozen_room_screen_v4/best.pt",
+  "raster2seq_checkpoint": "outputs/external_baselines/raster2seq/cubicasa5k/checkpoint.pth",
+  "arms": {
+    "dense": {},
+    "raster2seq_raw": {},
+    "raster2seq_rooms": {},
+    "raster2seq_rooms_walls": {
+      "wall_probability_threshold": 0.7
+    },
+    "raster2seq_full_structure": {
+      "wall_probability_threshold": 0.7,
+      "opening_probability_threshold": 0.5,
+      "furniture_probability_threshold": 0.5
+    }
+  },
+  "selection": "Room IoU + 0.25 * instance F1 + 0.1 * type accuracy",
+  "target_used_at_inference": false,
+  "test503_open": false
+}

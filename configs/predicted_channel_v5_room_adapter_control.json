@@ -1,0 +1,9 @@
+{
+  "schema_version": "predicted-channel-v5-room-adapter-control",
+  "extends": "predicted_channel_source_router_v5_control.json",
+  "status": "adapter_preserving_control",
+  "train_scope": "room_adapter",
+  "init_checkpoint": "outputs/train/typed_channel_v5_control_screen256_seed19_v3/best.pt",
+  "lr": 0.0001,
+  "claim_boundary": "Controls the adapter-only repair after the full-model screen rejected the v5 bundle."
+}

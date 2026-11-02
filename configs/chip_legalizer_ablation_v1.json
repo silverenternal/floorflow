@@ -1,0 +1,44 @@
+{
+  "version": "chip-legalizer-ablation-v1",
+  "scope": "matched frozen candidate layouts; CPU legalization only",
+  "variants": [
+    {
+      "id": "default",
+      "relation": "restored",
+      "reshape": true,
+      "trust": 1.3,
+      "outline": true
+    },
+    {
+      "id": "shape_preserving",
+      "relation": "restored",
+      "reshape": false,
+      "trust": 1.3,
+      "outline": true
+    },
+    {
+      "id": "low_trust",
+      "relation": "restored",
+      "reshape": true,
+      "trust": 1.1,
+      "outline": true
+    },
+    {
+      "id": "expanded_relation",
+      "relation": "expanded",
+      "reshape": true,
+      "trust": 1.3,
+      "outline": true
+    }
+  ],
+  "primary_endpoints": [
+    "legalized_hard_cost",
+    "legalized_v_rel",
+    "legalized_area_gap",
+    "legalized_b2b_hpwl_gap",
+    "legalizer_reshaped",
+    "legalizer_rung",
+    "legalizer_solves"
+  ],
+  "selection_rule": "No variant wins by legality alone; compare all variants on exactly the same refined layouts."
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": "residential-predicted-edit-config-v1",
+  "scope": "residential_floorplan_only",
+  "split": "val191",
+  "test_access": "forbidden_until_validation_freeze",
+  "predicted_completion_root": "outputs/eval/fp_completion_predicted_refined_val491_v1",
+  "predicted_control_root": "outputs/control_contracts/predicted_instruction_val191_v1",
+  "decoder": {
+    "room_logit_gaussian_sigma": 10.0,
+    "merge_fragment_min_area": 32
+  },
+  "graph_evaluator": {
+    "matching_protocol": "type_geometry_hungarian",
+    "target_method": "direct_tiled",
+    "ged_timeout_seconds": 5.0
+  },
+  "prompt_limit_per_category": 100,
+  "executed_categories": [
+    "room_type_change",
+    "room_addition",
+    "room_deletion",
+    "opening_pressure",
+    "furniture_low_salience"
+  ],
+  "abstention_categories": [
+    "unsupported_wall_move",
+    "ambiguous_global_scope",
+    "conflicting_instruction"
+  ],
+  "acceptance": {
+    "outside_pixel_exact": 1.0,
+    "outside_room_label_exact": 1.0,
+    "validity": 1.0,
+    "node_f1_paired_ci_positive": true,
+    "edge_overlap_paired_ci_positive": true,
+    "ged_must_remain_reported": true,
+    "bootstrap_iterations": 5000
+  },
+  "coverage_boundaries": {
+    "opening_moving": "not available in the current typed action set",
+    "wall_moving": "safety-only abstention",
+    "multi_step": "not promoted in this benchmark"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "version": "residential_identity_finetune_v1",
+  "scope": "residential_floorplan_only",
+  "base_checkpoint": {
+    "path": "outputs/external_baselines/raster2seq/checkpoint_blends_v2/ema_alpha_0.50.pth",
+    "why": "Best validation compromise between RoomF1, RoomIoU and corner F1; selected without test feedback.",
+    "source_sha256": "f7c0ef9379aa8cf11349da8b2179214e0d495af758383984a2361a1309aab3b7"
+  },
+  "data": {
+    "root": "outputs/cache/raster2seq_cc5k_trainval_v1",
+    "train_images": 5253,
+    "train_annotations": 129913,
+    "validation_images": 503,
+    "validation_annotations": 11943
+  },
+  "training": {
+    "epochs": 12,
+    "batch_size": 24,
+    "seed": 42,
+    "learning_rate": 0.00002,
+    "backbone_learning_rate": 0.000002,
+    "weight_decay": 0.0001,
+    "gradient_clip_norm": 0.1,
+    "label_smoothing": 0.1,
+    "coordinate_loss_coefficient": 20.0,
+    "token_class_loss_coefficient": 5.0,
+    "room_class_loss_coefficient": 1.0,
+    "image_size": 256,
+    "sequence_length": 512,
+    "coordinate_bins": 32,
+    "gpu": "cuda:0",
+    "wandb_mode": "offline"
+  },
+  "checkpoint_selection": {
+    "split": "val",
+    "primary_metric": "room_f1",
+    "tie_breakers": [
+      "room_iou",
+      "corner_f1"
+    ],
+    "paired_statistics_required": true,
+    "best_of_n_used": false,
+    "official_test509_policy": "Evaluate exactly once after the validation checkpoint and postprocessor are frozen."
+  },
+  "success_gate": {
+    "official_test509_room_f1_above_public_anchor": 0.887,
+    "official_test509_room_iou_not_below_source": 0.618439850055929,
+    "official_test509_corner_f1_not_below_source": 0.5929740147358397
+  }
+}

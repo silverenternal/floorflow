@@ -1,0 +1,37 @@
+{
+  "schema_version": "native-room-highres-budget-v1",
+  "data_root": ".data/cubicasa5k",
+  "cache_256": "outputs/cache/cubicasa5k_full_v2",
+  "cache_384": "outputs/cache/cubicasa5k_full_v2_384",
+  "warm_start": "outputs/train/raster_room_control_native_full_v1/best.pt",
+  "architecture": "resnet18_fpn",
+  "screen": {
+    "train_cases": 256,
+    "validation_cases": 64,
+    "epochs": 8,
+    "batch_size": 8,
+    "learning_rate": 1e-4,
+    "weight_decay": 1e-4,
+    "dice_weight": 0.5,
+    "boundary_weight": 0.5,
+    "class_balance": true,
+    "seed": 2903,
+    "gpu": "cuda:0"
+  },
+  "full": {
+    "train_cases": 5126,
+    "validation_cases": 491,
+    "epochs_trend": 8,
+    "epochs_promotion": 24,
+    "batch_size": 8,
+    "learning_rate": 1e-4,
+    "class_balance": true
+  },
+  "gates": {
+    "screen_room_iou_min": 0.23,
+    "screen_instance_f1_min": 0.23,
+    "screen_type_accuracy_min": 0.55,
+    "full_room_iou_min": 0.35,
+    "full_instance_f1_min": 0.30
+  }
+}

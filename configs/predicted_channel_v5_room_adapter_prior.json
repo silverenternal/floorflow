@@ -1,0 +1,11 @@
+{
+  "schema_version": "predicted-channel-v5-room-adapter-prior",
+  "extends": "predicted_channel_v5_room_adapter_control.json",
+  "status": "adapter_preserving_candidate",
+  "model": {
+    "room_instance_relational_adjacency": false,
+    "room_instance_class_count_prior": true,
+    "count_aware_second_graph": false
+  },
+  "claim_boundary": "Sparse class-count prior adapter screen; the prior is reapplied after checkpoint loading."
+}

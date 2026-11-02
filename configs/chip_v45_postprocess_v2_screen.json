@@ -1,0 +1,48 @@
+{
+  "version": "2026-10-29-chip-v45-postprocess-v2-screen",
+  "status": "frozen_before_multicase_outcomes",
+  "selection": {
+    "pool": "legacy v44 nangate45 candidate seed19 placements",
+    "rule": "three non-black_parrot cases with the fewest macros",
+    "cases": [
+      "nangate45/tinyRocket",
+      "nangate45/cva6",
+      "nangate45/bp_be_top"
+    ]
+  },
+  "artifact_map": {
+    "nangate45/tinyRocket": {
+      "placement_report": "outputs/chip_ppa/placements_v45_postprocess_v2/tinyRocket/candidate_seed19_report.json",
+      "routed_report": "outputs/reports/chip_v45_postprocess_v2_tinyrocket.json"
+    },
+    "nangate45/cva6": {
+      "placement_report": "outputs/chip_ppa/placements_v45_postprocess_v2/cva6/candidate_seed19_report.json",
+      "routed_report": "outputs/reports/chip_v45_postprocess_v2_cva6.json"
+    },
+    "nangate45/bp_be_top": {
+      "placement_report": "outputs/chip_ppa/placements_v45_postprocess_v2/bp_be/candidate_seed19_report.json",
+      "routed_report": "outputs/reports/chip_v45_postprocess_v2_bp_be.json"
+    }
+  },
+  "postprocess": {
+    "budget_um": 20.0,
+    "step_um": 5.0,
+    "passes": 1,
+    "proxy": "configs/chip_v45_routing_proxy_v2.json",
+    "legal_checks": [
+      "fixed blocks preserved",
+      "outline preserved",
+      "zero overlap",
+      "mean and maximum displacement recorded"
+    ]
+  },
+  "routed_guards": {
+    "wirelength_strictly_improves": true,
+    "congestion_nonregression": true,
+    "setup_ws_nonregression": true,
+    "drc_errors_zero": true,
+    "power_regression_at_most": 0.05,
+    "instance_area_regression_at_most": 0.05
+  },
+  "claim_boundary": "A pass supports a multi-case screen result only; confirmation remains the frozen v45 holdout."
+}

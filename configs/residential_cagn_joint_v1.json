@@ -1,0 +1,82 @@
+{
+  "schema_version": "residential-cagn-joint-config-v1",
+  "scope": "residential_floorplan_only",
+  "device": "cuda:0",
+  "seeds": [19, 20, 21, 22, 23],
+  "data": {
+    "action_manifest_root": "outputs/control_contracts/residential_cagn_v1",
+    "feature_root": "outputs/control_contracts/residential_cagn_features_v1",
+    "hard_envelope_filter": "drop groups with an infeasible oracle positive or legal alternative",
+    "negative_per_group": 2,
+    "test_access": "forbidden_until_CAGN_09_freeze"
+  },
+  "embedding_stage": {
+    "epochs": 40,
+    "batch_size": 256,
+    "learning_rate": 0.0005,
+    "temperature": 0.07,
+    "losses": {
+      "multi_positive_infonce": 1.0,
+      "multi_label_violation_bce": 1.0,
+      "energy_ranking": 0.1
+    },
+    "validation_split": "even/odd val491 group split",
+    "checkpoint_metric": "calibration legal/illegal AUROC"
+  },
+  "gate_stage": {
+    "epochs": 30,
+    "batch_size": 128,
+    "learning_rate": 0.001,
+    "losses": {
+      "hard_masked_listwise": 1.0,
+      "hard_masked_pairwise": 0.25,
+      "gate_calibration": 0.1
+    },
+    "hard_envelope": "p_effective = all(raw_hard_mask) * sigmoid(score)",
+    "hard_baseline": "raw hard mask plus SHA-256 candidate tie break",
+    "checkpoint_metric": "validation NDCG@5",
+    "selection_policy": "even validation group split; odd split reported only after checkpoint lock"
+  },
+  "joint_proxy_stage": {
+    "differentiable_fevp_weight": 0.05,
+    "soft_ged_weight": 0.05,
+    "warmup_epochs": 2,
+    "gradient_clip": 5.0,
+    "guard": "restore frozen state if hard validity or outside exactness drops below 1.0",
+    "reported_metric_policy": "hard FEVP only; soft proxies remain training diagnostics"
+  },
+  "arms": [
+    "baseline",
+    "hard_gate",
+    "hard_plus_learnable",
+    "full_constraint_embedding",
+    "parameter_matched_random_gate"
+  ],
+  "confirmatory_metrics": [
+    "candidate_ndcg_at_5",
+    "selected_legal_rate",
+    "selected_violation_rate",
+    "constraint_score_ece",
+    "false_feasible_rate"
+  ],
+  "quality_guards": {
+    "hard_validity": 1.0,
+    "outside_pixel_exact": 1.0,
+    "outside_room_polygon_exact": 1.0,
+    "outside_room_label_exact": 1.0,
+    "outside_edge_exact": 1.0,
+    "room_iou_max_regression": 0.002,
+    "delta_iou_max_regression": 0.002,
+    "delta_mse_max_regression": 0.00002,
+    "node_f1_regression": 0.0,
+    "edge_overlap_regression": 0.0,
+    "fixed_evaluator_ged_regression": 0.0
+  },
+  "engineering_guardrails": {
+    "single_python_file_limit": 600,
+    "no_chips_access": true,
+    "no_human_evaluation": true,
+    "no_best_of_n": true,
+    "soft_metrics_not_fevp": true
+  }
+}

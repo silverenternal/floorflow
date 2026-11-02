@@ -1,0 +1,96 @@
+{
+  "schema_version": "structure-bridge-mita-v3",
+  "status": "typed_host_conditioning_v2_implemented",
+  "scope": "residential_cubicasa_structure_bridge",
+  "hypothesis": "Wall, opening, and junction errors require global multi-scale routing and a typed wall-junction-room-boundary opening host contract in addition to local refinement.",
+  "trainer": "scripts/train_raster_predicted_control_bridge.py",
+  "model": {
+    "structure_contract": "typed_v2",
+    "room_base_channels": 24,
+    "structure_base_channels": 64,
+    "room_size": 224,
+    "structure_size": 128,
+    "direct_control_resolution": true,
+    "host_conditioned_openings": true,
+    "host_conditioning_v2": true,
+    "typed_junctions": true,
+    "room_boundary_head": true,
+    "structure_global_route_attention": true,
+    "structure_route_grid": 16,
+    "structure_route_router_count": 16,
+    "structure_route_top_k": 8,
+    "structure_route_heads": 4,
+    "estimated_parameters": 2903232
+  },
+  "parameter_audit": {
+    "total": 2903184,
+    "room_refiner": 272040,
+    "structure_refiner": 2631192,
+    "typed_host_conditioning_v2": 48,
+    "structure_mita_route": 645906
+  },
+  "budget": {
+    "screen": {
+      "train_cases": 512,
+      "calibration_cases": 64,
+      "holdout_cases": 64,
+      "epochs": 12,
+      "batch_size": 8,
+      "sample_exposures": 6144,
+      "optimizer_updates": 768
+    },
+    "promotion": {
+      "train_cases": 1024,
+      "calibration_cases": 256,
+      "holdout_cases": 128,
+      "epochs": 16,
+      "batch_size": 8,
+      "sample_exposures": 16384,
+      "optimizer_updates": 2048,
+      "seeds": [19, 20]
+    },
+    "confirmation": {
+      "train_cases": 5126,
+      "epochs": 16,
+      "batch_size": 16,
+      "sample_exposures": 82016,
+      "optimizer_updates": 5136,
+      "seeds": [19, 20, 21, 22, 23]
+    },
+    "extension_rule": "Extend only when wall precision and F1 or junction topology continue improving with non-collapsed route entropy."
+  },
+  "controls": [
+    "typed_v2 static route head at legacy width",
+    "typed_v2 equal-parameter local convolution at width 64",
+    "typed_v2 global route at width 48",
+    "typed_v2 full global route at width 64",
+    "full route with static top-k budget",
+    "full route without room/wall multi-scale memory"
+  ],
+  "measurements": [
+    "wall_precision",
+    "wall_recall",
+    "wall_f1",
+    "opening_f1",
+    "opening_host_accuracy",
+    "junction_f1",
+    "junction_degree_accuracy",
+    "room_macro_iou",
+    "node_f1",
+    "edge_overlap",
+    "unit_ged",
+    "validity",
+    "functional_watertight",
+    "outside_footprint_fraction",
+    "structure_route_entropy",
+    "structure_route_budget",
+    "structure_route_effective_expert_fraction"
+  ],
+  "gate": {
+    "screen": "Wall precision and F1 improve jointly or one improves without the other regressing; opening and junction signals do not regress.",
+    "promotion": "The full route beats equal-parameter local convolution and static-budget MIta on calibration and disjoint holdout.",
+    "confirmation": "At least 4/5 seeds preserve direction; paired 95% CI excludes zero.",
+    "safety": "Validity 1.0, functional watertightness >=0.99, outside footprint 0.0."
+  },
+  "claim_boundary": "Architecture and budget contract only; no structure metric claim before matched runs."
+}

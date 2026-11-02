@@ -1,0 +1,66 @@
+{
+  "version": "chip-sota-training-compute-ladder-v1",
+  "status": "rejected_at_20k_same_device_gate",
+  "source_plan": "configs/chip_sota_budget_ladder_v1.json",
+  "train_indices": "configs/chip_train_scaling_20k_v1.json",
+  "train_indices_sha256": "7e216f980eb2a09c7ff62fa4a2be6d69eb482bbfd61b00e9cdcbc619f2041979",
+  "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2",
+  "cache_metadata_sha256": "f123e93abfc313c90137ae0c63b5738d964b981e38a8ed658f531df7cc181484",
+  "device": "cuda:0",
+  "training": {
+    "architecture": "typed_hierarchy",
+    "seed": 19,
+    "micro_batch": 128,
+    "grad_accum_steps": 2,
+    "effective_batch": 256,
+    "sampling_mode": "random",
+    "eval_state": "ema",
+    "curve_per_count": 5,
+    "sampling_steps": 8,
+    "checkpoint_every": 1000,
+    "hidden": 192,
+    "heads": 3,
+    "hierarchy_depth": 10,
+    "typed_layers": 1,
+    "head_dim": 64,
+    "projector_iterations": 8,
+    "overlap_weight_scale": 10.0,
+    "hierarchy_bbox_weight": 0.5,
+    "hierarchy_bbox_decay_steps": 10000
+  },
+  "steps": [20000, 50000, 100000, 200000],
+  "evaluation": {
+    "case_indices": "outputs/reports/chip_dev_screen_v45.json",
+    "nfe": 4,
+    "refiner_steps": 400,
+    "refiner_lr": 0.001,
+    "refiner_schedule": "linear",
+    "refiner_weights": {
+      "boundary": 2.0,
+      "group": 2.0,
+      "mib": 1.0,
+      "overlap": 10.0,
+      "wl": 1.0,
+      "area": 1.0
+    },
+    "projector_iterations": 8,
+    "legalizer_time_limit_ms": 2000,
+    "use_ema": true,
+    "deterministic": true,
+    "device": "cuda:0"
+  },
+  "advance_gate": {
+    "reference": "previous completed step count",
+    "max_relative_regression": 0.002,
+    "min_relative_improvement_in_at_least_one_metric": 0.005,
+    "rule": "Advance only if neither legalized cost nor V_rel regresses by more than 0.2%, and at least one improves by at least 0.5%."
+  },
+  "stop_conditions": [
+    "Any process launch fails",
+    "The dev evaluation is incomplete",
+    "Both primary metrics do not clear the advance gate",
+    "The legalized feasible fraction is not 1.0"
+  ],
+  "resource_wait_pids": [820348, 1084838, 1084851, 1085243],
+  "boundary": "This runner never supplies --allow-full-data. It uses one frozen 20k-case subset and cannot establish a full-data or SOTA claim by itself."
+}

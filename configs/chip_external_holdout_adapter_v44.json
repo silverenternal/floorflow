@@ -1,0 +1,117 @@
+{
+  "version": "2026-10-28-chip-external-holdout-adapter-v44",
+  "status": "frozen_before_holdout_inference",
+  "parent_policy": "configs/chip_external_holdout_adapter_v1.json",
+  "primary_protocol": {
+    "protocol_tag": "holdout_v44",
+    "nfe": 4,
+    "refiner_steps": 1600,
+    "refiner_learning_rate": 0.001,
+    "refiner_schedule": "linear",
+    "refiner_weights": {
+      "boundary": 2.0
+    },
+    "refiner_shape_update": true,
+    "refiner_optimizer": "adam",
+    "refiner_chunk": 5,
+    "candidate_projector_iterations": 8,
+    "legalizer_relation": "expanded",
+    "legalizer_time_limit_ms": 2000,
+    "deterministic": true,
+    "instance_hierarchy": true,
+    "preserve_reference_orientation": true,
+    "pairwise_common_route": "If either arm cannot use scale_pack, regenerate both arms with the existing deterministic shelf fallback.",
+    "same_refiner": "third_party/Trinity/src/trinity/sampling/refine_closed.py",
+    "same_legalizer": "src/floorflow/chip_flow/legalization.py"
+  },
+  "candidate": {
+    "architecture": "typed_hierarchy",
+    "seeds": {
+      "19": "outputs/chip_hierarchy/v7_bbox_anneal_20k/typed_hierarchy_bbox_anneal_seed19_20k/checkpoints/final.pt",
+      "20": "outputs/chip_hierarchy/v10_three_seed/typed_hierarchy_seed20_20k/checkpoints/final.pt",
+      "21": "outputs/chip_hierarchy/v10_three_seed/typed_hierarchy_seed21_20k/checkpoints/final.pt"
+    }
+  },
+  "control": {
+    "architecture": "trinity_token",
+    "seeds": {
+      "19": "outputs/chip_trinity/rescue_20k/trinity_token_seed19_20k/checkpoints/final.pt",
+      "20": "outputs/chip_trinity/rescue_20k/trinity_token_seed20_20k/checkpoints/final.pt",
+      "21": "outputs/chip_trinity/rescue_20k/trinity_token_seed21_20k/checkpoints/final.pt"
+    }
+  },
+  "cases": {
+    "nangate45/ariane136": {
+      "input_odb": "outputs/chip_ppa/orfs/results/nangate45/ariane136/macro_count/3_2_place_iop.odb",
+      "macro_halo_um": 20.0
+    },
+    "nangate45/black_parrot": {
+      "input_odb": "outputs/chip_ppa/orfs/results/nangate45/bp/baseline/3_2_place_iop.odb",
+      "macro_halo_um": 20.0
+    },
+    "nangate45/bp_be_top": {
+      "input_odb": "outputs/chip_ppa/orfs/results/nangate45/bp_be/macro_count/3_2_place_iop.odb",
+      "macro_halo_um": 20.0
+    },
+    "nangate45/bp_fe_top": {
+      "input_odb": "outputs/chip_ppa/orfs/results/nangate45/bp_fe/macro_count/3_2_place_iop.odb",
+      "macro_halo_um": 20.0
+    },
+    "nangate45/bp_multi_top": {
+      "input_odb": "outputs/chip_ppa/orfs/results/nangate45/bp_multi/macro_count/3_2_place_iop.odb",
+      "macro_halo_um": 20.0
+    },
+    "nangate45/cva6": {
+      "input_odb": "outputs/chip_ppa/orfs/results/nangate45/cva6/macro_count/3_2_place_iop.odb",
+      "macro_halo_um": 20.0
+    },
+    "nangate45/swerv_wrapper": {
+      "input_odb": "outputs/chip_ppa/orfs/results/nangate45/swerv_wrapper/macro_count/3_2_place_iop.odb",
+      "macro_halo_um": 20.0
+    },
+    "nangate45/tinyRocket": {
+      "input_odb": "outputs/chip_ppa/orfs/results/nangate45/tinyRocket/baseline/3_2_place_iop.odb",
+      "macro_halo_um": 20.0
+    }
+  },
+  "mapping_contract": {
+    "macro_token_order": "lexicographic instance name",
+    "macro_shapes": "exact ORFS master width and height",
+    "orientation": "reference_preserved",
+    "nonuniform_area_scaling": false,
+    "area_normalization": "all macro areas multiplied by core_area / sum(macro_area)",
+    "fixed_blocks": "all external macros are fixed-shape mobile blocks",
+    "preplaced_blocks": "none",
+    "unavailable_fields": [
+      "MIB groups",
+      "FloorSet cluster ids",
+      "boundary-coded blocks",
+      "port direction as a model feature"
+    ]
+  },
+  "hard_constraint_policy": {
+    "shape_inflation": "20 um halo is applied symmetrically before packing and removed after packing",
+    "coordinate_roundtrip_tolerance_um": 0.19,
+    "coordinate_tolerance_reason": "nangate45 site pitch is 0.19 um",
+    "required_checks": [
+      "one-to-one macro names",
+      "fixed width and height",
+      "inside core",
+      "zero overlap",
+      "ORFS macro placement parse",
+      "ORFS PDN dry run",
+      "DEF coordinate round-trip"
+    ],
+    "failure_policy": "A placement that fails any check remains a reported failure and is not sent to routed PPA."
+  },
+  "claim_boundary": {
+    "holdout_was_unseen_before_freeze": true,
+    "selection_independent_of_candidate_outcome": true,
+    "no_case_replacement_by_outcome": true,
+    "independent_design_count": 8,
+    "planned_case_seed_pairs": 24,
+    "statistical_unit": "design cluster with three checkpoint/sampling seeds",
+    "do_not_describe_seeds_as_independent_cases": true,
+    "no_paper_or_ppa_claim_from_seed19_screen_alone": true
+  }
+}

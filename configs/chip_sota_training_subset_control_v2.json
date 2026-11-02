@@ -1,0 +1,65 @@
+{
+  "version": "chip-sota-training-subset-control-v2",
+  "status": "completed_rejected_same_device_subset_effect",
+  "source_plan": "configs/chip_sota_budget_ladder_v1.json",
+  "purpose": "Isolate the frozen 20k subset from effective-batch and projector-iteration changes.",
+  "train_indices": "configs/chip_train_scaling_20k_v1.json",
+  "train_indices_sha256": "7e216f980eb2a09c7ff62fa4a2be6d69eb482bbfd61b00e9cdcbc619f2041979",
+  "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2",
+  "cache_metadata_sha256": "f123e93abfc313c90137ae0c63b5738d964b981e38a8ed658f531df7cc181484",
+  "device": "cuda:0",
+  "training": {
+    "architecture": "typed_hierarchy",
+    "seed": 19,
+    "micro_batch": 128,
+    "grad_accum_steps": 1,
+    "effective_batch": 128,
+    "sampling_mode": "random",
+    "eval_state": "ema",
+    "curve_per_count": 5,
+    "sampling_steps": 8,
+    "checkpoint_every": 1000,
+    "hidden": 192,
+    "heads": 3,
+    "hierarchy_depth": 10,
+    "typed_layers": 1,
+    "head_dim": 64,
+    "projector_iterations": 4,
+    "overlap_weight_scale": 10.0,
+    "hierarchy_bbox_weight": 0.5,
+    "hierarchy_bbox_decay_steps": 10000
+  },
+  "steps": [
+    20000
+  ],
+  "evaluation": {
+    "case_indices": "outputs/reports/chip_dev_screen_v45.json",
+    "nfe": 4,
+    "refiner_steps": 400,
+    "refiner_lr": 0.001,
+    "refiner_schedule": "linear",
+    "refiner_weights": {
+      "boundary": 2.0,
+      "group": 2.0,
+      "mib": 1.0,
+      "overlap": 10.0,
+      "wl": 1.0,
+      "area": 1.0
+    },
+    "projector_iterations": 8,
+    "legalizer_time_limit_ms": 2000,
+    "use_ema": true,
+    "deterministic": true,
+    "device": "cuda:0"
+  },
+  "comparison": {
+    "baseline_checkpoint": "outputs/chip_hierarchy/v7_bbox_anneal_20k/typed_hierarchy_bbox_anneal_seed19_20k/checkpoints/final.pt",
+    "same_device": "cuda:0",
+    "required_metrics": [
+      "legalized_hard_cost",
+      "legalized_v_rel"
+    ],
+    "rule": "Reject the subset if either primary mean or paired interval is worse than the matched production control."
+  },
+  "boundary": "This arm isolates data-subset/training-order effects at the old production batch and projector settings. It is not a training-exposure or SOTA result."
+}

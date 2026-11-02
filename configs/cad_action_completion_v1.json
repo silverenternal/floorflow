@@ -1,0 +1,64 @@
+{
+  "schema_version": "cad-action-completion-v1",
+  "status": "implementation_ready_no_gpu_run",
+  "scope": "residential_predicted_control_cad_actions",
+  "completed_links": {
+    "program_to_room_instances": {
+      "network": "src/floorflow/model/program_instance_router.py",
+      "loss": "src/floorflow/training/program_instance_training.py",
+      "default_weight": 0.2,
+      "matching": "mask-IoU Hungarian with room-class cross entropy and schedule BCE"
+    },
+    "typed_junctions": {
+      "network_state": "token junction coordinates and degree",
+      "consumer": "src/floorflow/inference/typed_junction_stage.py",
+      "output": "junction coordinates, degree, and incident wall IDs",
+      "tolerance": 0.04
+    },
+    "generate_validate_repair": {
+      "loop": "src/floorflow/inference/verified_repair_loop.py",
+      "policy": "accept only verifier-approved improvements; keep fallback otherwise",
+      "max_steps": 3
+    },
+    "furniture_semantics": {
+      "network": "src/floorflow/heads/room_conditioned_furniture_semantics.py",
+      "conditioning": "room-type evidence and predicted room schedule",
+      "hidden_dim": 64
+    },
+    "learned_revision_state": {
+      "network": "src/floorflow/heads/revision_state_head.py",
+      "consumer": "src/floorflow/inference/learned_revision.py",
+      "outputs": [
+        "operation logits",
+        "family logits",
+        "revision gate",
+        "region logits"
+      ]
+    }
+  },
+  "predicted_head": {
+    "model_config": "configs/predicted_channel_source_router_v3.json",
+    "enable_instance_room_decoder": true,
+    "enable_program_instance_router": true,
+    "enable_furniture_queries": true,
+    "furniture_room_assignment": true,
+    "furniture_semantic_router": true,
+    "estimated_parameters": 6143898
+  },
+  "required_controls": [
+    "program router off",
+    "schedule loss off but assignment CE on",
+    "typed junctions off",
+    "repair loop without verifier acceptance",
+    "furniture semantic residual off",
+    "revision head with shuffled edit mask"
+  ],
+  "gates": {
+    "program": "Room IoU and F1 remain stable while count/type improve.",
+    "junction": "Junction F1 and degree exactness improve with no wall regression.",
+    "repair": "Every accepted edit improves the verifier and no outside edit occurs.",
+    "furniture": "Furniture type accuracy improves without containment regression.",
+    "revision": "Family and region prediction reduce wrong-family edits."
+  },
+  "claim_boundary": "Implementation and experiment contract only; no metric improvement is claimed before matched runs."
+}

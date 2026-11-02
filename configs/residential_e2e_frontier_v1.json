@@ -1,0 +1,22 @@
+{
+  "schema_version": "residential-e2e-frontier-config-v1",
+  "scope": "residential_floorplan_only",
+  "split": "val191",
+  "test_access": "forbidden_until_validation_freeze",
+  "source_rows": "outputs/reports/residential_graph_refinement_exact_rows_v1.json",
+  "bootstrap_iterations": 5000,
+  "tail_fraction": 0.1,
+  "checks": {
+    "all_operations_quality_improve": true,
+    "all_room_bins_quality_improve": true,
+    "distribution_mmd_improves": true,
+    "coverage_not_reduced": true,
+    "diversity_collapse_ratio_min": 0.5,
+    "worst_decile_ged_improves": true
+  },
+  "figure": "paper/figures/residential_e2e_frontier_v1.pdf",
+  "claim_boundary": {
+    "candidate_node_worst_decile_regression_must_be_reported": true,
+    "extra_neural_nfe": 0
+  }
+}

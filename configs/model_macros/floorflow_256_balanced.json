@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "name": "floorflow_256_balanced",
+  "family": "floorflow",
+  "target_channels": 64,
+  "base_channels": 64,
+  "levels": 3,
+  "resolution": [256, 256],
+  "target_feature_px": 2,
+  "dynamic_output": true,
+  "seed": 17,
+  "budget": {
+    "max_params": 12000000,
+    "max_macs": null,
+    "min_base_channels": 32,
+    "max_base_channels": 96,
+    "width_step": 8,
+    "min_levels": 2,
+    "max_levels": 4,
+    "head_fraction": 0.08
+  },
+  "backbone_kwargs": {
+    "semantic_channel_attention": true,
+    "slot_mixing": true,
+    "advanced_streams": true,
+    "family_streams": true,
+    "family_mita_attention": true,
+    "topology_aux": true,
+    "room_partition_head": true,
+    "num_room_classes": 24,
+    "room_program_head": true,
+    "hierarchical_rooms": true,
+    "hierarchical_hidden": 96,
+    "hierarchical_tokens": 8,
+    "hierarchical_coarse_resolution": 64,
+    "coarse_to_face_cfm": true,
+    "coarse_face_hidden": 64,
+    "coarse_face_max_faces": 32,
+    "geometry_heads": true,
+    "geometry_experts": 4,
+    "geometry_top_k": 2
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "schema_version": "predicted-control-identity-v1",
+  "scope": "residential_floorplan_only",
+  "device": "cuda:0",
+  "test_access": "forbidden_until_validation_freeze",
+  "frozen_base": {
+    "distribution_checkpoint": "outputs/train/distribution_dmd_adversarial_datamap4_v11/best.pt",
+    "room_segmenter_checkpoint": "outputs/train/room_segmenter_r18_uniform_full40_v2/best.pt",
+    "room_prior_weight": 2.0,
+    "control_source": "target_free_predicted",
+    "known_validation_reference": {
+      "room_macro_iou": 0.1698359609696591,
+      "instance_geometric_iou": 0.5144348828183483,
+      "instance_room_f1": 0.17873924679925549,
+      "instance_type_accuracy": 0.45485403937542435,
+      "room_support_iou": 0.7532600746902124,
+      "fpeval_wall_f1": 0.43558393964325215,
+      "fpeval_opening_f1": 0.11268346735725182,
+      "validity": 1.0,
+      "watertight": 0.9063136456211812
+    }
+  },
+  "identity_features": [
+    "24 room-segmenter class log-probabilities",
+    "24 DMD-v11 room-class log-probabilities",
+    "footprint occupancy",
+    "footprint boundary band"
+  ],
+  "head": {
+    "implementation": "existing RoomMaskDecoder",
+    "hidden_dim": 96,
+    "queries": 32,
+    "layers": 3,
+    "heads": 4,
+    "mask_fusion": "sigmoid",
+    "prototype_source": "room_segmenter_logits"
+  },
+  "training": {
+    "split": "train",
+    "full_cases": 5126,
+    "initial_screen_cases": 1024,
+    "validation_cases": 491,
+    "epochs_screen": 5,
+    "epochs_full": 5,
+    "batch_size": 8,
+    "learning_rate": 0.0002,
+    "weight_decay": 0.0001,
+    "boundary_weight": 2.0,
+    "assignment_class_weight": 0.5,
+    "assignment_mask_weight": 2.0,
+    "class_loss_weight": 1.0,
+    "mask_loss_weight": 2.0,
+    "partition_weight": 0.5,
+    "gradient_clip": 1.0
+  },
+  "selection": {
+    "metric": "room_macro_iou + 0.25 * instance_room_f1 + 0.1 * instance_type_accuracy",
+    "split": "val491",
+    "best_of_n": false
+  },
+  "screen_gate": {
+    "room_macro_iou_min": 0.25,
+    "instance_room_f1_min": 0.23,
+    "instance_type_accuracy_min": 0.5,
+    "room_support_retention_min": 0.98,
+    "validity": 1.0,
+    "watertight_min": 0.9
+  },
+  "guardrails": [
+    "No target-derived feature is an input to the identity head.",
+    "The DMD-v11 and room-segmenter backbones remain frozen in the first screen.",
+    "A target count may be reported as a diagnostic ceiling but cannot drive deployable output.",
+    "The test split remains closed until the validation bridge is frozen."
+  ]
+}

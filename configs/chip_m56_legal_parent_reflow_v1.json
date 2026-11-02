@@ -1,0 +1,57 @@
+{
+  "version": "chip-m56-legal-parent-reflow-v1",
+  "date": "2026-11-01",
+  "status": "official100_reject_against_retained_portfolio",
+  "development_cases": 32,
+  "device": "cuda:0",
+  "parent": "M75 best existing candidate latent",
+  "critical_blocks": {
+    "score": "active b2b net span + active p2b pin distance",
+    "top_fraction": 0.2,
+    "exclude": [
+      "fixed",
+      "preplaced"
+    ]
+  },
+  "reflow": {
+    "noise_fraction": 0.25,
+    "steps": 1,
+    "projector_iterations": 8,
+    "noncritical_anchor": "restore parent after every step",
+    "final_constraint_projection": true
+  },
+  "selection": {
+    "policy": "legality_guarded_consensus",
+    "compare": [
+      "legal parent",
+      "reflow candidate"
+    ],
+    "target_derived_inputs": false
+  },
+  "budget": {
+    "parent_trajectories": 1,
+    "parent_nfe": 1,
+    "reflow_nfe": 1,
+    "total_nfe": 2,
+    "refiner_steps": 1600,
+    "legalizer_calls": 3
+  },
+  "probes": [
+    "critical blocks exclude fixed and preplaced",
+    "at least one movable block is selected",
+    "noncritical parent locality",
+    "hard constraints preserved",
+    "exact total budget accounting"
+  ],
+  "gate": "Equal or lower total NFE/legalizer budget improves cost or V_rel without regressing the other primary metric, feasibility or parent locality.",
+  "claim_boundary": "Development mechanism screen only; external routed PPA remains required.",
+  "official100": {
+    "report": "outputs/reports/chip_m56_reflow2_decision_official100_v1.json",
+    "status": "reject",
+    "relative_cost_vs_m48_portfolio": 0.01925396509608124,
+    "relative_v_rel_vs_m48_portfolio": 0.05528660037988523,
+    "relative_cost_vs_trinity": 0.045575902634157665,
+    "noncritical_displacement_max": 0.0,
+    "decision": "Keep as reusable operator and negative promotion result; do not run source seeds 20/21."
+  }
+}

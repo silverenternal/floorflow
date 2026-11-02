@@ -1,0 +1,51 @@
+{
+  "schema_version": "fevp-report-v1",
+  "protocol_version": "1.0",
+  "report_id": "example-incomplete",
+  "method": "Example method",
+  "dataset": "Example dataset",
+  "task": "Example editing task",
+  "comparability": {
+    "status": "context_only",
+    "notes": "Illustrates explicit missing metrics."
+  },
+  "edit_region": {
+    "definition": "Declared rectangle.",
+    "rasterization_rule": "Round to raster.",
+    "valid_outside_rule": "Footprint outside edit region."
+  },
+  "scorer": {
+    "implementation": "example",
+    "version": "1",
+    "code_commit": "example"
+  },
+  "mandatory": {
+    "outside_exact": {
+      "status": "not_reported"
+    },
+    "validity": {
+      "status": "reported_under_fevp",
+      "value": 1.0,
+      "source": "example"
+    },
+    "conditional_watertightness": {
+      "status": "not_reported"
+    },
+    "node_f1": {
+      "status": "reported_under_fevp",
+      "value": 0.9,
+      "source": "example"
+    },
+    "edge_overlap": {
+      "status": "not_reported"
+    }
+  },
+  "optional": {},
+  "cases": {
+    "count": 1
+  },
+  "source_map": {
+    "validity": "example",
+    "node_f1": "example"
+  }
+}

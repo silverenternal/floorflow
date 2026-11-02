@@ -1,0 +1,224 @@
+{
+  "version": "chip-sota-budget-ladder-v1",
+  "date": "2026-10-30",
+  "status": "full50k_and_m6_pilot_rejected_highblock_running",
+  "source_document": "docs/chip_sota_budget_comparison_v1.md",
+  "claim_types": {
+    "absolute_sota": "Lowest same-protocol quality under any fully disclosed parameter, training and inference budget.",
+    "equal_training_sota": "Beat the anchor with matched parameter count and training sample/FLOP budget.",
+    "equal_inference_sota": "Beat the anchor with matched parameters, NFE, refiner steps and sample count.",
+    "equal_quality_efficiency": "Reach a frozen anchor quality threshold with fewer NFE, refiner steps, samples or measured GPU-seconds."
+  },
+  "current_model": {
+    "checkpoint": "outputs/chip_hierarchy/v7_bbox_anneal_20k/typed_hierarchy_bbox_anneal_seed19_20k/checkpoints/final.pt",
+    "parameters": 5836447,
+    "width": 192,
+    "depth": 10,
+    "typed_layers": 1,
+    "training_steps": 20000,
+    "micro_batch": 128,
+    "effective_batch": 128,
+    "sample_exposures": 2560000,
+    "primary_endpoint": "NFE4 + 400 refiner steps + 1 sample",
+    "closest_anchor_diagnostic": "NFE4 + 1600 refiner steps + 1 sample"
+  },
+  "anchors": {
+    "trinity_d192": {
+      "parameters": 5856400,
+      "training_steps": 200000,
+      "effective_batch": 256,
+      "sample_exposures": 51200000,
+      "paper_sampling_ceiling": 32,
+      "refiner_steps": 400,
+      "best_of_n": 48
+    },
+    "trinity_flagship": {
+      "parameters": 92900000,
+      "training_steps": 200000,
+      "effective_batch": 256,
+      "paper_sampling_ceiling": 32,
+      "refiner_steps": 400,
+      "best_of_n": 48,
+      "reported_hard_cost": 1.014,
+      "reported_seconds_per_chip": 1.63
+    },
+    "flowplace_dac26": {
+      "parameters": "not_reported_as_comparable_learned_parameter_budget",
+      "sampling_steps_typical": [20, 50],
+      "released_test_sampling_steps": 20,
+      "hard_constraint_sampling": true,
+      "reported_strength": "zero-overlap, best OpenROAD PPA ranking, 10-50x faster sampling than the compared ChipDiffusion pipeline",
+      "source": "https://arxiv.org/abs/2604.23658",
+      "repository": "https://github.com/lamda-bbo/flowplace",
+      "repository_license": "not_present",
+      "reuse_policy": "paper-level mechanism only; clean-room implementation in existing modules"
+    },
+    "chipdiffusion_large": {
+      "parameters": 6290000,
+      "training_steps_repo_default": 3000000,
+      "training_batch_repo_default": 64,
+      "guidance_steps_paper": 10
+    },
+    "macrodiff_plus": {
+      "parameters": 5023171,
+      "diffusion_timesteps": 200,
+      "ddim_steps": 20,
+      "guidance_iterations_range": [300, 700]
+    },
+    "eggplacer": {
+      "parameters": 556354,
+      "training_updates": 3000000,
+      "training_batch": 64,
+      "analytical_nesterov_steps": 5,
+      "energy_inner_steps": 10,
+      "reported_total_seconds_per_design": 95.4
+    },
+    "rollplace": {
+      "parameters": "model_plus_mcts",
+      "search": "Monte Carlo rollout search",
+      "reported_runtime_range_minutes_per_design": [29, 156]
+    },
+    "c2fplace": {
+      "parameters": "non_neural_evolutionary_search",
+      "search": "population search plus critical-macro tuning"
+    }
+  },
+  "parameter_ladder": [
+    {"id": "d192-current", "hidden": 192, "heads": 3, "parameters": 5836447},
+    {"id": "d256", "hidden": 256, "heads": 4, "parameters": 9844383},
+    {"id": "d384", "hidden": 384, "heads": 6, "parameters": 20219551},
+    {"id": "d512", "hidden": 512, "heads": 8, "parameters": 35215007},
+    {"id": "d768-l12", "hidden": 768, "heads": 12, "parameters": 86445345}
+  ],
+  "runtime_preflight": {
+    "report": "outputs/reports/chip_capacity_budget_v1.json",
+    "protocol": "typed_hierarchy, block_count=40, batch_size=1, NFE=4, CUDA:0",
+    "d192_training_forward_backward_flops": 1420643426,
+    "d256_training_forward_backward_flops": 2358361314,
+    "d384_training_forward_backward_flops": 4771274210,
+    "d192_sample_nfe4_flops": 1786325000,
+    "d256_sample_nfe4_flops": 2959455624,
+    "d384_sample_nfe4_flops": 5956243592,
+    "block_count_reports": [
+      {
+        "block_count": 21,
+        "report": "outputs/reports/chip_capacity_budget_b21_v1.json",
+        "d192_training_forward_backward_flops": 763446086,
+        "d256_training_forward_backward_flops": 1278324038,
+        "d384_training_forward_backward_flops": 2607857990
+      },
+      {
+        "block_count": 120,
+        "report": "outputs/reports/chip_capacity_budget_b120_v1.json",
+        "d192_training_forward_backward_flops": 5061009630,
+        "d256_training_forward_backward_flops": 8243858526,
+        "d384_training_forward_backward_flops": 16514835294
+      }
+    ],
+    "batch32_b40_report": "outputs/reports/chip_capacity_budget_b40_batch32_v1.json",
+    "boundary": "Single-batch preflight only; do not compare quality or infer full-cohort throughput."
+  },
+  "capacity_cli_smoke": {
+    "d256_report": "outputs/smoke/chip_capacity_width_smoke_v1/d256_width_smoke.json",
+    "d384_report": "outputs/smoke/chip_capacity_width_smoke_v1/d384_width_smoke.json",
+    "checkpoint_reload_verified_before_cleanup": true,
+    "boundary": "One-step plumbing smoke only; no quality claim."
+  },
+  "training_compute_ladder": {
+    "data_layer": "frozen 20k-case subset before any full-data training",
+    "micro_batch": 128,
+    "gradient_accumulation": 2,
+    "effective_batch": 256,
+    "steps": [20000, 50000, 100000, 200000],
+    "primary_inference": "NFE4 + refiner400",
+    "anchor_diagnostic": "NFE4 + refiner1600",
+    "early_stop": "Do not advance a step count when both primary metrics fail to improve on the frozen subset."
+  },
+  "high_block_count_branch": {
+    "reason": "The current 50k train cache covers 21-60 blocks, while Official-100 extends to 120. The 120-block Official-8 case dominates the current cost regression.",
+    "cache": "outputs/cache/chip_floorset_200k_train_12k_dev_range_v1",
+    "train_indices": "configs/chip_train_scaling_range20k_v1.json",
+    "train_indices_sha256": "21562442d64ee0ce0c8eda44b6a05b8196b88c499fa40e5f33f41ad6b1d7e32e",
+    "cache_metadata_sha256": "d3101b5f2569ebf642e5ef7e6857d510d44ce32b3434b7ab105afcffc8c0c428",
+    "cases": 20000,
+    "block_count_range": [21, 120],
+    "selection_seed": 20261031,
+    "promotion_rule": "Improve the predeclared high-block slice without regressing low/mid-complexity cases at equal training exposure and inference budget."
+  },
+  "inference_ladder": {
+    "nfe": [4, 8, 16, 32],
+    "refiner_steps": [400, 800, 1600, 3200],
+    "samples": [1, 4, 16],
+    "selection_policy": "Only a deployable shared scorer may choose among samples. Oracle best-of-N is diagnostic only.",
+    "primary_endpoint": "NFE4 + refiner400 + 1 sample"
+  },
+  "adaptive_inference": {
+    "snapshots": [400, 800, 1600, 3200],
+    "candidate_signals": [
+      "refiner_energy_delta",
+      "latent_displacement_rms",
+      "overlap_boundary_group_plateau",
+      "trust_region_distance",
+      "validated_analytical_response_delta"
+    ],
+    "forbidden_inputs": [
+      "target_boxes",
+      "official_cost",
+      "v_rel_label",
+      "case_identity"
+    ],
+    "compute_accounting": "Report NFE, refiner steps, generated draws, scorer calls, legalization work and wall time."
+  },
+  "route_portfolio": [
+    {
+      "id": "B1-training-compute",
+      "priority": "P0",
+      "success": "Close the 20x d192 sample-exposure deficit at fixed parameter count."
+    },
+    {
+      "id": "B2-high-block-data-coverage",
+      "priority": "P0",
+      "success": "Train on the frozen 21-120 distribution and remove 103/112/120-block extrapolation outliers."
+    },
+    {
+      "id": "B3-adaptive-refiner-and-search",
+      "priority": "closed_negative",
+      "success": "Rejected on dev32: no energy-plateau, observable-rank or leave-one-case-out selector beats fixed refiner1600 under the declared total-compute and quality guard."
+    },
+    {
+      "id": "B4-capacity-scaling",
+      "priority": "P1",
+      "success": "Screen d256/d384 under equal exposure and approximately equal FLOPs."
+    },
+    {
+      "id": "B5-large-data-and-seed-stability",
+      "priority": "P1",
+      "success": "Retest larger data at the selected horizon with a fixed data order and stable seeds."
+    },
+    {
+      "id": "B6-projection-consistent-flow",
+      "priority": "P0",
+      "success": "Before adding capacity, test a no-new-parameter projection-consistent flow using the existing hard projector at identical source noise, NFE, refiner and legalizer. U1 dynamic graph relay remains rejected."
+    },
+    {
+      "id": "B7-routed-feedback",
+      "priority": "P1",
+      "success": "Transfer improvements to routed PPA with a validated deployable response signal."
+    },
+    {
+      "id": "B8-strongest-anchor",
+      "priority": "P1",
+      "success": "Certify Trinity flagship or the strongest exact same-protocol anchor under every disclosed budget field."
+    }
+  ],
+  "capacity_order": ["d192-current", "d256", "d384", "d512", "d768-l12"],
+  "capacity_gate": "A larger model must improve both primary metrics at equal training sample exposure and equal inference budget. Equal-step-only wins are insufficient.",
+  "sota_certification": [
+    "Run exact Trinity d192 under matched model, training and inference budgets.",
+    "Run an exact strong anchor, preferably Trinity flagship 92.9M, under the declared absolute budget.",
+    "Treat FlowPlace as an external OpenROAD PPA anchor, but mark its comparable parameter count as unpublished and do not reuse its unlicensed source.",
+    "Report the selected model over a frozen single-sample and best-of-N Pareto ladder.",
+    "Keep external routed PPA and DRC/congestion/timing/power/area guards as independent endpoints.",
+    "Do not substitute cross-paper parameter or runtime comparisons for a local same-protocol result."
+  ]
+}

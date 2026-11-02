@@ -1,0 +1,15 @@
+{
+  "version": "chip-m60-incidence-normalized-graph-v1",
+  "stage": "M60-INCIDENCE-NORMALIZED-GRAPH",
+  "parent_checkpoint": "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed21_5k/checkpoints/final.pt",
+  "train_indices": "configs/chip_train_screen_5k_v1.json",
+  "flags": {
+    "relation_specific_attention": true,
+    "incidence_normalized_relations": true,
+    "dynamic_graph_input": true,
+    "complexity_conditioning": true,
+    "degree_conditioned_expert": true,
+    "relation_gate_weight": 0.01
+  },
+  "quick_gate": "port-off ablation retains gain and legalized p2b does not regress"
+}

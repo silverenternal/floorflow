@@ -1,0 +1,36 @@
+{
+  "version": "chip-s1-group-moment-v1",
+  "parent": "M27 canonical seed21",
+  "purpose": "Test whether explicit group extent/span moments preserve grouping while repairing b2b and area.",
+  "architecture": {
+    "architecture": "typed_hierarchy",
+    "hidden": 192,
+    "heads": 3,
+    "depth": 12,
+    "typed_layers": 1,
+    "head_dim": 64
+  },
+  "branches": {
+    "structural_relation_head": true,
+    "group_moment_conditioning": true
+  },
+  "objective": {
+    "structural_relation_weight": 0.1,
+    "relation_gate_weight": 0.01,
+    "hierarchy_bbox_weight": 0.5,
+    "hierarchy_bbox_decay_steps": 10000
+  },
+  "training": {
+    "scope": "b2b+downstream",
+    "subset": "configs/chip_m63_response_indices1k_v1.json",
+    "probe_steps": 300,
+    "survivor_steps": 2000,
+    "eval_budget": "NFE4/refiner400 on 500 frozen dev cases"
+  },
+  "gate": {
+    "primary": "cost non-regression and V_rel CI below zero",
+    "structure": "grouping, b2b and area non-regression; at least two improve",
+    "coverage": "CSJ@B improves by at least 0.05"
+  },
+  "claim_boundary": "CPU contract and frozen-subset candidate only; no full-data or SOTA claim before confirmation."
+}

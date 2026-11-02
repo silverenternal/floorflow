@@ -1,0 +1,26 @@
+{
+  "version": "chip-m61-route-source-decomposition-v1",
+  "parent_checkpoint": "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed21_5k/checkpoints/final.pt",
+  "train_indices": "configs/chip_train_screen_5k_v1.json",
+  "stages": {
+    "M61A-ROUTE-ONLY": {
+      "flags": {
+        "spatial_route_field": true,
+        "routing_proxy_weight": 0.05
+      }
+    },
+    "M61B-SOURCE-ONLY": {
+      "flags": {
+        "hierarchy_source_mode": "mixed",
+        "hierarchy_source_levels": "derived",
+        "hierarchy_source_shelf_probability": 0.25,
+        "hierarchy_source_shelf_probability_final": 0.75,
+        "hierarchy_source_shelf_probability_steps": 4000,
+        "backbone_unfreeze_step": 1000,
+        "geometry_augment": "dihedral",
+        "geometry_augment_probability": 0.25
+      }
+    }
+  },
+  "quick_gate": "route-only must improve cost or p2b without V_rel/grouping regression"
+}

@@ -1,0 +1,164 @@
+{
+  "version": "2026-10-28-chip-ppa-external-v1.1",
+  "status": "contract_frozen",
+  "amendments": [
+    {
+      "date": "2026-10-28",
+      "before_candidate_ppa_outcomes": true,
+      "change": "Predeclared 2% congestion and 20 ps WNS guards for the secondary non-regression gate."
+    },
+    {
+      "date": "2026-10-31",
+      "before_control_ppa_outcome": true,
+      "change": "Apply the same ORFS resource/convergence adaptation to candidate and control: SKIP_CTS_REPAIR_TIMING=1 because CTS repair exceeded available memory, and droute_end_iter=10 because the frozen end_iter=1 sensitivity run left 49712 DRC."
+    }
+  ],
+  "scope": "External macro-placement to routed-PPA validation; not part of the FloorSet official benchmark",
+  "source_policy": {
+    "preferred": {
+      "name": "OpenROAD-flow-scripts",
+      "url": "https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts",
+      "license": "BSD-3-Clause for flow scripts; each design, platform and tool retains its own license",
+      "use": "official designs, synthesis seed, complete physical-design flow and METRICS_2.1.2 extraction"
+    },
+    "optional_benchmark_cache": {
+      "name": "FlowPlace OpenROAD benchmark cache",
+      "url": "https://github.com/lamda-bbo/flowplace",
+      "license_status": "unverified_no_repository_license_returned",
+      "use": "allowed only after local license/provenance audit; otherwise do not use or redistribute"
+    },
+    "optional_evaluator": {
+      "name": "FlowPlace openroad_ppa_evaluator.py",
+      "license_status": "unverified_no_repository_license_returned",
+      "use": "audit before copying; ORFS genMetrics is the primary fallback"
+    },
+    "timing_engine": {
+      "name": "OpenSTA",
+      "url": "https://github.com/parallaxsw/OpenSTA",
+      "license": "GPL-3.0 or commercial dual license",
+      "use": "through ORFS only"
+    },
+    "optional_global_placer": {
+      "name": "DREAMPlace",
+      "url": "https://github.com/limbo018/DREAMPlace",
+      "license_status": "audit_required",
+      "use": "only if the selected ORFS design requires a separate mixed-size handoff"
+    }
+  },
+  "case_selection": {
+    "target_count": 5,
+    "minimum_count": 3,
+    "freeze_before_candidate_evaluation": true,
+    "required_inputs": [
+      "RTL or synthesized Verilog",
+      "standard-cell and macro Liberty/LEF inputs",
+      "macro-bearing netlist",
+      "SDC clock constraints",
+      "ORFS design config",
+      "successful baseline synthesis and floorplan dry run"
+    ],
+    "eligibility": [
+      "at least one macro with nonzero b2b or p2b connectivity",
+      "baseline global route and detailed route terminate within the predeclared timeout",
+      "all macro dimensions and orientations map one-to-one to DEF",
+      "no missing clock, PDK or routing-layer input"
+    ],
+    "deterministic_ranking": [
+      "partition eligible cases into small (1-40 macros), medium (41-80) and large (81-120)",
+      "take the lexicographically first eligible case from each nonempty stratum",
+      "fill remaining slots by ascending macro count, then case name",
+      "extend the large-case cap to 160 only if fewer than three eligible cases exist",
+      "never select or replace a case based on candidate PPA"
+    ],
+    "fallback_if_fewer_than_three": "Reject external PPA promotion and report the missing supported cases; do not substitute FloorSet or Bookshelf surrogate metrics."
+  },
+  "arms": {
+    "candidate": "typed_hierarchy EMA checkpoints with projector8",
+    "control": "graph-token EMA checkpoints with the same macro legalizer and DEF adapter",
+    "external_anchor": "released FlowPlace DEF if legally usable, otherwise the strongest licensed published DEF available",
+    "candidate_seeds": [19, 20, 21],
+    "required_primary_arm_count": 2,
+    "model_selection": "Use all three fixed seeds for the final external claim; a one-seed screen is diagnostic only."
+  },
+  "same_infrastructure": {
+    "orfs_image_or_binary_digest": "required",
+    "openroad_version": "required",
+    "opensta_version": "required",
+    "klayout_version": "required",
+    "platform": "identical for all arms and cases",
+    "sdc": "identical",
+    "route_effort": "identical",
+    "endpoint_slack": "REPORT_ENDPOINT_SLACK=1",
+    "macro_legalizer": "same implementation and iterations for candidate and control",
+    "def_writer": "same implementation for candidate and control"
+  },
+  "metrics": {
+    "validity": [
+      "macro overlap count = 0",
+      "fixed/preplaced macro preservation count = 0 violations",
+      "DEF name/coordinate/orientation round-trip mismatch = 0",
+      "detailed-route DRC count = 0"
+    ],
+    "primary": {
+      "metric": "mean relative detailed-routed wirelength",
+      "direction": "lower_is_better",
+      "minimum_effect": -0.02,
+      "aggregation": "mean of per-case candidate/control ratios across the frozen cases and fixed seeds"
+    },
+    "secondary": [
+      "global-route total overflow",
+      "global-route maximum congestion",
+      "routed WNS",
+      "routed TNS",
+      "setup violating endpoints",
+      "hold violating endpoints",
+      "total power",
+      "standard-cell area",
+      "macro area",
+      "core utilization"
+    ],
+    "regression_guards": {
+      "legality_or_drc_regression": "reject the PPA claim",
+      "power_relative_regression_above": 0.05,
+      "standard_cell_area_relative_regression_above": 0.05,
+      "congestion_relative_regression_above": 0.02,
+      "worst_negative_slack_absolute_regression_ns_above": 0.02,
+      "timing_claims": "WNS/TNS and violating-endpoint counts report all cases; no cherry-picked endpoint"
+    },
+    "source_precedence": [
+      "METRICS_2.1.2 stage JSON",
+      "ORFS stage logs",
+      "ORFS finish reports",
+      "endpoint slack JSON"
+    ],
+    "na_policy": "A primary metric marked N/A rejects promotion rather than falling back to a surrogate."
+  },
+  "statistics": {
+    "primary_estimand": "fixed-seed mean relative routed wirelength over frozen cases",
+    "report": [
+      "every case and seed",
+      "candidate/control ratio per case",
+      "mean and range across seeds",
+      "mean and range across cases",
+      "exact wins/ties/losses",
+      "leave-one-case-out and leave-one-seed-out sensitivity"
+    ],
+    "forbidden": [
+      "i.i.d. bootstrap over repeated cases across seeds",
+      "best-of-seed selection",
+      "best-of-case selection",
+      "claiming statistical significance from fewer than ten independent designs"
+    ]
+  },
+  "promotion_gate": {
+    "required": [
+      "3-5 cases frozen and complete",
+      "candidate and control complete the same routed flow",
+      "primary routed wirelength improves at least 2%",
+      "legality and DRC do not regress",
+      "power and std-cell area stay within the guarded threshold",
+      "at least one of congestion or timing is directionally consistent or explicitly neutral"
+    ],
+    "failure_decision": "Retain the FloorSet bounded-mechanism study and recommend DAC/ICCAD/ISPD/DATE instead of claiming CVPR placement/PPA improvement."
+  }
+}

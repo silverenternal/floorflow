@@ -1,0 +1,77 @@
+{
+  "schema_version": "residential-constraint-action-config-v1",
+  "scope": "residential_floorplan_only",
+  "data": {
+    "train_controls": "outputs/control_contracts/oracle_v1/train",
+    "validation_controls": "outputs/control_contracts/oracle_cagn_v1/val",
+    "footprint_cache": "outputs/cache/cubicasa5k",
+    "taxonomy": "outputs/cache/cubicasa5k_full_v2/taxonomy.json",
+    "test_access": "forbidden_until_cagn_09_freeze"
+  },
+  "action_vocabulary": [
+    "room_add",
+    "room_remove",
+    "room_type",
+    "opening_delete",
+    "furniture_delete"
+  ],
+  "candidate_policy": {
+    "group": "one reproducible edited action under one before state",
+    "per_group": [
+      "positive",
+      "legal_alternative",
+      "seven_typed_near_violations"
+    ],
+    "near_violation_families": [
+      "room_overlap",
+      "wall_gap",
+      "opening_detached",
+      "room_outside_footprint",
+      "door_connectivity",
+      "room_label_mismatch",
+      "outside_leakage"
+    ],
+    "transform_determinism": "fixed recipe plus base action seed; no random test-time sampling",
+    "case_balance": "one group per reproducible operation per case",
+    "operation_balance": "inverse-frequency weights are computed on train only",
+    "room_complexity_balance": "stratify by active room count bins 1-4, 5-7, 8+"
+  },
+  "hard_envelope": {
+    "equation": "p_effective = hard_feasible * sigmoid(learned_score)",
+    "tolerance": {
+      "local_edit_boundary_pixels": 1,
+      "footprint_outside_fraction_delta": 0.01,
+      "opening_wall_far_fraction_delta": 0.05
+    },
+    "relative_to_before": [
+      "room pixels outside footprint",
+      "wall pixels outside footprint",
+      "opening pixels far from walls",
+      "furniture pixels outside footprint"
+    ],
+    "typed_constraint_labels": [
+      "room_overlap",
+      "wall_gap",
+      "opening_detached",
+      "room_outside_footprint",
+      "door_connectivity",
+      "room_label_mismatch",
+      "outside_leakage"
+    ],
+    "selection_rule": "a learnable score can rank only rows satisfying all hard-envelope checks"
+  },
+  "audit": {
+    "expected_candidates_per_group": 9,
+    "required_train_rows": "all",
+    "required_validation_rows": "all",
+    "required_checks": [
+      "train_val_only",
+      "nine_candidates_per_group",
+      "positive_hard_pass_rate_at_least_0_98",
+      "legal_alternative_hard_pass_rate_at_least_0_98",
+      "every_family_present",
+      "hard_mask_recorded_for_every_role"
+    ],
+    "source_provenance": "SHA-256 for every distinct control source"
+  }
+}

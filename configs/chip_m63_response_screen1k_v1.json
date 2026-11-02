@@ -1,0 +1,12 @@
+{
+  "version": "chip-m63-response-screen1k-v1",
+  "source_train_indices": "configs/chip_train_screen_5k_v1.json",
+  "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2/train",
+  "selection": "complexity_stratified",
+  "cases": 1000,
+  "seed": 20261101,
+  "sidecar": "outputs/cache/chip_m63_response_screen1k_v1.npz",
+  "indices": "configs/chip_m63_response_indices1k_v1.json",
+  "report": "outputs/reports/chip_m63_response_sidecar_audit_v1.json",
+  "claim_boundary": "CPU shelf-source legalizer-response labels; still requires held-out response validation."
+}

@@ -1,0 +1,341 @@
+{
+  "project": "floorflow",
+  "version": "2026-10-31-adaptive-structure-v98",
+  "status": "active",
+  "scope": "residential_floorplan_only",
+  "objective": "Build a same-protocol residential SOTA evidence package by closing the ordered room -> support -> owner/wall/junction -> opening-host -> canonical CAD chain, then run matched external comparisons and frozen tests. Do not touch chips/FloorSet.",
+  "current_task": "FF-PC-15",
+  "engineering_policy": {
+    "gpu": "cuda:0",
+    "do_not_touch_chips_or_floorset": true,
+    "single_python_file_limit": 600,
+    "reuse_existing_code_before_new_modules": true,
+    "tests_before_training": true,
+    "validation_only_checkpoint_selection": true,
+    "test_sets_closed_until_freeze": true,
+    "no_metric_only_branch_without_plan_consumer": true,
+    "typed_handoffs_and_order_tests_required": true,
+    "oracle_predicted_and_external_rows_must_stay_separate": true,
+    "negative_results_must_record_the_engineering_lesson": true,
+    "no_global_stage_film_or_capacity_sweep_before_module_gates": true
+  },
+  "training_ladder": {
+    "contract_smoke": "One real batch with finite gradients, disabled-branch equality, typed outputs, and downstream consumer.",
+    "mechanism_screen": "256 train / 64 calibration; mechanism only.",
+    "promotion_screen": "1024 train / 256 calibration, two seeds.",
+    "scale_screen": "Full train split with 384 calibration and 107 offset-384 holdout cases; five seeds.",
+    "acceptance": "Full val491 plus complete canonical-plan structural evaluation; test only after freeze."
+  },
+  "evidence_summary": {
+    "rplan_generation_conditioned": {
+      "report": "outputs/reports/floorflow_sharednetwork_fiveseed_512_v1.json",
+      "room_iou": 0.6758748411,
+      "wall_f1": 0.6759025465,
+      "node_f1": 0.9244934276,
+      "edge_overlap": 0.6220292143,
+      "ged": 3.032421875,
+      "validity": 1.0,
+      "conditional_watertightness": 0.999609375,
+      "scope": "Boundary/entrance-conditioned generation, not predicted-control editing."
+    },
+    "predicted_control_reasonableness": {
+      "report": "outputs/reports/predicted_control_plausibility_fiveseed_v12.json",
+      "validity": 1.0,
+      "functional_watertightness": 0.99796,
+      "wall_continuity": 0.99543,
+      "plan_plausibility": 0.98656
+    },
+    "dense_query_blend_room_identity": {
+      "report": "outputs/reports/dense_query_blend_fiveseed_v1.json",
+      "val491": {
+        "room_iou_delta": 0.0028652013,
+        "instance_f1_delta": 0.0100893479,
+        "count_mae_delta": -0.2896130346
+      },
+      "holdout_instance_f1_delta": -0.003619058,
+      "holdout_improved_seeds": 1,
+      "decision": "hold as a diagnostic room-only readout."
+    },
+    "selective_support_deletion": {
+      "report": "outputs/reports/selective_support_deletion_promotion_twoseed_v1.json",
+      "val491_room_iou_delta": [0.0041827661, 0.0039232929],
+      "val491_instance_f1_delta": [0.0144362246, 0.0157738086],
+      "val491_count_mae_delta": [-0.3788187373, -0.3604887984],
+      "canonical_wall_f1_delta": -0.0143170123,
+      "decision": "hold; room-only gains do not survive canonical wall composition."
+    },
+    "opening_interval_integration": {
+      "checkpoint": "outputs/train/opening_interval_decoder_full_8ep_v1/best.pt",
+      "cal64_report": "outputs/reports/opening_interval_full_seed19_structure_cal64_v1.json",
+      "threshold_0_3_opening_f1": 0.2814986581,
+      "threshold_0_5_opening_f1": 0.2600033952,
+      "bridge_only_opening_f1": 0.115310535,
+      "wall_f1": 0.4689089496,
+      "validity": 1.0,
+      "functional_watertightness": 1.0,
+      "full_val_report": "outputs/reports/opening_interval_full_seed19_structure_val491_v1.json",
+      "decision": "active promotion; full-val paired result pending."
+    },
+    "negative_results": [
+      {
+        "arm": "Cross-readout metric comparison",
+        "decision": "forbidden",
+        "reason": "Room-only, canonical, oracle, predicted, generation, and editing rows must stay separate."
+      },
+      {
+        "arm": "Global wall/opening stage FiLM",
+        "decision": "reject",
+        "evidence": "outputs/reports/floorflow_cadaction_screen128_v1.json",
+        "lesson": "A global scale does not replace a typed spatial consumer."
+      },
+      {
+        "arm": "Hard owner attention or dense owner supervision",
+        "decision": "reject",
+        "lesson": "Hard routing reduces Room IoU or memorizes assignments."
+      },
+      {
+        "arm": "Owner-wall action scorer at 1024/256",
+        "decision": "reject",
+        "evidence": "outputs/reports/floorflow_owner_wall_action_promotion1024_v1.json",
+        "lesson": "The 128/64 connector gain did not scale; cache frozen candidates."
+      },
+      {
+        "arm": "Post-hoc room count merge or component relabel",
+        "decision": "reject",
+        "evidence": "docs/predicted_control_fidelity_baseline_v3.md",
+        "lesson": "Count can improve while identity collapses; learn support and identity together."
+      },
+      {
+        "arm": "Query-mask graph arbitration",
+        "decision": "hold",
+        "evidence": "outputs/train/query_mask_graph_existence_screen256_v1/report.json",
+        "lesson": "The existence head saturated and learned arbitration did not beat query-only."
+      },
+      {
+        "arm": "Fixed query-mask support threshold",
+        "decision": "reject",
+        "evidence": "outputs/reports/dense_query_support_seed19_val491_confv1.json",
+        "lesson": "Count gains traded away Room/support and holdout quality."
+      },
+      {
+        "arm": "Selective support deletion as complete CAD",
+        "decision": "hold",
+        "evidence": "outputs/reports/selective_support_deletion_seed19_structure_val491_v1.json",
+        "lesson": "A head must be consumed during owner/wall learning, not only after canonical composition."
+      },
+      {
+        "arm": "Free learned wall/opening vector queries",
+        "decision": "reject",
+        "evidence": "docs/cad_layer_stage_preexecution_review_v1.md",
+        "lesson": "Walls need room boundaries; openings need named host walls."
+      }
+    ]
+  },
+  "same_protocol_sota_blockers": {
+    "room_identity": "Predicted-control Room IoU is around 0.33; instance count and holdout stability remain weak.",
+    "support_to_structure": "Support gains must be consumed before owner/wall construction; post-hoc cleanup regresses wall F1.",
+    "walls_and_junctions": "Canonical wall F1 is around 0.47; junction state is not yet a promoted typed vector.",
+    "opening_hosts": "Bridge opening F1 is around 0.10; the interval decoder reaches around 0.28 on cal64 but needs full-val and seed validation.",
+    "furniture": "Vector furniture remains support evidence, not semantic SOTA.",
+    "external_execution": "HouseMind-E complete inference remains unavailable; Raster2Seq is a matched reconstruction baseline.",
+    "test_discipline": "RPLAN and CubiCasa test stay closed until validation, thresholds, and baseline wrappers freeze."
+  },
+  "module_contract": {
+    "ordered_stages": [
+      "target-free control",
+      "room identity and support",
+      "instance existence/count",
+      "support-owner reconciliation",
+      "owner cell complex",
+      "wall segments and junctions",
+      "opening host intervals",
+      "furniture instances",
+      "constraint validation/repair",
+      "canonical vector assembly"
+    ],
+    "typed_contracts": {
+      "room": "class logits + instance masks + support probability",
+      "owner": "owner raster + room-id map + shared boundary edges",
+      "wall": "endpoints + type + confidence + junction incidence",
+      "opening": "host wall id + interval + family/type + score",
+      "validation": "typed violation codes + bounded repair operations",
+      "export": "CanonicalFloorplan + token round trip"
+    },
+    "rules": [
+      "Every optional stage exposes a typed object and one verified downstream consumer.",
+      "Stage order is executable and tested; no module may silently read a later-stage tensor.",
+      "Disabled branches reproduce the parent checkpoint.",
+      "A metric branch is rejected if it works only in a room-only evaluator.",
+      "Every promotion records parameters, updates, NFE, latency, seed, split, and artifact hashes."
+    ]
+  },
+  "dynamic_control_audit": {
+    "finding": "MixtureTopKAttention and SparseControlAttention exist, but the promoted room-query decoder used static query embeddings and ordinary masked cross-attention; room and opening training used fixed loss weights.",
+    "implemented_controls": [
+      "opt-in AdaptiveQueryReferenceRefiner with image-global-conditioned reference points and grid_sample features",
+      "opt-in GradientNormBalancer for room-mask, partition, dense-identity, and teacher terms",
+      "disabled branches reproduce the parent model exactly"
+    ],
+    "references": {
+      "Deformable-DETR": {
+        "path": "third_party/Deformable-DETR",
+        "commit": "11169a60c33333af00a4849f1808023eba96a931"
+      },
+      "Mask2Former": {
+        "path": "third_party/Mask2Former",
+        "commit": "9b0651c6c1d5b3af2e6da0589b719c514ec0d69a"
+      },
+      "LibMTL": {
+        "path": "third_party/LibMTL",
+        "commit": "4336804847eaa5e0b924b743d76beec7ac3fdc97"
+      }
+    }
+  },
+  "tasks": [
+    {
+      "id": "FF-PC-15",
+      "priority": "P0",
+      "status": "active",
+      "title": "Canonical opening interval integration",
+      "depends_on": [],
+      "actions": [
+        "Finish full val491 with the existing opening interval checkpoint at frozen threshold 0.3.",
+        "Run a case-paired comparison against the identical blend50 plan without the detector.",
+        "Train five seed-matched interval heads and evaluate 384 calibration plus 107 offset-384 holdout.",
+        "Connect the accepted detector to CadStageRuntime as an opening-only replacement."
+      ],
+      "gate": {
+        "primary": "Opening F1 improves with a paired 95% interval excluding zero.",
+        "safety": "Validity 1.0, functional watertightness >= 0.99, outside footprint 0.",
+        "non_regression": "Room, wall, Node, Edge, and GED do not regress beyond paired noise.",
+        "scope": "Opening integration only; no complete-CAD SOTA claim."
+      },
+      "failure_response": "If full validation fails, return to joint selected-wall host supervision."
+    },
+    {
+      "id": "FF-DYN-21",
+      "priority": "P0",
+      "status": "planned",
+      "title": "Adaptive room query and loss-weight attribution",
+      "depends_on": ["FF-PC-15"],
+      "actions": [
+        "Run a matched 256/64 screen with four arms: static, adaptive reference queries, dynamic loss weights, and both.",
+        "Verify adaptive references differ across distinct images and that the zero-initialized branch exactly matches the parent checkpoint.",
+        "Require Room IoU, instance F1, and count MAE to improve jointly on calibration and offset-128 holdout before scaling.",
+        "Promote the winning adaptive arm to 1024/256 two-seed, then full validation.",
+        "Record reference displacement, router/gradient-scale diagnostics, parameters, latency, and disabled-branch equality."
+      ],
+      "gate": {
+        "mechanism": "Adaptive references are sample-dependent and nonzero after training; loss scales stay in the declared bounded range.",
+        "quality": "The winning arm passes the same room and structural non-regression gates as the room-query candidate.",
+        "attribution": "Single-mechanism arms are reported; do not claim an aggregate gain without ablation."
+      },
+      "failure_response": "Keep the disabled static path; inspect reference collapse or gradient-scale saturation before adding capacity."
+    },
+    {
+      "id": "FF-CAD-16",
+      "priority": "P0",
+      "status": "planned",
+      "title": "Support-owner-wall and junction closure",
+      "depends_on": ["FF-DYN-21"],
+      "actions": [
+        "Consume support probability during owner-cell and wall-candidate learning.",
+        "Make junction incidence a typed state consumed by endpoint snapping and opening hosts.",
+        "Supervise wall candidates against canonical vector targets and selected room boundaries.",
+        "Reject wall gains that increase opening or graph regression."
+      ],
+      "gate": {
+        "quality": "Wall F1 improves over 0.47 with no Room IoU or count regression.",
+        "topology": "Validity 1.0, watertightness >= 0.99, dangling endpoints <= 0.02.",
+        "order": "Room/support precede owner/wall/junction states in tests and runtime."
+      },
+      "failure_response": "Return to the failing stage contract before adding capacity."
+    },
+    {
+      "id": "FF-EVAL-17",
+      "priority": "P0",
+      "status": "planned",
+      "title": "Matched same-protocol external evidence",
+      "depends_on": ["FF-CAD-16"],
+      "actions": [
+        "Freeze executable Raster2Seq, CE2EPlan, TLC-Plan, and any recovered HouseMind row.",
+        "Use identical cases, preprocessing, evaluator, post-processing, and compute accounting.",
+        "Report paired bootstrap and Wilcoxon effect sizes with parameters, exposure, latency, and NFE.",
+        "Keep generation, reconstruction, predicted-control, oracle-control, and free-text rows separate."
+      ],
+      "gate": {
+        "validity": "No unmatched leaderboard claim.",
+        "primary": "One protocol-primary metric improves with a paired interval excluding zero and no structural regression."
+      },
+      "failure_response": "Keep unavailable baselines unavailable."
+    },
+    {
+      "id": "FF-RPLAN-18",
+      "priority": "P0",
+      "status": "planned",
+      "title": "RPLAN five-seed validation and frozen test",
+      "depends_on": ["FF-EVAL-17"],
+      "actions": [
+        "Run the final architecture on five seeds and full RPLAN validation.",
+        "Freeze code, checkpoints, thresholds, baselines, and statistics.",
+        "Open test exactly once.",
+        "Keep complete-CAD and generation tables separate."
+      ],
+      "gate": {
+        "stability": "All five seeds preserve quality and structural gates.",
+        "reproducibility": "Every number maps to a frozen artifact and command."
+      },
+      "failure_response": "Keep test closed and return to validation."
+    },
+    {
+      "id": "FF-EDIT-19",
+      "priority": "P0",
+      "status": "planned",
+      "title": "Predicted-control and free-text editing",
+      "depends_on": ["FF-RPLAN-18"],
+      "actions": [
+        "Predict edit regions and typed actions without oracle controls.",
+        "Keep outside freezing as an independently audited certificate.",
+        "Add text parsing and abstention only after predicted controls stabilize.",
+        "Compare only with fully executable same-protocol baselines."
+      ],
+      "gate": {
+        "locality": "Outside exactness 1.0 and violation rate 0.0.",
+        "quality": "Delta-IoU >= 0.95 and Delta-MSE <= 0.0019."
+      },
+      "failure_response": "Disable free-text promotion if predicted controls are unstable."
+    },
+    {
+      "id": "FF-FREEZE-20",
+      "priority": "P0",
+      "status": "planned",
+      "title": "CVPR evidence freeze",
+      "depends_on": ["FF-RPLAN-18", "FF-EDIT-19"],
+      "actions": [
+        "Run non-chips tests, Ruff, 600-line checks, JSON validation, manifest and SHA-256 verification.",
+        "Package every reported number with its generator and source artifact.",
+        "Freeze protocol coverage, environment lockfile, and deterministic archive.",
+        "Audit claim boundaries and exclude chips/FloorSet artifacts."
+      ],
+      "gate": {
+        "engineering": "All checks pass.",
+        "evidence": "No orphan or stale metric.",
+        "scope": "FloorFlow residential package only."
+      },
+      "failure_response": "Remove the unsupported claim or repair the evidence chain."
+    }
+  ],
+  "reuse_inventory": [
+    "src/floorflow/heads/room_mask_decoder.py",
+    "src/floorflow/heads/dense_query_support_gate.py",
+    "src/floorflow/inference/support_structure_fusion.py",
+    "src/floorflow/inference/opening_heatmap_decoder.py",
+    "src/floorflow/geometry/owner_cell_complex.py",
+    "src/floorflow/geometry/wall_graph_readout.py",
+    "src/floorflow/inference/owner_wall_action.py",
+    "src/floorflow/heads/cad_wall_candidate_scorer.py",
+    "src/floorflow/heads/cad_topology_repair.py",
+    "src/floorflow/representation/vector_floorplan_assembly.py",
+    "src/floorflow/representation/unified_floorplan_token_codec.py"
+  ]
+}

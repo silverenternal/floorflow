@@ -1,0 +1,6 @@
+{
+  "mode": "cosine",
+  "value": 1.0,
+  "min_value": 0.1,
+  "end": 1600
+}

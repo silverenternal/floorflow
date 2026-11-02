@@ -1,0 +1,581 @@
+{
+  "version": "2026-11-02-chip-gap-closure-v262",
+  "status": "goal_paused_plan_ready",
+  "updated_at": "2026-11-02",
+  "scope": "chips only; floorplan and predicted-control are out of scope",
+  "objective": "Close the publication-blocking chips gaps in dependency order: freeze the protocol, certify the public anchor, repair metric-owned model atoms, resolve long-budget and route-transfer failures, then run seed, fresh-cohort, ablation and external-PPA certification.",
+  "current_claim": "Under the matched 1k-subset/1600-step dev32 protocol, the typed per-block trajectory candidate improves mean legalized cost and V_rel over its own control. This is not a public-anchor, seed-stable, fresh-cohort, routed-PPA or SOTA claim.",
+  "claim_policy": {
+    "primary_metrics": [
+      "legalized_hard_cost",
+      "legalized_v_rel"
+    ],
+    "component_metrics": [
+      "legalized_b2b_hpwl_gap",
+      "legalized_p2b_hpwl_gap",
+      "legalized_area_gap",
+      "legalized_grouping",
+      "legalized_mib",
+      "legalized_boundary",
+      "legalized_rho_mae"
+    ],
+    "guardrails": [
+      "legalized_feasible_fraction",
+      "overlap_pairs",
+      "fixed_shape_violations",
+      "preplaced_motion",
+      "DRC",
+      "runtime_and_legalizer_calls"
+    ],
+    "claim_levels": {
+      "mechanism_evidence": "A repaired atom improves its owned real metric against a matched control without a guardrail regression.",
+      "public_anchor_evidence": "The frozen endpoint is non-worse on both primary metrics and better on at least one, with case-clustered paired intervals excluding zero on the claimed metric.",
+      "coverage_evidence": "The same frozen endpoint reaches the predeclared JSR/CSJ thresholds on a case-disjoint fresh cohort.",
+      "external_ppa_evidence": "Routed WL, congestion and DRC are non-regressive on an outcome-unopened source-disjoint cohort with valid candidate/control pairs.",
+      "SOTA_claim": "Requires public-anchor evidence, seed stability, fresh coverage, routed-PPA transfer and budget certification."
+    }
+  },
+  "evidence_snapshot": {
+    "best_local_dev32": {
+      "report": "outputs/reports/chip_s1_atom_isolated_confirmation_v1.json",
+      "checkpoint": "outputs/chip_hierarchy/s1_atom_isolated_confirmation_v1/candidate_confirmation/checkpoints/final.pt",
+      "protocol": "1k frozen training subset, 1600 training steps, 32 case-disjoint dev cases, NFE4/refiner1600, seed21",
+      "candidate_cost": 1.1195925578063404,
+      "control_cost": 1.1633941878437235,
+      "candidate_v_rel": 0.03194406390756542,
+      "control_v_rel": 0.04020931315575486,
+      "relative_change": {
+        "legalized_cost": -0.03765,
+        "legalized_v_rel": -0.20556,
+        "legalized_b2b_hpwl_gap": -0.43052,
+        "legalized_p2b_hpwl_gap": -1.00918,
+        "legalized_area_gap": -0.17352,
+        "legalized_grouping": -0.09091,
+        "legalized_boundary": -0.30435,
+        "legalized_rho_mae": -0.07657
+      },
+      "feasibility": 1.0,
+      "significant_components": [
+        "p2b_hpwl_gap",
+        "boundary",
+        "rho_mae"
+      ],
+      "primary_intervals": "cost and V_rel still cross zero",
+      "parameters": 7238551,
+      "trinity_d192_parameters": 5856400,
+      "parameter_overhead": 0.236
+    },
+    "public_anchor_status": {
+      "best_candidate_paired_to_trinity": false,
+      "previous_public_candidate": {
+        "report": "outputs/reports/chip_trinity_d192_component_gap_v1.json",
+        "candidate_cost": 1.2627975407960301,
+        "candidate_v_rel": 0.05118918945209682,
+        "trinity_three_seed_cost": 1.2165604088055237,
+        "trinity_three_seed_v_rel": 0.04359625539639952,
+        "relative_gap": {
+          "cost": 0.03800644148522325,
+          "v_rel": 0.17416482187881632
+        }
+      },
+      "largest_reproducible_component_gaps": {
+        "legalized_hpwl_gap": 0.42582791949417126,
+        "legalized_b2b_hpwl_gap": 0.4149731164999432,
+        "legalized_grouping": 0.331877729257642,
+        "legalized_area_gap": 0.2482978811131084,
+        "legalized_rho_mae": 0.10924425653905517
+      },
+      "note": "Component gaps are structural diagnostics and are not attributed to a single decoder, data or sampling choice."
+    },
+    "fresh500": {
+      "report": "outputs/reports/chip_s3_seed21_subset_holdout500_vs_nfe16_v1.json",
+      "relative_change_vs_trinity": {
+        "cost": -0.0101,
+        "v_rel": -0.0789,
+        "area_gap": -0.0255,
+        "b2b_hpwl_gap": 0.0096,
+        "p2b_hpwl_gap": -0.5395,
+        "grouping": 0.2015,
+        "boundary": -0.2051,
+        "rho_mae": 0.0519
+      },
+      "joint_wins": 266,
+      "strict_structural_wins": 120,
+      "constraint_safe_wins": 38,
+      "four_metric_pool_oracle": 157,
+      "four_metric_pool_oracle_rate": 0.314,
+      "decision": "Rejected as confirmation; primary intervals cross zero and the candidate-pool ceiling is below the CSJ gate."
+    },
+    "matched_1600": {
+      "report": "outputs/reports/chip_v45_matched_budget_1600_seed19_group2.json",
+      "relative_change_vs_trinity": {
+        "cost": -0.010805309000821934,
+        "v_rel": -0.04912877508684504,
+        "grouping": -0.1607142857142857,
+        "boundary": 0.02666666666666667,
+        "b2b_hpwl_gap": 0.37445910373797614,
+        "p2b_hpwl_gap": -0.5080535647098297,
+        "area_gap": 0.09032764142179567
+      },
+      "decision": "Mean boundary only; primary and component intervals cross zero and several structural components regress."
+    },
+    "external_ppa": {
+      "report": "outputs/reports/chip_v45_external_valid_pairs_summary.json",
+      "valid_source_disjoint_completed_designs": 8,
+      "routed_wirelength_relative_mean": 0.014081321615949665,
+      "routed_wirelength_wins_ties_losses": [3, 0, 5],
+      "congestion_relative_mean": 0.001366543521588024,
+      "power_relative_mean": 0.007072879365717023,
+      "finish_setup_ws_delta_ns_mean": -2.493046675,
+      "DRC_zero": true,
+      "decision": "Negative external transfer; not a fresh holdout."
+    },
+    "proxy_real": {
+      "audit": "outputs/reports/chip_proxy_real_consistency_v1.json",
+      "measured_pairs": 14,
+      "promotion_eligible_pairs": 0,
+      "decision": "Raw geometry and legalizer telemetry remain diagnostic-only until they pass the shared proxy-real contract."
+    },
+    "retained_negatives": [
+      "outputs/reports/chip_s0_corrected_screen_v1.json",
+      "outputs/reports/chip_s1_atom_isolated_screen_v1_pregate.json",
+      "outputs/reports/chip_s1_post_refiner_projector_v1.json",
+      "outputs/reports/chip_v45_external_valid_pairs_summary.json",
+      "docs/chip_route_transfer_provenance_v2.md",
+      "docs/chip_s1_budget_certification_v1.md"
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "G-PROTOCOL",
+      "priority": "P0",
+      "current": "The best dev32 comparison and the public Trinity comparison use different endpoints and evidence packages.",
+      "target": "One manifest, endpoint, legalizer, sampler, seed policy and report schema for every public-anchor comparison.",
+      "owner_task": "T0-PROTOCOL-FREEZE"
+    },
+    {
+      "id": "G-PUBLIC-ANCHOR",
+      "priority": "P0",
+      "current": "The current 1.1196/0.03194 endpoint has not been paired with Trinity d192.",
+      "target": "At one declared budget, both primary metrics are non-worse and at least one is better with a favorable paired interval.",
+      "owner_task": "T1-PUBLIC-ANCHOR"
+    },
+    {
+      "id": "G-PRIMARY-SIGNIFICANCE",
+      "priority": "P0",
+      "current": "Dev32 mean cost and V_rel improve, but both intervals cross zero.",
+      "target": "Reproduce the primary direction on independent seeds and cases without post-hoc endpoint selection.",
+      "owner_task": "T7-SEED-AND-FRESH-CERTIFICATION"
+    },
+    {
+      "id": "G-AREA-RHO-GROUPING",
+      "priority": "P0",
+      "current": "Public component gaps remain: area +24.83%, rho +10.92%, grouping +33.19%; fresh500 grouping regresses +20.15%.",
+      "target": "Generate joint area/rho/grouping-safe candidates and raise the legalized candidate-pool oracle.",
+      "owned_atoms": ["A05", "A07", "A08", "A15", "A18", "A19", "A20", "A24", "A27", "A33", "A34", "A39", "A40", "A42"],
+      "owner_task": "T2-AREA-RHO-GROUPING"
+    },
+    {
+      "id": "G-B2B-TAIL",
+      "priority": "P0",
+      "current": "B2b remains +41.50% versus the reproducible anchor; high-degree and high-complexity tails are the main residual failure.",
+      "target": "Reduce legalized b2b and cost p90/p95 without trading away grouping or legality.",
+      "owned_atoms": ["A02", "A03", "A04", "A11", "A17", "A23", "A24", "A38", "A42"],
+      "owner_task": "T3-B2B-AND-TAIL"
+    },
+    {
+      "id": "G-P2B-ROUTE",
+      "priority": "P0",
+      "current": "P2b improves strongly, but valid routed pairs still worsen routed WL by +1.408% on average.",
+      "target": "Require non-negative route-family sign agreement before promoting p2b and preserve the gain on external routed metrics.",
+      "owned_atoms": ["A10", "A14", "A21", "A22", "A25", "A28", "A36"],
+      "owner_task": "T4-PORT-ROUTE"
+    },
+    {
+      "id": "G-LONG-BUDGET",
+      "priority": "P0",
+      "current": "At matched 1600 steps the current candidate has only a mean boundary against Trinity and regresses b2b, area and grouping.",
+      "target": "Remove the long-budget ceiling with refiner, optimizer, EMA, schedule and endpoint-state repairs.",
+      "owned_atoms": ["A29", "A31", "A32", "A35", "A37", "A41", "A42"],
+      "owner_task": "T5-LONG-BUDGET"
+    },
+    {
+      "id": "G-SEED",
+      "priority": "P0",
+      "current": "Only seed21 establishes the latest matched-control mean; prior seed directions are heterogeneous.",
+      "target": "At least 4/5 seeds preserve primary direction with the endpoint frozen before results are inspected.",
+      "owner_task": "T7-SEED-AND-FRESH-CERTIFICATION"
+    },
+    {
+      "id": "G-FRESH-COVERAGE",
+      "priority": "P0",
+      "current": "Fresh500 candidate-pool oracle is 31.4%, below the 35% CSJ requirement.",
+      "target": "JSR >= 65% and CSJ >= 35% on a distinct fresh500 cohort after the pool oracle passes.",
+      "owner_task": "T7-SEED-AND-FRESH-CERTIFICATION"
+    },
+    {
+      "id": "G-COMPLEXITY",
+      "priority": "P1",
+      "current": "Earlier complexity adapters were trained on 21-60 blocks and tested on 81-120, so their rejection is confounded.",
+      "target": "Use the existing 21-120 range cache and improve the 81-120 stratum at equal sample exposure.",
+      "owned_atoms": ["A04", "A06", "A12", "A20", "A23", "A35", "A39"],
+      "owner_task": "T6-COMPLEXITY-RANGE"
+    },
+    {
+      "id": "G-BUDGET",
+      "priority": "P1",
+      "current": "The only public primary win required 10 trajectories, NFE14, refiner16000 and 15 legalizer calls; equal-quality efficiency is absent.",
+      "target": "At least one predeclared candidate budget reaches the declared baseline quality with no hidden extra search.",
+      "owned_atoms": ["A31", "A32", "A33", "A34", "A35", "A37", "A42"],
+      "owner_task": "T8-BUDGET-PARETO"
+    },
+    {
+      "id": "G-EXTERNAL-PPA",
+      "priority": "P1",
+      "current": "Only 8 valid completed external designs exist; 13 source-disjoint designs are missing for a 15-design confirmation.",
+      "target": "15-20 outcome-unopened source-disjoint pairs with valid TCL hashes, common routes, non-regressive WL/congestion and zero DRC regression.",
+      "owner_task": "T9-ROUTED-PPA"
+    },
+    {
+      "id": "G-MECHANISM",
+      "priority": "P0",
+      "current": "Typed graph, per-block residuals, boundary coupler, stage LR, atom isolation and reliability gates are bundled; attribution is incomplete.",
+      "target": "Each retained mechanism beats an equal-parameter or equal-budget structural control on its owned metric.",
+      "owner_task": "T10-MECHANISM-CERTIFICATION"
+    }
+  ],
+  "atom_evaluation_contract": {
+    "registry": "configs/chip_sota_metric_ownership_v1.json",
+    "atom_range": "A01-A42",
+    "every_atom_requires": [
+      "gradient_and_parameter_reachability",
+      "gate_open_and_controlled_disable_response",
+      "target_free_proxy_audit",
+      "owned_real_metric_delta",
+      "complexity_stratum_sign_check"
+    ],
+    "proxy_promotion": {
+      "minimum_cases": 64,
+      "spearman_min": 0.75,
+      "lower_95_ci_min": 0.5,
+      "pairwise_sign_agreement_min": 0.85,
+      "top3_true_best_recall_min": 0.9,
+      "selected_regret_p95_max": 0.05,
+      "forbid_complexity_sign_reversal": true
+    },
+    "default_state": "diagnostic_only",
+    "hard_rule": "A proxy that fails this contract cannot select a candidate, checkpoint, arm or claim."
+  },
+  "execution_ladder": {
+    "cpu_first": "Protocol, manifests, atom ownership, proxy-real audit, pair-integrity and tests.",
+    "small_screen": "1k frozen training subset and 32 or 92 case-disjoint dev cases; never start with full data.",
+    "fresh_debug": "Fresh150 is diagnostic and must not be reused as confirmation.",
+    "fresh_confirmation": "A distinct fresh500 cohort is evaluated once after the endpoint and thresholds are frozen.",
+    "gpu": "Use cuda:0 only after the CPU contract passes; one atom-repair arm at a time per parallel slot.",
+    "full_data": "Forbidden until the small-screen and fresh-debug gates pass.",
+    "evidence": "Only legalized, case-clustered paired reports can promote a task."
+  },
+  "reuse_catalog": {
+    "model": [
+      "src/floorflow/chip_flow/typed_cross_attention.py",
+      "src/floorflow/chip_flow/typed_atom_aggregator.py",
+      "src/floorflow/chip_flow/atom_score_heads.py",
+      "src/floorflow/chip_flow/structured_heads.py",
+      "src/floorflow/chip_flow/training_scopes.py",
+      "src/floorflow/chip_flow/boundary_anchor_coupler.py",
+      "third_party/Trinity"
+    ],
+    "runtime": [
+      "src/floorflow/chip_flow/typed_channel_cache.py",
+      "src/floorflow/chip_flow/training_runtime.py",
+      "src/floorflow/chip_flow/training_validation.py",
+      "scripts/run_chip_u1_dynamic_graph_screen.py",
+      "scripts/eval_trinity_baseline.py"
+    ],
+    "policy": "Search and reuse these owners before adding a module; a new module must name the missing responsibility and replace or wrap an existing path."
+  },
+  "tasks": [
+    {
+      "id": "T0-PROTOCOL-FREEZE",
+      "priority": "P0",
+      "status": "ready",
+      "execution": "cpu",
+      "closes": ["G-PROTOCOL"],
+      "actions": [
+        "Create one chip case manifest whose IDs are consumed by both FloorFlow and Trinity.",
+        "Freeze candidate/control checkpoints, Trinity d192 anchor, legalizer, NFE/refiner budget, inference seeds and report schema.",
+        "Synchronize the A01-A42 registry with current code ownership and fail closed on unowned or duplicated trainable atoms.",
+        "Add SHA-256 and command provenance to every comparison and reject cross-manifest joins."
+      ],
+      "gate": "Contract test, full chip test suite, Ruff and the below-600-line audit pass before any GPU job.",
+      "artifacts": [
+        "configs/chip_public_protocol_v2.json",
+        "outputs/reports/chip_public_case_manifest_v2.json",
+        "outputs/reports/chip_atom_ownership_audit_v2.json"
+      ]
+    },
+    {
+      "id": "T1-PUBLIC-ANCHOR",
+      "priority": "P0",
+      "status": "blocked_on_T0",
+      "execution": "cpu_contract_then_gpu0_small_then_confirm",
+      "depends_on": ["T0-PROTOCOL-FREEZE"],
+      "closes": ["G-PUBLIC-ANCHOR"],
+      "actions": [
+        "Evaluate the frozen best candidate, matched control and Trinity d192 on identical cases and budget.",
+        "Run a 32-case diagnostic for protocol validity, then the predeclared confirmation cohort.",
+        "Decompose the remaining gap into cost, area, b2b, grouping, boundary, p2b and rho without causal attribution to the decoder.",
+        "Keep the legacy unseeded Trinity result in the appendix only."
+      ],
+      "promotion_gate": "Both primary metrics non-worse, at least one better, and its case-clustered 95% interval excludes zero.",
+      "reject_if": "Case IDs, legalizer, budget, seed policy or endpoint differ between arms.",
+      "artifacts": [
+        "outputs/reports/chip_public_anchor_candidate_v2.json",
+        "outputs/reports/chip_public_anchor_trinity_v2.json",
+        "outputs/reports/chip_public_anchor_comparison_v2.json"
+      ]
+    },
+    {
+      "id": "T2-AREA-RHO-GROUPING",
+      "priority": "P0",
+      "status": "ready_after_T0",
+      "execution": "cpu_audit_then_gpu0_small",
+      "depends_on": ["T0-PROTOCOL-FREEZE"],
+      "closes": ["G-AREA-RHO-GROUPING"],
+      "parallel_group": "atom-repair",
+      "owned_atoms": ["A05", "A07", "A08", "A15", "A18", "A19", "A20", "A24", "A27", "A33", "A34", "A39", "A40", "A42"],
+      "model_actions": [
+        "Audit factorized shape, hierarchy group state, endpoint modes and atom aggregation before adding parameters.",
+        "Train independent area, rho and grouping evidence heads on cached target-free candidate features.",
+        "Generate new legalizer-compatible candidates that jointly change shape/grouping instead of reranking the rejected pool.",
+        "Use the existing typed atom aggregator only after out-of-fold atom evidence clears the proxy contract."
+      ],
+      "short_proxy": ["area_residual", "outline_compactness", "rho_mae", "cluster_relation_mae", "grouping_proxy"],
+      "real_metrics": ["legalized_area_gap", "legalized_rho_mae", "legalized_grouping", "legalized_cost", "legalized_v_rel"],
+      "promotion_gate": "At least one owned real metric improves, primary metrics do not regress, pool oracle rises, and no legality/headroom regression occurs.",
+      "reject_if": "Only selector weights or raw proxies improve, or grouping is traded away for area/rho.",
+      "artifacts": [
+        "outputs/reports/chip_atom_area_rho_grouping_audit_v2.json",
+        "outputs/reports/chip_area_rho_grouping_screen_v2.json"
+      ]
+    },
+    {
+      "id": "T3-B2B-AND-TAIL",
+      "priority": "P0",
+      "status": "ready_after_T0",
+      "execution": "cpu_audit_then_gpu0_small",
+      "depends_on": ["T0-PROTOCOL-FREEZE"],
+      "closes": ["G-B2B-TAIL"],
+      "parallel_group": "atom-repair",
+      "owned_atoms": ["A02", "A03", "A04", "A11", "A17", "A23", "A24", "A38", "A42"],
+      "model_actions": [
+        "Audit symmetric b2b messages, hyperedge incidence, degree expert and dynamic state relay for edge-direction and reachability defects.",
+        "Repair one graph mechanism at a time with an equal-parameter dense/static control.",
+        "Train a tail-aware b2b candidate head with legality veto outside the averaged utility.",
+        "Measure high-degree and 81-120 block strata separately."
+      ],
+      "short_proxy": ["raw_b2b_hpwl", "edge_degree_error", "hyperedge_span_error", "cost_p90_proxy", "displacement_p95"],
+      "real_metrics": ["legalized_b2b_hpwl_gap", "cost_p90", "cost_p95", "legalized_cost", "legalized_v_rel"],
+      "promotion_gate": "Legalized b2b or cost tail improves with no primary, grouping, boundary or legality regression.",
+      "reject_if": "Raw b2b improves while legalized b2b/cost does not; reverse graph messages alone are not evidence.",
+      "artifacts": [
+        "outputs/reports/chip_b2b_tail_audit_v2.json",
+        "outputs/reports/chip_b2b_tail_screen_v2.json"
+      ]
+    },
+    {
+      "id": "T4-PORT-ROUTE",
+      "priority": "P0",
+      "status": "ready_after_T0",
+      "execution": "cpu_audit_then_gpu0_small",
+      "depends_on": ["T0-PROTOCOL-FREEZE"],
+      "closes": ["G-P2B-ROUTE"],
+      "parallel_group": "atom-repair",
+      "owned_atoms": ["A10", "A14", "A21", "A22", "A25", "A28", "A36"],
+      "model_actions": [
+        "Audit port refinement order, dual semantic ports, occupancy field and legalizer residual interaction.",
+        "Add routing-aware macro spacing or L-path obstruction only through the existing target-free route field and zero-gated head.",
+        "Require route-family proxy-real agreement before enabling a new routing objective.",
+        "Test a bounded post-generation spacing repair separately from the hard projector."
+      ],
+      "short_proxy": ["raw_p2b_hpwl", "pin_tail", "b2b_route_demand_peak", "p2b_route_demand_peak", "macro_spacing_risk"],
+      "real_metrics": ["legalized_p2b_hpwl_gap", "routed_wirelength", "congestion", "DRC"],
+      "promotion_gate": "P2b plus non-negative routed-WL/congestion transfer on a five-design mini screen before a larger route cohort.",
+      "reject_if": "P2b improves while routed WL or congestion worsens; no post-refiner projector promotion.",
+      "artifacts": [
+        "outputs/reports/chip_port_route_audit_v2.json",
+        "outputs/reports/chip_port_route_mini5_v2.json"
+      ]
+    },
+    {
+      "id": "T5-LONG-BUDGET",
+      "priority": "P0",
+      "status": "blocked_on_T1",
+      "execution": "cpu_audit_then_gpu0_small",
+      "depends_on": ["T1-PUBLIC-ANCHOR"],
+      "closes": ["G-LONG-BUDGET"],
+      "owned_atoms": ["A29", "A31", "A32", "A35", "A37", "A41", "A42"],
+      "model_actions": [
+        "Audit refiner capacity, learning-rate decay, EMA state, stage-local LR restart and fusion saturation at 400/800/1600 steps.",
+        "Reuse the Trinity refiner interface before adding a new refiner.",
+        "Repair the first saturated or oscillating component identified by optimizer/update-norm diagnostics.",
+        "Test endpoint compatibility and legalizer response as bounded residuals with explicit trust regions."
+      ],
+      "promotion_gate": "At equal 1600-step inference, primary metrics beat or match Trinity with a favorable primary interval and no component guardrail reversal.",
+      "reject_if": "Improvement exists only at a different budget or requires choosing the endpoint after inspection.",
+      "artifacts": [
+        "outputs/reports/chip_long_budget_probe_v2.json",
+        "outputs/reports/chip_long_budget_matched_v2.json"
+      ]
+    },
+    {
+      "id": "T6-COMPLEXITY-RANGE",
+      "priority": "P1",
+      "status": "blocked_on_T3",
+      "execution": "gpu0_range_subset",
+      "depends_on": ["T3-B2B-AND-TAIL"],
+      "closes": ["G-COMPLEXITY"],
+      "owned_atoms": ["A04", "A06", "A12", "A20", "A23", "A35", "A39"],
+      "data": "outputs/cache/chip_floorset_200k_train_12k_dev_range_v1/train",
+      "model_actions": [
+        "Train complexity conditioner, degree expert and complexity-slot adapter as separate 21-120 arms on a frozen small subset.",
+        "Keep sample exposure, seeds, schedule and NFE equal to the control.",
+        "Promote the 81-120 gate only when lower strata remain within the predeclared regression tolerance."
+      ],
+      "promotion_gate": "81-120 block cost and V_rel improve without lower-complexity or grouping regression.",
+      "reject_if": "The module only raises activation or consumes extra compute without tail gain.",
+      "artifacts": [
+        "outputs/reports/chip_complexity_range_screen_v2.json",
+        "outputs/reports/chip_complexity_range_strata_v2.json"
+      ]
+    },
+    {
+      "id": "T7-SEED-AND-FRESH-CERTIFICATION",
+      "priority": "P0",
+      "status": "blocked_on_primary_atom_gates",
+      "execution": "gpu0_small_then_fresh",
+      "depends_on": ["T1-PUBLIC-ANCHOR", "T2-AREA-RHO-GROUPING", "T3-B2B-AND-TAIL", "T5-LONG-BUDGET"],
+      "closes": ["G-PRIMARY-SIGNIFICANCE", "G-SEED", "G-FRESH-COVERAGE"],
+      "actions": [
+        "Freeze one endpoint and run seeds 19-23 with matched controls.",
+        "Run a case-disjoint fresh150 diagnostic and require the candidate-pool oracle to exceed the coverage threshold before fresh500.",
+        "Evaluate a distinct, previously unopened fresh500 once.",
+        "Report JSR, CSJ, primary metrics and p50/p75/p90/p95 by block count, b2b degree and pin density."
+      ],
+      "promotion_gate": {
+        "seed_agreement": "at least 4/5 primary-direction agreement",
+        "fresh500_JSR": 0.65,
+        "fresh500_CSJ": 0.35,
+        "feasibility": 1.0
+      },
+      "reject_if": "Seeds or endpoints are chosen after results, or fresh150 is reused as fresh500.",
+      "artifacts": [
+        "outputs/reports/chip_seed19_23_certification_v2.json",
+        "outputs/reports/chip_fresh150_endpoint_v2.json",
+        "outputs/reports/chip_fresh500_confirmation_v2.json"
+      ]
+    },
+    {
+      "id": "T8-BUDGET-PARETO",
+      "priority": "P1",
+      "status": "blocked_on_frozen_finalist",
+      "execution": "gpu0",
+      "depends_on": ["T7-SEED-AND-FRESH-CERTIFICATION"],
+      "closes": ["G-BUDGET"],
+      "actions": [
+        "Evaluate NFE 1/2/4/8 and refiner steps 50/100/400/800/1600 with one frozen endpoint.",
+        "Include trajectories, legalizer calls and wall time in the same budget record.",
+        "Mark the baseline equal-quality lines before inspecting candidate outcomes.",
+        "Retain the 50-step quality-loss point instead of hiding it."
+      ],
+      "promotion_gate": "At least one predeclared candidate point reaches baseline reference quality on both primary metrics.",
+      "reject_if": "The equal-quality budget is selected post hoc or extra search is omitted.",
+      "artifacts": [
+        "outputs/reports/chip_budget_pareto_v2.json",
+        "outputs/reports/chip_budget_pareto_v2.png"
+      ]
+    },
+    {
+      "id": "T9-ROUTED-PPA",
+      "priority": "P1",
+      "status": "blocked_on_frozen_finalist_and_pair_integrity",
+      "execution": "cpu_pair_audit_then_external_gpu",
+      "depends_on": ["T4-PORT-ROUTE", "T7-SEED-AND-FRESH-CERTIFICATION"],
+      "closes": ["G-EXTERNAL-PPA"],
+      "actions": [
+        "Repair collapsed ChiPBench legalized pairs and require distinct TCL hashes before routing.",
+        "Source 13 additional outcome-unopened source-disjoint macro-capable designs.",
+        "Pin ORFS image, route seed, route recipe and config hashes.",
+        "Route one diagnostic pair, then 15-20 designs with the frozen recipe.",
+        "Report routed WL, overflow/congestion, DRC, WNS/TNS, power and area."
+      ],
+      "promotion_gate": "Valid source-disjoint cohort, non-regressive routed WL and congestion, zero DRC regression, and complete timing/power reporting.",
+      "reject_if": "Candidate/control TCL collapse, route mismatch, missing endpoints or seed-only pseudo-replication.",
+      "artifacts": [
+        "outputs/reports/chip_routed_pair_manifest_v3.json",
+        "outputs/reports/chip_orfs_mini5_v2.json",
+        "outputs/reports/chip_orfs_holdout15plus_v2.json"
+      ]
+    },
+    {
+      "id": "T10-MECHANISM-CERTIFICATION",
+      "priority": "P0",
+      "status": "blocked_on_atom_screens",
+      "execution": "cpu_registration_then_gpu0_small",
+      "depends_on": ["T2-AREA-RHO-GROUPING", "T3-B2B-AND-TAIL", "T4-PORT-ROUTE", "T5-LONG-BUDGET"],
+      "closes": ["G-MECHANISM"],
+      "actions": [
+        "Run equal-parameter dense-cross-attention and global-slot controls.",
+        "Remove netlist/cluster conditioning and per-block graph-token residuals separately.",
+        "Toggle reliability-gated atom aggregation, atom isolation and stage-local LR separately.",
+        "Toggle conservative boundary acceptance and the hard projector separately.",
+        "Toggle route-obstruction conditioning only after the proxy-real gate passes."
+      ],
+      "promotion_gate": "At least one graph/per-block mechanism has a repeatable advantage on its owned legalized metric without a legality regression.",
+      "reject_if": "The effect disappears under an equal-parameter control or is explained by extra search budget.",
+      "artifacts": [
+        "configs/chip_mechanism_ablation_v2.json",
+        "outputs/reports/chip_mechanism_ablation_v2.json"
+      ]
+    },
+    {
+      "id": "T11-EVIDENCE-PACKAGE",
+      "priority": "P1",
+      "status": "blocked_on_scientific_gates",
+      "execution": "reporting_only",
+      "depends_on": ["T1-PUBLIC-ANCHOR", "T7-SEED-AND-FRESH-CERTIFICATION", "T8-BUDGET-PARETO", "T9-ROUTED-PPA", "T10-MECHANISM-CERTIFICATION"],
+      "closes": [],
+      "actions": [
+        "Assemble only reports that passed their gates; keep failed arms in the negative appendix.",
+        "Map each claim sentence to one frozen report, manifest hash, budget and allowed boundary.",
+        "Include the reproducible Trinity three-seed anchor as the main comparator and the legacy anchor only as an appendix.",
+        "State explicitly that component gaps are structural diagnostics, not decoder/attribution estimates."
+      ],
+      "completion_rule": "No prose claim exists without a passed machine-readable gate.",
+      "artifacts": [
+        "outputs/reports/chip_cvpr_evidence_package_v2.json",
+        "docs/chip_cvpr_evidence_boundaries_v2.md"
+      ]
+    }
+  ],
+  "forbidden_claims_until_passed": [
+    "beating Trinity d192",
+    "seed-stable improvement",
+    "fresh500 coverage or JSR/CSJ success",
+    "routed-PPA, congestion, power or timing superiority",
+    "MIB or opening-specific improvement",
+    "monotonic improvement across all tail quantiles",
+    "decoder-caused component gaps",
+    "CVPR or CAS-Q2 acceptance readiness"
+  ],
+  "engineering_contract": {
+    "gpu_device": "cuda:0",
+    "first_party_python_line_limit": 599,
+    "small_subset_before_full_data": true,
+    "legalized_metrics_only_for_promotion": true,
+    "case_clustered_bootstrap_iterations": 10000,
+    "reuse_search_required_before_new_module": true,
+    "do_not_touch_floorplan": true,
+    "preserve_negative_reports": true
+  }
+}

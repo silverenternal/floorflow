@@ -1,0 +1,7 @@
+descartes==1.1.0
+fairscale==0.4.13
+fvcore==0.1.5.post20221221
+omegaconf==2.4.0
+pycocotools==2.0.11
+svgpathtools==1.8.0
+timm==1.0.30

@@ -1,0 +1,88 @@
+{
+  "schema_version": "room-query-head-full-v2",
+  "status": "superseded_by_room_query_head_mita_v3",
+  "scope": "residential_cubicasa_room_head",
+  "trainer": "scripts/train_raster_instance_control.py",
+  "checkpoint_readout": "Checkpoint blend is consumed by the canonical evaluator unless explicitly overridden.",
+  "screen": {
+    "train_cases": 512,
+    "train_sampling": "seeded",
+    "calibration_cases": 64,
+    "holdout_cases": 64,
+    "holdout_offset": 64,
+    "epochs": 12,
+    "seed": 19,
+    "image_size": 384,
+    "batch_size": 8
+  },
+  "promotion": {
+    "train_cases": 1024,
+    "calibration_cases": 256,
+    "holdout_cases": 128,
+    "holdout_offset": 256,
+    "epochs": 16,
+    "seeds": [19, 20]
+  },
+  "confirmation": {
+    "train_cases": 5122,
+    "calibration_cases": 384,
+    "holdout_cases": 107,
+    "holdout_offset": 384,
+    "epochs": 16,
+    "seeds": [19, 20, 21, 22, 23],
+    "reporting": "Freeze thresholds on calibration and report full val491 once."
+  },
+  "model": {
+    "full_resolution_masks": false,
+    "adaptive_query_refiner": false,
+    "adaptive_sampling_resolution": "encoder_full_resolution",
+    "mask_pooled_class_fusion": false,
+    "dense_identity_refiner": false,
+    "query_set_head": true,
+    "query_count_gate": true,
+    "room_program_head": false,
+    "partition_consistent": false,
+    "queries": 32,
+    "layers": 5,
+    "heads": 4,
+    "hidden_dim": 192,
+    "query_set_hidden": 128,
+    "query_set_pool": 64,
+    "query_set_layers": 1
+  },
+  "loss": {
+    "room_mask": 1.0,
+    "partition": 0.5,
+    "fused_identity": 0.5,
+    "dense": 0.5,
+    "existence": 0.5,
+    "unmatched_mask": 0.0,
+    "query_separation": 0.0,
+    "query_separation_mode": "active",
+    "query_set": 0.5,
+    "query_count": 0.5,
+    "query_class_count": 0.1,
+    "room_program": 0.0,
+    "partition_consistency": 0.0,
+    "partition_confidence_weighting": false,
+    "dynamic_room_loss_weights": false,
+    "selection_count_weight": 0.005
+  },
+  "ablation_order": [
+    "budget-only active head",
+    "mask-pooled class evidence",
+    "query existence and count",
+    "room program and class cardinality",
+    "same-class query separation",
+    "partition consistency",
+    "adaptive full-resolution references",
+    "verified combination"
+  ],
+  "gates": {
+    "joint_quality": "Room IoU, instance F1, and count MAE improve together on calibration and disjoint holdout.",
+    "stability": "At least 4/5 confirmation seeds improve with paired 95% CI above zero.",
+    "safety": "Validity 1.0, functional watertightness >=0.99, outside footprint 0.0.",
+    "readout": "The reported query weight equals the checkpoint-selected blend or records an explicit override."
+  },
+  "claim_boundary": "This is a reproducible implementation plan and has no new GPU result."
+}

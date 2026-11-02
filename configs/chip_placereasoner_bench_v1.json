@@ -1,0 +1,92 @@
+{
+  "version": "chip-placereasoner-bench-v1",
+  "repo_url": "https://github.com/fenggev56/PlaceReasoner-Beta",
+  "repo_commit": "5a0c65b88f1931a4c3efb4d9c28f81251f296449",
+  "repo_license": "GPL-3.0",
+  "dataset_id": "fenggev566/PlaceReasoner-Bench",
+  "dataset_license": "mixed-open-source; component licenses apply",
+  "tech": "Nangate45",
+  "unique_designs": 8,
+  "placement_tasks": 16,
+  "designs": [
+    {
+      "name": "ariane133",
+      "top": "ariane",
+      "macros": 132,
+      "clusters": 14,
+      "macro_types": 1,
+      "clock_ns": 4.0
+    },
+    {
+      "name": "ariane81",
+      "top": "ariane",
+      "macros": 81,
+      "clusters": 8,
+      "macro_types": 6,
+      "clock_ns": 4.0
+    },
+    {
+      "name": "bp_be",
+      "top": "bp_be_top",
+      "macros": 10,
+      "clusters": 3,
+      "macro_types": 3,
+      "clock_ns": 2.6
+    },
+    {
+      "name": "bp_fe",
+      "top": "bp_fe_top",
+      "macros": 11,
+      "clusters": 4,
+      "macro_types": 3,
+      "clock_ns": 1.8
+    },
+    {
+      "name": "ethernet",
+      "top": "eth_top",
+      "macros": 64,
+      "clusters": 2,
+      "macro_types": 1,
+      "clock_ns": 8.0
+    },
+    {
+      "name": "swerv_wrapper",
+      "top": "swerv_wrapper",
+      "macros": 28,
+      "clusters": 3,
+      "macro_types": 3,
+      "clock_ns": 2.0
+    },
+    {
+      "name": "vga_lcd",
+      "top": "vga_enh_top",
+      "macros": 62,
+      "clusters": 12,
+      "macro_types": 3,
+      "clock_ns": 2.0
+    },
+    {
+      "name": "VeriGPU",
+      "top": "gpu_card",
+      "macros": 12,
+      "clusters": 1,
+      "macro_types": 1,
+      "clock_ns": 1.2
+    }
+  ],
+  "aspect_tasks": [
+    {
+      "id": "ar1",
+      "def": "def/1_1_u60_floorplan.def",
+      "aspect": "1:1",
+      "utilization": 0.6
+    },
+    {
+      "id": "ar2",
+      "def": "def/2_1_floorplan.def",
+      "aspect": "2:1",
+      "utilization": 0.6
+    }
+  ],
+  "freshness_rule": "8 unique source designs and 16 aspect tasks; cluster bootstrap by design, not by task"
+}

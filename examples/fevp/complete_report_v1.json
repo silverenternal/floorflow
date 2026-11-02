@@ -1,0 +1,87 @@
+{
+  "schema_version": "fevp-report-v1",
+  "protocol_version": "1.0",
+  "report_id": "floorflow-cubicasa-control-gated-v1",
+  "method": "FloorFlow control-gated local delta",
+  "dataset": "CubiCasa5K test503",
+  "task": "declared local floorplan editing",
+  "comparability": {
+    "status": "matched",
+    "matched_group": "cubicasa-test503-five-seed",
+    "notes": "Five-seed aggregate under oracle controls."
+  },
+  "edit_region": {
+    "definition": "Clamped normalized edit rectangle.",
+    "rasterization_rule": "Round the clamped rectangle onto the evaluation raster.",
+    "valid_outside_rule": "Footprint outside the edit region, excluding dilated pre/post walls."
+  },
+  "scorer": {
+    "implementation": "floorflow.evaluation.fevp_protocol",
+    "version": "1.0",
+    "code_commit": "working-tree"
+  },
+  "mandatory": {
+    "outside_exact": {
+      "status": "reported_under_fevp",
+      "value": null,
+      "outside_pixel_exact": 1.0,
+      "outside_room_label_exact": 1.0,
+      "source": "outputs/reports/fp_edit_detection_test503_controlgated_fiveseed_v1.json"
+    },
+    "validity": {
+      "status": "reported_under_fevp",
+      "value": 1.0,
+      "source": "outputs/reports/fp_verifiability_score_v1.json"
+    },
+    "conditional_watertightness": {
+      "status": "reported_under_fevp",
+      "value": 0.9626373626373625,
+      "source": "outputs/reports/fp_verifiability_score_v1.json"
+    },
+    "node_f1": {
+      "status": "reported_under_fevp",
+      "value": 0.9822502993441112,
+      "source": "outputs/reports/fp_housemind_structural_alignment_v1.json"
+    },
+    "edge_overlap": {
+      "status": "reported_under_fevp",
+      "value": 0.9294747523699975,
+      "source": "outputs/reports/fp_housemind_structural_alignment_v1.json"
+    }
+  },
+  "optional": {
+    "delta_iou": {
+      "status": "reported_under_fevp",
+      "value": 0.9870840184952085,
+      "source": "outputs/reports/fp_edit_detection_test503_controlgated_fiveseed_v1.json"
+    },
+    "ged": {
+      "status": "reported_under_fevp",
+      "value": 0.8695441710367083,
+      "source": "outputs/reports/fp_housemind_structural_alignment_v1.json"
+    },
+    "delta_mse": {
+      "status": "reported_under_fevp",
+      "value": 0.00021761272324362862,
+      "source": "outputs/reports/fp_edit_detection_test503_controlgated_fiveseed_v1.json"
+    }
+  },
+  "cases": {
+    "count": 12395,
+    "rows_file": "outputs/reports/fp_housemind_structural_alignment_rows_v1.json",
+    "sha256": null
+  },
+  "source_map": {
+    "outside_exact": "outputs/reports/fp_edit_detection_test503_controlgated_fiveseed_v1.json",
+    "validity": "outputs/reports/fp_verifiability_score_v1.json",
+    "conditional_watertightness": "outputs/reports/fp_verifiability_score_v1.json",
+    "node_f1": "outputs/reports/fp_housemind_structural_alignment_v1.json",
+    "edge_overlap": "outputs/reports/fp_housemind_structural_alignment_v1.json",
+    "delta_iou": "outputs/reports/fp_edit_detection_test503_controlgated_fiveseed_v1.json",
+    "ged": "outputs/reports/fp_housemind_structural_alignment_v1.json",
+    "delta_mse": "outputs/reports/fp_edit_detection_test503_controlgated_fiveseed_v1.json"
+  },
+  "excluded_components": [
+    "human_evaluation"
+  ]
+}

@@ -1,0 +1,725 @@
+{
+  "version": "chip-upgrade-candidates-v2",
+  "date": "2026-10-30",
+  "status": "m19_case_tail_objective_rejected",
+  "source_document": "docs/chip_upgrade_research_v1.md",
+  "selection_policy": "Select one mechanism at a time, reuse an existing state/operator and include a falsification test. Inference-only candidates may run from a fixed checkpoint without training. Trainable architecture changes wait for the exposure frontier and M6 evidence. A test-time repair must preserve the frozen total generation budget and report all EDA response cost.",
+  "fast_iteration_policy": {
+    "exploratory_version_data_ceiling_cases": 5000,
+    "quick": "2k training steps with NFE4/refiner400 on the frozen 32-case legalized dev screen",
+    "confirmation": "5k training steps with NFE4/refiner1600 on the same subset and validation manifest",
+    "full_data": "one frozen registered finalist plus one same-seed matched control at 20k steps only",
+    "forbidden": [
+      "full-data exploratory variants",
+      "multiple full-data variants for one mechanism",
+      "changing a finalist after observing full-data output",
+      "skipping quick or confirmation after a failure"
+    ]
+  },
+  "blocking_snapshot": {
+    "full50k_status": "rejected_same_device_advance_gate",
+    "highblock_range_status": "mean_gate_pass_primary_ci_crosses_zero",
+    "completed_queue": "outputs/reports/chip_post_full50k_queue_v1.json",
+    "m6_status": "complete_pilot_rejected_deployable_selector",
+    "new_openroad_allowed": false,
+    "new_gpu_training_allowed": true,
+    "reason": "One architecture quick screen is active on cuda:1. Architecture iteration is prioritized over stopping range-seed replication."
+  },
+  "candidates": [
+    {
+      "id": "M11-order-conditioned-group-staging",
+      "priority": 0,
+      "stage": "trainable_architecture",
+      "status": "rejected_quick_screen_both_scratch_and_warmstart",
+      "pain_point": "simultaneous per-block flow cannot express the learned ordering and staged/deferred group updates observed in recent placement research",
+      "paper_refs": [
+        "arXiv:2606.08904",
+        "arXiv:2511.08054"
+      ],
+      "existing_pathway": {
+        "files": [
+          "src/floorflow/chip_flow/ordered_group_staging.py",
+          "src/floorflow/chip_flow/hierarchical_flow.py",
+          "src/floorflow/chip_flow/typed_graph_encoder.py"
+        ],
+        "symbols": [
+          "OrderedGroupStaging",
+          "HierarchicalTokenFlowModel.forward",
+          "TypedGraphOutput.structural_tokens"
+        ],
+        "state": "cluster_tokens_present_but_no_order_or_phase_conditioning"
+      },
+      "minimal_extension": "Reuse four typed cluster slots. Learn case-specific group priorities, convert them to normalized phase centers, and apply Gaussian time-phase gates to a zero-gated block residual.",
+      "parameter_delta_d192": {
+        "added": 48053,
+        "ratio": 0.008233262462590683
+      },
+      "expected_metrics": [
+        "legalized hard cost",
+        "V_rel",
+        "grouping",
+        "b2b HPWL",
+        "p2b HPWL",
+        "high-block tails"
+      ],
+      "quick_gate": "2k/refiner400 on frozen 5k: no primary regression >0.2%, at least one improvement >=0.5%, feasibility 1.0.",
+      "confirmation_gate": "5k/refiner1600 on the same subset: both primary metrics non-regressing and at least one improved.",
+      "falsification": [
+        "zero-gradient or static collapse",
+        "grouping regression",
+        "primary metric regression",
+        "no gain over simultaneous flow"
+      ],
+      "do_not_repeat": [
+        "U1 dynamic edge relay",
+        "M10 projection-consistent/final-only trajectory",
+        "group-order phase residuals",
+        "dense NxN attention"
+      ]
+    },
+    {
+      "id": "M12-coarse-to-fine-hierarchy-feedback",
+      "priority": 0,
+      "stage": "trainable_architecture",
+      "status": "rejected_quick_screen_long_tail_driven",
+      "pain_point": "L0/L1 predictions and L2 block trajectories are decoded in parallel; predicted boundary and group states never guide the block prediction that determines their consistency",
+      "paper_refs": [
+        "arXiv:2511.08054",
+        "arXiv:2606.08904"
+      ],
+      "existing_pathway": {
+        "files": [
+          "src/floorflow/chip_flow/hierarchical_flow.py",
+          "src/floorflow/chip_flow/typed_graph_encoder.py",
+          "src/floorflow/chip_flow/hierarchical_flow_runtime.py"
+        ],
+        "symbols": [
+          "HierarchicalTokenFlowModel.forward",
+          "TypedGraphOutput.structural_tokens",
+          "build_hierarchy_targets",
+          "hierarchy_flow_loss"
+        ],
+        "state": "coarse_heads_and_block_backbone_are_parallel"
+      },
+      "minimal_extension": "Predict L0 boundary and L1 group states first, pool their memberships per block, and add a bottleneck zero-gated residual to the L2 trajectory before the existing backbone.",
+      "reuse": [
+        "existing L0/L1 heads",
+        "structural_membership",
+        "typed block tokens",
+        "existing backbone"
+      ],
+      "parameter_delta_d192": {
+        "added": 22132,
+        "ratio": 0.003791909104556817
+      },
+      "expected_metrics": [
+        "legalized hard cost",
+        "V_rel",
+        "grouping",
+        "boundary",
+        "cost p90/p95",
+        "high-block tails"
+      ],
+      "quick_gate": "2k/refiner400 on frozen 5k: no primary regression >0.2%, at least one improvement >=0.5%, feasibility 1.0.",
+      "confirmation_gate": "5k/refiner1600 on the same subset with both primary metrics non-regressing and at least one improved.",
+      "falsification": [
+        "coarse residual gate collapses near zero",
+        "primary cost or V_rel regression at quick screen",
+        "structural gains without legalized-metric transfer",
+        "dense pair tensor creation"
+      ],
+      "do_not_repeat": [
+        "order-phase residual",
+        "pairwise dynamic edge relay",
+        "generic extra transformer block"
+      ]
+    },
+    {
+      "id": "M13-port-to-block-consensus-feedback",
+      "priority": 0,
+      "stage": "trainable_architecture",
+      "status": "rejected_quick_screen",
+      "pain_point": "the model predicts L3 port offsets but never feeds them back into the L2 block trajectory, matching the observed p2b-to-routed-PPA disconnect",
+      "paper_refs": [
+        "arXiv:2604.23658",
+        "arXiv:2606.08904"
+      ],
+      "existing_pathway": {
+        "files": [
+          "src/floorflow/chip_flow/hierarchical_flow.py",
+          "src/floorflow/chip_flow/typed_graph_encoder.py",
+          "src/floorflow/chip_flow/hierarchical_flow_runtime.py"
+        ],
+        "symbols": [
+          "HierarchicalTokenFlowModel.forward",
+          "TypedGraphOutput.port_block_incidence",
+          "TypedGraphOutput.port_mask",
+          "build_hierarchy_targets"
+        ],
+        "state": "port_prediction_is_auxiliary_and_bypassed_by_block_backbone"
+      },
+      "minimal_extension": "Predict port offsets before the block backbone, pool them onto incident blocks through the existing sparse incidence, and add a hidden/4 zero-gated residual to the block trajectory.",
+      "reuse": [
+        "existing L3 port head",
+        "port_block_incidence",
+        "typed block tokens",
+        "existing backbone"
+      ],
+      "parameter_delta_d192": {
+        "added": 19108,
+        "ratio": 0.0032739096234404253
+      },
+      "expected_metrics": [
+        "legalized hard cost",
+        "V_rel",
+        "p2b HPWL",
+        "b2b HPWL",
+        "grouping",
+        "routed-PPA transfer"
+      ],
+      "quick_gate": "2k/refiner400 on frozen 5k: no primary regression >0.2%, at least one improvement >=0.5%, feasibility 1.0.",
+      "confirmation_gate": "5k/refiner1600 on the same subset with both primary metrics non-regressing and at least one improved.",
+      "falsification": [
+        "port residual gate collapses near zero",
+        "cost or V_rel regression",
+        "p2b-only gain without legalized-metric transfer",
+        "dense NxN tensor creation"
+      ],
+      "do_not_repeat": [
+        "pairwise dynamic edge relay",
+        "order-phase residual",
+        "generic extra transformer block"
+      ]
+    },
+    {
+      "id": "M14-differentiable-spatial-occupancy-feedback",
+      "priority": 0,
+      "stage": "trainable_architecture",
+      "status": "rejected_quick_screen",
+      "pain_point": "the model has static block and edge features but no explicit current-state occupancy or crowding field, leaving high-block conflicts under-represented",
+      "paper_refs": [
+        "arXiv:2511.08054",
+        "arXiv:2604.23658"
+      ],
+      "existing_pathway": {
+        "files": [
+          "src/floorflow/chip_flow/hierarchical_flow.py",
+          "src/floorflow/chip_flow/typed_graph_encoder.py",
+          "src/floorflow/chip_flow/hierarchical_flow_runtime.py"
+        ],
+        "symbols": [
+          "HierarchicalTokenFlowModel.forward",
+          "TypedGraphOutput.block_tokens",
+          "HierarchyState.block_state"
+        ],
+        "state": "spatial_occupancy_field_absent"
+      },
+      "minimal_extension": "Soft-splat current block centers and exact-area pressure onto a 16x16 field, encode with two small convolutions, sample at block centers, and add a zero-gated block residual.",
+      "reuse": [
+        "current block trajectory",
+        "exact block areas",
+        "typed block tokens",
+        "existing backbone"
+      ],
+      "parameter_delta_d192": {
+        "added": 12876,
+        "ratio": 0.00220613671296938
+      },
+      "expected_metrics": [
+        "legalized hard cost",
+        "V_rel",
+        "cost p50/p90/p95",
+        "high-block tails",
+        "raw overlap"
+      ],
+      "quick_gate": "2k/refiner400 on frozen 5k: no primary regression >0.2%, at least one improvement >=0.5%, feasibility 1.0.",
+      "confirmation_gate": "5k/refiner1600 on the same subset with both primary metrics non-regressing and at least one improved.",
+      "falsification": [
+        "density residual gate collapses near zero",
+        "legality regresses",
+        "no gain on high-block strata",
+        "runtime overhead exits the predeclared operator budget"
+      ],
+      "do_not_repeat": [
+        "dense NxN geometry tensor",
+        "generic extra transformer block",
+        "pairwise dynamic edge relay"
+      ]
+    },
+    {
+      "id": "M15-frozen-base-port-adapter-validation",
+      "priority": 0,
+      "stage": "architecture_validation",
+      "status": "rejected_frozen_adapter_screen",
+      "pain_point": "whole-model 5k warm-start adaptation changes the production base enough to obscure the causal effect of the port-feedback architecture",
+      "paper_refs": [
+        "arXiv:2604.23658",
+        "arXiv:2606.08904"
+      ],
+      "existing_pathway": {
+        "files": [
+          "src/floorflow/chip_flow/port_consensus_coupler.py",
+          "src/floorflow/chip_flow/hierarchical_flow.py",
+          "scripts/train_chip_slot.py"
+        ],
+        "symbols": [
+          "PortConsensusCoupler",
+          "HierarchicalTokenFlowModel.forward",
+          "--freeze-existing"
+        ],
+        "state": "adapter_isolated_from_base_optimizer"
+      },
+      "minimal_extension": "Freeze every production parameter and train only the existing M13 port-consensus adapter for 2k steps on the frozen 5k subset. Compare directly with the untouched production checkpoint under the same NFE4/refiner400 evaluator.",
+      "reuse": [
+        "production 20k checkpoint",
+        "M13 port-consensus module",
+        "existing evaluator",
+        "existing candidate registry"
+      ],
+      "expected_metrics": [
+        "legalized hard cost",
+        "V_rel",
+        "p2b HPWL",
+        "grouping",
+        "cost median"
+      ],
+      "quick_gate": "Against the untouched production checkpoint, no primary regression >0.2%, at least one improvement >=0.5%, feasibility 1.0.",
+      "falsification": [
+        "adapter gate remains inactive",
+        "whole-model drift is required for any apparent gain",
+        "primary metric regression versus the untouched base"
+      ],
+      "do_not_repeat": [
+        "unfreezing the base during adapter mechanism validation",
+        "dense NxN attention"
+      ]
+    },
+    {
+      "id": "M16-bidirectional-b2b-graph-messages",
+      "priority": 0,
+      "stage": "existing_operator_repair",
+      "status": "rejected_quick_screen",
+      "pain_point": "b2b edges are mostly stored once, but the typed graph message path only sends source features to targets, so most source blocks receive no corresponding neighbor message",
+      "paper_refs": [
+        "arXiv:2511.08054",
+        "arXiv:2606.08904"
+      ],
+      "existing_pathway": {
+        "files": [
+          "src/floorflow/chip_flow/sparse_layers.py",
+          "src/floorflow/chip_flow/typed_graph_encoder.py",
+          "src/floorflow/chip_flow/hierarchical_flow.py"
+        ],
+        "symbols": [
+          "GraphMessageBlock._b2b_context",
+          "TypedGraphEncoder",
+          "HierarchicalTokenFlowModel"
+        ],
+        "state": "mostly_one_way_messages_on_an_undirected_edge_list"
+      },
+      "minimal_extension": "Reuse the existing weighted source message and send the reverse target message on each undirected b2b edge. Keep the default directional path for checkpoint compatibility.",
+      "reuse": [
+        "existing b2b flattening and validity masks",
+        "existing edge gate and degree normalization",
+        "existing graph residual block",
+        "existing typed encoder parameters"
+      ],
+      "parameter_delta_d192": {
+        "added": 0,
+        "ratio": 0.0
+      },
+      "expected_metrics": [
+        "legalized hard cost",
+        "V_rel",
+        "b2b HPWL",
+        "p2b HPWL",
+        "grouping",
+        "high-block tails"
+      ],
+      "quick_gate": "2k/refiner400 on frozen 5k: no primary regression >0.2%, at least one improvement >=0.5%, feasibility 1.0.",
+      "confirmation_gate": "5k/refiner1600 on the same subset with both primary metrics non-regressing and at least one improved.",
+      "falsification": [
+        "source-target message duplication dominates repeated edges",
+        "primary metric regression",
+        "structural gain without legalized-metric transfer"
+      ],
+      "do_not_repeat": [
+        "generic extra graph layer",
+        "dense NxN edge tensor",
+        "dynamic geometry relay"
+      ]
+    },
+    {
+      "id": "M17-complexity-conditioned-sparse-slot-adapter",
+      "priority": 0,
+      "stage": "existing_router_reuse",
+      "status": "rejected_frozen_adapter_screen",
+      "pain_point": "fixed computation is wasteful on simple graphs, while the 101-120 block tail fails despite greater structural demand",
+      "paper_refs": [
+        "arXiv:2511.08054"
+      ],
+      "existing_pathway": {
+        "files": [
+          "src/floorflow/chip_flow/sparse_hierarchy.py",
+          "src/floorflow/chip_flow/complexity_slot_adapter.py",
+          "src/floorflow/chip_flow/hierarchical_flow.py"
+        ],
+        "symbols": [
+          "graph_complexity",
+          "LearnedSparseSlotRouter",
+          "ComplexitySlotAdapter"
+        ],
+        "state": "router_existed_but_was_not_connected_to_typed_hierarchy"
+      },
+      "minimal_extension": "Reuse complexity-scaled sparse slots as a frozen-base adapter, then inject routed slot context into per-block trajectories.",
+      "parameter_delta_d192": {
+        "added": 24485,
+        "ratio": 0.004195189299243187
+      },
+      "result": {
+        "report": "outputs/reports/chip_complexity_slot_adapter_v1.json",
+        "cost_relative": 0.05068208438023114,
+        "v_rel_relative": 0.15577524213893557,
+        "feasibility_fraction": 1.0,
+        "worst_stratum": "101-120 blocks at +17.18% cost"
+      },
+      "decision": "Reject. The adapter provides more slots to the hardest stratum but worsens it, so additional relational context alone is not the missing mechanism."
+    },
+    {
+      "id": "M18-degree-conditioned-relational-expert",
+      "priority": 0,
+      "stage": "trainable_architecture",
+      "status": "rejected_frozen_adapter_screen",
+      "pain_point": "a single shared block transform cannot specialize for high-degree and high-pin blocks that dominate structural tail failures",
+      "paper_refs": [
+        "arXiv:2511.08054"
+      ],
+      "existing_pathway": {
+        "files": [
+          "src/floorflow/chip_flow/degree_conditioned_expert.py",
+          "src/floorflow/chip_flow/typed_graph_encoder.py"
+        ],
+        "symbols": [
+          "DegreeConditionedExpert",
+          "TypedGraphEncoder",
+          "_b2b_context",
+          "_pin_context"
+        ],
+        "state": "shared_block_computation_with_no_degree_specialization"
+      },
+      "minimal_extension": "Route blocks from normalized b2b/p2b degree into one hidden/4 relational expert behind a zero scale.",
+      "parameter_delta_d192": {
+        "added": 28854,
+        "ratio": 0.004943761161542288
+      },
+      "result": {
+        "report": "outputs/reports/chip_degree_conditioned_expert_v1.json",
+        "cost_relative": 0.009309434188493393,
+        "v_rel_relative": 0.09101584317957823,
+        "feasibility_fraction": 1.0,
+        "mid_band_cost": "-1.29% on 81-100 blocks",
+        "mid_band_v_rel": "+2.14% on 81-100 blocks"
+      },
+      "decision": "Reject. Specialization creates a narrow cost-only effect and fails the joint primary gate."
+    },
+    {
+      "id": "M19-case-tail-aware-objective",
+      "priority": 0,
+      "stage": "training_objective",
+      "status": "rejected_quick_screen",
+      "pain_point": "the mean physics loss underweights rare structural failures that drive cross-seed V_rel tail instability",
+      "paper_refs": [],
+      "existing_pathway": {
+        "files": [
+          "src/floorflow/chip_flow/batched.py",
+          "src/floorflow/chip_flow/train_objective.py"
+        ],
+        "symbols": [
+          "batch_physics_terms",
+          "top_fraction_mean",
+          "supervised_loss"
+        ],
+        "state": "mean_only_physics_objective"
+      },
+      "minimal_extension": "Add a differentiable top-25% case-level physics penalty with a delayed schedule and no model parameter changes.",
+      "result": {
+        "report": "outputs/reports/chip_tail_objective_warmstart_screen_v1.json",
+        "cost_relative": -0.019363983902424,
+        "v_rel_relative": 0.13093369221888196,
+        "feasibility_fraction": 1.0
+      },
+      "decision": "Reject. The objective shifts cost but worsens V_rel, so it does not solve the measured tail instability."
+    },
+    {
+      "id": "M10-projection-consistent-flow",
+      "priority": 0,
+      "stage": "inference_only_flow_operator",
+      "status": "rejected_at_confirmation",
+      "pain_point": "the current hard projector changes an advanced Euler state but does not reinterpolate the trajectory toward the projected final endpoint",
+      "paper_refs": [
+        "arXiv:2604.23658"
+      ],
+      "source_review": {
+        "paper": "https://arxiv.org/abs/2604.23658",
+        "repository": "https://github.com/lamda-bbo/flowplace",
+        "license": "not_present_on_2026_10_30",
+        "use": "clean-room paper-level mechanism only"
+      },
+      "existing_pathway": {
+        "files": [
+          "src/floorflow/chip_flow/hierarchical_flow_runtime.py",
+          "src/floorflow/chip_flow/hard_constraint_projector.py",
+          "src/floorflow/chip_flow/flow_adapter.py"
+        ],
+        "symbols": [
+          "integrate_hierarchy_step",
+          "sample_hierarchy_flow",
+          "sample_for_batch",
+          "project_hard_constraints"
+        ],
+        "state": "post_step_projection_implemented_projection_consistent_mode_added"
+      },
+      "minimal_extension": "Add an opt-in source-to-projected-endpoint reinterpolation while retaining the existing per-block model, exact-area decoder and projector.",
+      "reuse": [
+        "HierarchicalTokenFlowModel",
+        "integrate_hierarchy_step",
+        "project_hard_constraints",
+        "decode_boxes_batch",
+        "scale_pack_legalize_reproducible"
+      ],
+      "expected_metrics": [
+        "legalized cost and V_rel at identical NFE/refiner",
+        "cost and V_rel p50/p90/p95",
+        "21-40, 41-80 and 81-120 block strata",
+        "legalization time and exact-area violations"
+      ],
+      "quick_gate": "At one matched point from the same source noise, improve both mean cost and V_rel with feasibility 1.0; a negative or mixed result cannot open confirmation.",
+      "confirmation_gate": "Confirm the single quick-selected mode on the full frozen 32-case NFE/refiner grid without changing the mode.",
+      "full_gate": "Only a confirmed projection-consistent mode may be registered for the full-data candidate gate.",
+      "falsification": [
+        "No gain over post-step projection",
+        "Gain only in one metric",
+        "Gain requires changed source noise, NFE, refiner, projector iterations or legalizer",
+        "Fixed/preplaced/MIB/boundary/area constraints are relaxed"
+      ],
+      "implementation_evidence": {
+        "config": "configs/chip_m10_projection_consistent_flow_v1.json",
+        "runner": "scripts/run_chip_m10_projection_flow_screen.py",
+        "smoke": "outputs/smoke/chip_m10_projection_consistent_flow_smoke_v1.json",
+        "nfe4_smoke": "outputs/smoke/chip_m10_projection_consistent_nfe4_smoke_v1.json",
+        "smoke_boundary": "One-case plumbing only; NFE4 observed cost +0.50% and V_rel unchanged.",
+        "fallback_quick": "outputs/reports/chip_m10_projection_consistent_flow_dev32_fallback_cpu_v1.json",
+        "quick_selection": "outputs/reports/chip_m10_quick_selection_v1.json",
+        "confirmation": "outputs/reports/chip_m10_projection_consistent_flow_final_only_confirmation_fallback_cpu_v1.json",
+        "quick_result": "At NFE4/refiner400 final_only improves cost -1.51% and V_rel -2.98% versus post_step; projection_consistent fails the primary point.",
+        "confirmation_result": "At NFE4/refiner1600 final_only regresses cost +3.33% and V_rel +0.59%; reject the family without full data or multiseed."
+      }
+    },
+    {
+      "id": "U1-dynamic-state-graph-relay",
+      "priority": 0,
+      "stage": "trainable_architecture",
+      "status": "rejected_at_confirmation",
+      "pain_point": "static b2b/p2b messages are reused across the full ODE trajectory",
+      "paper_refs": [
+        "arXiv:2605.16451",
+        "arXiv:2510.15897"
+      ],
+      "existing_pathway": {
+        "files": [
+          "src/floorflow/chip_flow/hierarchical_flow.py",
+          "src/floorflow/chip_flow/hierarchical_flow_runtime.py",
+          "src/floorflow/chip_flow/sparse_layers.py",
+          "third_party/Trinity/src/trinity/models/backbone.py"
+        ],
+        "symbols": [
+          "HierarchicalTokenFlowModel.prepare_context",
+          "HierarchicalTokenFlowModel.forward",
+          "integrate_hierarchy_step",
+          "GraphMessageBlock",
+          "DenoiserCond.adjacency"
+        ],
+        "state": "static_context_reused_at_every_flow_step"
+      },
+      "minimal_extension": "Add one opt-in zero-initialized state-to-edge geometry relay using active b2b/p2b edges, current normalized centers, width/height ratios and net weights. Aggregate through the existing sparse index_add path. Do not recompute dense typed attention per ODE step and preserve the disabled checkpoint path.",
+      "reuse": [
+        "GraphMessageBlock._b2b_context",
+        "GraphMessageBlock._pin_context",
+        "masked_token_mean",
+        "decode_boxes_batch"
+      ],
+      "expected_metrics": [
+        "legalized cost",
+        "V_rel",
+        "b2b HPWL",
+        "p2b HPWL",
+        "cost p90/p95",
+        "operator latency"
+      ],
+      "quick_gate": "2k/refiner400 on cuda:0: improve cost or V_rel without legality regression and without collapsing to the static A5 gate.",
+      "confirmation_gate": "5k/refiner1600: both primary metrics non-regressing, at least one improved, feasibility 1.0.",
+      "full_gate": "Only after registration, one frozen 20k candidate and same-seed control, then exact group=2 matched Trinity comparison and three training seeds. Full data is never used for variant selection.",
+      "falsification": [
+        "No improvement at quick or confirmation budget",
+        "Structural metric improvement with cost/V_rel regression",
+        "Dynamic geometry ablation is indistinguishable from static edge weighting",
+        "GPU overhead exceeds the predeclared operator budget"
+      ],
+      "do_not_repeat": [
+        "A5 static source-target edge gate",
+        "another typed attention layer",
+        "per-type attention bias"
+      ]
+    },
+    {
+      "id": "U2-response-critical-partial-reflow",
+      "priority": 1,
+      "stage": "bounded_inference_repair",
+      "status": "blocked_on_validated_M6_response",
+      "pain_point": "the model cannot repair a strong parent without restarting the complete trajectory",
+      "paper_refs": [
+        "arXiv:2610.33099",
+        "arXiv:2609.34452",
+        "arXiv:2608.27649"
+      ],
+      "existing_pathway": {
+        "files": [
+          "src/floorflow/chip_flow/hierarchical_flow_runtime.py",
+          "scripts/evaluate_chip_analytical_search.py",
+          "src/floorflow/chip_flow/analytical_feedback.py"
+        ],
+        "symbols": [
+          "sample_hierarchy_flow",
+          "summarize_analytical_response",
+          "summarize_matched_flow_search"
+        ],
+        "state": "complete_proposals_only"
+      },
+      "minimal_extension": "Select a legal parent, choose a small critical block set from graph degree, current net span and the M6-validated response, perturb only those block latents and spend the remaining frozen NFE/refiner budget on a partial trajectory.",
+      "reuse": [
+        "sample_hierarchy_flow",
+        "integrate_hierarchy_step",
+        "project_hard_constraints",
+        "scale_pack_legalize_reproducible",
+        "run_chip_analytical_response"
+      ],
+      "expected_metrics": [
+        "cost and V_rel at equal total NFE/refiner budget",
+        "routed wirelength",
+        "congestion",
+        "response wall time"
+      ],
+      "quick_gate": "Beat p2b-only and N1 proposal selection on new proposals with identical total model-generation budget.",
+      "confirmation_gate": "Routed selection remains positive on non-overlapping validation cases and all legality/DRC guards hold.",
+      "falsification": [
+        "Only the pre-route proxy improves",
+        "Response or legalization cost erases the budget benefit",
+        "Critical blocks are selected using post-route oracle information",
+        "Parent diversity collapses to one layout"
+      ],
+      "do_not_repeat": [
+        "unvalidated A15/A16 scalar energies",
+        "plain best-of-N without a validated scorer"
+      ]
+    },
+    {
+      "id": "U3-outline-manifold-projection",
+      "priority": 1,
+      "stage": "hard_constraint_repair",
+      "status": "blocked_pending_A17_and_M9_subset_screen",
+      "pain_point": "fixed-outline samples have zero feasible fraction",
+      "paper_refs": [
+        "arXiv:2510.15897",
+        "arXiv:2605.16451"
+      ],
+      "existing_pathway": {
+        "files": [
+          "src/floorflow/chip_flow/hierarchical_flow.py",
+          "src/floorflow/chip_flow/hard_constraint_projector.py",
+          "src/floorflow/chip_flow/legalization.py"
+        ],
+        "symbols": [
+          "outline_condition_from_hw",
+          "outline_to_hidden",
+          "project_hard_constraints",
+          "scale_pack_legalize_reproducible",
+          "translate_into_core"
+        ],
+        "state": "L0_condition_exists_but_no_outline_manifold_stage"
+      },
+      "minimal_extension": "After exact-area decode, add a deterministic outline translation/scale and local overlap projection before legalizer fallback while preserving fixed blocks, MIB sharing and exact area.",
+      "reuse": [
+        "decode_boxes_batch",
+        "project_hard_constraints",
+        "scale_pack_legalize_reproducible",
+        "translate_into_core"
+      ],
+      "expected_metrics": [
+        "outline-feasible fraction",
+        "hard-constraint violations",
+        "legalization displacement",
+        "legalized cost and V_rel"
+      ],
+      "quick_gate": "Increase feasible fraction above zero on the frozen outline screen without moving fixed/preplaced blocks.",
+      "confirmation_gate": "All 22 frozen bookshelf cases report HARD/SOFT separately with stable feasibility and no area violations.",
+      "falsification": [
+        "Feasibility requires changing exact area or fixed constraints",
+        "Outline succeeds but legalizer collapse returns",
+        "Cost/V_rel become worse than the L0-only M9 arm"
+      ],
+      "do_not_repeat": [
+        "outline refiner-weight sweeps",
+        "more draws without a feasibility mechanism"
+      ]
+    },
+    {
+      "id": "U4-post-grt-dual-stream-surrogate",
+      "priority": 2,
+      "stage": "downstream_surrogate",
+      "status": "dormant_waiting_for_matched_labels",
+      "pain_point": "pre-route and routed rankings can remain disconnected",
+      "paper_refs": [
+        "arXiv:2608.13790",
+        "arXiv:2407.04579",
+        "arXiv:2505.16445"
+      ],
+      "existing_pathway": {
+        "files": [
+          "src/floorflow/chip_flow/analytical_feedback.py",
+          "src/floorflow/chip_flow/ppa_external.py",
+          "scripts/run_chip_analytical_response.py"
+        ],
+        "symbols": [
+          "ANALYTICAL_RESPONSE_KEYS",
+          "summarize_analytical_response"
+        ],
+        "state": "direct_response_only_no_standard_cell_spatial_tokens"
+      },
+      "minimal_extension": "Train a reusable graph-plus-spatial PPA surrogate on post-GRT labels, with leave-one-design and leave-one-family-out ranking gates, then expose a projected gradient only through bounded repair.",
+      "reuse": [
+        "OpenROAD-flow-scripts",
+        "ppa_external",
+        "analytical_feedback",
+        "hard_constraint_projector"
+      ],
+      "expected_metrics": [
+        "routed wirelength",
+        "congestion",
+        "WNS/TNS",
+        "power",
+        "DRC"
+      ],
+      "quick_gate": "Matched label-fidelity audit and held-out ranking above the existing global-place scalar.",
+      "confirmation_gate": "Leave-one-design and leave-one-family-out sign stability on a predeclared label corpus.",
+      "falsification": [
+        "Surrogate labels do not preserve post-route ranking",
+        "Gradient repair exits the training distribution",
+        "No matched full-netlist label corpus is available"
+      ],
+      "do_not_repeat": [
+        "training on macro-only p2b labels and naming it routed-PPA aware",
+        "unbounded gradient descent after global route"
+      ]
+    }
+  ]
+}

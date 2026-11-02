@@ -1,0 +1,37 @@
+{
+  "schema_version": "opening-center-width-spatial-gap-v1",
+  "status": "implementation_ready_no_gpu_run",
+  "scope": "predicted_control_opening_head",
+  "hypothesis": "Four opening gap tokens need explicit spatial evidence routing; self-attention among four tokens cannot localize wall gaps.",
+  "model": {
+    "head_variant": "center_width",
+    "spatial_gap_attention": true,
+    "gap_memory_grid": 16,
+    "route_router_count": 8,
+    "route_top_k": 4,
+    "gap_residual_scale": 0.01
+  },
+  "training": {
+    "init_checkpoint": "outputs/train/opening_interval_centerwidth_promotion1024_seed19_v1/best.pt",
+    "train_scope": "gap_fusion",
+    "train_cases": 512,
+    "validation_cases": 64,
+    "epochs": 8,
+    "batch_size": 8,
+    "seed": 19,
+    "device": "cuda:0"
+  },
+  "controls": [
+    "center-width self-token gap fusion",
+    "spatial gap attention without MIta routing",
+    "spatial gap attention with fixed top-k",
+    "spatial gap MIta with learned router budget"
+  ],
+  "gates": {
+    "quality": "Opening vector F1 improves on calibration and disjoint holdout.",
+    "host": "Geometry-matched and family-consistent counts do not regress.",
+    "safety": "Wall, Room, Node, Edge, GED, validity, watertightness, and outside-footprint remain non-regressing.",
+    "mechanism": "Gap route entropy and effective expert fraction remain non-collapsed."
+  },
+  "claim_boundary": "Architecture contract only; no opening metric claim before matched training."
+}

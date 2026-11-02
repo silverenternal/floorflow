@@ -1,0 +1,74 @@
+{
+  "version": "chip-m9-outline-conditioning-screen-v1",
+  "status": "u3_seed_probe_direction_positive_not_significant",
+  "scope": "Matched fine-tune mechanism screen for explicit L0 fixed-outline conditioning",
+  "prerequisite": [
+    "M6 analytical-response decision complete",
+    "A17 and dependent ORFS queues release compute",
+    "checkpoint-compatible zero-initialized outline path tests remain green"
+  ],
+  "base_checkpoint": "outputs/chip_hierarchy/v7_bbox_anneal_20k/typed_hierarchy_bbox_anneal_seed19_20k/checkpoints/final.pt",
+  "training": {
+    "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2",
+    "subset_manifest": "configs/chip_train_screen_5k_v1.json",
+    "seed": 23,
+    "device": "cuda:0",
+    "resume_weights_only": true,
+    "quick_steps": 2000,
+    "confirmation_steps": 5000,
+    "same_data_order": true,
+    "arms": {
+      "control": {
+        "outline_conditioning": false
+      },
+      "candidate": {
+        "outline_conditioning": true,
+        "outline_max_margin": 0.2
+      }
+    }
+  },
+  "validation": {
+    "official_subset": "outputs/reports/chip_dev_screen_v45.json",
+    "official_cases": 32,
+    "quick_nfe": 4,
+    "quick_refiner_steps": 400,
+    "confirmation_nfe": 4,
+    "confirmation_refiner_steps": 1600,
+    "require_legalized_feasible_fraction": 1.0
+  },
+  "external_structure": {
+    "manifest": "outputs/reports/chip_v46_bookshelf_holdout_manifest.json",
+    "u3_fallback": "scale_pack -> shelf_pack_fixed -> fixed-rectangle MILP with exact outline/non-overlap validation",
+    "initial_cases": [
+      "gsrc/hard/n10",
+      "mcnc/soft/apte"
+    ],
+    "initial_draws": 4,
+    "full_cohort_draws": 4,
+    "full_cohort_result": "candidate 10/22 feasible versus control 9/22; 7 paired feasible cases; feasible-pair mean HPWL +1.87%",
+    "full_cohort_16draw_result": "candidate 13/22 feasible versus control 9/22; exact McNemar p=0.21875; 8 paired feasible cases; feasible-pair mean HPWL -3120.38 (-0.94% relative), bootstrap CI [-15557.04, +9266.69]",
+    "hard_soft_result": "HARD 6/11 versus 6/11 feasible and -0.37% paired HPWL with CI crossing zero; SOFT 7/11 versus 3/11 feasible with only two double-feasible cases and -1.08% paired HPWL with wide CI",
+    "milp_timeout_probe": "A 10-second MILP rerun on ten persistent failures produced zero fully feasible cases; default timeout was not the cause.",
+    "seed_probe": "Two-case four-draw matched probe: candidate feasible cases 2/2 (seed19), 1/2 (seed20), 2/2 (seed21); controls 1/2, 0/2, 1/2. Direction is positive but APTE is unstable and HPWL signs are mixed.",
+    "seed_probe_pooled": "candidate feasibility 5/6 versus control 2/6; exact McNemar p=0.25; only two n10 cases are double-feasible and their mean HPWL is -3.43%.",
+    "failure_modes": "With fallback, HARD candidate/control both 79/176 fully feasible; remaining failures are outline-only misses with shapes kept. SOFT candidate/control is 55/176 versus 40/176. Candidate-vs-control advantage is SOFT-concentrated, while fallback itself helps both arms versus no fallback.",
+    "fallback_effect": "Candidate 10/22 with fallback versus 2/22 without (9 gains, 1 loss, McNemar p=0.0215); control 9/22 versus 1/22 (8 gains, 0 losses, p=0.0078). HPWL has only one paired-feasible case and is not a performance result.",
+    "fallback_effect_16draw": "Candidate 13/22 with fallback versus 2/22 without (11 gains, 0 losses, p=0.00098); control 9/22 versus 1/22 (8 gains, 0 losses, p=0.0078). HARD rises from 0/11 to 6/11 for both arms. HPWL still has only 2 candidate and 1 control paired-feasible cases.",
+    "fallback_effect_seed20_21": "seed20 candidate 0→1 and control 0→0; seed21 candidate 0→2 and control 0→1, with no losses on the two-case cohorts.",
+    "next_gate": "Do not promote HPWL. The 16-draw feasibility coverage signal remains exploratory; any performance claim requires an untouched structural cohort.",
+    "claim_boundary": "Feasibility coverage improvement is not a performance win."
+  },
+  "promotion": {
+    "requires_both_cost_and_v_rel_non_regression_quick": true,
+    "requires_both_cost_and_v_rel_non_regression_confirmation": true,
+    "requires_positive_bookshelf_feasible_fraction": true,
+    "register_before_full_data": true,
+    "full_data_matcher_required": true
+  },
+  "retained_negative_evidence": [
+    "outputs/reports/chip_v46_bookshelf_external_smoke_d16.json",
+    "outputs/reports/chip_v46_bookshelf_outline10_smoke_d16.json",
+    "outputs/reports/chip_v46_bookshelf_outline100_smoke_d4.json"
+  ],
+  "claim_boundary": "A one-step smoke or positive subset screen is not a CVPR result. Bookshelf HPWL is never ranked without an outline-feasible legalized layout."
+}

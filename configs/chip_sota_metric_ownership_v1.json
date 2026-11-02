@@ -1,0 +1,546 @@
+{
+  "version": "chip-sota-metric-ownership-v1",
+  "date": "2026-11-01",
+  "objective": "Assign every SOTA gap and every trainable chip-model atom an explicit proxy metric, real metric, consistency gate, owner task and rejection rule.",
+  "evidence_boundary": "This register is a preregistered evaluation plan. It contains no new quality evidence.",
+  "task_alias_map": {
+    "S0-METRIC-ARCH-CLOSURE": "S1-ATOM-ISOLATED-TRAINING",
+    "S1-GROUP-STATE": "S1-ATOM-ISOLATED-TRAINING",
+    "S2-LEGAL-ENDPOINT": "S2-CLOSEST-METRIC-GATE",
+    "S3A-ATOM-GENERATORS": "S3-COVERAGE-AND-TAIL",
+    "S3-CONSENSUS": "S5-BUDGET-CERTIFY",
+    "S4-ROUTE-TRANSFER": "S4-ROUTE-TRANSFER",
+    "S5-CERTIFY": "S2-CLOSEST-METRIC-GATE"
+  },
+  "task_registry": "chipstodo.json",
+  "proxy_real_protocol": {
+    "default_state": "diagnostic_only",
+    "evaluation_unit": "candidate within case",
+    "bootstrap": {
+      "iterations": 5000,
+      "unit": "case",
+      "same_case_pairs": true,
+      "seed": 20261101
+    },
+    "measurements": [
+      "spearman_rho",
+      "case_block_95_ci",
+      "pairwise_sign_agreement",
+      "top3_true_best_recall",
+      "selected_regret_median",
+      "selected_regret_p95",
+      "calibration_slope",
+      "calibration_intercept",
+      "complexity_stratum_sign_reversal"
+    ],
+    "screen_eligible": {
+      "minimum_cases": 15,
+      "minimum_candidates_per_case": 4,
+      "spearman_rho_min": 0.60,
+      "pairwise_sign_agreement_min": 0.75,
+      "top3_true_best_recall_min": 0.80,
+      "no_high_complexity_sign_reversal": true
+    },
+    "promotion_eligible": {
+      "minimum_cases": 64,
+      "spearman_rho_min": 0.75,
+      "lower_95_ci_min": 0.50,
+      "pairwise_sign_agreement_min": 0.85,
+      "top3_true_best_recall_min": 0.90,
+      "selected_regret_p95_max": 0.05,
+      "no_stratum_sign_reversal": true
+    },
+    "hard_rules": [
+      "A proxy that fails screen_eligible may be logged but cannot choose a checkpoint, arm, candidate or claim.",
+      "A target-conditioned training surrogate is marked train_only and cannot appear in deployment selection.",
+      "No candidate variance within a case is reported as no discrimination, not zero error.",
+      "Every proxy-real audit uses the same case list, legalizer policy, scorer and budget as the real metric.",
+      "External surrogate metrics never replace routed wirelength, congestion, DRC, power or timing.",
+      "High-complexity 81-120-block cases are a mandatory consistency stratum."
+    ],
+    "atm_protocol": {
+      "purpose": "Evaluate every atom independently before end-to-end screening.",
+      "checks": [
+        "parameter and gradient reachability",
+        "gate-open fraction when a gate exists",
+        "shuffle or zero-input sensitivity",
+        "controlled ablation delta",
+        "representation reconstruction or relation probe",
+        "downstream metric ownership and proxy-real consistency"
+      ],
+      "disabled_atom_rule": "An opt-in atom reports not_applicable when disabled; enabling it requires the same checks on a synthetic and real batch."
+    }
+  },
+  "gap_owners": [
+    {
+      "gap": "G-AREA",
+      "failure": "Pooled area/outline remains worse than Trinity and M75 area intervals remain unfavorable.",
+      "owners": ["A05", "A18", "A24", "A27", "A33", "A34"],
+      "task": "S1-GROUP-STATE",
+      "proxy": ["area_conservation_error", "outline_compactness", "outline_aspect", "rho_mae", "legalized_displacement"],
+      "real": ["legalized_area_gap", "rho_mae", "official_cost"],
+      "gate": "Proxy must pass promotion_eligible for area_gap and cost; no b2b, boundary or legality reversal."
+    },
+    {
+      "gap": "G-B2B",
+      "failure": "b2b HPWL remains unfavorable versus exact anchors and M75 mean.",
+      "owners": ["A01", "A02", "A03", "A04", "A08", "A11", "A17", "A24"],
+      "task": "S1-GROUP-STATE",
+      "proxy": ["raw_b2b_hpwl", "b2b_hpwl_gap", "edge_degree_reconstruction", "hyperedge_span_error"],
+      "real": ["legalized_b2b_hpwl_gap", "official_cost", "cost_p90_p95"],
+      "gate": "Raw and legalized b2b directions agree; high-degree/high-complexity strata cannot reverse."
+    },
+    {
+      "gap": "G-P2B-ROUTE",
+      "failure": "Large p2b gains do not transfer to routed wirelength; historical p2b-routed Spearman has been weak or negative.",
+      "owners": ["A10", "A14", "A21", "A22", "A25", "A28", "A36"],
+      "task": "S4-ROUTE-TRANSFER",
+      "proxy": ["raw_p2b_hpwl", "pin_tail", "pin_boundary_alignment", "routing_proxy", "b2b_route_demand_peak", "p2b_route_demand_peak", "macro_spacing_risk"],
+      "real": ["legalized_p2b_hpwl_gap", "routed_wirelength", "routing_overflow", "DRC"],
+      "gate": "p2b proxy cannot be promoted unless p2b-routed sign agreement is non-negative and a five-design ORFS mini screen agrees."
+    },
+    {
+      "gap": "G-GROUP",
+      "failure": "Grouping is a strength but must remain stable while area and b2b are repaired.",
+      "owners": ["A07", "A08", "A11", "A15", "A16", "A19", "A20"],
+      "task": "S1-GROUP-STATE",
+      "proxy": ["soft_grouping_v_rel", "cluster_relation_mae", "membership_swap_error", "grouping_proxy"],
+      "real": ["official_grouping_v_rel", "V_rel", "official_cost"],
+      "gate": "No area/b2b arm may be promoted if official grouping regresses beyond paired noise."
+    },
+    {
+      "gap": "G-BOUNDARY",
+      "failure": "Boundary is improved descriptively but not a universally stable exact-anchor win.",
+      "owners": ["A05", "A09", "A18", "A26", "A27"],
+      "task": "S2-LEGAL-ENDPOINT",
+      "proxy": ["boundary_gap", "edge_contact_error", "envelope_compactness", "boundary_displacement"],
+      "real": ["official_boundary_v_rel", "V_rel", "hard_violations"],
+      "gate": "Boundary CI must exclude zero; proxy sign agreement must hold in anchored and unanchored strata."
+    },
+    {
+      "gap": "G-COST-TAIL",
+      "failure": "Catastrophic 110-block and legalization tails dominate pooled cost.",
+      "owners": ["A23", "A29", "A32", "A33", "A34", "A35"],
+      "task": "S2-LEGAL-ENDPOINT",
+      "proxy": ["cost_p90_p95_proxy", "legalizer_rung", "solver_iterations", "displacement_p95", "candidate_ranking_regret"],
+      "real": ["official_cost_p90_p95", "hard_cost_10_fraction", "legalizer_escalation"],
+      "gate": "Tail proxy must identify the truly best candidate; median regret alone is insufficient."
+    },
+    {
+      "gap": "G-MIB",
+      "failure": "MIB V_rel has no discrimination in existing official comparisons.",
+      "owners": ["A08", "A09", "A24", "A31"],
+      "task": "S1-GROUP-STATE",
+      "proxy": ["mib_shared_shape", "mib_mask_coverage", "mib_sensitivity"],
+      "real": ["official_mib_v_rel"],
+      "gate": "No promotion claim while either side is zero/no-discrimination; report diagnostic only."
+    },
+    {
+      "gap": "G-SEED",
+      "failure": "Training-seed heterogeneity and one negative replication remain.",
+      "owners": ["A11", "A29", "A35", "A37"],
+      "task": "S5-CERTIFY",
+      "proxy": ["gate_health_across_seeds", "parameter_update_norm", "proxy_rank_stability"],
+      "real": ["paired_seed_cost", "paired_seed_v_rel", "improved_seed_count"],
+      "gate": "At least 4/5 seeds preserve direction and paired CI excludes zero before a stability claim."
+    },
+    {
+      "gap": "G-EFFICIENCY",
+      "failure": "Better quality has required substantially more NFE, refiner and legalizer work.",
+      "owners": ["A30", "A31", "A32", "A33", "A34", "A35", "A37"],
+      "task": "S3-CONSENSUS",
+      "proxy": ["trainable_parameters", "typed_backward_ms", "refiner_progress", "legalizer_calls"],
+      "real": ["wall_clock", "equal_quality_nfe", "equal_quality_refiner_steps", "equal_quality_legalizer_calls"],
+      "gate": "Budget curves at NFE1/2/4/8 and refiner steps 50/100/400/1600 must be reported together."
+    },
+    {
+      "gap": "G-EXTERNAL",
+      "failure": "External routed PPA is negative and timing/DRC coverage is incomplete.",
+      "owners": ["A21", "A22", "A28", "A36"],
+      "task": "S4-ROUTE-TRANSFER",
+      "proxy": ["routing_proxy", "density_overflow_proxy", "macro_spacing_risk", "DEF_alignment"],
+      "real": ["routed_wirelength", "global_route_overflow", "DRC", "WNS_TNS", "power"],
+      "gate": "No external claim until one five-design mini screen and a 15-20-design holdout use identical route recipes and complete metrics."
+    }
+  ],
+  "atoms": [
+    {
+      "id": "A01",
+      "module": "block feature encoder",
+      "paths": ["src/floorflow/chip_flow/typed_graph_encoder.py"],
+      "self_eval": ["gradient_reachability", "feature_shuffle_sensitivity", "permutation_equivariance", "center_rho_probe"],
+      "proxy_metrics": ["flow_block_center", "flow_block_rho", "soft_hpwl_gap"],
+      "real_metrics": ["legalized_cost", "b2b_hpwl_gap", "area_gap", "V_rel"],
+      "owner_task": "S1-GROUP-STATE"
+    },
+    {
+      "id": "A02",
+      "module": "raw local geometry encoder",
+      "paths": ["src/floorflow/chip_flow/local_geometry_features.py"],
+      "self_eval": ["gate_open_fraction", "first_step_gate_gradient", "masked_feature_reconstruction", "edge_dropout_sensitivity"],
+      "proxy_metrics": ["b2b_degree_reconstruction", "p2b_degree_reconstruction", "pin_spread", "raw_b2b_p2b_hpwl"],
+      "real_metrics": ["legalized_b2b_hpwl_gap", "legalized_p2b_hpwl_gap", "cost_p90_p95"],
+      "owner_task": "S1-GROUP-STATE"
+    },
+    {
+      "id": "A03",
+      "module": "typed graph message stack",
+      "paths": ["src/floorflow/chip_flow/sparse_layers.py", "src/floorflow/chip_flow/typed_graph_encoder.py"],
+      "self_eval": ["edge_ablation_delta", "degree_sensitivity", "symmetric_edge_consistency", "message_finite_fraction"],
+      "proxy_metrics": ["raw_b2b_hpwl", "raw_p2b_hpwl", "connectivity_gap"],
+      "real_metrics": ["legalized_b2b_hpwl_gap", "legalized_p2b_hpwl_gap", "official_cost"],
+      "owner_task": "S1-GROUP-STATE"
+    },
+    {
+      "id": "A04",
+      "module": "degree-conditioned expert",
+      "paths": ["src/floorflow/chip_flow/degree_conditioned_expert.py"],
+      "self_eval": ["route_entropy", "high_degree_activation_fraction", "gate_gradient", "expert_disable_delta"],
+      "proxy_metrics": ["high_degree_b2b_hpwl", "high_pin_p2b_hpwl"],
+      "real_metrics": ["high_degree_cost", "high_pin_cost", "tail_cost"],
+      "owner_task": "S1-GROUP-STATE"
+    },
+    {
+      "id": "A05",
+      "module": "global specification conditioner",
+      "paths": ["src/floorflow/chip_flow/global_spec.py"],
+      "self_eval": ["gate_open_fraction", "first_step_gate_gradient", "spec_shuffle_sensitivity", "masked_spec_identity"],
+      "proxy_metrics": ["outline_compactness", "outline_aspect", "rho_mae", "boundary_gap"],
+      "real_metrics": ["area_gap", "boundary_v_rel", "official_cost"],
+      "owner_task": "S1-GROUP-STATE"
+    },
+    {
+      "id": "A06",
+      "module": "complexity conditioner",
+      "paths": ["src/floorflow/chip_flow/complexity_conditioning.py"],
+      "self_eval": ["feature_finite_fraction", "complexity_stratum_sensitivity", "disable_delta"],
+      "proxy_metrics": ["complexity_stratum_hpwl", "legalizer_rung_by_complexity"],
+      "real_metrics": ["81_120_block_cost", "cost_p90_p95", "V_rel"],
+      "owner_task": "S2-LEGAL-ENDPOINT"
+    },
+    {
+      "id": "A07",
+      "module": "semantic node and port encoder",
+      "paths": ["src/floorflow/chip_flow/semantic_conditioning.py"],
+      "self_eval": ["gate_open_fraction", "first_step_gate_gradient", "mask_correctness", "semantic_shuffle_sensitivity"],
+      "proxy_metrics": ["cluster_relation_mae", "port_role_probe", "grouping_proxy"],
+      "real_metrics": ["grouping_v_rel", "p2b_hpwl_gap", "V_rel"],
+      "owner_task": "S1-GROUP-STATE"
+    },
+    {
+      "id": "A08",
+      "module": "structural tokenizer",
+      "paths": ["src/floorflow/chip_flow/typed_graph_encoder.py"],
+      "self_eval": ["token_mask_coverage", "cluster_mib_boundary_pool_error", "structural_shuffle_delta"],
+      "proxy_metrics": ["soft_grouping_v_rel", "boundary_gap", "mib_shared_shape"],
+      "real_metrics": ["official_grouping_v_rel", "boundary_v_rel", "mib_v_rel"],
+      "owner_task": "S1-GROUP-STATE"
+    },
+    {
+      "id": "A09",
+      "module": "constraint tokenizer and bridge",
+      "paths": ["src/floorflow/chip_flow/typed_graph_encoder.py"],
+      "self_eval": ["constraint_flag_sensitivity", "constraint_mask_coverage", "port_bridge_gradient"],
+      "proxy_metrics": ["boundary_violation", "grouping_violation", "hard_cost_proxy"],
+      "real_metrics": ["hard_cost_10_fraction", "overlap", "area_violation", "V_rel"],
+      "owner_task": "S2-LEGAL-ENDPOINT"
+    },
+    {
+      "id": "A10",
+      "module": "port tokenizer",
+      "paths": ["src/floorflow/chip_flow/typed_graph_encoder.py"],
+      "self_eval": ["incidence_coverage", "pin_position_reconstruction", "pin_weight_reconstruction"],
+      "proxy_metrics": ["raw_p2b_hpwl", "pin_tail", "pin_spread"],
+      "real_metrics": ["legalized_p2b_hpwl_gap", "routed_wirelength"],
+      "owner_task": "S4-ROUTE-TRANSFER"
+    },
+    {
+      "id": "A11",
+      "module": "typed cross-attention fusion",
+      "paths": ["src/floorflow/chip_flow/typed_cross_attention.py", "src/floorflow/chip_flow/typed_channel_fusion.py"],
+      "self_eval": ["relation_gate_entropy", "relation_ablation_delta", "edge_type_sensitivity", "gate_gradient"],
+      "proxy_metrics": ["typed_edge_fraction", "structural_component_proxy", "official_cost_surrogate"],
+      "real_metrics": ["official_cost", "V_rel", "grouping", "boundary", "b2b", "p2b"],
+      "owner_task": "S5-CERTIFY"
+    },
+    {
+      "id": "A12",
+      "module": "hierarchy global head",
+      "paths": ["src/floorflow/chip_flow/hierarchical_flow.py"],
+      "self_eval": ["head_gradient", "global_state_error", "ablation_delta"],
+      "proxy_metrics": ["envelope_compactness", "outline_aspect"],
+      "real_metrics": ["area_gap", "boundary_v_rel", "cost"],
+      "owner_task": "S1-GROUP-STATE"
+    },
+    {
+      "id": "A13",
+      "module": "hierarchy structural head",
+      "paths": ["src/floorflow/chip_flow/hierarchical_flow.py"],
+      "self_eval": ["head_gradient", "structural_state_error", "slot_coverage"],
+      "proxy_metrics": ["grouping_proxy", "cluster_relation_mae"],
+      "real_metrics": ["grouping_v_rel", "b2b_hpwl_gap"],
+      "owner_task": "S1-GROUP-STATE"
+    },
+    {
+      "id": "A14",
+      "module": "hierarchy port head",
+      "paths": ["src/floorflow/chip_flow/hierarchical_flow.py"],
+      "self_eval": ["connected_port_gradient", "unconnected_port_gradient", "port_mask_coverage"],
+      "proxy_metrics": ["port_connected_error", "port_unconnected_error", "p2b_hpwl"],
+      "real_metrics": ["p2b_hpwl_gap", "routed_wirelength"],
+      "owner_task": "S4-ROUTE-TRANSFER"
+    },
+    {
+      "id": "A15",
+      "module": "structural relation head",
+      "paths": ["src/floorflow/chip_flow/structural_relations.py"],
+      "self_eval": ["relation_mae", "token_gate_gradient", "membership_mask_coverage"],
+      "proxy_metrics": ["grouping_relation_error", "cluster_connectivity"],
+      "real_metrics": ["grouping_v_rel", "b2b_hpwl_gap"],
+      "owner_task": "S1-GROUP-STATE"
+    },
+    {
+      "id": "A16",
+      "module": "membership hierarchy coupler",
+      "paths": ["src/floorflow/chip_flow/structured_heads.py"],
+      "self_eval": ["membership_shuffle_delta", "coupler_gradient", "residual_norm"],
+      "proxy_metrics": ["group_region_error", "grouping_proxy"],
+      "real_metrics": ["grouping_v_rel", "boundary_v_rel"],
+      "owner_task": "S1-GROUP-STATE"
+    },
+    {
+      "id": "A17",
+      "module": "netlist hyperedge conditioner",
+      "paths": ["src/floorflow/chip_flow/netlist_hypergraph.py"],
+      "self_eval": ["gate_open_fraction", "first_step_gate_gradient", "hyperedge_ablation_delta", "port_incidence_coverage"],
+      "proxy_metrics": ["hyperedge_span_error", "raw_b2b_p2b_hpwl"],
+      "real_metrics": ["b2b_hpwl_gap", "p2b_hpwl_gap", "cost"],
+      "owner_task": "S1-GROUP-STATE"
+    },
+    {
+      "id": "A18",
+      "module": "hierarchy coordinate gate",
+      "paths": ["src/floorflow/chip_flow/hierarchy_coordinates.py"],
+      "self_eval": ["roundtrip_max_error", "gate_open_fraction", "translation_equivariance"],
+      "proxy_metrics": ["cluster_frame_error", "area_conservation_error", "outline_compactness"],
+      "real_metrics": ["area_gap", "boundary_v_rel", "cost"],
+      "owner_task": "S1-GROUP-STATE"
+    },
+    {
+      "id": "A19",
+      "module": "ordered group staging",
+      "paths": ["src/floorflow/chip_flow/ordered_group_staging.py"],
+      "self_eval": ["phase_gate_sensitivity", "order_shuffle_delta", "gradient_reachability"],
+      "proxy_metrics": ["group_phase_error", "grouping_proxy"],
+      "real_metrics": ["grouping_v_rel", "boundary_v_rel"],
+      "owner_task": "S1-GROUP-STATE"
+    },
+    {
+      "id": "A20",
+      "module": "coarse-to-fine coupler",
+      "paths": ["src/floorflow/chip_flow/coarse_to_fine_coupler.py"],
+      "self_eval": ["cluster_pool_error", "gate_gradient", "coarse_shuffle_delta"],
+      "proxy_metrics": ["grouping_proxy", "cluster_geometry_error"],
+      "real_metrics": ["grouping_v_rel", "area_gap"],
+      "owner_task": "S1-GROUP-STATE"
+    },
+    {
+      "id": "A21",
+      "module": "port consensus coupler",
+      "paths": ["src/floorflow/chip_flow/port_consensus_coupler.py"],
+      "self_eval": ["incidence_alignment", "gate_gradient", "port_shuffle_delta"],
+      "proxy_metrics": ["pin_boundary_alignment", "raw_p2b_hpwl", "routing_proxy"],
+      "real_metrics": ["legalized_p2b_hpwl_gap", "routed_wirelength", "overflow"],
+      "owner_task": "S4-ROUTE-TRANSFER"
+    },
+    {
+      "id": "A22",
+      "module": "spatial occupancy route field",
+      "paths": ["src/floorflow/chip_flow/spatial_occupancy_coupler.py"],
+      "self_eval": ["occupancy_reconstruction", "route_field_sensitivity", "gate_gradient"],
+      "proxy_metrics": ["routing_proxy", "b2b_route_demand_peak", "p2b_route_demand_peak", "b2b_route_obstruction", "p2b_route_obstruction", "density_overflow_proxy", "macro_spacing_risk"],
+      "real_metrics": ["global_route_overflow", "routed_wirelength", "DRC"],
+      "owner_task": "S4-ROUTE-TRANSFER"
+    },
+    {
+      "id": "A23",
+      "module": "complexity slot adapter",
+      "paths": ["src/floorflow/chip_flow/complexity_slot_adapter.py"],
+      "self_eval": ["slot_gate_entropy", "complexity_disable_delta", "high_block_activation"],
+      "proxy_metrics": ["high_block_area_b2b_proxy", "legalizer_rung"],
+      "real_metrics": ["81_120_block_cost", "cost_p90_p95"],
+      "owner_task": "S2-LEGAL-ENDPOINT"
+    },
+    {
+      "id": "A24",
+      "module": "factorized block head",
+      "paths": ["src/floorflow/chip_flow/structured_heads.py"],
+      "self_eval": ["center_gradient", "rho_gradient", "area_consistency", "forced_block_error", "preplaced_center_identity", "fixed_rho_identity"],
+      "proxy_metrics": ["block_center_rho_error", "area_conservation_error", "soft_hpwl_gap"],
+      "real_metrics": ["area_gap", "b2b_hpwl_gap", "cost"],
+      "owner_task": "S1-GROUP-STATE"
+    },
+    {
+      "id": "A25",
+      "module": "dual semantic port head",
+      "paths": ["src/floorflow/chip_flow/structured_heads.py"],
+      "self_eval": ["connected_unconnected_gradient", "port_mask_coverage", "sensitivity"],
+      "proxy_metrics": ["pin_tail", "raw_p2b_hpwl"],
+      "real_metrics": ["p2b_hpwl_gap", "routed_wirelength"],
+      "owner_task": "S4-ROUTE-TRANSFER"
+    },
+    {
+      "id": "A26",
+      "module": "boundary anchor coupler",
+      "paths": ["src/floorflow/chip_flow/boundary_anchor_coupler.py"],
+      "self_eval": ["boundary_mask_accuracy", "gate_gradient", "displacement_bound", "preplaced_identity", "fixed_rho_identity"],
+      "proxy_metrics": ["boundary_displacement", "boundary_gap"],
+      "real_metrics": ["boundary_v_rel", "hard_boundary_violations"],
+      "owner_task": "S2-LEGAL-ENDPOINT"
+    },
+    {
+      "id": "A27",
+      "module": "global bbox consensus",
+      "paths": ["src/floorflow/chip_flow/global_bbox_consensus.py"],
+      "self_eval": ["bbox_recovery", "gate_gradient", "collapse_test", "preplaced_center_identity"],
+      "proxy_metrics": ["bbox_iou", "outline_compactness", "outline_aspect", "area_conservation"],
+      "real_metrics": ["area_gap", "boundary_v_rel", "cost"],
+      "owner_task": "S1-GROUP-STATE"
+    },
+    {
+      "id": "A28",
+      "module": "projector residual head",
+      "paths": ["src/floorflow/chip_flow/projector_residual_head.py"],
+      "self_eval": ["residual_norm", "trust_radius_fraction", "gradient_reachability"],
+      "proxy_metrics": ["legalized_displacement", "projected_area_change", "p2b_change"],
+      "real_metrics": ["legalized_cost", "V_rel", "routed_wirelength"],
+      "owner_task": "S4-ROUTE-TRANSFER"
+    },
+    {
+      "id": "A29",
+      "module": "legalizer response head",
+      "paths": ["src/floorflow/chip_flow/legalizer_response.py", "src/floorflow/chip_flow/hierarchy_adapters.py"],
+      "self_eval": ["displacement_prediction_error", "rung_accuracy", "gradient_reachability", "pin_net_radius_bound", "preplaced_center_identity"],
+      "proxy_metrics": ["predicted_displacement", "legalizer_rung", "solver_iterations"],
+      "real_metrics": ["legalized_cost", "V_rel", "p2b_tail", "hard_violations"],
+      "owner_task": "S2-LEGAL-ENDPOINT"
+    },
+    {
+      "id": "A30",
+      "module": "hierarchy token bridge",
+      "paths": ["src/floorflow/chip_flow/hierarchy_token_bridge.py"],
+      "self_eval": ["bounded_gradient", "token_residual_norm", "disable_delta"],
+      "proxy_metrics": ["hierarchy_flow_error", "soft_hpwl_gap"],
+      "real_metrics": ["cost", "V_rel", "area", "b2b", "p2b"],
+      "owner_task": "S3-CONSENSUS"
+    },
+    {
+      "id": "A31",
+      "module": "NFE consistency objective",
+      "paths": ["src/floorflow/chip_flow/nfe_consistency.py"],
+      "self_eval": ["endpoint_consistency", "short_nfe_self_error", "gradient_reachability"],
+      "proxy_metrics": ["NFE1_2_4_endpoint_gap", "raw_V_rel_curve"],
+      "real_metrics": ["legalized_cost_curve", "legalized_V_rel_curve"],
+      "owner_task": "S3-CONSENSUS"
+    },
+    {
+      "id": "A32",
+      "module": "Trinity refiner",
+      "paths": ["src/floorflow/chip_flow/refiner_config.py", "third_party/Trinity/src/trinity/sampling/refine_closed.py"],
+      "self_eval": ["refiner_progress", "monotonicity_violation", "step_profile"],
+      "proxy_metrics": ["raw_cost_by_refiner_step", "raw_V_rel_by_refiner_step"],
+      "real_metrics": ["legalized_cost_50_100_400_1600", "legalized_V_rel_50_100_400_1600"],
+      "owner_task": "S3-CONSENSUS"
+    },
+    {
+      "id": "A33",
+      "module": "hard constraint projector",
+      "paths": ["src/floorflow/chip_flow/hard_constraint_projector.py"],
+      "self_eval": ["feasible_fraction", "projection_displacement", "fixed_preplaced_identity"],
+      "proxy_metrics": ["violation_before_after", "displacement_p95"],
+      "real_metrics": ["hard_cost_10_fraction", "area_fixed_preplaced_mib_violations"],
+      "owner_task": "S2-LEGAL-ENDPOINT"
+    },
+    {
+      "id": "A34",
+      "module": "scale-pack legalizer",
+      "paths": ["src/floorflow/chip_flow/legalization.py", "third_party/Trinity/src/trinity/floorplan/legalize/scale_pack.py"],
+      "self_eval": ["solver_rung", "reshape_rate", "displacement_distribution", "timeout_rate"],
+      "proxy_metrics": ["legalizer_rung", "solver_iterations", "displacement"],
+      "real_metrics": ["legalized_cost", "hard_violations", "legalizer_calls", "wall_time"],
+      "owner_task": "S2-LEGAL-ENDPOINT"
+    },
+    {
+      "id": "A35",
+      "module": "candidate portfolio, selector and reranker",
+      "paths": ["src/floorflow/chip_flow/legalizer_portfolio.py", "src/floorflow/chip_flow/candidate_legalizability.py", "src/floorflow/chip_flow/target_free_geometry.py"],
+      "self_eval": ["candidate_diversity", "selector_entropy", "feature_finite_fraction"],
+      "proxy_metrics": ["within_case_spearman", "top3_recall", "selected_regret", "v_rel_b2b_p2b_compactness_ranks"],
+      "real_metrics": ["selected_legalized_cost", "selected_V_rel", "cost_tail", "solver_escalation"],
+      "owner_task": "S2-LEGAL-ENDPOINT"
+    },
+    {
+      "id": "A36",
+      "module": "external placement and PPA adapter",
+      "paths": ["src/floorflow/chip_flow/ppa_external.py", "src/floorflow/chip_flow/def_pin_alignment.py", "src/floorflow/chip_flow/external_portfolio.py"],
+      "self_eval": ["pin_alignment", "DEF_roundtrip", "macro_count", "recipe_identity"],
+      "proxy_metrics": ["routing_proxy", "density_overflow_proxy", "macro_spacing_risk"],
+      "real_metrics": ["routed_wirelength", "global_route_overflow", "DRC", "WNS_TNS", "power"],
+      "owner_task": "S4-ROUTE-TRANSFER"
+    },
+    {
+      "id": "A37",
+      "module": "training-scope and objective-balance runtime",
+      "paths": ["src/floorflow/chip_flow/training_scopes.py", "src/floorflow/chip_flow/multi_objective_balance.py"],
+      "self_eval": ["trainable_parameter_count", "gradient_reachability", "stage_transition_finite", "branch_health"],
+      "proxy_metrics": ["typed_backward_ms", "full_step_ms", "parameters_updated", "loss_scale_dispersion"],
+      "real_metrics": ["iterations_to_quality", "wall_clock_to_quality", "peak_memory", "seed_stability"],
+      "owner_task": "S3-CONSENSUS"
+    },
+    {
+      "id": "A38",
+      "module": "dynamic state-to-graph input",
+      "paths": ["src/floorflow/chip_flow/hierarchical_flow.py", "src/floorflow/chip_flow/sparse_layers.py"],
+      "self_eval": ["symmetric_gate_gradient", "warm_start_equivalence", "current_state_sensitivity", "edge_type_sensitivity"],
+      "proxy_metrics": ["raw_b2b_hpwl", "edge_degree_reconstruction", "high_degree_b2b_hpwl"],
+      "real_metrics": ["legalized_b2b_hpwl_gap", "cost_p90_p95"],
+      "owner_task": "S0-METRIC-ARCH-CLOSURE"
+    },
+    {
+      "id": "A39",
+      "module": "observed coarse-to-fine hierarchy coupling",
+      "paths": ["src/floorflow/chip_flow/observed_hierarchy.py", "src/floorflow/chip_flow/hierarchical_flow.py"],
+      "self_eval": ["L0_L1_L3_sensitivity", "adapter_zero_identity", "adapter_gradient", "target_free_input"],
+      "proxy_metrics": ["group_region_error", "bbox_iou", "pin_boundary_alignment"],
+      "real_metrics": ["grouping", "boundary", "area_gap", "p2b_hpwl_gap"],
+      "owner_task": "S0-METRIC-ARCH-CLOSURE"
+    },
+    {
+      "id": "A40",
+      "module": "baseline-aware center/rho endpoint modes",
+      "paths": ["src/floorflow/chip_flow/shape_mode_head.py", "src/floorflow/chip_flow/shape_mode_features.py", "src/floorflow/chip_flow/shape_mode_objectives.py", "src/floorflow/chip_flow/hierarchy_sampling.py"],
+      "self_eval": ["generator_wta_gradient", "baseline_descriptor_parity", "preplaced_center_identity", "mib_support_closure", "selector_histogram"],
+      "proxy_metrics": ["candidate_pool_oracle", "within_case_spearman", "top3_regret"],
+      "real_metrics": ["candidate_pool_JSR", "candidate_pool_CSJ", "legalized_area_gap", "legalized_grouping", "legalized_p2b_hpwl_gap"],
+      "owner_task": "S3A-ATOM-GENERATORS"
+    },
+    {
+      "id": "A41",
+      "module": "atom-isolated training scheduler",
+      "paths": ["src/floorflow/chip_flow/training_scopes.py", "scripts/train_chip_slot.py"],
+      "self_eval": ["atom_prefix_coverage", "parameter_owner_completeness", "scope_exclusivity", "stage_transition_finite", "branch_gradient_reachability"],
+      "proxy_metrics": ["parameters_updated_by_atom", "loss_scale_by_atom", "shared_backbone_gradient_norm"],
+      "real_metrics": ["atom_owned_metric_delta", "coupled_fusion_delta", "seed_stability"],
+      "owner_task": "S0-METRIC-ARCH-CLOSURE"
+    },
+    {
+      "id": "A42",
+      "module": "typed trajectory atom aggregator",
+      "paths": ["src/floorflow/chip_flow/structured_heads.py", "src/floorflow/chip_flow/hierarchy_adapters.py", "src/floorflow/chip_flow/training_scopes.py"],
+      "self_eval": ["identity_sum_at_init", "mix_gate_gradient", "attention_entropy", "branch_gate_dispersion", "branch_availability_mask", "all_inactive_finiteness", "active_branch_fraction", "gate_extrema", "block_permutation_equivariance", "prediction_diagnostic_propagation", "frozen_atom_stage", "inactive_attention_isolation", "reliability_can_reject_atom", "real_batch_complexity_strata"],
+      "proxy_metrics": ["weighted_residual_norm", "branch_gate_entropy", "shared_backbone_gradient_norm", "atom_reliability", "branch_residual_rms_by_complexity"],
+      "real_metrics": ["legalized_cost", "legalized_V_rel", "b2b", "area", "grouping", "p2b"],
+      "owner_task": "S0-METRIC-ARCH-CLOSURE"
+    }
+  ]
+}

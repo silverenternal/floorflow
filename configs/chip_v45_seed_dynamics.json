@@ -1,0 +1,30 @@
+{
+  "version": "chip-v45-seed-dynamics-v1",
+  "status": "frozen_before_controls",
+  "scope": "5k dev controls isolate initialization seed from data-order seed",
+  "steps": 5000,
+  "pairs": {
+    "same_init_23_data_23": {
+      "seed": 23,
+      "data_seed": 23
+    },
+    "same_init_23_data_22": {
+      "seed": 23,
+      "data_seed": 22
+    },
+    "same_data_23_init_22": {
+      "seed": 22,
+      "data_seed": 23
+    },
+    "same_init_22_data_22": {
+      "seed": 22,
+      "data_seed": 22
+    }
+  },
+  "analysis": [
+    "Compare the pair that changes data_seed while holding seed fixed.",
+    "Compare the pair that changes seed while holding data_seed fixed.",
+    "Report final dev total, legalized cost/V_rel and diagnostics from the same checkpoint policy.",
+    "No official outcome may select an initialization or data-order seed."
+  ]
+}

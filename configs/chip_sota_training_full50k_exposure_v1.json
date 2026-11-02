@@ -1,0 +1,60 @@
+{
+  "version": "chip-sota-training-full50k-exposure-v1",
+  "status": "frozen_ready",
+  "purpose": "Single-arm training-exposure test on the established 50k-cache production recipe after the 20k subset proxy was rejected.",
+  "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2",
+  "cache_metadata_sha256": "f123e93abfc313c90137ae0c63b5738d964b981e38a8ed658f531df7cc181484",
+  "device": "cuda:0",
+  "training": {
+    "architecture": "typed_hierarchy",
+    "seed": 19,
+    "micro_batch": 128,
+    "grad_accum_steps": 1,
+    "effective_batch": 128,
+    "sampling_mode": "random",
+    "eval_state": "ema",
+    "curve_per_count": 5,
+    "sampling_steps": 8,
+    "checkpoint_every": 1000,
+    "hidden": 192,
+    "heads": 3,
+    "hierarchy_depth": 10,
+    "typed_layers": 1,
+    "head_dim": 64,
+    "projector_iterations": 4,
+    "overlap_weight_scale": 10.0,
+    "hierarchy_bbox_weight": 0.5,
+    "hierarchy_bbox_decay_steps": 10000
+  },
+  "steps": [
+    50000
+  ],
+  "reference_eval": "outputs/chip_hierarchy/sota_budget_v1/eval_old_v7_20k_dev32_cuda1.json",
+  "evaluation": {
+    "case_indices": "outputs/reports/chip_dev_screen_v45.json",
+    "nfe": 4,
+    "refiner_steps": 400,
+    "refiner_lr": 0.001,
+    "refiner_schedule": "linear",
+    "refiner_weights": {
+      "boundary": 2.0,
+      "group": 2.0,
+      "mib": 1.0,
+      "overlap": 10.0,
+      "wl": 1.0,
+      "area": 1.0
+    },
+    "projector_iterations": 8,
+    "legalizer_time_limit_ms": 2000,
+    "use_ema": true,
+    "deterministic": true,
+    "device": "cuda:1"
+  },
+  "advance_gate": {
+    "reference": "old full-50k production 20k checkpoint on cuda:1 dev32",
+    "max_relative_regression": 0.002,
+    "min_relative_improvement_in_at_least_one_metric": 0.005,
+    "rule": "Stop if either cost or V_rel regresses by more than 0.2%; at least one must improve by 0.5%."
+  },
+  "boundary": "One full-cache exposure arm only. This is not an architecture sweep or full-data SOTA claim."
+}

@@ -1,0 +1,42 @@
+{
+  "version": "2026-10-28-chip-external-holdout-candidates-v1",
+  "status": "frozen_before_architecture_treatment",
+  "purpose": "Prevent architecture repair from being tuned and evaluated on the same five ORFS development cases.",
+  "cases": {
+    "nangate45/ariane136": {
+      "input_odb": "outputs/chip_ppa/orfs/results/nangate45/ariane136/macro_count/3_2_place_iop.odb",
+      "macro_halo_um": 24.0,
+      "design_license": {
+        "path": "third_party/OpenROAD-flow-scripts/flow/designs/src/ariane136/LICENSE",
+        "license": "Solderpad-0.51 or Apache-2.0 at licensee option",
+        "sha256": "b41106a9d0de1cf6ab4ea56bedf677503085c0570248f37fe2cdf657a5e72601"
+      }
+    },
+    "nangate45/swerv_wrapper": {
+      "input_odb": "outputs/chip_ppa/orfs/results/nangate45/swerv_wrapper/macro_count/3_2_place_iop.odb",
+      "macro_halo_um": 24.0,
+      "design_license": {
+        "path": "third_party/OpenROAD-flow-scripts/flow/designs/src/swerv/LICENSE",
+        "license": "Apache-2.0",
+        "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+      }
+    },
+    "nangate45/cva6": {
+      "input_odb": "outputs/chip_ppa/orfs/results/nangate45/cva6/macro_count/3_2_place_iop.odb",
+      "macro_halo_um": 20.0,
+      "design_license": {
+        "provenance": "third_party/OpenROAD-flow-scripts/flow/designs/src/cva6/README.md",
+        "upstream": "https://github.com/openhwgroup/cva6",
+        "upstream_commit": "3a389af",
+        "license": "Solderpad-0.51 or Apache-2.0 at licensee option",
+        "sha256": "b41106a9d0de1cf6ab4ea56bedf677503085c0570248f37fe2cdf657a5e72601"
+      }
+    }
+  },
+  "frozen_decisions": {
+    "platform": "nangate45",
+    "no_candidate_or_control_inference_before_freeze": true,
+    "no_replacement_by_ppa_outcome": true,
+    "fallback": "If a candidate fails the untouched baseline floorplan/PDN dry parse, replace it deterministically by the next license-audited nangate45 macro design in lexicographic order."
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "schema_version": "chip-curve-atom-metric-pairs-v1",
+  "contract": "PROXY-REAL-V1",
+  "pairs": [
+    {
+      "id": "A08.raw-grouping",
+      "atom_id": "A08",
+      "proxy_metric": "raw_grouping_violations",
+      "canonical_metric": "legalized_grouping_violations",
+      "proxy_direction": "minimize",
+      "canonical_direction": "minimize",
+      "proxy_tolerance": 0.001,
+      "canonical_tolerance": 0.001,
+      "definition": "Raw structural grouping violations should predict legalized grouping violations.",
+      "failure_case": "Legalization creates new group containment failures."
+    },
+    {
+      "id": "A08.raw-mib",
+      "atom_id": "A08",
+      "proxy_metric": "raw_mib_violations",
+      "canonical_metric": "legalized_mib_violations",
+      "proxy_direction": "minimize",
+      "canonical_direction": "minimize",
+      "proxy_tolerance": 0.001,
+      "canonical_tolerance": 0.001,
+      "definition": "Raw MIB constraint violations should predict legalized MIB violations.",
+      "failure_case": "Both sides are flat and the metric has no discrimination."
+    },
+    {
+      "id": "A09.aspect-violations",
+      "atom_id": "A09",
+      "proxy_metric": "raw_aspect_violations",
+      "canonical_metric": "legalized_hard_cost",
+      "proxy_direction": "minimize",
+      "canonical_direction": "minimize",
+      "proxy_tolerance": 0.001,
+      "canonical_tolerance": 0.001,
+      "definition": "Raw constraint/aspect violations should predict legalized cost.",
+      "failure_case": "Constraint repair introduces large displacement."
+    },
+    {
+      "id": "A26.boundary-violations",
+      "atom_id": "A26",
+      "proxy_metric": "raw_boundary_violations",
+      "canonical_metric": "legalized_boundary_violations",
+      "proxy_direction": "minimize",
+      "canonical_direction": "minimize",
+      "proxy_tolerance": 0.001,
+      "canonical_tolerance": 0.001,
+      "definition": "Raw boundary violations should predict legalized boundary violations.",
+      "failure_case": "Boundary anchoring changes unrelated block geometry."
+    },
+    {
+      "id": "A33.raw-overlap-cost",
+      "atom_id": "A33",
+      "proxy_metric": "raw_overlap_pairs",
+      "canonical_metric": "legalized_hard_cost",
+      "proxy_direction": "minimize",
+      "canonical_direction": "minimize",
+      "proxy_tolerance": 0.001,
+      "canonical_tolerance": 0.001,
+      "definition": "Fewer raw overlap pairs should predict lower legalized cost.",
+      "failure_case": "Projector removes overlaps but causes large displacement."
+    },
+    {
+      "id": "A33.raw-overlap-vrel",
+      "atom_id": "A33",
+      "proxy_metric": "raw_overlap_pairs",
+      "canonical_metric": "legalized_v_rel",
+      "proxy_direction": "minimize",
+      "canonical_direction": "minimize",
+      "proxy_tolerance": 0.001,
+      "canonical_tolerance": 0.001,
+      "definition": "Fewer raw overlap pairs should predict lower legalized V_rel.",
+      "failure_case": "Overlap repair preserves constraint violations."
+    },
+    {
+      "id": "A29.rung-cost",
+      "atom_id": "A29",
+      "proxy_metric": "legalizer_rung",
+      "canonical_metric": "legalized_hard_cost",
+      "proxy_direction": "minimize",
+      "canonical_direction": "minimize",
+      "proxy_tolerance": 0.001,
+      "canonical_tolerance": 0.01,
+      "definition": "Lower legalizer rung should predict lower legalized cost.",
+      "failure_case": "Early legalization requires large displacement."
+    },
+    {
+      "id": "A34.solves-cost",
+      "atom_id": "A34",
+      "proxy_metric": "legalizer_solves",
+      "canonical_metric": "legalized_hard_cost",
+      "proxy_direction": "minimize",
+      "canonical_direction": "minimize",
+      "proxy_tolerance": 0.001,
+      "canonical_tolerance": 0.01,
+      "definition": "Fewer scale-pack solves should predict lower legalized cost.",
+      "failure_case": "Cheap solve leaves boundary or b2b damage."
+    },
+    {
+      "id": "A34.time-cost",
+      "atom_id": "A34",
+      "proxy_metric": "legalizer_ms",
+      "canonical_metric": "legalized_hard_cost",
+      "proxy_direction": "minimize",
+      "canonical_direction": "minimize",
+      "proxy_tolerance": 1.0,
+      "canonical_tolerance": 0.01,
+      "definition": "Lower scale-pack wall time should not hide worse legalized quality.",
+      "failure_case": "A timeout returns a cheap but poor-quality legalization."
+    }
+  ]
+}

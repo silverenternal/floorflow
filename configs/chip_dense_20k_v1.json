@@ -1,0 +1,45 @@
+{
+  "version": "2026-10-28-chip-dense-control-v1",
+  "purpose": "Matched 20k dense-attention control for the external mechanism ablation",
+  "status": "complete",
+  "checkpoint": "outputs/chip_hierarchy/v11_dense_20k/typed_hierarchy_dense_seed19_20k/checkpoints/final.pt",
+  "checkpoint_sha256": "8acb9ec25fa78907f4f30d28301a7ffd824d55d926c08164206eb4dbf2e36462",
+  "training": {
+    "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2",
+    "architecture": "typed_hierarchy",
+    "typed_mode": "dense",
+    "use_hierarchy": true,
+    "use_netlist": true,
+    "projector": true,
+    "seed": 19,
+    "steps": 20000,
+    "batch_size": 128,
+    "hidden": 192,
+    "depth": 10,
+    "typed_layers": 1,
+    "head_dim": 64,
+    "graph_pe_k": 2,
+    "heads": 3,
+    "lr": 0.0002,
+    "weight_decay": 0.001,
+    "warmup": 500,
+    "ema_decay": 0.9995,
+    "flow_huber_beta": 0.1,
+    "hierarchy_bbox_weight": 0.5,
+    "hierarchy_bbox_decay_steps": 10000,
+    "device": "cuda:0",
+    "elapsed_seconds": 1527.941377399009
+  },
+  "official_100_nfe4_refiner400": {
+    "legalized_hard_cost": 1.257934388911694,
+    "legalized_v_rel": 0.049292077230551276,
+    "legalized_hpwl_gap": 0.08979366910163955,
+    "legalized_area_gap": 0.1274309085830147,
+    "legalized_feasible_fraction": 1.0
+  },
+  "relationship_to_promoted_full": {
+    "cost_relative": 0.029836216656363226,
+    "v_rel_relative": -0.031687307290251786,
+    "note": "Dense is worse on cost and better on V_rel; both signs must be retained."
+  }
+}

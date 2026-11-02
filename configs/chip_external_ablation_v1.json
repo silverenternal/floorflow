@@ -1,0 +1,61 @@
+{
+  "version": "2026-10-28-chip-external-ablation-v1",
+  "status": "frozen_before_ablation_ppa",
+  "seed": 19,
+  "case_selection": {
+    "cases": [
+      "nangate45/black_parrot",
+      "nangate45/tinyRocket",
+      "nangate45/bp_multi_top"
+    ],
+    "rule": "Use the largest, smallest and largest-but-one macro-count cases from the already frozen five-case set.",
+    "purpose": "Bound the PPA mechanism ablation without selecting cases by PPA outcome."
+  },
+  "protocol": {
+    "nfe": 4,
+    "refiner_steps": 400,
+    "refiner_learning_rate": 0.001,
+    "refiner_schedule": "linear",
+    "refiner_shape_update": false,
+    "projector_iterations": 8,
+    "same_refiner": true,
+    "same_legalizer_ladder": true,
+    "same_orfs_image": true,
+    "same_route_effort": true
+  },
+  "arms": {
+    "full": {
+      "checkpoint": "outputs/chip_hierarchy/v7_bbox_anneal_20k/typed_hierarchy_bbox_anneal_seed19_20k/checkpoints/final.pt",
+      "projector": true
+    },
+    "dense": {
+      "checkpoint": "outputs/chip_hierarchy/v11_dense_20k/typed_hierarchy_dense_seed19_20k/checkpoints/final.pt",
+      "projector": true
+    },
+    "no_structural": {
+      "checkpoint": "outputs/chip_hierarchy/v9_promoted_controls/typed_hierarchy_no_structural_seed19_20k/checkpoints/final.pt",
+      "projector": true
+    },
+    "no_hierarchy": {
+      "checkpoint": "outputs/chip_hierarchy/v9_promoted_controls/typed_hierarchy_no_hierarchy_seed19_20k/checkpoints/final.pt",
+      "projector": true
+    },
+    "no_projector": {
+      "checkpoint": "outputs/chip_hierarchy/v7_bbox_anneal_20k/typed_hierarchy_bbox_anneal_seed19_20k/checkpoints/final.pt",
+      "projector": false
+    }
+  },
+  "reporting": {
+    "retain_all_arms": true,
+    "no_best_of_n": true,
+    "primary": "detailed-routed wirelength",
+    "secondary": [
+      "DRC count",
+      "global-route congestion",
+      "WNS/TNS",
+      "power",
+      "std-cell area"
+    ],
+    "seed_boundary": "One fixed seed is diagnostic and cannot support a three-seed significance claim."
+  }
+}

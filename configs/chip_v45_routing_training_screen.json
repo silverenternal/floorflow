@@ -1,0 +1,32 @@
+{
+  "version": "chip-v45-routing-training-screen-v1",
+  "status": "frozen_before_screen",
+  "scope": "seed23 dev-only screen; identical initialization and data order across arms",
+  "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2",
+  "screen_steps": 5000,
+  "seed": 23,
+  "data_seed": 23,
+  "proxy_family": "pin_concentration_peak + 0.5 route_demand_peak + 0.25 occupancy_peak",
+  "arms": {
+    "control": {
+      "routing_proxy_final_weight": 0.0
+    },
+    "routing_low": {
+      "routing_proxy_final_weight": 0.01,
+      "routing_proxy_delay_steps": 500,
+      "routing_proxy_anneal_steps": 2000
+    },
+    "routing_high": {
+      "routing_proxy_final_weight": 0.05,
+      "routing_proxy_delay_steps": 500,
+      "routing_proxy_anneal_steps": 2000
+    }
+  },
+  "promotion_rule": [
+    "legalized dev cost and V_rel must both be no worse than the matched control",
+    "the calibrated routing proxy must improve relative to control",
+    "only the best arm may proceed to a 20k run",
+    "a proxy win without held-out routed-PPA confirmation is not a PPA claim"
+  ],
+  "confirmation_boundary": "The proxy was nominated on legacy designs; routed-PPA confirmation on the frozen v45 holdout remains mandatory."
+}

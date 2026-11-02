@@ -1,0 +1,40 @@
+{
+  "rows": [
+    {
+      "schema_version": "fevp-case-row-v1",
+      "case_id": "example-1",
+      "operation": "room_type",
+      "source_hash": "sha256:example",
+      "outside_pixel_exact": 1.0,
+      "outside_room_label_exact": 1.0,
+      "validity": 1.0,
+      "target_watertight": true,
+      "conditional_watertightness": 1.0,
+      "node_f1": 1.0,
+      "edge_overlap": 1.0,
+      "optional": {
+        "delta_iou": 0.99,
+        "ged": 0.1,
+        "delta_mse": 0.0002
+      }
+    },
+    {
+      "schema_version": "fevp-case-row-v1",
+      "case_id": "example-2",
+      "operation": "opening_delete",
+      "source_hash": "sha256:example",
+      "outside_pixel_exact": 1.0,
+      "outside_room_label_exact": 1.0,
+      "validity": 1.0,
+      "target_watertight": false,
+      "conditional_watertightness": null,
+      "node_f1": 0.9,
+      "edge_overlap": 0.8,
+      "optional": {
+        "delta_iou": 0.95,
+        "ged": 0.2,
+        "delta_mse": 0.0003
+      }
+    }
+  ]
+}

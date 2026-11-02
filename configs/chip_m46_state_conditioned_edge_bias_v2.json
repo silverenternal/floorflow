@@ -1,0 +1,43 @@
+{
+  "version": "chip-m46-state-conditioned-edge-bias-v2",
+  "status": "rejected_quick_gate",
+  "candidate": "Canonical M27 plus degree-normalized current-geometry modulation of the existing backbone graph",
+  "priority": "P0",
+  "pain_point": "M27 reuses one static netlist adjacency across every ODE call and all 12 backbone layers. U1 changed only the final 3D output and did not preserve legalized structure.",
+  "mechanism": "A zero-initialized sparse edge encoder maps active b2b center deltas, aspect deltas, area ratios and net weights to a bounded symmetric adjacency residual. Degree normalization matches the static graph scale, and the residual modulates the existing Trinity graph-mix and attention bias at every trajectory call.",
+  "engineering_history": {
+    "v1": "The first run summed edge scores without degree normalization. It remained finite on most cases but overflowed two 108/119-block cases. Disabling the dynamic path on the same trained checkpoint restored finite rollouts, so v1 is an invalid unnormalized implementation rather than a mechanism result.",
+    "v2": "Each row now uses the mean active-edge score. All 500 dev curve rollouts are finite."
+  },
+  "screen": {
+    "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2",
+    "train_indices": "configs/chip_train_screen_5k_v1.json",
+    "training_seed": 21,
+    "data_seed": 21,
+    "steps": 2000,
+    "batch_size": 128,
+    "device": "cuda:0",
+    "eval_curve_total": 0.017184917263686657,
+    "control_curve_total": 0.017198146894574166
+  },
+  "quick_result": {
+    "control_cost": 1.138701604693825,
+    "candidate_cost": 1.2271029975101035,
+    "cost_relative": 0.0776335015704559,
+    "cost_ci": [-0.018879533482825388, 0.24749556097727166],
+    "control_v_rel": 0.03650970115869849,
+    "candidate_v_rel": 0.04178456117910655,
+    "v_rel_relative": 0.14447831269501682,
+    "v_rel_ci": [-0.004060951955753319, 0.016136022080822706],
+    "area_gap_relative": 0.5745329270625467,
+    "b2b_hpwl_relative": 1.0965140422326733,
+    "p2b_hpwl_relative": 55.42443026619916,
+    "grouping_relative": 0.09090909090909091,
+    "boundary_relative": 0.14285714285714285,
+    "rho_mae_relative": 0.00500534871522189,
+    "feasible_fraction": 1.0,
+    "report": "outputs/reports/chip_m46b_state_edge_normalized_quick_refiner400_dev32.json"
+  },
+  "decision": "Reject all-layer state-conditioned graph modulation. A small train-curve gain did not survive legalization and compounded through all 12 blocks. Do not sweep activation layers, bottleneck width or residual scale.",
+  "boundary": "Frozen subset mechanism screen only; not a full-data or external-PPA claim."
+}

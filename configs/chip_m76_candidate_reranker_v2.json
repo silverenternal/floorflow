@@ -1,0 +1,66 @@
+{
+  "version": "chip-m76-candidate-reranker-v2",
+  "date": "2026-11-01",
+  "status": "repair_after_v1_overfit",
+  "training_cases": 32,
+  "candidate_sources": {
+    "m48_inference_seeds": [19, 20, 21],
+    "deterministic": ["M61B", "M65"]
+  },
+  "variants": ["baseline", "expanded", "projector32"],
+  "candidates_per_case": 15,
+  "features": [
+    "v_rel_rank",
+    "displacement_rank",
+    "boundary_rank",
+    "grouping_rank",
+    "b2b_hpwl_rank",
+    "p2b_hpwl_rank",
+    "compactness_rank",
+    "aspect_rank",
+    "rung_rank",
+    "solves_rank"
+  ],
+  "forbidden_inference_inputs": [
+    "target_boxes",
+    "official_cost",
+    "v_rel_label",
+    "trinity_outcomes",
+    "case_identity"
+  ],
+  "model": {
+    "hidden": 1,
+    "layers": 2,
+    "activation": "silu",
+    "normalization": "layernorm"
+  },
+  "loss": {
+    "type": "listwise_cross_entropy",
+    "temperature": 0.1
+  },
+  "optimizer": {
+    "name": "adamw",
+    "learning_rate": 0.01,
+    "weight_decay": 0.05
+  },
+  "validation": {
+    "protocol": "8_fold_grouped_case_out",
+    "epochs_per_fold": 60,
+    "epochs_final": 60,
+    "seed": 76,
+    "device": "cpu"
+  },
+  "safety_contract": {
+    "default": "M75 legality_guarded_consensus",
+    "allowed_override": "solver-eligible candidate with target-free geometry score no worse than guarded",
+    "geometry_score": "b2b_hpwl + p2b_hpwl + (1 - outline_compactness) + abs(outline_aspect)"
+  },
+  "gate": {
+    "cost_relative_high": 0.0,
+    "v_rel_relative_high": 0.0,
+    "area_gap_relative_high": 0.0,
+    "b2b_hpwl_gap_relative_high": 0.0,
+    "feasibility_one": true
+  },
+  "claim_boundary": "Frozen development evidence only. Official-100 cannot enter model fitting, epoch selection or safety-threshold tuning."
+}

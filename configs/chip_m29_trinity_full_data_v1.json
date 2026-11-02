@@ -1,0 +1,41 @@
+{
+  "version": "chip-m29-trinity-full-data-v1",
+  "status": "rejected_official100_mixed",
+  "candidate": "M27 registered finalist on the full 50k training split",
+  "architecture": {
+    "hidden": 192,
+    "heads": 3,
+    "depth": 12,
+    "typed_layers": 1,
+    "head_dim": 64,
+    "projector_iterations": 4,
+    "trinity_backbone_init": "third_party/Trinity/checkpoints/d192"
+  },
+  "training": {
+    "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2",
+    "allow_full_data": true,
+    "steps": 20000,
+    "batch_size": 128,
+    "grad_accum_steps": 1,
+    "sampling_mode": "random",
+    "lr": 0.0002,
+    "backbone_lr_scale": 1.0,
+    "seed": 23,
+    "device": "cuda:1"
+  },
+  "evaluation": {
+    "official_cache": "outputs/cache/chip_official_test_100_v1",
+    "primary_inference_seed": 19,
+    "nfe": 4,
+    "refiner_steps": 1600,
+    "refiner_weights": {
+      "boundary": 2.0,
+      "group": 2.0,
+      "mib": 1.0,
+      "overlap": 10.0,
+      "wl": 1.0,
+      "area": 1.0
+    }
+  },
+  "boundary": "One registered full-data finalist. No full-data variant or seed selection."
+}

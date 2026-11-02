@@ -1,0 +1,521 @@
+{
+  "project": "floorflow",
+  "version": "2026-10-31-bottleneck-selfcheck-v99",
+  "status": "active",
+  "scope": "residential_floorplan_only",
+  "current_task": "FF-PC-15",
+  "objective": "Close the protocol-specific SOTA gaps in this order: opening consumer, room identity/count, wall precision/junction, edge/GED, furniture, matched external evidence, RPLAN/test freeze, and editing. Do not touch chips/FloorSet.",
+  "engineering_policy": {
+    "gpu": "cuda:0",
+    "do_not_touch_chips_or_floorset": true,
+    "single_python_file_limit": 600,
+    "reuse_existing_code_and_cloned_references": true,
+    "tests_before_training": true,
+    "mechanism_gate_before_scale": true,
+    "validation_only_checkpoint_selection": true,
+    "no_metric_only_branch_without_canonical_consumer": true,
+    "every_number_maps_to_artifact_and_command": true,
+    "negative_results_keep_the_engineering_lesson": true,
+    "test_sets_closed_until_freeze": true,
+    "oracle_predicted_generation_and_editing_rows_stay_separate": true
+  },
+  "target_contract": {
+    "kind": "internal strong CVPR target gates, not claims about unmatched external leaderboards",
+    "predicted_complete_cad": {
+      "room_iou": 0.72,
+      "instance_f1": 0.85,
+      "count_mae_max": 1.5,
+      "type_accuracy": 0.85,
+      "wall_f1": 0.8,
+      "wall_precision": 0.75,
+      "opening_f1": 0.75,
+      "node_f1": 0.9,
+      "edge_overlap": 0.65,
+      "ged_max": 3.5,
+      "furniture_f1": 0.7
+    },
+    "safety_guards": {
+      "validity": 1.0,
+      "functional_watertightness_min": 0.99,
+      "wall_continuity_min": 0.98,
+      "dangling_endpoint_rate_max": 0.02,
+      "outside_footprint_fraction": 0.0
+    },
+    "stability": "Five seeds with case-paired CI; do not pool heterogeneous protocols."
+  },
+  "self_check_matrix": [
+    {
+      "id": "SC-01",
+      "metric": "Opening F1",
+      "protocol": "predicted-control canonical plan",
+      "current": 0.2704580832,
+      "target": 0.75,
+      "evidence": "outputs/reports/opening_interval_consumer_val491_paired_v2.json",
+      "owner": "FF-PC-15",
+      "status": "major gain, seed robustness pending"
+    },
+    {
+      "id": "SC-02",
+      "metric": "Room macro IoU",
+      "protocol": "predicted-control canonical plan",
+      "current": 0.3365330239,
+      "target": 0.72,
+      "evidence": "outputs/reports/dense_query_blend_seed19_structure_val491_v1.json",
+      "owner": "FF-ROOM-01/02",
+      "status": "primary blocker"
+    },
+    {
+      "id": "SC-03",
+      "metric": "Instance F1",
+      "protocol": "predicted-control canonical plan",
+      "current": 0.2938560227,
+      "target": 0.85,
+      "evidence": "outputs/reports/dense_query_blend_seed19_structure_val491_v1.json",
+      "owner": "FF-ROOM-01/02",
+      "status": "primary blocker"
+    },
+    {
+      "id": "SC-04",
+      "metric": "Count MAE",
+      "protocol": "predicted-control canonical plan",
+      "current": 3.3319755601,
+      "target": 1.5,
+      "evidence": "outputs/reports/dense_query_blend_seed19_structure_val491_v1.json",
+      "owner": "FF-ROOM-01/02",
+      "status": "primary blocker"
+    },
+    {
+      "id": "SC-05",
+      "metric": "Matched type accuracy",
+      "protocol": "predicted-control canonical plan",
+      "current": 0.6909029192,
+      "target": 0.85,
+      "evidence": "outputs/reports/dense_query_blend_seed19_structure_val491_v1.json",
+      "owner": "FF-ROOM-01/02",
+      "status": "blocker"
+    },
+    {
+      "id": "SC-06",
+      "metric": "Wall F1",
+      "protocol": "predicted-control canonical plan",
+      "current": 0.4753447413,
+      "target": 0.8,
+      "evidence": "outputs/reports/dense_query_blend_seed19_structure_val491_v1.json",
+      "owner": "FF-WALL-01",
+      "status": "blocker"
+    },
+    {
+      "id": "SC-07",
+      "metric": "Wall precision",
+      "protocol": "predicted-control canonical plan",
+      "current": 0.3891457564,
+      "target": 0.75,
+      "evidence": "outputs/reports/dense_query_blend_seed19_structure_val491_v1.json",
+      "owner": "FF-WALL-01",
+      "status": "wall over-production"
+    },
+    {
+      "id": "SC-08",
+      "metric": "Node F1",
+      "protocol": "HouseMind-style graph, predicted-control",
+      "current": 0.7273880276,
+      "target": 0.9,
+      "evidence": "outputs/reports/dense_query_blend_seed19_structure_val491_v1.json",
+      "owner": "FF-GRAPH-01",
+      "status": "intermediate"
+    },
+    {
+      "id": "SC-09",
+      "metric": "Edge overlap",
+      "protocol": "HouseMind-style graph, predicted-control",
+      "current": 0.3629563206,
+      "target": 0.65,
+      "evidence": "outputs/reports/dense_query_blend_seed19_structure_val491_v1.json",
+      "owner": "FF-GRAPH-01",
+      "status": "blocker"
+    },
+    {
+      "id": "SC-10",
+      "metric": "GED",
+      "protocol": "fixed evaluator, exact-paired subset",
+      "current": 10.299389002,
+      "target": 3.5,
+      "evidence": "outputs/reports/dense_query_blend_seed19_structure_val491_v1.json",
+      "owner": "FF-GRAPH-01",
+      "status": "blocker"
+    },
+    {
+      "id": "SC-11",
+      "metric": "Furniture F1",
+      "protocol": "complete CAD",
+      "current": null,
+      "target": 0.7,
+      "evidence": "docs/predicted_control_cad_action_layer_map_v2.md",
+      "owner": "FF-FURN-01",
+      "status": "not promoted"
+    },
+    {
+      "id": "SC-12",
+      "metric": "Validity",
+      "protocol": "five-check canonical legality",
+      "current": 1.0,
+      "target": 1.0,
+      "evidence": "outputs/reports/dense_query_blend_seed19_structure_val491_v1.json",
+      "owner": "safety guard",
+      "status": "hold"
+    },
+    {
+      "id": "SC-13",
+      "metric": "Functional watertightness",
+      "protocol": "target-free canonical plan",
+      "current": 0.9959266802,
+      "target": 0.99,
+      "evidence": "outputs/reports/dense_query_blend_seed19_structure_val491_v1.json",
+      "owner": "safety guard",
+      "status": "hold"
+    },
+    {
+      "id": "SC-14",
+      "metric": "Outside footprint fraction",
+      "protocol": "target-free canonical plan",
+      "current": 0.0,
+      "target": 0.0,
+      "evidence": "outputs/reports/dense_query_blend_seed19_structure_val491_v1.json",
+      "owner": "safety guard",
+      "status": "hold"
+    },
+    {
+      "id": "SC-15",
+      "metric": "Matched external comparison",
+      "protocol": "same cases/preprocess/evaluator",
+      "current": null,
+      "target": "paired CI and fair compute",
+      "evidence": "fptodo blocker",
+      "owner": "FF-EVAL-01",
+      "status": "missing"
+    },
+    {
+      "id": "SC-16",
+      "metric": "Five-seed/test evidence",
+      "protocol": "RPLAN and predicted-control final rows",
+      "current": null,
+      "target": "frozen, reproducible",
+      "evidence": "fptodo blocker",
+      "owner": "FF-RPLAN-01/FF-FREEZE-01",
+      "status": "missing"
+    }
+  ],
+  "evidence_ledger": {
+    "positive": {
+      "strict_locality": {
+        "outside_pixel_room_label_polygon_edge_exact": 1.0,
+        "violation_rate": 0.0,
+        "five_seed_cases": 12395,
+        "negative_controls": 7345,
+        "source": "FEVP evidence package"
+      },
+      "control_gated_editing": {
+        "delta_iou_range": [0.9848, 0.9903],
+        "delta_mse_range": [0.000168, 0.000259],
+        "validity": 1.0,
+        "conditional_watertightness_range": [0.9579, 0.9675]
+      },
+      "rplan_conditioned_generation": {
+        "room_iou": 0.6758748411,
+        "wall_f1": 0.6759025465,
+        "node_f1": 0.9244934276,
+        "edge_overlap": 0.6220292143,
+        "ged": 3.032421875,
+        "watertightness": 0.999609375,
+        "source": "outputs/reports/floorflow_sharednetwork_fiveseed_512_v1.json"
+      },
+      "opening_interval": {
+        "bridge_only_f1": 0.0962817128,
+        "integrated_f1": 0.2704580832,
+        "paired_delta": 0.1741763704,
+        "ci": [0.1612648656, 0.1869069000],
+        "non_opening_metrics_unchanged": true,
+        "source": "outputs/reports/opening_interval_consumer_val491_paired_v2.json"
+      }
+    },
+    "negative": [
+      {
+        "arm": "Cross-protocol leaderboard comparison",
+        "decision": "forbidden",
+        "lesson": "Never mix oracle, predicted, generation, complete CAD, and editing rows."
+      },
+      {
+        "arm": "Global stage FiLM",
+        "decision": "reject",
+        "evidence": "outputs/reports/floorflow_cadaction_screen128_v1.json",
+        "lesson": "Global scale does not replace typed spatial state."
+      },
+      {
+        "arm": "Owner-wall action scorer 128 to 1024",
+        "decision": "reject",
+        "evidence": "outputs/reports/floorflow_owner_wall_action_promotion1024_v1.json",
+        "lesson": "Small connector gain did not scale; cache candidates first."
+      },
+      {
+        "arm": "Post-hoc room merge/relabel",
+        "decision": "reject",
+        "lesson": "Count can improve while identity collapses."
+      },
+      {
+        "arm": "Fixed query-mask support threshold",
+        "decision": "reject",
+        "evidence": "outputs/reports/dense_query_support_seed19_val491_confv1.json",
+        "lesson": "Count gain traded away Room/support and holdout quality."
+      },
+      {
+        "arm": "Selective support deletion as complete CAD",
+        "decision": "hold",
+        "evidence": "outputs/reports/selective_support_deletion_seed19_structure_val491_v1.json",
+        "lesson": "Room-only gains must be consumed during owner/wall learning."
+      },
+      {
+        "arm": "Free wall/opening vector queries",
+        "decision": "reject",
+        "lesson": "Walls need room boundaries; openings need named host walls."
+      }
+    ]
+  },
+  "pipeline_contract": {
+    "order": [
+      "target-free control",
+      "room identity and support",
+      "instance existence/count",
+      "support-owner reconciliation",
+      "owner cell complex",
+      "wall segments and junctions",
+      "opening host intervals",
+      "furniture instances",
+      "constraint validation/repair",
+      "canonical vector/token"
+    ],
+    "rules": [
+      "Every head has a typed output and canonical consumer.",
+      "No stage reads a future stage tensor.",
+      "Disabled branches exactly reproduce the parent checkpoint.",
+      "Every promoted arm stores seed, split, parameters, updates, NFE, latency, and SHA-256.",
+      "Metric-only gains are rejected."
+    ]
+  },
+  "tasks": [
+    {
+      "id": "FF-PC-15",
+      "priority": "P0",
+      "status": "active",
+      "title": "Opening interval five-seed closure",
+      "depends_on": [],
+      "actions": [
+        "Finish the five seed-matched interval heads currently training with 384 calibration and 107 offset-384 holdout cases.",
+        "For each seed, run full val491 with and without the opening detector using identical rooms/walls.",
+        "Compare Opening F1 and non-opening metrics with case-paired bootstrap; compare GED only on the intersection of exact cases.",
+        "Require the opening gain and structural non-regression to hold on at least four of five seeds.",
+        "Connect the accepted detector to CadStageRuntime as an opening-only replacement."
+      ],
+      "required_evidence": [
+        "five training reports",
+        "five calibration reports",
+        "five holdout reports",
+        "five full-val paired reports",
+        "five complete-plan structural comparisons"
+      ],
+      "gate": {
+        "primary": "Opening F1 CI above zero on full val and holdout.",
+        "non_regression": "Room, wall, Node, Edge, exact-GED, validity, and watertightness do not regress.",
+        "scope": "Opening submodule promotion only."
+      },
+      "failure_response": "Return to joint selected-wall host supervision."
+    },
+    {
+      "id": "FF-ROOM-01",
+      "priority": "P0",
+      "status": "planned",
+      "title": "Room identity and count root-cause repair",
+      "depends_on": ["FF-PC-15"],
+      "actions": [
+        "Decompose current predicted-control errors into missing rooms, duplicate fragments, wrong merges, class swaps, and count over-prediction by room-count/complexity bins.",
+        "Measure oracle support and oracle identity ceilings separately to decide whether support, existence, or identity is the first failing stage.",
+        "Run matched 256/64 arms: static, adaptive reference query, dynamic loss weights, and both; all branches initialize from the same query checkpoint.",
+        "Require joint Room IoU, instance F1, count MAE, support IoU, and type-accuracy gains on calibration64 and offset-128 holdout.",
+        "If the winning mechanism passes, promote to 1024/256 two seeds before full validation."
+      ],
+      "required_evidence": [
+        "room error decomposition",
+        "oracle support/identity ceilings",
+        "four-arm calibration comparison",
+        "four-arm holdout comparison",
+        "reference-displacement and adaptive-loss-scale diagnostics"
+      ],
+      "gate": {
+        "primary": "Room IoU, instance F1, and count MAE improve together on both calibration and holdout.",
+        "support": "Support IoU and type accuracy do not regress.",
+        "mechanism": "Adaptive references vary by image; dynamic loss scales stay bounded; disabled branch is identical."
+      },
+      "failure_response": "If adaptive branches fail, diagnose reference collapse, class assignment, and count supervision before adding capacity."
+    },
+    {
+      "id": "FF-ROOM-02",
+      "priority": "P0",
+      "status": "planned",
+      "title": "Five-seed room identity promotion",
+      "depends_on": ["FF-ROOM-01"],
+      "actions": [
+        "Run the winning identity arm on full training data with 384 calibration and 107 offset-384 holdout.",
+        "Run five seeds; do not pool calibration and holdout rows.",
+        "Evaluate full val491 and the complete wall/opening plan for every seed.",
+        "Report count, Room IoU, F1, type accuracy, support, and structural metrics by room-count and edit-complexity bins."
+      ],
+      "gate": {
+        "stability": "Primary gains hold on at least four of five seeds; support/legality hold on five.",
+        "quality": "Room IoU >= 0.60, instance F1 >= 0.70, count MAE <= 2.5 as the first staged target; continue toward the final target contract.",
+        "structure": "No canonical wall/opening/graph regression."
+      },
+      "failure_response": "Return to the failing stage; do not hide instability with pooled means."
+    },
+    {
+      "id": "FF-WALL-01",
+      "priority": "P0",
+      "status": "planned",
+      "title": "Wall precision and typed junction closure",
+      "depends_on": ["FF-ROOM-02"],
+      "actions": [
+        "Build candidates from selected room boundaries and consume support probability before wall-candidate scoring.",
+        "Add typed junction incidence as a first-class wall state with a real endpoint-snapping consumer.",
+        "Test collinear consolidation, candidate pruning, and junction degree constraints as separate matched arms.",
+        "Measure wall precision, wall F1, dangling endpoints, junction F1/degree, opening F1, and Edge/GED."
+      ],
+      "gate": {
+        "primary": "Wall precision improves from 0.389 toward 0.75 and wall F1 from 0.475 toward 0.80.",
+        "topology": "Validity 1.0, functional watertightness >= 0.99, dangling <= 0.02.",
+        "non_regression": "Room, opening, Node, and Edge metrics do not regress."
+      },
+      "failure_response": "Return to candidate provenance or junction consumer; do not tune binary wall threshold."
+    },
+    {
+      "id": "FF-GRAPH-01",
+      "priority": "P0",
+      "status": "planned",
+      "title": "Adjacency, Edge overlap, and GED closure",
+      "depends_on": ["FF-WALL-01"],
+      "actions": [
+        "Supervise room-pair adjacency on the selected owner graph rather than applying GED loss alone.",
+        "Use identity-preserving room nodes and host-wall/opening edges; reject duplicate room-type nodes.",
+        "Stratify errors by room count, room deletion, merged rooms, and boundary-crossing edits.",
+        "Report paired Node/Edge/GED deltas on the exact-evaluator intersection."
+      ],
+      "gate": {
+        "edge": "Edge overlap moves from 0.363 toward 0.65 with paired CI above zero.",
+        "ged": "GED moves from 10.30 toward 3.5 with a fixed evaluator and paired test.",
+        "node": "Node F1 remains >= 0.80 and improves toward 0.90."
+      },
+      "failure_response": "Return to room identity or owner adjacency; do not optimize an approximate GED surrogate without canonical-plan gain."
+    },
+    {
+      "id": "FF-FURN-01",
+      "priority": "P1",
+      "status": "planned",
+      "title": "Room-conditioned vector furniture",
+      "depends_on": ["FF-GRAPH-01"],
+      "actions": [
+        "Reuse room-instance tokens and direct vector-primitive supervision for furniture.",
+        "Require explicit query-to-room assignment and containment in the canonical plan.",
+        "Evaluate furniture F1, type accuracy, containment, polygon validity, and out-of-boundary rate."
+      ],
+      "gate": {
+        "quality": "Furniture F1 >= 0.70, containment >= 0.98, validity 1.0.",
+        "non_regression": "Room/wall/opening metrics remain within paired noise."
+      },
+      "failure_response": "Keep furniture outside the main SOTA claim until its canonical consumer passes."
+    },
+    {
+      "id": "FF-EVAL-01",
+      "priority": "P0",
+      "status": "planned",
+      "title": "Matched external and statistical evidence",
+      "depends_on": ["FF-FURN-01"],
+      "actions": [
+        "Freeze executable Raster2Seq, CE2EPlan, TLC-Plan, and any complete HouseMind replay row.",
+        "Match cases, preprocessing, evaluator, post-processing, parameters, sample exposure, NFE, latency, and peak memory.",
+        "Report paired bootstrap, Wilcoxon/effect size, exact-evaluator coverage, and unavailable rows explicitly.",
+        "Keep generation, reconstruction, predicted-control, oracle-control, and editing tables separate."
+      ],
+      "gate": {
+        "fairness": "No unmatched leaderboard claim.",
+        "claim": "At least one protocol-primary metric improves with a paired interval excluding zero and no structural regression."
+      },
+      "failure_response": "Mark unavailable baselines unavailable; never fill with proxies."
+    },
+    {
+      "id": "FF-RPLAN-01",
+      "priority": "P0",
+      "status": "planned",
+      "title": "RPLAN five-seed validation and frozen test",
+      "depends_on": ["FF-EVAL-01"],
+      "actions": [
+        "Run the final architecture on five RPLAN seeds and the full validation split.",
+        "Freeze code, checkpoints, thresholds, baselines, and statistics.",
+        "Open the test exactly once and publish all outcomes."
+      ],
+      "gate": {
+        "stability": "All five seeds preserve quality and structural guards.",
+        "reproducibility": "Every test number maps to a frozen command and artifact."
+      },
+      "failure_response": "Keep test closed and return to validation."
+    },
+    {
+      "id": "FF-EDIT-01",
+      "priority": "P1",
+      "status": "planned",
+      "title": "Predicted-control and free-text editing",
+      "depends_on": ["FF-RPLAN-01"],
+      "actions": [
+        "Predict edit regions and typed actions without oracle controls.",
+        "Add text parsing, conflict handling, and abstention only after predicted controls stabilize.",
+        "Compare only against executable same-protocol editing rows."
+      ],
+      "gate": {
+        "locality": "Outside exactness 1.0 and violation rate 0.0.",
+        "quality": "Delta-IoU >= 0.95 and Delta-MSE <= 0.0019."
+      },
+      "failure_response": "Disable free-text promotion if controls are unstable."
+    },
+    {
+      "id": "FF-FREEZE-01",
+      "priority": "P0",
+      "status": "planned",
+      "title": "CVPR evidence freeze",
+      "depends_on": ["FF-RPLAN-01", "FF-EDIT-01"],
+      "actions": [
+        "Run all non-chips tests, Ruff, 600-line checks, JSON validation, manifest and SHA-256 verification.",
+        "Map every reported number to its generator and source artifact.",
+        "Freeze environment lockfile, claim boundaries, protocol matrix, and deterministic archive.",
+        "Exclude chips/FloorSet artifacts."
+      ],
+      "gate": {
+        "engineering": "All checks pass.",
+        "evidence": "No orphan, stale, or cross-protocol metric."
+      },
+      "failure_response": "Remove the unsupported claim or repair the chain."
+    }
+  ],
+  "reference_code": {
+    "Deformable-DETR": {
+      "path": "third_party/Deformable-DETR",
+      "commit": "11169a60c33333af00a4849f1808023eba96a931",
+      "use": "adaptive reference points and learned sampling"
+    },
+    "Mask2Former": {
+      "path": "third_party/Mask2Former",
+      "commit": "9b0651c6c1d5b3af2e6da0589b719c514ec0d69a",
+      "use": "masked transformer and point-sampled supervision"
+    },
+    "LibMTL": {
+      "path": "third_party/LibMTL",
+      "commit": "4336804847eaa5e0b924b743d76beec7ac3fdc97",
+      "use": "adaptive multi-task weighting references"
+    }
+  }
+}

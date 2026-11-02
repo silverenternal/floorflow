@@ -1,0 +1,55 @@
+{
+  "version": "2026-10-29-chip-routing-proxy-v2",
+  "status": "frozen_before_normalized_training_outcomes",
+  "proxy": {
+    "definition": "dimensionless demand-mass and normalized-area hotspots",
+    "invariance": [
+      "translation",
+      "uniform-coordinate-scale"
+    ],
+    "reference": {
+      "pin_concentration_peak": 0.07,
+      "route_demand_peak": 0.02,
+      "occupancy_peak": 0.06,
+      "spacing_risk": 0.0001
+    },
+    "composite_weights": {
+      "pin_concentration_peak": 0.5,
+      "route_demand_peak": 0.25,
+      "occupancy_peak": 0.25,
+      "spacing_risk": 0.05
+    },
+    "regression_test": "tests/test_chip_routing_proxy.py"
+  },
+  "screen": {
+    "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2",
+    "dev_case_manifest": "outputs/reports/chip_dev_screen_v45.json",
+    "training_seed": 23,
+    "data_seed": 23,
+    "sampling_seed": 19,
+    "steps": 5000,
+    "device": "cuda:0",
+    "arms": {
+      "control": {
+        "routing_proxy_final_weight": null,
+        "routing_proxy_delay_steps": 0,
+        "routing_proxy_anneal_steps": 0
+      },
+      "route": {
+        "routing_proxy_final_weight": 0.05,
+        "routing_proxy_delay_steps": 500,
+        "routing_proxy_anneal_steps": 2000
+      }
+    }
+  },
+  "selection_policy": {
+    "official_100_used_for_selection": false,
+    "promote_route_only_if": [
+      "legalized dev cost improves",
+      "legalized dev V_rel improves",
+      "normalized composite improves",
+      "feasible fraction remains 1.0"
+    ],
+    "otherwise": "retain as a negative result"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "schema_version": "opening-candidate-ranker-v3",
+  "status": "implementation_ready_no_gpu_run",
+  "scope": "predicted_wall_opening_host_verification",
+  "hypothesis": "Predicted opening candidates need explicit host-wall visibility and fragmentation evidence; detector confidence alone cannot separate hosted from free-wall proposals.",
+  "candidate_feature": {
+    "version": "v3",
+    "feature_count": 30,
+    "base_features": 21,
+    "host_features": [
+      "host_wall_continuity",
+      "host_wall_visibility_gap",
+      "host_thickness_fraction",
+      "host_endpoint_margin_fraction",
+      "same_wall_candidate_coverage",
+      "host_wall_endpoint_distance_fraction",
+      "collinear_neighbor_fraction",
+      "collinear_length_fraction",
+      "parallel_wall_fraction"
+    ]
+  },
+  "ranker": {
+    "models": {
+      "presence": "HistGradientBoostingClassifier",
+      "family": "HistGradientBoostingClassifier"
+    },
+    "torch_fast_screen": true,
+    "x_axis": "candidate-level verifier score"
+  },
+  "training_contract": {
+    "train_cases": 1024,
+    "calibration_split": "val[0:96]",
+    "holdout_split": "val[96:288]",
+    "target_used_at_inference": false,
+    "seed": 17
+  },
+  "controls": [
+    "v2 21-feature ranker",
+    "v3 host features without collinear fragmentation",
+    "v3 host features without continuity/visibility",
+    "full v3 host feature set"
+  ],
+  "gates": {
+    "holdout_f1": "above v2",
+    "paired_ci": "95% CI lower bound > 0",
+    "precision": "above v2",
+    "recall": "non-inferior within 0.01",
+    "family": "non-inferior within 0.02",
+    "safety": "Wall/Room/Node/Edge/GED/validity/watertight unchanged on full consumer"
+  },
+  "claim_boundary": "Feature contract only; no opening metric claim before matched training."
+}

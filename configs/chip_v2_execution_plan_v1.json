@@ -1,0 +1,229 @@
+{
+  "version": "chip-v2-execution-plan-v1",
+  "status": "cpu_audited_gpu_authorized",
+  "parent_checkpoint": "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed21_5k/checkpoints/final.pt",
+  "architecture_config": "configs/chip_architecture_completion_v2.json",
+  "mechanism_policy": "configs/chip_mechanism_screen_v1.json",
+  "training_subset": "configs/chip_train_screen_5k_v1.json",
+  "validation": {
+    "case_manifest": "outputs/reports/chip_dev_screen_v45.json",
+    "cases": 32,
+    "nfe": 4,
+    "inference_seed": 19,
+    "quick_refiner_steps": 400,
+    "confirmation_refiner_steps": 1600
+  },
+  "matched_control": {
+    "same_parent": true,
+    "same_training_subset": true,
+    "same_steps_and_effective_batch": true,
+    "same_optimizer_and_ema": true,
+    "same_nfe_refiner_and_legalizer_budget": true,
+    "same_data_order_seed": true,
+    "only_mechanism_flags_may_differ": true,
+    "training_seed": 21,
+    "data_seed": 21,
+    "inference_seed": 19
+  },
+  "control_baseline": {
+    "arm": "m27_matched_control_quick",
+    "structured_heads": true,
+    "structured_hierarchy_coupling": false,
+    "structured_factorized_block": false,
+    "structured_dual_ports": true,
+    "structured_legalizer_response": true,
+    "relation_specific_attention": false,
+    "dynamic_graph_input": false,
+    "complexity_conditioning": false,
+    "degree_conditioned_expert": false,
+    "spatial_route_field": false,
+    "training_projector": false,
+    "endpoint_compatibility_weight": 0.0,
+    "legalizer_response_weight": 0.0,
+    "hierarchy_source_mode": "random",
+    "rule": "Shared control for all independent stages; candidate arms change only their declared mechanism."
+  },
+  "checkpoint_contract": {
+    "atomic_writes": true,
+    "save_model_optimizer_ema": true,
+    "save_torch_numpy_python_rng": true,
+    "save_batch_rng_and_balanced_sampler_state": true,
+    "save_data_order_hash": true,
+    "fail_closed_on_nonfinite": true
+  },
+  "budget": {
+    "quick_steps": 2000,
+    "confirmation_steps": 5000,
+    "batch_size": 128,
+    "grad_accum_steps": 1,
+    "quick_sample_exposures": 256000,
+    "checkpoint_every": 500,
+    "eval_steps": [500, 1000, 1500, 2000]
+  },
+  "execution_order": [
+    "M50-COMMITTED-HIERARCHY-FLOW",
+    "M51-POSITION-SHAPE-FACTORIZATION",
+    "M53-REFINER-COMPATIBLE-FLOW",
+    "M52-RELATION-SPECIFIC-FUSION",
+    "M55-ROUTEABILITY-SPATIAL-STREAM",
+    "M57-CONFIDENCE-GATED-COMMIT",
+    "M58-SHARED-TRUNK-FACTORIZATION",
+    "M59-LEGALIZER-CONSTRAINED-ENDPOINT",
+    "M60-INCIDENCE-NORMALIZED-GRAPH",
+    "M61A-ROUTE-ONLY",
+    "M61B-SOURCE-ONLY",
+    "M62-CONSTRAINED-COMPLEMENTARY-FUSION",
+    "M64-SOURCE-ONLY-CLEAN",
+    "M65-GRAPH-SOURCE-FUSION"
+  ],
+  "stages": [
+    {
+      "id": "M50-COMMITTED-HIERARCHY-FLOW",
+      "architecture_stage": "M50-SAME-CALL-COMMIT",
+      "train_indices": "configs/chip_train_screen_5k_v1.json",
+      "candidate_arm": "m50_candidate_quick",
+      "control_arm": "m50_control_quick",
+      "required_probe": "outputs/reports/chip_m50_representation_probe_v1.json",
+      "quick_report": "outputs/reports/chip_m50_quick_refiner400_dev32_v1.json"
+    },
+    {
+      "id": "M51-POSITION-SHAPE-FACTORIZATION",
+      "architecture_stage": "M51-FACTORIZED-GEOMETRY",
+      "train_indices": "configs/chip_train_screen_5k_v1.json",
+      "candidate_arm": "m51_candidate_quick",
+      "control_arm": "m51_control_quick",
+      "required_probe": "outputs/reports/chip_m51_representation_probe_v1.json",
+      "quick_report": "outputs/reports/chip_m51_quick_refiner400_dev32_v1.json"
+    },
+    {
+      "id": "M53-REFINER-COMPATIBLE-FLOW",
+      "architecture_stage": "M53-REFINER-COMPATIBLE-FLOW",
+      "train_indices": "configs/chip_train_screen_5k_v1.json",
+      "candidate_arm": "m53_candidate_quick",
+      "control_arm": "m53_control_quick",
+      "required_probe": "outputs/reports/chip_m53_refiner_probe_v1.json",
+      "quick_report": "outputs/reports/chip_m53_quick_refiner400_dev32_v1.json"
+    },
+    {
+      "id": "M52-RELATION-SPECIFIC-FUSION",
+      "architecture_stage": "M52-RELATION-GRAPH",
+      "train_indices": "configs/chip_train_screen_5k_v1.json",
+      "candidate_arm": "m52_candidate_quick",
+      "control_arm": "m52_control_quick",
+      "required_probe": "outputs/reports/chip_m52_relation_probe_v1.json",
+      "quick_report": "outputs/reports/chip_m52_quick_refiner400_dev32_v1.json"
+    },
+    {
+      "id": "M55-ROUTEABILITY-SPATIAL-STREAM",
+      "architecture_stage": "M55-ROUTEABILITY-AND-STABLE-TRAINING",
+      "train_indices": "configs/chip_train_screen_5k_v1.json",
+      "candidate_arm": "m55_candidate_quick",
+      "control_arm": "m55_control_quick",
+      "required_probe": "outputs/reports/chip_m55_field_probe_v1.json",
+      "quick_report": "outputs/reports/chip_m55_quick_refiner400_dev32_v1.json"
+    },
+    {
+      "id": "M57-CONFIDENCE-GATED-COMMIT",
+      "architecture_stage": "M57-CONFIDENCE-GATED-COMMIT",
+      "train_indices": "configs/chip_train_screen_5k_v1.json",
+      "candidate_arm": "m57_candidate_quick",
+      "control_arm": "m57_control_quick",
+      "required_probe": "outputs/reports/chip_m57_commit_probe_v1.json",
+      "quick_report": "outputs/reports/chip_m57_quick_refiner400_dev32_v1.json"
+    },
+    {
+      "id": "M58-SHARED-TRUNK-FACTORIZATION",
+      "architecture_stage": "M58-SHARED-TRUNK-FACTORIZATION",
+      "train_indices": "configs/chip_train_screen_5k_v1.json",
+      "candidate_arm": "m58_candidate_quick",
+      "control_arm": "m58_control_quick",
+      "required_probe": "outputs/reports/chip_m58_factorization_probe_v1.json",
+      "quick_report": "outputs/reports/chip_m58_quick_refiner400_dev32_v1.json"
+    },
+    {
+      "id": "M59-LEGALIZER-CONSTRAINED-ENDPOINT",
+      "architecture_stage": "M59-LEGALIZER-CONSTRAINED-ENDPOINT",
+      "train_indices": "configs/chip_m63_response_indices1k_v1.json",
+      "candidate_arm": "m59_candidate_quick",
+      "control_arm": "m59_control_quick",
+      "required_probe": "outputs/reports/chip_m59_endpoint_probe_v1.json",
+      "quick_report": "outputs/reports/chip_m59_quick_refiner400_dev32_v1.json"
+    },
+    {
+      "id": "M60-INCIDENCE-NORMALIZED-GRAPH",
+      "architecture_stage": "M60-INCIDENCE-NORMALIZED-GRAPH",
+      "train_indices": "configs/chip_train_screen_5k_v1.json",
+      "candidate_arm": "m60_candidate_quick",
+      "control_arm": "m60_control_quick",
+      "required_probe": "outputs/reports/chip_m60_relation_probe_v1.json",
+      "quick_report": "outputs/reports/chip_m60_quick_refiner400_dev32_v1.json"
+    },
+    {
+      "id": "M61A-ROUTE-ONLY",
+      "architecture_stage": "M61A-ROUTE-ONLY",
+      "train_indices": "configs/chip_train_screen_5k_v1.json",
+      "candidate_arm": "m61a_candidate_quick",
+      "control_arm": "m61a_control_quick",
+      "required_probe": "outputs/reports/chip_m61a_route_only_probe_v1.json",
+      "quick_report": "outputs/reports/chip_m61a_quick_refiner400_dev32_v1.json"
+    },
+    {
+      "id": "M61B-SOURCE-ONLY",
+      "architecture_stage": "M61B-SOURCE-ONLY",
+      "train_indices": "configs/chip_train_screen_5k_v1.json",
+      "candidate_arm": "m61b_candidate_quick",
+      "control_arm": "m61b_control_quick",
+      "required_probe": "outputs/reports/chip_m61b_source_only_probe_v1.json",
+      "quick_report": "outputs/reports/chip_m61b_quick_refiner400_dev32_v1.json"
+    },
+    {
+      "id": "M62-CONSTRAINED-COMPLEMENTARY-FUSION",
+      "architecture_stage": "M62-CONSTRAINED-FUSION",
+      "train_indices": "configs/chip_m63_response_indices1k_v1.json",
+      "candidate_arm": "m62_candidate_quick",
+      "control_arm": "m62_control_quick",
+      "required_probe": "outputs/reports/chip_m62_fusion_probe_v1.json",
+      "quick_report": "outputs/reports/chip_m62_quick_refiner400_dev32_v1.json"
+    },
+    {
+      "id": "M64-SOURCE-ONLY-CLEAN",
+      "architecture_stage": "M64-SOURCE-ONLY-CLEAN",
+      "train_indices": "configs/chip_train_screen_5k_v1.json",
+      "candidate_arm": "m64_candidate_quick",
+      "control_arm": "m64_control_quick",
+      "required_probe": "outputs/reports/chip_m64_source_probe_v1.json",
+      "quick_report": "outputs/reports/chip_m64_quick_refiner400_dev32_v1.json"
+    },
+    {
+      "id": "M65-GRAPH-SOURCE-FUSION",
+      "architecture_stage": "M65-GRAPH-SOURCE-FUSION",
+      "train_indices": "configs/chip_train_screen_5k_v1.json",
+      "candidate_arm": "m65_candidate_quick",
+      "control_arm": "m65_control_quick",
+      "required_probe": "outputs/reports/chip_m65_fusion_probe_v1.json",
+      "quick_report": "outputs/reports/chip_m65_quick_refiner400_dev32_v1.json"
+    }
+  ],
+  "legalizer_closed_loop": {
+    "id": "M54-LEGALIZATION-AWARE-FLOW",
+    "architecture_stage": "M54-LEGALIZATION-AWARE-FLOW",
+    "train_indices": "configs/chip_m63_response_indices1k_v1.json",
+    "response_sidecar": "outputs/cache/chip_m63_response_screen1k_v1.npz",
+    "candidate_arm": "m54_candidate_quick",
+    "control_arm": "m54_control_quick",
+    "required_probe": "outputs/reports/chip_m54_response_probe_v1.json",
+    "quick_report": "outputs/reports/chip_m54_quick_refiner400_dev32_v1.json",
+    "run_after": "M53-REFINER-COMPATIBLE-FLOW"
+  },
+  "failure_policy": {
+    "stop_on_missing_parent_or_subset": true,
+    "stop_on_missing_response_sidecar_for_action": true,
+    "stop_on_nonfinite_loss_or_gradient": true,
+    "stop_on_control_budget_mismatch": true,
+    "stop_on_feasibility_below_one": true,
+    "allow_gpu_cache_oom_fallback": true,
+    "gpu_cache_fallback": "--no-gpu-data-cache",
+    "promotion_requires_control_comparison": true
+  },
+  "gpu_execution": "authorized_bounded_screens"
+}

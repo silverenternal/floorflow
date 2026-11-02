@@ -1,0 +1,72 @@
+{
+  "schema_version": "room-joint-slot-state-screen-v1",
+  "status": "screen_rejected_no_promotion",
+  "scope": "residential_cubicasa_room_head",
+  "trainer": "scripts/train_raster_instance_control.py",
+  "parent": {
+    "checkpoint": "outputs/train/room_query_blend50_seed19_v1/best.pt",
+    "selection_blend": 0.75,
+    "selection_mode": "dense_relative_identity"
+  },
+  "screen": {
+    "train_cases": 256,
+    "calibration_cases": 64,
+    "holdout_cases": 64,
+    "holdout_offset": 64,
+    "epochs": 8,
+    "seed": 19,
+    "image_size": 384,
+    "batch_size": 8
+  },
+  "promotion": {
+    "train_cases": 1024,
+    "calibration_cases": 256,
+    "holdout_cases": 128,
+    "holdout_offset": 256,
+    "epochs": 12,
+    "seeds": [19, 20]
+  },
+  "confirmation": {
+    "train_cases": 5126,
+    "calibration_cases": 384,
+    "holdout_cases": 107,
+    "holdout_offset": 384,
+    "epochs": 12,
+    "seeds": [19, 20, 21, 22, 23]
+  },
+  "model": {
+    "full_resolution_masks": true,
+    "full_resolution_channels": 32,
+    "joint_room_slot_state": true,
+    "query_set_head": false,
+    "query_count_gate": false,
+    "query_existence_gate": false,
+    "queries": 24,
+    "layers": 3,
+    "heads": 4,
+    "hidden_dim": 128
+  },
+  "loss": {
+    "room_mask": 1.0,
+    "partition": 0.5,
+    "fused_identity": 0.5,
+    "query_set": 0.5,
+    "existence": 0.5,
+    "query_count": 0.5,
+    "selection_mode": "dense_relative_identity",
+    "selection_count_weight": 0.1
+  },
+  "required_controls": [
+    "parent checkpoint with the same training budget",
+    "legacy query-set head with no count gate",
+    "joint slot state without count selection at inference",
+    "joint slot state with count loss disabled"
+  ],
+  "gates": {
+    "joint_quality": "Room IoU, instance F1, and count MAE improve jointly on calibration and disjoint holdout.",
+    "support_preservation": "The count branch must not reduce room support while improving count MAE.",
+    "safety": "Validity, watertightness, outside-footprint, wall, opening, node, edge, and GED gates do not regress.",
+    "confirmation": "At least 4/5 seeds improve with paired 95% CI excluding zero."
+  },
+  "claim_boundary": "Both full-finetune and frozen-parent slot-state screens fail the disjoint holdout joint gate. The branch remains disabled and is not a quality improvement."
+}

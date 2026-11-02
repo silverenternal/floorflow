@@ -1,0 +1,49 @@
+{
+  "version": "residential_identity_dihedral_consensus_v1",
+  "scope": "residential_floorplan_only",
+  "base_checkpoint": "outputs/external_baselines/raster2seq/checkpoint_blends_v2/ema_alpha_0.75.pth",
+  "checkpoint_sha256": "5c738ba5cda8842856a945aba67e60e8b373a8f5c86047af0c1c23c19e362311",
+  "views": [
+    "original",
+    "hflip",
+    "vflip",
+    "rot90",
+    "rot180",
+    "rot270",
+    "transpose",
+    "transverse"
+  ],
+  "note": "All eight dihedral views are generated as independent model inputs.",
+  "selection_policy": {
+    "name": "room_count_consensus_8",
+    "agreement": "mean best per-room polygon IoU across other views",
+    "room_count_target": "median of all view room counts",
+    "maximum_room_count_deviation": 2,
+    "tie_preference": "original",
+    "validation_selected_only": true
+  },
+  "validation": {
+    "split": "val503",
+    "room_f1": 0.9078840017218636,
+    "room_iou": 0.6487164232675511,
+    "corner_f1": 0.6177794855073743,
+    "room_f1_paired_ci95": [
+      0.012703839793042473,
+      0.02640895634156575
+    ],
+    "room_iou_paired_ci95": [
+      0.0032520584748738134,
+      0.03577058578526468
+    ],
+    "corner_f1_paired_ci95": [
+      0.011583120813229892,
+      0.02381656420266771
+    ],
+    "threshold_sensitivity": "thresholds 1, 2, and 3 select identical outputs"
+  },
+  "test_lockbox": {
+    "policy_was_frozen_before_dihedral_test_scoring": true,
+    "new_policy_scored_once_after_val_freeze": true,
+    "previous_four_view_test_result_retained": true
+  }
+}

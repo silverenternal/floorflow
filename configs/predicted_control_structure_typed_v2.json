@@ -1,0 +1,76 @@
+{
+  "schema_version": "predicted-control-structure-typed-v2",
+  "status": "superseded_by_structure_bridge_mita_v3",
+  "scope": "residential_cubicasa_structure_bridge",
+  "reuse": {
+    "trainer": "scripts/train_raster_predicted_control_bridge.py",
+    "model": "src/floorflow/heads/joint_control_repair.py::JointControlRepair",
+    "refiner": "src/floorflow/heads/coarse_structure_refiner.py::CoarseStructureRefiner",
+    "context": "src/floorflow/heads/structure_context.py",
+    "relations": "src/floorflow/objectives/structure_refinement.py"
+  },
+  "room_distribution": {
+    "dense_checkpoint": "outputs/train/native_room_384_full_32ep_v1/best.pt",
+    "query_checkpoint": "outputs/train/room_query_blend50_seed19_v1/best.pt",
+    "canonical_blend": 0.75,
+    "training_jitter": 0.10,
+    "reason": "The bridge was previously trained on an older room distribution and evaluated on the current blend."
+  },
+  "structure": {
+    "contract": "typed_v2",
+    "room_size": 224,
+    "structure_size": 128,
+    "direct_control_resolution": true,
+    "room_conditioning": "bilinear_probability",
+    "context_channels": [
+      "room_boundary",
+      "owner_uncertainty",
+      "second_owner",
+      "wall_proximity",
+      "footprint_boundary",
+      "opening_wall_affinity"
+    ],
+    "wall_conditioned_opening": true,
+    "typed_junction": true,
+    "junction_degree_classes": 5,
+    "room_boundary_head": true
+  },
+  "loss": {
+    "pixel_structure": 1.0,
+    "canonical_plan_proxy": 0.5,
+    "opening_host": 0.25,
+    "room_edge": 0.25,
+    "junction": 0.5,
+    "room_boundary": 0.25
+  },
+  "readout": {
+    "seam_mode": "boundary_gated",
+    "wall_threshold": 0.5,
+    "junction_threshold": 0.5,
+    "junction_degree_min": 2,
+    "opening_threshold": 0.5,
+    "room_boundary_threshold": 0.5,
+    "opening_support_radius": 2,
+    "opening_min_area": 3,
+    "exterior_mode": "resolution_scaled",
+    "owner_cell_plan": true,
+    "structure_opening_interval_readout": true,
+    "graph_source": "plan",
+    "canonical_token_readout": true,
+    "adaptive_canonical_quantizer": true,
+    "max_wall_gap_fraction": 0.08
+  },
+  "screen_arms": [
+    "legacy bridge on current room blend",
+    "typed_v2 without relation loss",
+    "typed_v2 with relation loss",
+    "typed_v2 with room repair enabled"
+  ],
+  "gates": {
+    "quality": "Wall precision and F1 improve on calibration and disjoint holdout; opening F1 does not regress.",
+    "topology": "Junction F1 and degree exactness are reported and improve over owner-only reconstruction.",
+    "safety": "Validity 1.0, functional watertightness >=0.99, outside footprint 0.0.",
+    "fairness": "Every arm consumes the same room blend distribution and evaluator."
+  },
+  "claim_boundary": "Implementation and run contract only; no new metric result has been produced."
+}

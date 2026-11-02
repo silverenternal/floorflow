@@ -1,0 +1,37 @@
+{
+  "version": "2026-10-28-chip-external-adapter-repair-v1",
+  "status": "frozen_after_development_seed19_screen",
+  "selected_screen": "strict_route_match_repair",
+  "selection_evidence": {
+    "report": "outputs/reports/chip_external_adapter_repair_v1.json",
+    "completed_pairs": 5,
+    "matched_route_pairs": 5,
+    "candidate_scale_pack_count": 2,
+    "control_scale_pack_count": 2,
+    "all_legalized_feasible": true,
+    "all_zero_overlap": true
+  },
+  "policy": {
+    "legalizer_relation": "expanded",
+    "instance_hierarchy": true,
+    "preserve_reference_orientation": true,
+    "force_shelf_cases": [
+      "bp_be",
+      "bp_multi"
+    ],
+    "force_shelf_reason": "Within a development pair, use the existing deterministic shelf fallback for both arms whenever scale_pack is not valid for both.",
+    "nfe": 4,
+    "refiner_steps": 400,
+    "projector_iterations": 8,
+    "same_checkpoint": true,
+    "same_orfs_image": true,
+    "same_route_effort": true
+  },
+  "claim_boundary": {
+    "development_screen_outcome": "route-confound repair only; no PPA claim",
+    "unrepaired_v1_remains_negative": true,
+    "do_not_tune_on_holdout": true,
+    "do_not_relabel_p2b_as_routed_wirelength": true
+  },
+  "holdout_policy": "Apply this exact policy to a frozen untouched holdout set and freeze its case/config hashes before candidate or control inference."
+}

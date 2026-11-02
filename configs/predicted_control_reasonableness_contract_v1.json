@@ -1,0 +1,211 @@
+{
+  "schema_version": "predicted-control-reasonableness-contract-v1",
+  "scope": "FloorFlow residential predicted-control reconstruction and the separately labeled Raster2Seq-proposal hybrid",
+  "frozen_date": "2026-10-30",
+  "target_policy": {
+    "generation_target_free": true,
+    "official_and_adapter_metrics_are_not_interchangeable": true,
+    "teacher_predictions_are_controls_not_ground_truth": true,
+    "test503_open": false
+  },
+  "source_revisions": {
+    "fpvec_lab": {
+      "repository": "https://github.com/Cyprinus12138/fpvec-lab",
+      "commit": "b4b4a169a19b098ed3d1c39f67dfc7f89ed6b566",
+      "local_path": "third_party/fpvec-lab",
+      "usage": "direct dependency for validity, watertightness, wall/opening matching, room matching, and topology-aware edit cost"
+    },
+    "raster2seq": {
+      "repository": "https://github.com/Cornell-VAILab/Raster2Seq",
+      "commit": "a6c4e27a68d11d7a459f6e4a2601fd887227dd1a",
+      "paper": "https://arxiv.org/abs/2602.09016",
+      "local_path": "third_party/Raster2Seq",
+      "official_evaluator": "third_party/Raster2Seq/evaluations/s3d_floorplan_eval/Evaluator/Evaluator.py",
+      "usage": "official result_jsons for official_* values; local row adapter only for explicitly labeled adapter_* diagnostics"
+    },
+    "gsdiff": {
+      "repository": "https://github.com/SizheHu/GSDiff",
+      "commit": "a02af021b80eba984228f92f7cf5b6f296cf3725",
+      "local_path": "third_party/GSDiff",
+      "usage": "protocol reference for typed room nodes, shared-edge adjacency, and NetworkX graph edit distance"
+    },
+  "housemind": {
+      "paper": "CVPR 2026",
+      "local_path": ".data/housemind/weights",
+      "official_inference": false,
+      "usage": "published Node F1, edge-overlap, GED, Delta-IoU, and Delta-MSE protocol context only; no direct reproduction claim"
+    },
+    "dplan": {
+      "paper": "https://arxiv.org/abs/2606.21159",
+      "usage": "2026 graph/minimal-connectivity design reference only; rectangular-plot prototype is not a CubiCasa executable baseline"
+    },
+    "floorplan_vlm": {
+      "paper": "https://arxiv.org/abs/2602.06507",
+      "usage": "2026 polygon-sequence representation reference only; no verified matched executable is available in this workspace"
+    },
+    "reno_layout": {
+      "paper": "https://arxiv.org/abs/2610.21366",
+      "usage": "2026 editing-context reference only; no matched benchmark execution is enabled"
+    }
+  },
+  "metrics": {
+    "official_room_iou": {
+      "definition": "Raster2Seq room precision and recall use each predicted-to-ground-truth IoU above 0.5 while ignoring the wall-mask region; reported F1 is the harmonic mean of the case-level precision and recall.",
+      "source": "raster2seq",
+      "split": "Raster2Seq val503",
+      "role": "official external reconstruction metric",
+      "tolerance": {
+        "room_iou_threshold": 0.5,
+        "wall_mask_ignored": true
+      }
+    },
+    "official_room_semantic_f1": {
+      "definition": "Raster2Seq semantic room F1 requires the same room-IoU match and exact room-type agreement.",
+      "source": "raster2seq",
+      "split": "Raster2Seq val503",
+      "role": "official external reconstruction metric"
+    },
+    "official_corner_f1": {
+      "definition": "For each matched room, a predicted corner matches a target corner within 10 pixels; precision and recall are computed over predicted and target corner counts, then combined into F1.",
+      "source": "raster2seq",
+      "split": "Raster2Seq val503",
+      "role": "official external geometry metric",
+      "tolerance": {
+        "corner_distance_px": 10.0
+      }
+    },
+    "official_angle_f1": {
+      "definition": "A corner-angle prediction is correct when its matched polygon corner is within 10 pixels and its angle differs by at most 5 degrees.",
+      "source": "raster2seq",
+      "split": "Raster2Seq val503",
+      "role": "official external geometry metric",
+      "tolerance": {
+        "corner_distance_px": 10.0,
+        "angle_degrees": 5.0
+      }
+    },
+    "official_opening_f1": {
+      "definition": "A door/window endpoint pair matches when the type agrees and each endpoint is within 10 pixels under the better endpoint orientation; precision and recall use predicted and target opening counts.",
+      "source": "raster2seq",
+      "split": "Raster2Seq val503",
+      "role": "official external opening metric",
+      "tolerance": {
+        "endpoint_distance_px": 10.0,
+        "type_exact": true
+      }
+    },
+    "adapter_room_macro_iou": {
+      "definition": "Macro IoU over room classes after rendering the FloorFlow explicit-room plan; reported only as an adapter diagnostic.",
+      "source": "floorflow_room_metric_suite",
+      "split": "declared row split",
+      "role": "adapter diagnostic; never substituted for official_room_iou"
+    },
+    "adapter_instance_f1": {
+      "definition": "One-to-one Hungarian room-instance matching at IoU 0.5, with independent instance precision, recall, and F1.",
+      "source": "floorflow_room_metric_suite",
+      "split": "declared row split",
+      "role": "identity diagnostic",
+      "tolerance": {
+        "room_iou_threshold": 0.5,
+        "minimum_room_area_px": 8
+      }
+    },
+    "node_f1": {
+      "definition": "Precision, recall, and F1 over unique room types in the HouseMind-style graph view.",
+      "source": "floorflow_housemind_structure",
+      "split": "declared row split",
+      "role": "structure metric aligned to HouseMind's public protocol family"
+    },
+    "edge_f1": {
+      "definition": "Precision, recall, and F1 over shared-boundary room-type pairs; canonical one-to-one instance edges are reported separately.",
+      "source": "floorflow_housemind_structure",
+      "split": "declared row split",
+      "role": "structure metric"
+    },
+    "ged": {
+      "definition": "NetworkX graph edit distance on unique room-type nodes with unit node insertion/deletion/substitution and shared-edge adjacency; the timeout and exact-indicator policy are fixed per report.",
+      "source": "floorflow_housemind_structure",
+      "split": "declared row split",
+      "role": "fixed-evaluator graph metric",
+      "tolerance": {
+        "node_substitution_cost": 1.0,
+        "node_insert_cost": 1.0,
+        "node_delete_cost": 1.0,
+        "exact_indicator_required": true
+      }
+    },
+    "validity": {
+      "definition": "Conjunction of outer-boundary closure, room-polygon closure, no self-intersection, no room overlap, and complete legal room semantics.",
+      "source": "fpvec_lab_plus_fevp_contract",
+      "split": "declared row split",
+      "role": "mandatory safety metric"
+    },
+    "raw_watertightness": {
+      "definition": "The unchanged fpeval room-partition watertightness result; multi-component footprints are not silently converted to success.",
+      "source": "fpvec_lab",
+      "split": "declared row split",
+      "role": "mandatory protocol metric"
+    },
+    "componentwise_watertightness": {
+      "definition": "Functional diagnostic requiring validity, zero overlap, exact room-union coverage, component-count agreement with exportable footprint components, and sufficient room-face retention.",
+      "source": "floorflow_generation_plausibility",
+      "split": "declared row split",
+      "role": "functional diagnostic reported beside raw watertightness"
+    },
+    "wall_continuity": {
+      "definition": "Fraction of wall-junction clusters incident to at least two wall segments after the frozen junction-clustering tolerance.",
+      "source": "floorflow_structural_legality",
+      "split": "declared row split",
+      "role": "topology metric",
+      "tolerance": {
+        "junction_cluster_px": 2.0
+      }
+    },
+    "plan_plausibility": {
+      "definition": "Conjunction of parseability, five-check validity, room closure, no self-intersection, no overlap, no out-of-boundary geometry, wall continuity, room-face retention, and functional watertightness.",
+      "source": "floorflow_generation_plausibility",
+      "split": "declared row split",
+      "role": "mandatory target-free reasonableness metric"
+    }
+  },
+  "non_interchangeable_pairs": [
+    ["official_room_iou", "adapter_room_macro_iou"],
+    ["raw_watertightness", "componentwise_watertightness"],
+    ["node_f1", "canonical_instance_f1"],
+    ["edge_f1", "canonical_instance_edge_f1"],
+    ["Raster2Seq official GED", "fixed FloorFlow HouseMind-style GED"],
+    ["oracle-control Room IoU", "predicted-control Room IoU"]
+  ],
+  "current_reasonableness_decision": {
+    "standalone_floorflow_five_seed_val491": {
+      "status": "pass",
+      "raster_plausible_mean": 0.98493,
+      "validity_mean": 1.0,
+      "functional_watertight_mean": 0.99796,
+      "wall_continuity_mean": 0.99543,
+      "plan_plausibility_mean": 0.98656
+    },
+    "raster2seq_proposal_hybrid_val503_v6": {
+      "status": "pass",
+      "raster_plausible": 0.9900596421471173,
+      "validity": 1.0,
+      "functional_watertight": 0.9880715705765407,
+      "wall_continuity_mean": 0.9948030288428164,
+      "wall_continuity_case_pass": 0.9860834990059643,
+      "plan_plausibility": 0.974155069582505,
+      "plan_failure_cases": 13
+    },
+    "hybrid_gap_008_smoke20": {
+      "status": "rejected",
+      "new_case_pass": false,
+      "wall_count_inflation_vs_gap_006": 0.1172
+    }
+  },
+  "hard_fail_policy": [
+    "A missing source implementation makes a metric diagnostic-only.",
+    "A target-derived input invalidates a deployable row.",
+    "A structural threshold cannot be changed after observing a full evaluation.",
+    "A multi-component footprint cannot be treated as a single-region watertight sample without labeling the protocol boundary.",
+    "A hybrid cannot be renamed as standalone FloorFlow."
+  ]
+}

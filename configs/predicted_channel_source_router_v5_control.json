@@ -1,0 +1,15 @@
+{
+  "schema_version": "predicted-channel-source-router-v5-control",
+  "extends": "predicted_channel_source_router_v5_relational_edge.json",
+  "status": "matched_control_only",
+  "hypothesis": "Control arm for isolating the relational edge residual and sparse class-count prior under the same atomic loss routing.",
+  "model": {
+    "room_instance_relational_adjacency": false,
+    "room_instance_class_count_prior": false,
+    "count_aware_second_graph": false
+  },
+  "loss_policy": {
+    "room_instance_class_balance": false
+  },
+  "claim_boundary": "Matched control configuration; not a model result."
+}

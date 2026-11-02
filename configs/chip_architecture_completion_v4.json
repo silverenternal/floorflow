@@ -1,0 +1,68 @@
+{
+  "version": "chip-architecture-completion-v4",
+  "status": "implementation_and_cpu_contract_verification_only",
+  "architecture": "typed_hierarchy",
+  "canonical_parent": "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed21_5k/checkpoints/final.pt",
+  "experiment_policy": {
+    "gpu": "not_run_for_this_plan",
+    "orfs": "not_run_for_this_plan",
+    "training": "not_run_for_this_plan",
+    "promotion": "requires a later matched-subset quality experiment"
+  },
+  "flags": {
+    "global_spec_conditioning": true,
+    "node_semantic_dim": 12,
+    "port_semantic_dim": 5,
+    "netlist_hyperedge_conditioning": true,
+    "membership_hierarchy_conditioning": true,
+    "standalone_legalizer_response": true,
+    "hierarchy_source_max_shelf_probability": 0.75
+  },
+  "input_contracts": {
+    "global_spec": "target-free normalized die/core/utilization vector of width 7",
+    "node_features": "19-column legacy schema is unchanged; orientation/status/shape semantics are optional width 12",
+    "port_features": "optional BTerm-side semantics of width 5",
+    "netlist_hypergraph": "net_features, net_block_incidence and net_mask are required together; net_port_incidence is optional",
+    "image_floorplan": "global and semantic branches fail closed because target-design inputs are unavailable"
+  },
+  "stages": [
+    {
+      "id": "A1-GLOBAL-SPEC",
+      "contract": "zero-gated global geometry conditions the typed global token"
+    },
+    {
+      "id": "A2-SEMANTIC-NODE-PORT",
+      "contract": "masked zero-gated node and port semantics extend the encoder without changing 19-column features"
+    },
+    {
+      "id": "A3-DYNAMIC-HYPEREDGE",
+      "contract": "current block state and tokens are pooled over valid multi-terminal nets at every flow step"
+    },
+    {
+      "id": "A4-MEMBERSHIP-LEGALIZER",
+      "contract": "cluster membership and legalizer response are independent bounded branches"
+    },
+    {
+      "id": "A5-ANALYTICAL-RERANK",
+      "contract": "analytical routed-WL can rerank only legal, non-escalating candidates and fails closed on missing scores"
+    },
+    {
+      "id": "A6-CONSENSUS-DISTILLATION",
+      "contract": "a permutation-equivariant candidate fuser starts from a declared valid reference candidate"
+    },
+    {
+      "id": "A7-VERIFICATION",
+      "contract": "checkpoint reconstruction, resume guards, source cap, tests, Ruff and line limits are audited"
+    }
+  ],
+  "reuse": {
+    "typed_encoder": "src/floorflow/chip_flow/typed_graph_encoder.py",
+    "typed_cross_attention": "src/floorflow/chip_flow/typed_cross_attention.py",
+    "membership_coupler": "src/floorflow/chip_flow/structured_heads.py",
+    "legalizer_response": "src/floorflow/chip_flow/legalizer_response.py",
+    "external_graph_adapter": "src/floorflow/chip_flow/ppa_external.py",
+    "legalizer": "third_party/Trinity/src/trinity/floorplan/legalize/scale_pack.py",
+    "closed_refiner": "third_party/Trinity/src/trinity/sampling/refine_closed.py"
+  },
+  "evidence_boundary": "No result in this config is a quality, SOTA, routed-PPA, congestion or timing claim."
+}

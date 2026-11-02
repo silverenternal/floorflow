@@ -1,0 +1,145 @@
+{
+  "version": "chip-sota-capacity-screen-v1",
+  "status": "prepared_waiting_for_S1",
+  "source_reports": [
+    "chip-capacity-budget-v1",
+    "chip-capacity-budget-v1",
+    "chip-capacity-budget-v1"
+  ],
+  "block_counts": [
+    40,
+    21,
+    120
+  ],
+  "base_steps": 20000,
+  "flop_ratios": {
+    "256": {
+      "per_block": {
+        "40": 1.660065622969349,
+        "21": 1.6744129827132286,
+        "120": 1.6288960363033334
+      },
+      "mean": 1.6544582139953035,
+      "min": 1.6288960363033334,
+      "max": 1.6744129827132286
+    },
+    "384": {
+      "per_block": {
+        "40": 3.358530453650936,
+        "21": 3.4159032809554546,
+        "120": 3.2631503398265616
+      },
+      "mean": 3.3458613581443175,
+      "min": 3.2631503398265616,
+      "max": 3.4159032809554546
+    }
+  },
+  "quick_screen": {
+    "train_indices": "configs/chip_train_screen_5k_v1.json",
+    "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2",
+    "base_steps": 5000,
+    "arms": [
+      {
+        "id": "d192-control",
+        "width": 192,
+        "steps": 5000,
+        "budget_class": "control",
+        "measured_block_ratio": 1.0,
+        "relative_training_flops": 1.0
+      },
+      {
+        "id": "d256-equal-exposure",
+        "width": 256,
+        "steps": 5000,
+        "budget_class": "equal-exposure",
+        "measured_block_ratio": 1.6544582139953035,
+        "relative_training_flops": 1.6544582139953037
+      },
+      {
+        "id": "d256-equal-flops",
+        "width": 256,
+        "steps": 3022,
+        "budget_class": "equal-flops",
+        "measured_block_ratio": 1.6544582139953035,
+        "relative_training_flops": 0.9999545445387613
+      },
+      {
+        "id": "d384-equal-exposure",
+        "width": 384,
+        "steps": 5000,
+        "budget_class": "equal-exposure",
+        "measured_block_ratio": 3.3458613581443175,
+        "relative_training_flops": 3.3458613581443175
+      },
+      {
+        "id": "d384-equal-flops",
+        "width": 384,
+        "steps": 1494,
+        "budget_class": "equal-flops",
+        "measured_block_ratio": 3.3458613581443175,
+        "relative_training_flops": 0.9997433738135222
+      }
+    ],
+    "seed": 19,
+    "device": "cuda:0"
+  },
+  "confirmation": {
+    "train_indices": "configs/chip_train_scaling_20k_v1.json",
+    "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2",
+    "selected_horizon_source": "last completed arm in the S1 range training ladder",
+    "arms": [
+      {
+        "id": "d192-control",
+        "width": 192,
+        "steps": 20000,
+        "budget_class": "control",
+        "measured_block_ratio": 1.0,
+        "relative_training_flops": 1.0
+      },
+      {
+        "id": "d256-equal-exposure",
+        "width": 256,
+        "steps": 20000,
+        "budget_class": "equal-exposure",
+        "measured_block_ratio": 1.6544582139953035,
+        "relative_training_flops": 1.6544582139953037
+      },
+      {
+        "id": "d256-equal-flops",
+        "width": 256,
+        "steps": 12089,
+        "budget_class": "equal-flops",
+        "measured_block_ratio": 1.6544582139953035,
+        "relative_training_flops": 1.0000372674494613
+      },
+      {
+        "id": "d384-equal-exposure",
+        "width": 384,
+        "steps": 20000,
+        "budget_class": "equal-exposure",
+        "measured_block_ratio": 3.3458613581443175,
+        "relative_training_flops": 3.3458613581443175
+      },
+      {
+        "id": "d384-equal-flops",
+        "width": 384,
+        "steps": 5978,
+        "budget_class": "equal-flops",
+        "measured_block_ratio": 3.3458613581443175,
+        "relative_training_flops": 1.0000779599493366
+      }
+    ],
+    "seed": 19,
+    "device": "cuda:0"
+  },
+  "inference": {
+    "primary": "NFE4 + refiner400 + one sample",
+    "diagnostic": "NFE4 + refiner1600 + one sample"
+  },
+  "promotion_rule": {
+    "quick": "Run d256 equal-exposure and equal-FLOP arms before d384.",
+    "d384": "Open only if d256 improves both cost and V_rel in at least one budget class without worsening the high-block tail.",
+    "confirmation": "Promote only a setting that improves both primary metrics under a named equal-exposure or equal-FLOP class."
+  },
+  "boundary": "Capacity screen budget only; no full-data or external claim."
+}

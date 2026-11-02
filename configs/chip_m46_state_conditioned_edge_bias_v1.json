@@ -1,0 +1,45 @@
+{
+  "version": "chip-m46-state-conditioned-edge-bias-v1",
+  "status": "rejected_unnormalized_engineering_run",
+  "candidate": "Canonical M27 plus sparse current-geometry modulation of every backbone graph bias",
+  "priority": "P0",
+  "pain_point": "M27 encodes the typed netlist once and reuses the static adjacency across every ODE call and all 12 backbone layers. U1 changed only the final 3D output and failed to preserve legalized structure.",
+  "mechanism": "An opt-in, zero-initialized sparse edge encoder turns active b2b center deltas, aspect deltas, area ratios and net weights into a bounded symmetric adjacency residual. The residual modulates the existing Trinity attention bias and graph-mix path on every trajectory call without extra NFE or refiner work.",
+  "architecture": {
+    "hidden": 192,
+    "heads": 3,
+    "depth": 12,
+    "typed_layers": 1,
+    "head_dim": 64,
+    "projector_iterations": 4
+  },
+  "initialization": {
+    "source_checkpoint": "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed21_5k/checkpoints/final.pt",
+    "mode": "resume_weights_only_allow_new_params",
+    "initial_output_equivalence_required": true
+  },
+  "screen": {
+    "cache": "outputs/cache/chip_floorset_50k_train_12k_dev_v2",
+    "train_indices": "configs/chip_train_screen_5k_v1.json",
+    "dev_manifest": "outputs/reports/chip_dev_screen_v45.json",
+    "training_seed": 21,
+    "data_seed": 21,
+    "steps": 2000,
+    "batch_size": 128,
+    "device": "cuda:0",
+    "eval_protocol": {
+      "nfe": 4,
+      "refiner_steps": 400,
+      "inference_seed": 19
+    }
+  },
+  "control": {
+    "checkpoint": "outputs/chip_hierarchy/m36_hierarchy_token_bridge_v1/m36_control_quick/checkpoints/final.pt",
+    "cost": 1.138701604693825,
+    "v_rel": 0.03650970115869849
+  },
+  "promotion_gate": "Joint legalized cost and V_rel improvement with feasibility 1.0 and no legalizer rung/solve escalation.",
+  "falsification": "Either primary metric regresses, the dynamic tensor is equivalent to a static edge gate, or legalizer work escalates.",
+  "boundary": "Frozen subset mechanism screen only; not a full-data or external-PPA claim.",
+  "decision": "Invalid for mechanism inference: row-wise degree normalization was missing, and disabling the path on the same trained checkpoint restored finite high-block rollouts. Retained only as engineering provenance; v2 is the evaluated mechanism."
+}

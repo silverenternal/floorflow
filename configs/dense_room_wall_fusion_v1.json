@@ -1,0 +1,39 @@
+{
+  "schema_version": "dense-room-wall-fusion-v1",
+  "checkpoint": "outputs/train/raster_full_cad_bank_frozen_room_screen_v4/best.pt",
+  "data": {
+    "split": "val",
+    "calibration": {
+      "offset": 0,
+      "limit": 64
+    },
+    "holdout": {
+      "offset": 128,
+      "limit": 64
+    },
+    "full": {
+      "offset": 0,
+      "limit": 491
+    }
+  },
+  "arms": {
+    "dense": {},
+    "boundary_wall": {},
+    "predicted_wall_thresholds": [0.3, 0.4, 0.5, 0.6, 0.7],
+    "union_thresholds": [0.3, 0.4, 0.5, 0.6, 0.7]
+  },
+  "selection": {
+    "ranking": "Room IoU + 0.25 * instance F1 + 0.1 * type accuracy",
+    "holdout_gate": "Room IoU and instance F1 improvements preserved; count error and type accuracy do not regress; structural gates pass"
+  },
+  "structural_gate": {
+    "validity": 1.0,
+    "wall_continuity_min": 0.95,
+    "functional_watertight_min": 0.95,
+    "plan_plausibility_min": 0.95,
+    "room_overlap_max": 0.0,
+    "out_of_boundary_max": 0.0
+  },
+  "target_used_at_inference": false,
+  "test503_open": false
+}

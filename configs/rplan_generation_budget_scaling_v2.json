@@ -1,0 +1,36 @@
+{
+  "scope": "residential_rplan_boundary_generation",
+  "test_split_policy": "closed",
+  "frozen_architecture": {
+    "hidden_dim": 96,
+    "decoder_channels": 96,
+    "identity_layers": 2,
+    "vector_layers": 2,
+    "identity_queries": 12,
+    "query_separation_weight": 0.1,
+    "class_balance_power": 0.0,
+    "supervised_separation": false,
+    "class_aware_separation": false,
+    "query_quality": 0.0
+  },
+  "screen_sequence": [
+    {
+      "name": "separation_4096_512",
+      "train_cases": 4096,
+      "validation_cases": 512,
+      "validation_offset": 256,
+      "epochs": 8,
+      "batch_size": 2
+    },
+    {
+      "name": "separation_8192_1024",
+      "train_cases": 8192,
+      "validation_cases": 1024,
+      "validation_offset": 512,
+      "epochs": 8,
+      "batch_size": 2
+    }
+  ],
+  "parameter_rule": "The current ResNet18 encoder is an 11.17M-parameter floor. Parameters below the 9.64M CE2EPlan anchor require a compact encoder ablation; do not call the current 13.61M model parameter matched.",
+  "claim_boundary": "Validation-only scaling screen. CE2EPlan remains a pretrained anchor with a 153.6M-exposure README budget."
+}

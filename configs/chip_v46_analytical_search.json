@@ -1,0 +1,67 @@
+{
+  "version": "2026-10-30-chip-v46-analytical-search",
+  "status": "frozen_before_pilot_outcomes",
+  "scope": "Mechanism-selection pilot only; observed v45 cases cannot confirm a new method.",
+  "cases": [
+    "nangate45/tinyRocket",
+    "nangate45/cva6",
+    "nangate45/bp_be_top"
+  ],
+  "protocol": {
+    "proposal_counts": [
+      1,
+      2
+    ],
+    "total_nfe": 4,
+    "total_refiner_steps": 1600,
+    "inference_seed": 19,
+    "proposal_seed_stride": 1000,
+    "same_legalizer": "src/floorflow/chip_flow/legalization.py",
+    "pairwise_common_route": "If proposals in one case use different legalizer routes, regenerate every proposal in that case with the existing deterministic shelf fallback before scoring.",
+    "same_refiner": "third_party/Trinity/src/trinity/sampling/refine_closed.py",
+    "response_seed_variant": "macro_count",
+    "projector_iterations": 8,
+    "legalizer_time_limit_ms": 2000
+  },
+  "selection": {
+    "primary": "lowest globalplace__route__wirelength__estimated",
+    "baseline": "lowest macro-only p2b HPWL",
+    "forbidden": [
+      "detailed-route wirelength",
+      "DRC count",
+      "post-route timing",
+      "power",
+      "area",
+      "per-case hyperparameter selection"
+    ],
+    "response_command": "scripts/run_chip_analytical_response.py",
+    "response_flow_target": "3_3_place_gp"
+  },
+  "accounting": {
+    "include": [
+      "diffusion sampling",
+      "refiner",
+      "projector",
+      "legalizer",
+      "global placement",
+      "selected detailed route"
+    ],
+    "require_equal_total_nfe": true,
+    "require_equal_total_refiner_steps": true,
+    "report_globalplace_seconds_per_proposal": true,
+    "claim_boundary": "N1 and N2 match diffusion/refiner compute only. Legalization, global placement and selected routing add proposal-dependent cost, so report wall time and use a Pareto claim rather than an equal-total-compute claim."
+  },
+  "guards": {
+    "selected_route_drc_errors": 0,
+    "selected_route_congestion_nonregression": true,
+    "selected_route_setup_ws_regression_ns_at_most": 0.02,
+    "selected_route_power_relative_regression_at_most": 0.05,
+    "selected_route_area_relative_regression_at_most": 0.05
+  },
+  "promotion": {
+    "requires_analytical_beats_p2b_selection": true,
+    "requires_full_route_of_selected_proposals": true,
+    "requires_nonoverlap_validation_before_model_integration": true,
+    "otherwise": "Retain the pilot as negative evidence and do not add a model path."
+  }
+}

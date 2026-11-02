@@ -1,0 +1,20 @@
+{
+  "version": "chip-m59-legalizer-constrained-endpoint-v1",
+  "stage": "M59-LEGALIZER-CONSTRAINED-ENDPOINT",
+  "parent_checkpoint": "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed21_5k/checkpoints/final.pt",
+  "train_indices": "configs/chip_m63_response_indices1k_v1.json",
+  "response_sidecar": "outputs/cache/chip_m63_response_screen1k_v1.npz",
+  "flags": {
+    "structured_hierarchy_coupling": false,
+    "structured_factorized_block": false,
+    "training_projector": true,
+    "training_projector_iterations": 2,
+    "training_projector_displacement_weight": 0.05,
+    "endpoint_compatibility_weight": 0.05,
+    "endpoint_refiner_trajectory_steps": 2,
+    "endpoint_legalized_area_weight": 0.1,
+    "endpoint_legalized_p2b_weight": 0.1,
+    "endpoint_legalizer_target_weight": 0.1
+  },
+  "quick_gate": "legalized cost/V_rel/p2b non-regressing and displacement/rung improves"
+}

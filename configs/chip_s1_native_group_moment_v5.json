@@ -1,0 +1,40 @@
+{
+  "version": "chip-s1-native-group-moment-v5",
+  "parent": "M27 canonical seed21",
+  "purpose": "Screen true group-bbox moments after removing the zero-gated residual deadlock.",
+  "architecture": {
+    "architecture": "typed_hierarchy",
+    "hidden": 192,
+    "heads": 3,
+    "depth": 12,
+    "typed_layers": 1,
+    "head_dim": 64
+  },
+  "branches": {
+    "structural_relation_head": true,
+    "group_moment_conditioning": true
+  },
+  "objective": {
+    "structural_relation_weight": 0.1,
+    "relation_gate_weight": 0.01,
+    "hierarchy_bbox_weight": 0.5,
+    "hierarchy_bbox_decay_steps": 10000
+  },
+  "training": {
+    "scope": "b2b+downstream",
+    "subset": "configs/chip_m63_response_indices1k_v1.json",
+    "probe_steps": 300,
+    "eval_budget": "NFE4/refiner400; frozen 32-case screen before 500-case expansion"
+  },
+  "initialization": {
+    "gate": 1.0,
+    "residual_output": 0.0,
+    "contract": "exact identity at step zero with non-zero residual-head gradients"
+  },
+  "gate": {
+    "primary": "cost non-regression and V_rel paired direction favorable",
+    "structure": "grouping, b2b and area non-regression with at least two improvements",
+    "coverage": "CSJ@B improves by at least 0.05"
+  },
+  "claim_boundary": "Gradient-unblocked target-semantics repair; no quality claim before matched GPU screening."
+}

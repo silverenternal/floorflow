@@ -1,0 +1,52 @@
+{
+  "version": "chip-m45-projector-residual-head-v1",
+  "status": "rejected_quick_gate",
+  "candidate": "Canonical M27 plus zero-initialized projector-residual output head",
+  "priority": "P0",
+  "pain_point": "Projected-value substitution diverges or harms legalization. The model needs a dedicated legal-displacement output pathway without changing its raw x0.",
+  "mechanism": "Predict projector(x0)-x0 from block tokens, raw x0 and time. The projection target is detached. The head is zero at initialization and is added once at inference without extra NFE.",
+  "training": {
+    "source_checkpoint": "outputs/chip_hierarchy/m27_training_seed_replication_v1/m27_seed21_5k/checkpoints/final.pt",
+    "train_indices": "configs/chip_train_screen_5k_v1.json",
+    "steps": 2000,
+    "batch_size": 128,
+    "seed": 21,
+    "data_seed": 21,
+    "device": "cuda:0",
+    "projector_residual_weight": 1.0,
+    "projector_residual_iterations": 4
+  },
+  "control": {
+    "checkpoint": "outputs/chip_hierarchy/m36_hierarchy_token_bridge_v1/m36_control_quick/checkpoints/final.pt",
+    "cost": 1.138701604693825,
+    "v_rel": 0.03650970115869849
+  },
+  "evaluation": {
+    "manifest": "outputs/reports/chip_dev_screen_v45.json",
+    "nfe": 4,
+    "refiner_steps": 400,
+    "inference_seed": 19
+  },
+  "promotion_gate": "Joint legalized cost and V_rel improvement with feasibility 1.0 and no legalizer rung/solve escalation.",
+  "quick_result": {
+    "control_cost": 1.138701604693825,
+    "candidate_cost": 1.2262783099913954,
+    "cost_relative": 0.07690926660379828,
+    "cost_ci": [0.009009409950410963, 0.19203551297123156],
+    "control_v_rel": 0.03650970115869849,
+    "candidate_v_rel": 0.0426144397926788,
+    "v_rel_relative": 0.16720867167453787,
+    "v_rel_ci": [-0.0022388948725106154, 0.015087319855086833],
+    "area_gap_relative": 0.6230478101863139,
+    "b2b_hpwl_relative": 1.0731011357079028,
+    "p2b_hpwl_relative": 52.27421962833999,
+    "grouping_relative": 0.36363636363636365,
+    "boundary_relative": 0.0,
+    "rho_mae_relative": 0.05720772548440961,
+    "feasible_fraction": 1.0,
+    "report": "outputs/reports/chip_m45_projector_residual_quick_refiner400_dev32.json"
+  },
+  "decision": "Reject the detached projector-displacement output head. Do not sweep its width, residual weight or projector iterations.",
+  "falsification": "Residual head is inactive, uses free target geometry, or either primary endpoint metric regresses.",
+  "boundary": "Frozen subset diagnostic only."
+}
