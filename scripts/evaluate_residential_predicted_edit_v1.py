@@ -24,6 +24,7 @@ from floorflow.evaluation.predicted_edit_graph_diagnostics import (
 from floorflow.evaluation.predicted_edit_graph_metrics import (
     predicted_edit_graph_metrics,
 )
+from floorflow.evaluation.report_contract import split_report_fields
 from floorflow.evaluation.structural_legality import structural_legality_metrics
 from floorflow.inference.predicted_control_edit import project_predicted_instruction
 from floorflow.inference.room_repair import (
@@ -537,8 +538,7 @@ def main() -> None:
         "schema_version": "residential-predicted-edit-v1",
         "status": "passed" if all(checks.values()) else "failed",
         "scope": "residential_floorplan_only",
-        "split": args.split,
-        "test_opened": args.split == "test",
+        **split_report_fields(args.split),
         "prompt_count": len(rows),
         "executed": len(executed),
         "abstained": len(abstained),

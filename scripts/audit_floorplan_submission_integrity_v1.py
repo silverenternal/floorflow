@@ -31,6 +31,22 @@ REQUIRED_PAPER_FILES = (
     "paper/figures/predicted_control_operation_panels_v1.pdf",
     "paper/figures/floorplan_failure_taxonomy_v1.pdf",
 )
+ACTIVE_TEXT_FILES = (
+    "paper/main.tex",
+    "paper/supplement.tex",
+    "paper/tables/oracle_control_cvpr_dossier_v1.md",
+    "paper/tables/predicted_control_reasonableness_dossier_v1.md",
+    "paper/tables/main_oracle_anchor_v1.md",
+    "paper/tables/main_predicted_reliability_v1.md",
+    "paper/tables/main_resource_and_ablation_v1.md",
+    "paper/tables/main_external_context_v1.md",
+    "docs/floorplan_claim_evidence_matrix_v1.md",
+)
+STALE_ACTIVE_PATTERNS = (
+    "0.9848-0.9903",
+    "0.000168-0.000259",
+    "Delta-IoU = 0.874-0.899",
+)
 
 
 def _sha256(path: Path) -> str:
@@ -80,11 +96,38 @@ def _package_checks() -> list[str]:
     return errors
 
 
+def _active_text_checks() -> tuple[bool, list[str]]:
+    errors = []
+    for name in ACTIVE_TEXT_FILES:
+        path = ROOT / name
+        if not path.is_file():
+            errors.append(f"active text missing: {name}")
+            continue
+        text = path.read_text(encoding="utf-8")
+        for pattern in STALE_ACTIVE_PATTERNS:
+            if pattern in text:
+                errors.append(f"{name} contains stale metric {pattern}")
+        if "TODO" in text or "TBD" in text or "PLACEHOLDER" in text:
+            errors.append(f"{name} contains a placeholder token")
+    manuscript = (ROOT / "paper/main.tex").read_text(encoding="utf-8")
+    for figure in (
+        "floorplan_protocol_overview_v1.pdf",
+        "predicted_control_operation_panels_v1.pdf",
+    ):
+        if figure not in manuscript:
+            errors.append(f"main manuscript does not reference {figure}")
+    supplement = (ROOT / "paper/supplement.tex").read_text(encoding="utf-8")
+    if "floorplan_failure_taxonomy_v1.pdf" not in supplement:
+        errors.append("supplement does not reference failure taxonomy figure")
+    return not errors, errors
+
+
 def main() -> None:
     plan, plan_errors = _plan_checks()
     missing_reports = [path for path in REQUIRED_REPORTS if not (ROOT / path).is_file()]
     missing_paper = [path for path in REQUIRED_PAPER_FILES if not (ROOT / path).is_file()]
     package_errors = _package_checks()
+    active_text_ok, active_text_errors = _active_text_checks()
     predicted = _load(ROOT / "outputs/reports/predicted_operation_success_val191_v1.json")
     integrity = {
         "schema_version": "floorplan-submission-integrity-v1",
@@ -95,6 +138,7 @@ def main() -> None:
             "required_reports_present": not missing_reports,
             "required_paper_assets_present": not missing_paper,
             "artifact_manifest_valid": not package_errors,
+            "active_texts_current": active_text_ok,
             "predicted_audit_excludes_test": predicted["test_opened"] is False,
             "predicted_model_frozen": predicted["model_frozen"] is True,
             "heldout_result_present": (
@@ -108,6 +152,7 @@ def main() -> None:
             "missing_reports": missing_reports,
             "missing_paper_assets": missing_paper,
             "artifact_package": package_errors,
+            "active_texts": active_text_errors,
         },
         "task_status_counts": _task_status_counts(plan),
         "boundary": (
