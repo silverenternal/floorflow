@@ -19,11 +19,12 @@ from floorflow.heads.structured_objects import partition_wall_mask
 from floorflow.inference.cad_wall_candidate_runtime import (
     candidate_walls_with_sources,
     canonical_room_rows,
+    compose_scored_candidate_plan,
     pad_candidate_sources,
     pad_candidate_tensors,
 )
-from floorflow.inference.canonical_layer_composition import (
-    canonical_union_labels,
+from floorflow.inference.final_stage_wall_source import (
+    final_stage_wall_segments,
 )
 
 
@@ -42,6 +43,45 @@ class CandidateBatch:
     control_proposal_source: torch.Tensor | None = None
 
 
+def compose_source_candidate_plans(
+    candidates: CandidateBatch,
+    opening_probability: torch.Tensor,
+    frame: float,
+    taxonomy: FloorplanTaxonomy,
+    *,
+    source: int = 5,
+    opening_threshold: float = 0.3,
+) -> list:
+    """Compose one proposal source from a canonical candidate batch."""
+
+    if candidates.proposal_source is None:
+        raise ValueError("source composition requires proposal identities")
+    probability = opening_probability.float()
+    plans = []
+    for index in range(candidates.endpoints.shape[0]):
+        active = candidates.proposal_source[index] == int(source)
+        scores = torch.where(
+            active,
+            torch.ones_like(candidates.evidence[index]),
+            torch.full_like(candidates.evidence[index], -1.0),
+        )
+        plans.append(
+            compose_scored_candidate_plan(
+                candidates.endpoints[index],
+                scores,
+                candidates.valid[index],
+                candidates.rooms[index],
+                float(frame),
+                candidates.host_walls[index],
+                probability[index].cpu().numpy(),
+                taxonomy,
+                score_threshold=0.5,
+                opening_threshold=float(opening_threshold),
+            )
+        )
+    return plans
+
+
 def match_candidates(
     predicted: torch.Tensor,
     target: torch.Tensor,
@@ -57,24 +97,15 @@ def match_candidates(
             pairs.append((np.zeros(0, dtype=np.int64), np.zeros(0, dtype=np.int64)))
             positive.append(np.zeros(predicted.shape[1], dtype=bool))
             continue
-        direct = (
-            predicted[batch][:, None] - target[batch, :count][None]
-        ).abs().mean(dim=(2, 3))
-        reverse = (
-            predicted[batch][:, None]
-            - target[batch, :count][None, :, [1, 0]]
-        ).abs().mean(dim=(2, 3))
+        direct = (predicted[batch][:, None] - target[batch, :count][None]).abs().mean(dim=(2, 3))
+        reverse = (predicted[batch][:, None] - target[batch, :count][None, :, [1, 0]]).abs().mean(dim=(2, 3))
         pred_length = (predicted[batch, :, 1] - predicted[batch, :, 0]).norm(dim=-1)
-        target_length = (
-            target[batch, :count, 1] - target[batch, :count, 0]
-        ).norm(dim=-1)
-        cost = torch.minimum(direct, reverse) + 0.5 * (
-            pred_length[:, None] - target_length[None]
-        ).abs()
+        target_length = (target[batch, :count, 1] - target[batch, :count, 0]).norm(dim=-1)
+        cost = torch.minimum(direct, reverse) + 0.5 * (pred_length[:, None] - target_length[None]).abs()
         rows, columns = linear_sum_assignment(cost.detach().cpu().numpy())
-        keep = (
-            cost[rows, columns].detach().cpu().numpy() <= float(tolerance)
-        ) & candidate_valid[batch, rows].cpu().numpy()
+        keep = (cost[rows, columns].detach().cpu().numpy() <= float(tolerance)) & candidate_valid[
+            batch, rows
+        ].cpu().numpy()
         rows = rows[keep].astype(np.int64)
         columns = columns[keep].astype(np.int64)
         mask = np.zeros(predicted.shape[1], dtype=bool)
@@ -105,20 +136,14 @@ def candidate_targets(
         valid,
         tolerance,
     )
-    expected = (
-        torch.from_numpy(np.stack(positive_rows))
-        .to(outputs["score_logits"].device)
-        .float()
-    )
+    expected = torch.from_numpy(np.stack(positive_rows)).to(outputs["score_logits"].device).float()
     exterior_target = torch.zeros_like(expected)
     for batch, (rows, columns) in enumerate(pairs):
         if not rows.size:
             continue
         row_ids = torch.from_numpy(rows).to(exterior_target.device)
         col_ids = torch.from_numpy(columns).to(targets["wall_exterior"].device)
-        exterior_target[batch, row_ids] = targets["wall_exterior"][
-            batch, col_ids
-        ].float()
+        exterior_target[batch, row_ids] = targets["wall_exterior"][batch, col_ids].float()
     coordinate_losses = []
     for batch, (rows, columns) in enumerate(pairs):
         if not rows.size:
@@ -136,19 +161,10 @@ def candidate_targets(
             reduction="none",
         ).mean()
         coordinate_losses.append(torch.minimum(direct, reverse))
-    coordinate = (
-        torch.stack(coordinate_losses).mean()
-        if coordinate_losses
-        else outputs["endpoints"].sum() * 0.0
-    )
+    coordinate = torch.stack(coordinate_losses).mean() if coordinate_losses else outputs["endpoints"].sum() * 0.0
     target_budget = targets["wall_exists"].sum(dim=1).float() / float(valid.shape[1])
-    exterior_budget = (
-        targets["wall_exterior"].sum(dim=1).float() / float(valid.shape[1])
-    )
-    interior_budget = (
-        (targets["wall_exists"] - targets["wall_exterior"]).sum(dim=1).float()
-        / float(valid.shape[1])
-    )
+    exterior_budget = targets["wall_exterior"].sum(dim=1).float() / float(valid.shape[1])
+    interior_budget = (targets["wall_exists"] - targets["wall_exterior"]).sum(dim=1).float() / float(valid.shape[1])
     return (
         expected,
         coordinate,
@@ -172,16 +188,15 @@ def build_candidate_batch(
     visible_wall_boundary_width: int = 7,
 ) -> CandidateBatch:
     if candidate_mode not in {"boundary", "host", "skeleton_portfolio"}:
-        raise ValueError(
-            "candidate_mode must be boundary, host, or skeleton_portfolio"
-        )
+        raise ValueError("candidate_mode must be boundary, host, or skeleton_portfolio")
     room_count = len(taxonomy.room_ids)
     target_size = tuple(footprint.shape[-2:])
     layers = layer_output["cad_layers"].resized(target_size)
-    full_stage_labels = canonical_union_labels(
-        layers.render(footprint, taxonomy),
+    final_source_walls = final_stage_wall_segments(
+        layer_output,
+        footprint,
         taxonomy,
-        boundary_width=int(visible_wall_boundary_width),
+        visible_wall_boundary_width=int(visible_wall_boundary_width),
     )
     layer_wall = layers.wall_logits[:, 0].sigmoid().detach().cpu().numpy()
     runtime_wall = torch.nn.functional.interpolate(
@@ -210,14 +225,12 @@ def build_candidate_batch(
             largest_component_only=True,
         )
         boundary = partition_wall_mask(
-            torch.from_numpy(
-                layers.room_logits[index].argmax(dim=0).detach().cpu().numpy()
-            )[None],
+            torch.from_numpy(layers.room_logits[index].argmax(dim=0).detach().cpu().numpy())[None],
             radius=1,
         )[0].numpy()
-        host_mask = (
-            (runtime_wall[index].detach().cpu().numpy() >= 0.5) | boundary
-        ).astype(np.uint8) * room_footprint.astype(np.uint8)
+        host_mask = ((runtime_wall[index].detach().cpu().numpy() >= 0.5) | boundary).astype(
+            np.uint8
+        ) * room_footprint.astype(np.uint8)
         runtime_host_walls = extract_wall_segments(host_mask, taxonomy)
         base_walls, base_scores, base_sources = candidate_walls_with_sources(
             room_rows,
@@ -236,21 +249,12 @@ def build_candidate_batch(
             candidate_rooms = room_rows
             sources = np.full(len(walls), 2, dtype=np.int64)
             scores = (
-                wall_candidate_evidence(walls, layer_wall[index], radius=2)
-                if walls
-                else np.zeros(0, dtype=np.float32)
+                wall_candidate_evidence(walls, layer_wall[index], radius=2) if walls else np.zeros(0, dtype=np.float32)
             )
         elif candidate_mode == "skeleton_portfolio":
             skeleton_sources = {
                 2: runtime_host_walls,
-                5: extract_wall_segments(
-                    full_stage_labels[index].detach().cpu().numpy(),
-                    taxonomy,
-                    wall_policy=WallSkeletonPolicy(
-                        close_kernel=5,
-                        simplification_fraction=0.010,
-                    ),
-                ),
+                5: final_source_walls[index],
             }
             for source, policy in enumerate(
                 (
@@ -321,9 +325,7 @@ def build_candidate_batch(
         boundary_distance = distance_transform_edt(room_footprint)
         phase = np.zeros(max_walls, dtype=bool)
         for wall_index, wall in enumerate(walls[:max_walls]):
-            midpoint = 0.5 * (
-                np.asarray(wall.start) + np.asarray(wall.end)
-            )
+            midpoint = 0.5 * (np.asarray(wall.start) + np.asarray(wall.end))
             x = int(np.clip(round(midpoint[0]), 0, room_footprint.shape[1] - 1))
             y = int(np.clip(round(midpoint[1]), 0, room_footprint.shape[0] - 1))
             phase[wall_index] = boundary_distance[y, x] <= 2.5

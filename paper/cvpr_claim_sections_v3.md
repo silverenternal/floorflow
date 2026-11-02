@@ -1,106 +1,115 @@
-# CVPR Claim Sections v3
+# CVPR Claim Sections v4
 
-Status date: 2026-11-02
-
-This file is the current submission-facing claim language. It supersedes the
-aggregate ranges in `cvpr_claim_sections_v1.md`. The protocol and evidence
-authority is `docs/fp_oracle_control_protocol_status_v1.md`.
+Status date: 2026-11-02. Claim scope: frozen scoped release.
 
 ## Abstract
 
-Floorplan editing systems increasingly report edit accuracy, but accuracy alone
-does not show whether an edit leaves unrelated geometry unchanged. We study
-strictly local floorplan editing under an explicit control protocol that fixes
-the pre-edit plan, edit region, typed operation, and available controls. We
-evaluate five edit families on CubiCasa5K test503 with five repeated seeds:
-room-type change, room addition, room removal, opening deletion, and furniture
-deletion. FloorFlow reaches Delta-IoU 0.956703-0.999801 and Delta-MSE
-0.000019-0.000096 under the HouseMind edit-detection definitions. These values
-exceed the published HouseMind-E anchors 0.608 and 0.0019 while using different
-datasets and input contracts. FloorFlow preserves outside pixels, room labels,
-polygons, walls, openings, and unaffected edges exactly, maintains FP-Eval
-validity 1.0, and reports conditional watertightness 0.9579-0.9675. An
-attack-tested FEVP evaluator and matched Raster2Seq and editing-aware controls
-separate locality from edit fidelity. The result is a scoped oracle-control
-anchor, not a complete-method HouseMind ranking or a deployable free-text claim.
+Floorplan editors often report edit accuracy without establishing that unrelated
+architecture remains unchanged. We study reliable local execution under an
+explicit control interface: an old CAD state, a declared edit region, and a typed
+control change. Under target-derived oracle controls, FloorFlow reaches Delta-IoU
+`0.956703-0.999801` and Delta-MSE `0.000019-0.000096` across five operations and
+2,479 edits while preserving outside layers exactly. Under target-free predicted
+controls, it preserves the same outside contract, reaches plan plausibility
+`0.986558`, executes all 438 supported development-exposed prompts, and abstains
+on all 300 unsupported or ambiguous prompts. We keep these safety properties
+separate from fidelity: predicted Room macro IoU is `0.269701`, raw
+watertightness is `0.816701`, and an older val191 semantic diagnostic ranges from
+`0.00` to `0.92`. The contribution is a scoped, auditable boundary between
+locality, legality, and semantic realization, not complete benchmark
+superiority.
 
 ## Introduction Contributions
 
-1. **Protocol.** We define a floorplan editing contract that makes the edit
-   region, typed operation, coarse controls, outside domain, and verification
-   metrics explicit.
-2. **Auditability.** We separate edit fidelity from exact outside preservation,
-   topology legality, structural consistency, and edit-region behavior.
-3. **Strong scoped evidence.** Across five operations and five seeds, FloorFlow
-   numerically exceeds the published HouseMind-E Delta-IoU and Delta-MSE
-   anchors while preserving exact outside content and validity.
-4. **Mechanism.** Control-gated local composition and typed routing improve edit
-   fidelity without converting the operation into a global reconstruction.
-5. **Matched controls.** Raster2Seq and an outside-frozen editing-aware wrapper
-   are evaluated on shared paired rows and the same scorer, ruling out a
-   locality-wrapper explanation for the entire gain.
-6. **Boundary evidence.** Negative controls, protocol attacks, complexity strata,
-   independent FEVP validity, and graph diagnostics expose where the protocol
-   succeeds and where topology remains weak.
+1. **Protocol.** A typed-edit contract defines the old state, edit region, coarse
+   control change, outside domain, abstention conditions, and verification axes.
+2. **Scoped oracle anchor.** Five operations, 2,479 edits, five repeated seeds,
+   exact outside preservation, and per-operation edit-support metrics are bound
+   to a frozen source registry.
+3. **Target-free reliability evidence.** Five val491 seeds establish structural
+   plausibility and legality without target controls; a separate
+   development-exposed audit establishes supported execution and safe abstention.
+4. **Matched diagnostics.** An outside-frozen Raster2Seq wrapper, an editing-aware
+   control, deterministic composition arms, and protocol attacks test whether
+   locality alone explains the result.
+5. **Reproducible release.** Tables, figures, case provenance, source hashes,
+   package checksums, and numerical claims share one frozen identity set.
 
 ## Results
 
-Under the oracle-control protocol, FloorFlow's per-operation Delta-IoU is
-0.999199 for room-type change, 0.999801 for room addition, 0.999756 for room
-removal, 0.956703 for opening deletion, and 0.987812 for furniture deletion.
-The corresponding Delta-MSE values are 0.000069, 0.000030, 0.000019, 0.000096,
-and 0.000083. Every operation preserves pixel, room, polygon, wall, opening,
-and unaffected-edge content exactly. FP-Eval validity is 1.0 and conditional
-watertightness ranges from 0.9579 to 0.9675. The primary local-delta path is
-deterministic on fixed rows, so the repeated seeds verify reproducibility rather
-than estimate seed-level sampling variance.
+### Oracle Controls
 
-HouseMind-E publishes Delta-IoU 0.608 and Delta-MSE 0.0019. FloorFlow numerically
-exceeds both anchors for all five operations under aligned metric definitions.
-Because HouseMind reports on RPLAN natural-language editing and FloorFlow reports
-on CubiCasa oracle controls, this is a protocol-aligned comparison rather than a
-same-benchmark rank.
+Per-operation Delta-IoU is `0.999199`, `0.999801`, `0.999756`, `0.956703`, and
+`0.987812` for room type, room addition, room removal, opening deletion, and
+furniture deletion. The corresponding Delta-MSE values are `0.000069`,
+`0.000030`, `0.000019`, `0.000096`, and `0.000083`. Outside pixel, room, polygon,
+wall, opening, and unaffected-edge checks are exact. FP-Eval validity is `1.0`;
+pooled conditional watertightness is `0.957875-0.967491`. The seed19 trace audit
+recomputes all 2,479 rows with zero IoU error.
 
-The matched outside-frozen Raster2Seq wrapper reaches Delta-IoU
-0.035690-0.164930. The editing-aware control baseline reaches
-0.731151-0.998508. FloorFlow's range is 0.956703-0.999801. Exact outside
-preservation remains 1.0 in every FloorFlow operation.
+HouseMind-E publishes Delta-IoU `0.608` and Delta-MSE `0.0019` on RPLAN
+natural-language editing. The oracle numbers numerically exceed those anchors
+under aligned metric definitions, but the datasets and input contracts differ.
+This is therefore a scoped anchor, not a cross-dataset ranking.
 
-The aligned structural readout reaches Node F1 0.982250, edge overlap 0.929475,
-and GED 0.869544. These values do not exceed HouseMind-E's 0.998, 0.934, and
-0.467. The graph result is therefore a secondary topology diagnostic, not an
-additional SOTA claim.
+### Matched Controls
 
-## Related Work Positioning
+The outside-frozen Raster2Seq wrapper reaches `0.137160-0.189491`. The matched
+editing-aware control reaches `0.731151-0.998508`. FloorFlow reaches
+`0.956703-0.999801` on the same operation rows. Paired floorplan-level intervals
+and five-operation Holm adjustment are retained in the source report.
 
-HouseMind introduces discrete room-instance tokens and a unified multimodal
-interface for floorplan understanding, generation, and editing. Its edit table
-reports Delta-IoU, Delta-MSE, Node F1, edge overlap, and GED but does not report
-strict outside exactness, locality violation rate, negative controls, protocol
-attacks, or paired locality statistics. This absence defines an audit boundary,
-not a failure claim.
+The typed composition diagnostic reports Delta-IoU `0.937473`, Node F1
+`0.955068`, edge F1 `0.890007`, and GED `2.120855` on 12,395 strict-locality
+rows. Relative to the matched no-graph arm, typed routing gains `0.048656` in
+Delta-IoU and `-0.061396` in GED. Routing latency is `3.1925 ms` versus
+`0.2666 ms`; efficiency is not claimed.
 
-Raster2Seq reconstructs vector plans from raster inputs and is used here only as
-a matched reconstruction baseline. Its outside-frozen local-redraw wrapper is an
-editing-aware diagnostic rather than a claim about native editing capability.
+### Predicted Controls
 
-CE2EPlan, TLC-Plan, and FMLM remain generation-only context. No generation
-result is interpreted as an editing result.
+On val491, raster plausibility is `0.984929`, plan plausibility is `0.986558`,
+room coverage is `1.0`, room-face retention is `0.995655`, validity is `1.0`, and
+outside footprint and room overlap are `0.0`. Raw watertightness is `0.816701`;
+functional componentwise watertightness is `0.997963`. Of 491 footprints, 401 are
+single-component and pass both checks; 90 multi-component footprints define the
+declared protocol boundary.
+
+The operation audit contains 738 development-exposed test prompts: 438 supported
+prompts execute and 300 unsupported or ambiguous prompts abstain. Every row has
+outside pixel exactness `1.0`, outside room-label exactness `1.0`, and validity
+`1.0`. These are safety and state outcomes, not semantic success.
+
+### Semantic Boundary
+
+The older val191 diagnostic reports room addition `92/100`, room type `55/100`,
+room removal `20/100`, opening deletion `30/59`, and furniture deletion `0/15`.
+It uses a different model age and split from the selected predicted-control
+evidence. Predicted room macro IoU is `0.269701`, Node F1 is `0.660202`, edge
+overlap is `0.264622`, and GED is `11.600815`.
+
+## Related-Work Positioning
+
+HouseMind unifies floorplan understanding, generation, and editing with discrete
+room-instance tokens. Its published table does not expose strict outside
+preservation, abstention, attack sensitivity, or paired locality statistics.
+Raster2Seq is used as an outside-frozen reconstruction wrapper, not as a native
+editing model. The HouseMind official serialization is unavailable, so no
+complete-method reproduction is claimed.
 
 ## Reviewer-Facing Claim
 
-> Under one frozen oracle-control editing protocol, FloorFlow produces
-> edit-detection metrics above the published HouseMind-E anchors while also
-> reporting exact outside preservation and topology legality. The evidence
-> supports a strong scoped editing anchor, not complete-method or cross-benchmark
-> SOTA.
+> Under a frozen typed-edit protocol, FloorFlow provides strong oracle-control
+> edit support with exact outside preservation and legality, and a target-free
+> predicted-control path with structural plausibility and calibrated abstention.
+> Reference fidelity and semantic realization remain explicit limitations.
 
 ## Locked Boundaries
 
-- No claim that FloorFlow beats the complete HouseMind-E method.
-- No claim that FloorFlow is leaderboard SOTA on HouseMind's RPLAN benchmark.
-- No claim that aligned Node/Edge/GED exceed HouseMind-E.
-- No claim that oracle controls are deployable predicted controls.
-- No claim of free-text, move-wall, resize, or global-recomposition capability.
-- No pooling of aligned, canonical-instance, and typed graph protocols.
-- No conversion of missing external metrics into zeros or failures.
+- No complete HouseMind, RPLAN, or full-CAD SOTA.
+- No uniform Node/Edge/GED superiority.
+- No deployable free-text editing.
+- No pooling across oracle, predicted, identity, generation, or free-text rows.
+- No conversion of abstention, contract checks, or no-op behavior into semantic
+  success.
+- No fresh held-out claim; the optional extension is separately marked as not
+  evaluated.

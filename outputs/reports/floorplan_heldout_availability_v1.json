@@ -1,0 +1,25 @@
+{
+  "schema_version": "floorplan-heldout-availability-v1",
+  "status": "optional_generalization_not_evaluated",
+  "evaluated_at": "2026-11-02",
+  "dataset": "CubiCasa5K",
+  "total_test_cases": 503,
+  "cases_in_edit_prompt_report": 200,
+  "cases_absent_from_edit_prompt_report": 303,
+  "full_completion_inference_cases": 503,
+  "fresh_compatible_split_available": false,
+  "reason": "All test cases were included in full predicted-completion inference; absent prompt cases are not unopened model cases.",
+  "required_for_scoped_submission": false,
+  "blocks_scoped_release": false,
+  "future_heldout_policy": [
+    "Freeze checkpoint, config, prompts, taxonomy, evaluator, and thresholds before access.",
+    "Execute once.",
+    "Retain every negative outcome.",
+    "Report the extension separately from the scoped main tables."
+  ],
+  "sources": [
+    "outputs/reports/residential_instruction_robustness_test503_final_v1.json",
+    "outputs/reports/predicted_control_plausibility_fiveseed_v12.json",
+    "outputs/reports/floorplan_evidence_freeze_audit_v2.json"
+  ]
+}

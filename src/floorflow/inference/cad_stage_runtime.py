@@ -73,10 +73,7 @@ def fuse_learned_opening_consumer(
         mode="bilinear",
         align_corners=False,
     )[:, 0]
-    output[:, room_count + 1] = torch.maximum(
-        structure_opening_logits.sigmoid()[:, 0],
-        family,
-    )
+    output[:, room_count + 1] = structure_opening_logits.sigmoid()[:, 0]
     opening_channels = room_count + 2, room_count + 2 + len(taxonomy.opening_ids)
     output[:, opening_channels[0] : opening_channels[1]] = (
         structure_opening_type_logits.softmax(dim=1)
@@ -95,11 +92,16 @@ def opening_control_maps(
     missing = [name for name in required if name not in maps]
     if missing:
         raise ValueError(f"opening detector maps missing: {missing}")
-    return {
+    result = {
         "opening_family_probability": maps["family_probability"],
         "opening_foreground_probability": maps["foreground"],
         "opening_family_logits": maps["family_logits"],
     }
+    if "center" in maps:
+        result["opening_center_probability"] = maps["center"]
+    if "interval_width" in maps:
+        result["opening_interval_width"] = maps["interval_width"]
+    return result
 
 
 def fuse_junction_evidence(

@@ -27,6 +27,7 @@ def layer_proxy_metrics(
     taxonomy: FloorplanTaxonomy,
     *,
     predicted_room_support: np.ndarray | None = None,
+    opening_family_probability: np.ndarray | None = None,
 ) -> dict[str, float]:
     """Return low-cost layer diagnostics used only after target-free inference."""
 
@@ -79,7 +80,12 @@ def layer_proxy_metrics(
         ),
     }
     metrics.update(
-        opening_vector_proxy(predicted, target, taxonomy)
+        opening_vector_proxy(
+            predicted,
+            target,
+            taxonomy,
+            opening_family_probability=opening_family_probability,
+        )
     )
     return metrics
 

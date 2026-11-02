@@ -97,8 +97,9 @@ def predicted_channel_model_kwargs(config: Mapping[str, Any]) -> dict[str, Any]:
             config.get("room_query_set_routing_attention", True)
         ),
         "query_count_gate": bool(config.get("query_count_gate", False)),
-        "owner_preserving_room_readout": bool(
-            config.get("owner_preserving_room_readout", False)
+        "owner_preserving_room_readout": config.get(
+            "owner_preserving_room_readout",
+            False,
         ),
         "room_instance_adaptive_query": bool(
             config.get("room_instance_adaptive_query", False)
@@ -126,6 +127,10 @@ def predicted_channel_model_kwargs(config: Mapping[str, Any]) -> dict[str, Any]:
         ),
         "count_aware_second_graph": bool(
             config.get("count_aware_second_graph", False)
+        ),
+        "area_preserving_mask_residual": config.get(
+            "area_preserving_mask_residual",
+            False,
         ),
         "full_resolution_mask_refinement": bool(
             config.get("full_resolution_mask_refinement", False)

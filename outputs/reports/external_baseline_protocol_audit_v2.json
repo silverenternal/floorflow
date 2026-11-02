@@ -1,0 +1,53 @@
+{
+  "status": "complete",
+  "raster2seq": {
+    "official_anchor_status": "official_anchor_complete_matched_identity_blocked",
+    "official_room_f1": 0.8852683927386281,
+    "matched_sensitivity_status": "shared_project_preprocessing_sensitivity_complete",
+    "matched_scope": "CubiCasa test503; identical project-controlled coarse-control renderings, pre/post rows, wall exclusion, and HouseMind-style scorer. This is not Raster2Seq's released official preprocessing.",
+    "shared_project_preprocessing": true,
+    "upstream_official_preprocessing_matched": false,
+    "wrapper": {
+      "path": "scripts/evaluate_fp_raster2seq_local_redraw.py",
+      "sha256": "e99b9a2a9cf6b8578081d93d2e2548e73aeba67cdfe1cba7a8777c147475bd3a",
+      "implementation_public": true
+    }
+  },
+  "ce2eplan": {
+    "sampling_method": "np.linspace_over_public_test_order",
+    "sampling_seed": null,
+    "sample_indices_sha256": "158d013bf8b7eeacfecf7dba9389311274b4cd93b0b09e0b605c837267903f69",
+    "sample_count": 200,
+    "outside_exact": "not applicable to generation-only outputs"
+  },
+  "housemind": {
+    "status": "blocked_external",
+    "verified_at": "2026-10-27T13:05:04.688152+00:00",
+    "official_code_status": "code_soon",
+    "source_hashes": {
+      "project_page": "4a2e6eb25df3f7cbe2b5dfa5e3eed0a1737c78298ff16e1f6dcc67dfa4a1eb11",
+      "arxiv_abs": "2dc0bd58ab98fbaaa827718b25877edb40faf33654a07af144e5712f63feb0d3",
+      "arxiv_html": "7753f81e2c192b11b73c1fea1e37305ccf88624f3d7cbc6bb14e015990b6f7f5",
+      "cvpr_page": "31d77edd781ed6b94039d06e925f3eabd565bdb079e8a5d8c21a310d1248a08a"
+    }
+  },
+  "checks": {
+    "official_and_shared_preprocessing_separated": true,
+    "wrapper_is_public_and_hashed": true,
+    "ce2e_sampling_disclosed": true,
+    "house_mind_timestamp_and_hashes": true
+  },
+  "claims": {
+    "allowed": [
+      "Raster2Seq matched rows are a shared-project-preprocessing sensitivity analysis, not an official-pipeline reproduction.",
+      "The Raster2Seq outside-frozen wrapper is public and reproducible.",
+      "CE2EPlan samples are deterministic evenly spaced and index-hashed.",
+      "HouseMind unavailability is time-stamped and page-hash backed."
+    ],
+    "forbidden": [
+      "The matched edit comparison uses official Raster2Seq preprocessing.",
+      "HouseMind is failed rather than unreported.",
+      "CE2EPlan is a matched editing baseline."
+    ]
+  }
+}

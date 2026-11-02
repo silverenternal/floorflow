@@ -5,12 +5,16 @@ from pathlib import Path
 
 import pytest
 
+from floorflow.evaluation.atom_measurement_builder import build_measurements
+from floorflow.evaluation.atom_metric_contract import load_metric_pairs
 from floorflow.evaluation.atom_proxy_consistency import (
     ConsistencyThresholds,
     build_consistency_report,
     evaluate_measurement,
     load_measurement_payloads,
 )
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def _payload(baseline: str = "c0") -> dict:
@@ -124,3 +128,33 @@ def test_cross_seed_case_mismatch_fails_same_case_gate(tmp_path: Path) -> None:
     assert not result["summary"]["same_cases_across_seeds"]
     assert not result["summary"]["same_cases_all_seeds"]
     assert not result["checks"]["same_cases"]
+
+
+def test_query_separation_rows_bind_to_instance_f1_measurement() -> None:
+    pairs = load_metric_pairs(ROOT / "configs/atom_metric_pairs_v1.json")
+    rows = [
+        {
+            "seed": 19,
+            "checkpoint": checkpoint,
+            "case_id": "case-0",
+            "proxy_metrics": {"query_separation_proxy": proxy},
+            "canonical_metrics": {"instance_f1": canonical},
+        }
+        for checkpoint, proxy, canonical in (
+            ("epoch_00", 0.20, 0.30),
+            ("epoch_01", 0.10, 0.40),
+        )
+    ]
+    measurements = build_measurements(rows, pairs)
+    bound = {
+        item["id"]: item
+        for item in measurements
+    }
+    assert bound["RM-02.query-separation"]["atom_id"] == "RM-02"
+    assert bound["RM-02.query-separation"]["proxy_metric"] == (
+        "query_separation_proxy"
+    )
+    assert bound["RM-02.query-separation"]["canonical_metric"] == (
+        "instance_f1"
+    )
+    assert len(bound["RM-02.query-separation"]["rows"]) == 2

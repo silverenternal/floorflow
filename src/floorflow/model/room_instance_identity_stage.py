@@ -10,6 +10,7 @@ from floorflow.heads.room_adjacency import (
     RoomAdjacencyHead,
     RoomGraphConditioner,
     mask_contact_logits,
+    owner_swap_metrics,
 )
 from floorflow.heads.room_mask_decoder import (
     RoomMaskDecoder,
@@ -101,7 +102,7 @@ class RoomInstanceIdentityStage(nn.Module):
         query_set_routing_attention: bool = True,
         room_class_prior: tuple[float, ...] | None = None,
         query_count_gate: bool = True,
-        owner_preserving_room_readout: bool = True,
+        owner_preserving_room_readout: bool | str = True,
         adaptive_query_refinement: bool = False,
         adaptive_query_residual_scale: float = 0.0,
         mask_aware_room_adjacency: bool = False,
@@ -109,6 +110,7 @@ class RoomInstanceIdentityStage(nn.Module):
         relational_adjacency_hidden: int = 128,
         count_aware_room_graph: bool = False,
         count_aware_second_graph: bool = False,
+        area_preserving_mask_residual: bool | str = False,
         full_resolution_mask_refinement: bool = False,
     ) -> None:
         super().__init__()
@@ -173,6 +175,7 @@ class RoomInstanceIdentityStage(nn.Module):
                 hidden_dim,
                 in_channels,
                 num_room_classes,
+                area_preserving_mask_residual=area_preserving_mask_residual,
             )
             if predict_room_adjacency
             else None
@@ -198,6 +201,11 @@ class RoomInstanceIdentityStage(nn.Module):
             else None
         )
         self.query_count_gate = bool(query_count_gate)
+        self.owner_readout_mode = (
+            "relative"
+            if owner_preserving_room_readout == "relative"
+            else "absolute"
+        )
         self.owner_preserving_room_readout = bool(
             owner_preserving_room_readout
         )
@@ -307,11 +315,13 @@ class RoomInstanceIdentityStage(nn.Module):
                 prediction["mask_logits"],
                 query_presence=graph_presence,
             )
+            pre_graph_mask_logits = prediction["mask_logits"]
             graph = self.room_graph_conditioner(
                 prediction["query_features"],
                 adjacency_logits,
                 features,
                 query_presence=graph_presence,
+                mask_logits=pre_graph_mask_logits,
             )
             prediction["query_features"] = graph["query_features"]
             class_logits = prediction["class_logits"].clone()
@@ -332,6 +342,17 @@ class RoomInstanceIdentityStage(nn.Module):
                 )
             prediction["mask_logits"] = (
                 prediction["mask_logits"] + mask_residual
+            )
+            first_swap = owner_swap_metrics(
+                pre_graph_mask_logits,
+                prediction["mask_logits"],
+                graph_presence,
+            )
+            prediction["room_graph_first_owner_swap_fraction"] = first_swap[
+                "owner_swap_fraction"
+            ]
+            prediction["room_graph_first_owner_swap_support_fraction"] = (
+                first_swap["owner_swap_support_fraction"]
             )
             prediction["room_graph_first_mask_residual"] = mask_residual
             prediction["query_existence_logits"] = (
@@ -402,11 +423,13 @@ class RoomInstanceIdentityStage(nn.Module):
                 prediction["mask_logits"],
                 query_presence=final_presence,
             )
+            pre_second_mask_logits = prediction["mask_logits"]
             graph = self.room_graph_conditioner(
                 prediction["query_features"],
                 final_adjacency,
                 features,
                 query_presence=final_presence,
+                mask_logits=pre_second_mask_logits,
             )
             prediction["query_features"] = graph["query_features"]
             updated_class = prediction["class_logits"].clone()
@@ -427,6 +450,17 @@ class RoomInstanceIdentityStage(nn.Module):
                 )
             prediction["mask_logits"] = (
                 prediction["mask_logits"] + mask_residual
+            )
+            second_swap = owner_swap_metrics(
+                pre_second_mask_logits,
+                prediction["mask_logits"],
+                final_presence,
+            )
+            prediction["room_graph_second_owner_swap_fraction"] = (
+                second_swap["owner_swap_fraction"]
+            )
+            prediction["room_graph_second_owner_swap_support_fraction"] = (
+                second_swap["owner_swap_support_fraction"]
             )
             prediction["room_graph_second_mask_residual"] = mask_residual
             prediction["query_existence_logits"] = (
@@ -479,6 +513,7 @@ class RoomInstanceIdentityStage(nn.Module):
                 dense_room_logits.shape[1],
                 fallback_logits=fused,
                 soft_foreground=self.training,
+                confidence_mode=self.owner_readout_mode,
             )
             fused = owner["owner_preserving_logits"]
             prediction.update(
@@ -488,6 +523,15 @@ class RoomInstanceIdentityStage(nn.Module):
                     "room_owner_boundary": owner["owner_boundary"],
                     "room_owner_soft_weight_mean": owner[
                         "owner_soft_weight"
+                    ].float().mean(),
+                    "room_owner_relative_confidence_mean": owner[
+                        "owner_relative_confidence"
+                    ].float().mean(),
+                    "room_owner_foreground_fraction": owner[
+                        "owner_foreground"
+                    ].float().mean(),
+                    "room_owner_mass_sum_mean": owner[
+                        "owner_mass_sum"
                     ].float().mean(),
                 }
             )

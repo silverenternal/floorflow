@@ -55,14 +55,18 @@ def instance_room_losses(
     query_separation_class_aware: bool = True,
     reference_anchor_weight: float = 0.0,
     mask_centroid_weight: float = 0.0,
+    mask_area_weight: float = 0.0,
     balance_room_classes: bool = True,
     return_loss_terms: bool = False,
-) -> tuple[torch.Tensor, torch.Tensor, dict[str, torch.Tensor]] | tuple[
-    torch.Tensor,
-    torch.Tensor,
-    dict[str, torch.Tensor],
-    dict[str, torch.Tensor],
-]:
+) -> (
+    tuple[torch.Tensor, torch.Tensor, dict[str, torch.Tensor]]
+    | tuple[
+        torch.Tensor,
+        torch.Tensor,
+        dict[str, torch.Tensor],
+        dict[str, torch.Tensor],
+    ]
+):
     """Supervise query instances and their dense fused partition."""
 
     if teacher is None:
@@ -88,9 +92,7 @@ def instance_room_losses(
         "class_logits": output["room_instance_class_logits"],
         "mask_logits": mask_logits,
         "query_existence_logits": output.get("query_existence_logits"),
-        "query_count_selection_mask": output.get(
-            "query_count_selection_mask"
-        ),
+        "query_count_selection_mask": output.get("query_count_selection_mask"),
         "aux_mask_logits": [
             F.interpolate(
                 value,
@@ -101,9 +103,7 @@ def instance_room_losses(
             for value in output["room_instance_aux_mask_logits"]
         ],
         "aux_class_logits": output["room_instance_aux_class_logits"],
-        "adaptive_query_diagnostics": output.get(
-            "adaptive_query_diagnostics"
-        ),
+        "adaptive_query_diagnostics": output.get("adaptive_query_diagnostics"),
     }
     room_matches = match_room_mask_queries(
         predictions["class_logits"],
@@ -112,18 +112,10 @@ def instance_room_losses(
         target_masks,
         target_valid,
     )
-    room_shared_match_count = mask_logits.new_tensor(
-        sum(len(match.predicted_indices) for match in room_matches)
-    )
+    room_shared_match_count = mask_logits.new_tensor(sum(len(match.predicted_indices) for match in room_matches))
     room_valid_target_count = target_valid.sum().to(mask_logits.dtype)
-    room_query_gate_output_present = mask_logits.new_tensor(
-        float("query_count_soft_selection" in output)
-    )
-    room_class_weights = (
-        _room_class_weights(taxonomy, target.device)
-        if balance_room_classes
-        else None
-    )
+    room_query_gate_output_present = mask_logits.new_tensor(float("query_count_soft_selection" in output))
+    room_class_weights = _room_class_weights(taxonomy, target.device) if balance_room_classes else None
     instance_loss, instance_components = room_mask_loss(
         predictions,
         target_classes,
@@ -134,20 +126,16 @@ def instance_room_losses(
         unmatched_mask_weight=unmatched_mask_weight,
         mask_pos_weight=mask_pos_weight,
         mask_tversky_weight=mask_tversky_weight,
-        query_separation_weight=(
-            1.0 if float(query_separation_weight) > 0.0 else 0.0
-        ),
+        query_separation_weight=(1.0 if float(query_separation_weight) > 0.0 else 0.0),
         class_aware_query_separation=query_separation_class_aware,
         reference_anchor_weight=reference_anchor_weight,
         mask_centroid_weight=mask_centroid_weight,
+        mask_area_weight=mask_area_weight,
         matches=room_matches,
     )
     query_separation_loss = instance_components["_room_mask_separation_term"]
     base_instance_loss = instance_loss - query_separation_loss
-    instance_loss = (
-        base_instance_loss
-        + float(query_separation_weight) * query_separation_loss
-    )
+    instance_loss = base_instance_loss + float(query_separation_weight) * query_separation_loss
     query_set_total = instance_loss.new_zeros(())
     query_set_components = {}
     query_set_loss_terms: list[dict[str, torch.Tensor]] = []
@@ -172,9 +160,7 @@ def instance_room_losses(
             target_classes,
             target_valid,
             target_masks,
-            class_cardinality_consistency_weight=(
-                query_class_cardinality_weight
-            ),
+            class_cardinality_consistency_weight=(query_class_cardinality_weight),
             support_assignment_weight=query_support_assignment_weight,
             selection_alignment_weight=query_selection_alignment_weight,
             presence_rank_weight=query_presence_rank_weight,
@@ -187,9 +173,7 @@ def instance_room_losses(
             query_set_components,
             *query_set_loss_terms,
         ) = query_set_result
-        instance_loss = (
-            instance_loss + float(query_set_weight) * query_set_total
-        )
+        instance_loss = instance_loss + float(query_set_weight) * query_set_total
     partition_loss, partition_components = room_mask_partition_loss(
         predictions,
         target,
@@ -199,24 +183,17 @@ def instance_room_losses(
     )
     program_loss = instance_loss.new_zeros(())
     program_components = {}
-    if (
-        program is not None
-        and "program_room_assignment_logits" in output
-    ):
-        program_loss, program_components = (
-            program_instance_assignment_loss(
-                output["program_room_assignment_logits"],
-                mask_logits,
-                target_classes,
-                target_masks,
-                target_valid,
-                program,
-                matches=room_matches,
-            )
+    if program is not None and "program_room_assignment_logits" in output:
+        program_loss, program_components = program_instance_assignment_loss(
+            output["program_room_assignment_logits"],
+            mask_logits,
+            target_classes,
+            target_masks,
+            target_valid,
+            program,
+            matches=room_matches,
         )
-        instance_loss = (
-            instance_loss + float(program_assignment_weight) * program_loss
-        )
+        instance_loss = instance_loss + float(program_assignment_weight) * program_loss
     adjacency_loss = instance_loss.new_zeros(())
     adjacency_components = {}
     type_adjacency_loss = instance_loss.new_zeros(())
@@ -224,54 +201,38 @@ def instance_room_losses(
     type_node_loss = instance_loss.new_zeros(())
     type_node_components = {}
     if "room_adjacency_logits" in output:
-        adjacency_loss, adjacency_components = (
-            room_adjacency_consistency_loss(
-                output,
-                int(max_rooms),
-                target_masks,
-                target_valid,
-            )
+        adjacency_loss, adjacency_components = room_adjacency_consistency_loss(
+            output,
+            int(max_rooms),
+            target_masks,
+            target_valid,
         )
-        instance_loss = (
-            instance_loss + float(room_adjacency_weight) * adjacency_loss
+        instance_loss = instance_loss + float(room_adjacency_weight) * adjacency_loss
+        type_adjacency_loss, type_adjacency_components = room_type_adjacency_consistency_loss(
+            output,
+            int(max_rooms),
+            target_classes,
+            target_valid,
+            target_masks,
         )
-        type_adjacency_loss, type_adjacency_components = (
-            room_type_adjacency_consistency_loss(
-                output,
-                int(max_rooms),
-                target_classes,
-                target_valid,
-                target_masks,
-            )
-        )
-        instance_loss = (
-            instance_loss
-            + float(room_type_adjacency_weight) * type_adjacency_loss
-        )
+        instance_loss = instance_loss + float(room_type_adjacency_weight) * type_adjacency_loss
     if float(room_type_node_weight) > 0.0:
-        type_node_loss, type_node_components = (
-            room_type_node_consistency_loss(
-                output,
-                int(max_rooms),
-                target_classes,
-                target_valid,
-            )
+        type_node_loss, type_node_components = room_type_node_consistency_loss(
+            output,
+            int(max_rooms),
+            target_classes,
+            target_valid,
         )
-        instance_loss = (
-            instance_loss + float(room_type_node_weight) * type_node_loss
-        )
+        instance_loss = instance_loss + float(room_type_node_weight) * type_node_loss
     dense_components = {}
     dense_total = instance_loss.new_zeros(())
     dense_loss_terms: list[dict[str, torch.Tensor]] = []
     if (
-        float(dense_type_adjacency_weight) > 0.0
-        or float(dense_type_node_weight) > 0.0
+        float(dense_type_adjacency_weight) > 0.0 or float(dense_type_node_weight) > 0.0
     ) and "room_instance_probability" in output:
         final_room_probability = output["room_instance_probability"]
         if "room_instance_logits" in output:
-            final_room_probability = output[
-                "room_instance_logits"
-            ].float().softmax(dim=1)
+            final_room_probability = output["room_instance_logits"].float().softmax(dim=1)
         dense_result = dense_room_type_graph_losses(
             final_room_probability,
             target,
@@ -286,45 +247,20 @@ def instance_room_losses(
         instance_loss = instance_loss + dense_total
     components = {
         **instance_components,
-        "instance_room_class": instance_components[
-            "room_mask_class_loss"
-        ],
-        "instance_room_mask": instance_components[
-            "room_mask_dice_bce_loss"
-        ],
-        "instance_room_unmatched": instance_components[
-            "room_mask_unmatched_loss"
-        ],
-        "instance_room_tversky": instance_components[
-            "room_mask_tversky_loss"
-        ],
-        "instance_room_matched_dice": instance_components[
-            "room_mask_matched_dice"
-        ],
-        "instance_room_matched_iou": instance_components[
-            "room_mask_matched_iou"
-        ],
-        "instance_room_predicted_area": instance_components[
-            "room_mask_matched_predicted_area"
-        ],
-        "instance_room_target_area": instance_components[
-            "room_mask_matched_target_area"
-        ],
-        "instance_room_unmatched_area": instance_components[
-            "room_mask_unmatched_predicted_area"
-        ],
-        "instance_room_centroid_error": instance_components[
-            "room_mask_matched_centroid_error"
-        ],
-        "instance_room_reference_anchor": instance_components[
-            "room_mask_reference_anchor_loss"
-        ],
-        "instance_room_mask_centroid": instance_components[
-            "room_mask_centroid_loss"
-        ],
-        "instance_room_query_separation": instance_components[
-            "room_query_separation_loss"
-        ],
+        "instance_room_class": instance_components["room_mask_class_loss"],
+        "instance_room_mask": instance_components["room_mask_dice_bce_loss"],
+        "instance_room_unmatched": instance_components["room_mask_unmatched_loss"],
+        "instance_room_tversky": instance_components["room_mask_tversky_loss"],
+        "instance_room_matched_dice": instance_components["room_mask_matched_dice"],
+        "instance_room_matched_iou": instance_components["room_mask_matched_iou"],
+        "instance_room_predicted_area": instance_components["room_mask_matched_predicted_area"],
+        "instance_room_target_area": instance_components["room_mask_matched_target_area"],
+        "instance_room_unmatched_area": instance_components["room_mask_unmatched_predicted_area"],
+        "instance_room_centroid_error": instance_components["room_mask_matched_centroid_error"],
+        "instance_room_reference_anchor": instance_components["room_mask_reference_anchor_loss"],
+        "instance_room_mask_centroid": instance_components["room_mask_centroid_loss"],
+        "instance_room_area": instance_components["room_mask_area_loss"],
+        "instance_room_query_separation": instance_components["room_query_separation_loss"],
         "instance_room_partition": partition_loss.detach(),
         "program_instance_total": program_loss.detach(),
         "room_query_set_total": query_set_total.detach(),
@@ -346,6 +282,7 @@ def instance_room_losses(
         raw_terms = {
             "instance_room": base_instance_loss,
             "query_separation": query_separation_loss,
+            "room_area": instance_components["_room_mask_area_term"],
             "program_instance": program_loss,
             "room_adjacency": adjacency_loss,
             "room_type_adjacency": type_adjacency_loss,
@@ -398,11 +335,14 @@ def teacher_room_targets(
     """Assign room classes to class-agnostic Raster2Seq proposal masks."""
 
     count = min(int(max_rooms), teacher.masks.shape[1])
-    masks = F.interpolate(
-        teacher.masks[:, :count].float(),
-        size=target.shape[-2:],
-        mode="nearest",
-    ) > 0.5
+    masks = (
+        F.interpolate(
+            teacher.masks[:, :count].float(),
+            size=target.shape[-2:],
+            mode="nearest",
+        )
+        > 0.5
+    )
     teacher_classes = teacher.class_ids
     if teacher_classes is None:
         room_proposals = teacher.valid[:, :count].bool()
@@ -413,10 +353,7 @@ def teacher_room_targets(
             device=target.device,
         )
         room_proposals = torch.isin(teacher_classes, room_ids_tensor)
-    valid = (
-        room_proposals
-        & masks.flatten(2).any(dim=-1)
-    )
+    valid = room_proposals & masks.flatten(2).any(dim=-1)
     classes = torch.zeros(
         valid.shape,
         dtype=torch.long,

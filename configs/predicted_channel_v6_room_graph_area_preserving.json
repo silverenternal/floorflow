@@ -1,0 +1,9 @@
+{
+  "schema_version": "predicted-channel-v6-room-graph-area-preserving",
+  "extends": "predicted_channel_v6_room_graph_adapter_joint.json",
+  "status": "area_preserving_graph_candidate",
+  "model": {
+    "area_preserving_mask_residual": true
+  },
+  "claim_boundary": "Keeps the rejected relational graph bundle but constrains both graph mask-residual passes to presence-aware, zero-spatial-mean owner redistribution. No quality claim before matched screening."
+}

@@ -79,6 +79,20 @@ all non-chip Python files remain <600 lines
 No GPU training or evaluation was run in this pass. Metric promotion remains
 open until the owner-boundary and soft-count mechanisms clear matched screens.
 
+## v342 Class-Consumer Repair
+
+A later tensor-contract audit found that the selected-query gather expanded its
+class-index dimension to one rather than the number of room classes. PyTorch
+accepted the narrower index, returned the first class only, and broadcast that
+single value across the class axis in `owner_preserving_logits`.
+
+The gather now carries all room classes. Historical `True`/`False` owner
+configuration values retain absolute-confidence behavior, while the explicit
+`"relative"` mode is available only through
+`configs/predicted_channel_v6_owner_relative_only.json`. Deterministic tests
+cover all-class preservation, low-absolute/high-relative ownership, config
+round-trip, and rejection of unknown modes.
+
 The repository-wide line-count test currently reports one pre-existing
 out-of-scope chips file, `src/floorflow/chip_flow/hierarchical_flow.py`, above
 600 lines. That file was not modified in this pass.

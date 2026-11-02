@@ -5,6 +5,8 @@ import sys
 from collections import Counter
 from pathlib import Path
 
+import pytest
+
 from floorflow.data.taxonomy import build_taxonomy
 from floorflow.model.predicted_channel_checkpoint import (
     build_predicted_channel_model,
@@ -172,11 +174,13 @@ def test_dynamic_loss_balancer_covers_weak_metric_objectives(monkeypatch) -> Non
         "stage_opening_precision",
         "stage_opening_host",
         "stage_opening_type",
+        "stage_opening_family",
         "stage_furniture",
         "routing",
         "furniture_query",
         "instance_room",
         "query_separation",
+        "room_area",
         "instance_partition",
         "program_instance",
         "room_adjacency",
@@ -293,6 +297,87 @@ def test_room_identity_repair_uses_trainable_room_scope(monkeypatch) -> None:
     balancer = build_typed_channel_balancer(args)
     assert balancer is not None
     assert abs(balancer.base_weights["query_separation"] - 0.05) < 1.0e-12
+
+
+def test_program_route_candidate_isolates_route_flags(monkeypatch) -> None:
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "train",
+            "--output-dir",
+            "outputs/train/test",
+            "--model-config",
+            "configs/predicted_channel_v6_program_route_only.json",
+        ],
+    )
+    args = parse_args()
+    resolved = model_config(args)
+    assert resolved["program_room_action_fusion"]
+    assert resolved["differentiable_route_budget"]
+    assert args.room_instance_query_separation_weight == 0.0
+    assert not args.room_instance_query_separation_class_agnostic
+    assert not args.room_instance_relational_adjacency
+    assert not args.room_instance_class_count_prior
+    assert not args.count_aware_second_graph
+
+
+def test_area_preserving_graph_candidate_is_opt_in(monkeypatch) -> None:
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "train",
+            "--output-dir",
+            "outputs/train/test",
+            "--model-config",
+            "configs/predicted_channel_v6_room_graph_area_preserving.json",
+        ],
+    )
+    args = parse_args()
+    resolved = model_config(args)
+    assert resolved["area_preserving_mask_residual"]
+    assert resolved["room_instance_relational_adjacency"]
+    assert resolved["count_aware_second_graph"]
+
+
+@pytest.mark.parametrize(
+    ("config", "fusion", "budget"),
+    [
+        (
+            "configs/predicted_channel_v6_program_fusion_only.json",
+            True,
+            False,
+        ),
+        (
+            "configs/predicted_channel_v6_route_budget_only.json",
+            False,
+            True,
+        ),
+    ],
+)
+def test_program_route_single_factor_configs(
+    monkeypatch,
+    config: str,
+    fusion: bool,
+    budget: bool,
+) -> None:
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "train",
+            "--output-dir",
+            "outputs/train/test",
+            "--model-config",
+            config,
+        ],
+    )
+    args = parse_args()
+    resolved = model_config(args)
+    assert resolved.get("program_room_action_fusion", False) is fusion
+    assert resolved.get("differentiable_route_budget", False) is budget
+    assert args.room_instance_query_separation_weight == 0.0
 
 
 def test_v5_room_adapter_config_preserves_prior_stage(monkeypatch) -> None:

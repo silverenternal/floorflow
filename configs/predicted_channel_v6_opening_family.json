@@ -1,0 +1,11 @@
+{
+  "schema_version": "predicted-channel-v6-opening-family",
+  "extends": "predicted_channel_v6_opening_adapter_control.json",
+  "status": "opening_family_loss_candidate",
+  "train_scope": "opening_adapter",
+  "loss_policy": {
+    "opening_family_weight": 1.0,
+    "opening_type_class_balance": true
+  },
+  "claim_boundary": "Adds direct door/window family supervision and subtype class balance. No opening metric claim before matched training."
+}

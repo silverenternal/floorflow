@@ -1,0 +1,7 @@
+{
+  "schema_version": "predicted-channel-v6-opening-adapter-control",
+  "extends": "predicted_channel_v6_room_identity_adapter_control.json",
+  "status": "opening_adapter_control",
+  "train_scope": "opening_adapter",
+  "claim_boundary": "Matched control for opening-family loss and subtype balance. Only opening-family parameters train."
+}

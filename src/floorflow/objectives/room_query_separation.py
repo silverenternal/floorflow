@@ -111,6 +111,30 @@ def count_gated_query_separation(
     )
 
 
+def per_case_query_separation(
+    class_logits: torch.Tensor,
+    mask_logits: torch.Tensor,
+    existence_logits: torch.Tensor | None = None,
+    selection: torch.Tensor | None = None,
+    *,
+    class_aware: bool = False,
+) -> tuple[torch.Tensor, ...]:
+    """Return one target-free separation value per batch case."""
+
+    if class_logits.shape[0] != mask_logits.shape[0]:
+        raise ValueError("query separation batch size must match")
+    return tuple(
+        count_gated_query_separation(
+            class_logits[index : index + 1],
+            mask_logits[index : index + 1],
+            None if existence_logits is None else existence_logits[index : index + 1],
+            None if selection is None else selection[index : index + 1],
+            class_aware=class_aware,
+        )
+        for index in range(class_logits.shape[0])
+    )
+
+
 def balanced_room_class_weights(
     target_classes: torch.Tensor,
     target_valid: torch.Tensor,
@@ -213,5 +237,6 @@ __all__ = [
     "balanced_room_class_weights",
     "count_gated_query_separation",
     "gated_active_query_presence",
+    "per_case_query_separation",
     "supervised_same_class_overlap_loss",
 ]

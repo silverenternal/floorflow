@@ -231,6 +231,14 @@ def test_dynamic_query_and_contact_graph_are_optional_live_paths() -> None:
     assert output["room_graph_query_presence"].shape == (1, 4)
     assert "room_graph_first_class_residual" in output
     assert "room_graph_first_mask_residual" in output
+    assert output["room_owner_relative_confidence_mean"] >= 0.0
+    assert output["room_owner_foreground_fraction"] >= 0.0
+    assert output["room_owner_mass_sum_mean"] >= 0.0
+    owner_spread = (
+        output["room_owner_fused_logits"].amax(dim=1)
+        - output["room_owner_fused_logits"].amin(dim=1)
+    )
+    assert owner_spread.max() > 0.0
     assert output["opening_host_support"].shape == (
         1,
         1,

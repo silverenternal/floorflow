@@ -90,10 +90,21 @@ def main() -> None:
         torch.isinf(state.room_exists[~selection]).all()
         or (state.room_exists[~selection] < -1.0e30).all()
     )
+    owner_logits = output.get("room_owner_fused_logits")
+    owner_class_spread = (
+        owner_logits.amax(dim=1) - owner_logits.amin(dim=1)
+        if isinstance(owner_logits, torch.Tensor)
+        else None
+    )
+    expected_refreshes = (
+        4 if bool(config.get("refresh_validation_tokens", False)) else 3
+    )
     checks = {
         "all_outputs_finite": finite,
         "loss_finite": bool(torch.isfinite(loss)),
-        "action_refresh_3": int(output["action_refresh_count"]) == 3,
+        "action_refresh_matches_config": (
+            int(output["action_refresh_count"]) == expected_refreshes
+        ),
         "room_stage_context_live": _grad_present(
             model.stage_refiners["rooms"].output.weight
         ),
@@ -113,6 +124,10 @@ def main() -> None:
             and output["mask_class_evidence"].shape[-1]
             == len(taxonomy.room_ids)
         ),
+        "owner_class_channels_live": bool(
+            owner_class_spread is not None
+            and owner_class_spread.max() > 1.0e-6
+        ),
         "edit_ghost_slots_masked": bool(ghost_mask_ok),
     }
     report = {
@@ -120,6 +135,7 @@ def main() -> None:
         "device": str(device),
         "case": names[0],
         "checkpoint": str(args.checkpoint),
+        "expected_action_refreshes": expected_refreshes,
         "checks": checks,
         "passed": all(checks.values()),
         "loss": float(loss.detach()),
@@ -127,6 +143,11 @@ def main() -> None:
         "shapes": {
             "logits": list(output["logits"].shape),
             "room_instance": list(output["room_instance_logits"].shape),
+            "room_owner_fused": (
+                list(owner_logits.shape)
+                if isinstance(owner_logits, torch.Tensor)
+                else None
+            ),
             "adjacency": list(output["room_adjacency_logits"].shape),
             "furniture_class": list(
                 output["furniture_query_class_logits"].shape

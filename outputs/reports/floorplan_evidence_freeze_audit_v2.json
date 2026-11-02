@@ -1,0 +1,27 @@
+{
+  "schema_version": "floorplan-evidence-freeze-audit-v2",
+  "status": "passed_scoped_release",
+  "freeze": "configs/floorplan_submission_evidence_freeze_v2.json",
+  "freeze_sha256": "fc614fd1866fb8701f08ee8127143c231a72578579556261a10a87bde5c2f2f4",
+  "checks": {
+    "scoped_mode": true,
+    "source_registry_hash_locked": true,
+    "source_files_hash_locked": true,
+    "checkpoint_identity_locked": true,
+    "evaluator_identity_locked": true,
+    "release_source_identity_locked": true,
+    "oracle_statistics_complete": true,
+    "predicted_five_seed_release_complete": true,
+    "operation_safety_and_semantics_separated": true,
+    "historical_execution_hashes_not_claimed": true,
+    "optional_heldout_not_blocking": true,
+    "no_clean_worktree_requirement": true
+  },
+  "optional_generalization_not_evaluated": {
+    "status": "optional_generalization_not_evaluated",
+    "required_for_scoped_submission": false,
+    "note": "A new held-out claim requires a separate pre-access freeze and one-shot run."
+  },
+  "errors": [],
+  "boundary": "This audit verifies identities and scoped evidence consistency. It does not certify that the historical seed reports were generated from the current source tree, and it does not open a new split."
+}

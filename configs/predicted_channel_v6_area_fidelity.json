@@ -1,0 +1,9 @@
+{
+  "schema_version": "predicted-channel-v6-area-fidelity",
+  "extends": "predicted_channel_v6_room_graph_area_preserving.json",
+  "status": "atomic_area_fidelity_candidate",
+  "loss_policy": {
+    "room_instance_mask_area_weight": 0.2
+  },
+  "claim_boundary": "Adds only matched-query symmetric area supervision to the area-preserving graph control. It does not inherit any metric claim and must be screened against the same architecture with the area term disabled."
+}

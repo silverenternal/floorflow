@@ -1,5 +1,9 @@
 import torch
 
+from floorflow.heads.room_mask_area import (
+    matched_mask_area_loss,
+    symmetric_area_error,
+)
 from floorflow.heads.room_mask_decoder import room_mask_loss
 from floorflow.objectives.furniture_vector_refine import (
     furniture_containment_loss,
@@ -39,12 +43,15 @@ def test_positive_weight_changes_sparse_mask_objective() -> None:
     balanced.backward()
     gradient = predictions["mask_logits"].grad
     assert gradient is not None
-    assert gradient[0, 0, 3:5, 3:5].mean() < gradient[
-        0,
-        0,
-        0:2,
-        0:2,
-    ].mean()
+    assert (
+        gradient[0, 0, 3:5, 3:5].mean()
+        < gradient[
+            0,
+            0,
+            0:2,
+            0:2,
+        ].mean()
+    )
 
 
 def test_unmatched_query_mask_is_supervised_as_empty() -> None:
@@ -121,3 +128,57 @@ def test_tversky_is_live_and_containment_penalizes_outside_room() -> None:
     total.backward()
     assert predictions["mask_logits"].grad is not None
     assert outside_mask.grad is not None
+
+
+def test_matched_area_loss_is_scale_sensitive_and_differentiable() -> None:
+    target = torch.zeros(2, 1, 8, 8)
+    target[0, 0, 1:5, 1:5] = 1.0
+    target[1, 0, 2:6, 2:6] = 1.0
+    under = torch.full_like(target, 1.0e-4, requires_grad=True)
+    exact = target * 0.999
+    over = torch.full_like(target, 0.75)
+
+    under_error = symmetric_area_error(under, target)
+    exact_error = symmetric_area_error(exact, target)
+    over_error = symmetric_area_error(over, target)
+    assert under_error.mean() > exact_error.mean()
+    assert over_error.mean() > exact_error.mean()
+    assert torch.all(under_error <= 1.0)
+
+    loss = matched_mask_area_loss(under, target)
+    loss.backward()
+    assert under.grad is not None
+    assert torch.count_nonzero(under.grad) > 0
+
+
+def test_room_mask_area_weight_is_independent_atomic_term() -> None:
+    predictions = {
+        "class_logits": torch.zeros(1, 1, 2),
+        "mask_logits": torch.full(
+            (1, 1, 8, 8),
+            -8.0,
+            requires_grad=True,
+        ),
+    }
+    classes = torch.zeros(1, 1, dtype=torch.long)
+    masks = torch.zeros(1, 1, 8, 8)
+    masks[0, 0, 1:7, 1:7] = 1.0
+    valid = torch.ones(1, 1, dtype=torch.bool)
+    baseline, _ = room_mask_loss(
+        predictions,
+        classes,
+        masks,
+        valid,
+    )
+    weighted, components = room_mask_loss(
+        predictions,
+        classes,
+        masks,
+        valid,
+        mask_area_weight=1.0,
+    )
+    assert components["room_mask_area_loss"] > 0.5
+    assert torch.allclose(
+        weighted.detach() - baseline.detach(),
+        components["room_mask_area_loss"],
+    )

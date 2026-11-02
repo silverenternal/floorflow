@@ -1,0 +1,7 @@
+{
+  "schema_version": "predicted-channel-v6-wall-source5-evidence",
+  "extends": "predicted_channel_v6_room_identity_adapter_control.json",
+  "status": "deterministic_wall_source_evidence",
+  "evaluate_deterministic_wall_source": true,
+  "claim_boundary": "Adds source-5 vector-plan metrics to the existing validation path. It does not alter model parameters or training objectives."
+}

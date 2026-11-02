@@ -1,0 +1,271 @@
+{
+  "status": "complete",
+  "base_attacks": 26,
+  "supplemental_attacks": 6,
+  "attacks": [
+    {
+      "metric": "delta_iou",
+      "attack": "remove_one_expected_change_pixel",
+      "baseline": 1.0,
+      "attacked": 0.984375,
+      "sensitive": true
+    },
+    {
+      "metric": "delta_mse",
+      "attack": "remove_one_expected_change_pixel",
+      "baseline": 0.0,
+      "attacked": 0.00390625,
+      "sensitive": true
+    },
+    {
+      "metric": "conditional_watertightness",
+      "submetric": "hole_area_ratio",
+      "attack": "enlarge_hole_area",
+      "baseline": 0.0,
+      "attacked": 0.00808080808080808,
+      "sensitive": true
+    },
+    {
+      "metric": "outside_exact",
+      "submetric": "outside_room_polygon_exact",
+      "attack": "move_room_polygon_one_pixel",
+      "baseline": 1.0,
+      "attacked": 0.0,
+      "sensitive": true
+    },
+    {
+      "metric": "outside_exact",
+      "submetric": "outside_pixel_exact",
+      "attack": "move_room_pixels_outside_edit_region",
+      "baseline": 1.0,
+      "attacked": 0.8662587412587412,
+      "sensitive": true
+    },
+    {
+      "metric": "ged",
+      "submetric": "ged",
+      "attack": "relabel_one_graph_node",
+      "baseline": 0.0,
+      "attacked": 1.0,
+      "sensitive": true
+    }
+  ],
+  "covered_metric_submetric_pairs": [
+    [
+      "conditional_watertightness",
+      "dangling_endpoint_rate"
+    ],
+    [
+      "conditional_watertightness",
+      "disconnected_component_count"
+    ],
+    [
+      "conditional_watertightness",
+      "hole_area_ratio"
+    ],
+    [
+      "conditional_watertightness",
+      "hole_count"
+    ],
+    [
+      "conditional_watertightness",
+      "watertight_rate"
+    ],
+    [
+      "delta_iou",
+      "delta_iou"
+    ],
+    [
+      "delta_mse",
+      "delta_mse"
+    ],
+    [
+      "edge_overlap",
+      "f1"
+    ],
+    [
+      "edge_overlap",
+      "outside_edge_exact"
+    ],
+    [
+      "edge_overlap",
+      "precision"
+    ],
+    [
+      "edge_overlap",
+      "recall"
+    ],
+    [
+      "ged",
+      "ged"
+    ],
+    [
+      "node_f1",
+      "f1"
+    ],
+    [
+      "node_f1",
+      "precision"
+    ],
+    [
+      "node_f1",
+      "recall"
+    ],
+    [
+      "outside_exact",
+      "locality_violation_rate"
+    ],
+    [
+      "outside_exact",
+      "outside_edge_exact"
+    ],
+    [
+      "outside_exact",
+      "outside_pixel_exact"
+    ],
+    [
+      "outside_exact",
+      "outside_room_label_exact"
+    ],
+    [
+      "outside_exact",
+      "outside_room_level_exact"
+    ],
+    [
+      "outside_exact",
+      "outside_room_polygon_exact"
+    ],
+    [
+      "validity",
+      "no_room_overlap"
+    ],
+    [
+      "validity",
+      "no_self_intersection"
+    ],
+    [
+      "validity",
+      "outer_boundary_closed"
+    ],
+    [
+      "validity",
+      "room_polygon_closed"
+    ],
+    [
+      "validity",
+      "semantic_complete"
+    ],
+    [
+      "validity",
+      "validity"
+    ]
+  ],
+  "required_metric_submetric_pairs": [
+    [
+      "outside_exact",
+      "outside_pixel_exact"
+    ],
+    [
+      "outside_exact",
+      "outside_room_level_exact"
+    ],
+    [
+      "outside_exact",
+      "outside_room_label_exact"
+    ],
+    [
+      "outside_exact",
+      "outside_room_polygon_exact"
+    ],
+    [
+      "outside_exact",
+      "outside_edge_exact"
+    ],
+    [
+      "outside_exact",
+      "locality_violation_rate"
+    ],
+    [
+      "validity",
+      "outer_boundary_closed"
+    ],
+    [
+      "validity",
+      "room_polygon_closed"
+    ],
+    [
+      "validity",
+      "no_self_intersection"
+    ],
+    [
+      "validity",
+      "no_room_overlap"
+    ],
+    [
+      "validity",
+      "semantic_complete"
+    ],
+    [
+      "conditional_watertightness",
+      "watertight_rate"
+    ],
+    [
+      "conditional_watertightness",
+      "hole_count"
+    ],
+    [
+      "conditional_watertightness",
+      "hole_area_ratio"
+    ],
+    [
+      "conditional_watertightness",
+      "disconnected_component_count"
+    ],
+    [
+      "conditional_watertightness",
+      "dangling_endpoint_rate"
+    ],
+    [
+      "node_f1",
+      "precision"
+    ],
+    [
+      "node_f1",
+      "recall"
+    ],
+    [
+      "node_f1",
+      "f1"
+    ],
+    [
+      "edge_overlap",
+      "precision"
+    ],
+    [
+      "edge_overlap",
+      "recall"
+    ],
+    [
+      "edge_overlap",
+      "f1"
+    ],
+    [
+      "delta_iou",
+      "delta_iou"
+    ],
+    [
+      "delta_mse",
+      "delta_mse"
+    ],
+    [
+      "ged",
+      "ged"
+    ]
+  ],
+  "checks": {
+    "all_supplemental_attacks_sensitive": true,
+    "mandatory_and_optional_submetrics_covered": true,
+    "delta_metrics_attacked": true,
+    "hole_area_attacked": true
+  }
+}

@@ -24,7 +24,10 @@ def test_cad_layers_compose_without_mixing_family_thresholds() -> None:
     layers = CadLayeredOutput(
         room_logits=torch.zeros(1, len(taxonomy.room_ids), 16, 16),
         wall_logits=torch.full((1, 1, 16, 16), -8.0),
-        opening_logits=torch.zeros(1, len(taxonomy.opening_ids), 16, 16),
+        opening_logits=torch.full(
+            (1, len(taxonomy.opening_ids), 16, 16),
+            -8.0,
+        ),
         furniture_logits=torch.zeros(1, len(taxonomy.furniture_ids), 16, 16),
         support_logits=torch.full((1, 1, 16, 16), -8.0),
     )
@@ -59,3 +62,20 @@ def test_cad_layer_resize_preserves_contract() -> None:
     resized = layers.resized((16, 16))
     assert resized.room_logits.shape[-2:] == (16, 16)
     assert resized.support_logits is None
+
+
+def test_opening_foreground_uses_family_confidence_contract() -> None:
+    taxonomy = _taxonomy()
+    layers = CadLayeredOutput(
+        room_logits=torch.zeros(1, len(taxonomy.room_ids), 8, 8),
+        wall_logits=torch.full((1, 1, 8, 8), 8.0),
+        opening_logits=torch.zeros(1, len(taxonomy.opening_ids), 8, 8),
+        furniture_logits=torch.zeros(
+            1,
+            len(taxonomy.furniture_ids),
+            8,
+            8,
+        ),
+    )
+    rendered = layers.render(torch.ones(1, 8, 8), taxonomy)
+    assert not rendered.opening.any()

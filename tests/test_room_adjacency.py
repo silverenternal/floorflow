@@ -150,6 +150,40 @@ def test_graph_residual_warm_start_restores_nonzero_output_weights() -> None:
     assert conditioner.mask_residual.weight.abs().sum() > 0
 
 
+def test_area_preserving_graph_residual_redistributes_owner_mass() -> None:
+    torch.manual_seed(7)
+    conditioner = RoomGraphConditioner(
+        8,
+        8,
+        3,
+        area_preserving_mask_residual=True,
+    )
+    queries = torch.randn(1, 3, 8)
+    adjacency = torch.randn(1, 3, 3)
+    features = torch.randn(1, 8, 4, 4)
+    output = conditioner(
+        queries,
+        adjacency,
+        features,
+        query_presence=torch.tensor([[1.0, 0.0, 1.0]]),
+    )
+    residual = output["mask_residual"]
+    assert torch.count_nonzero(residual[0, 1]) == 0
+    assert residual[0, [0, 2]].sum(dim=(1, 2)).abs().max() < 1.0e-6
+    assert residual.sum(dim=1).abs().max() < 1.0e-6
+    class_residual = output["class_residual"]
+    assert torch.count_nonzero(class_residual[0, 1]) == 0
+    assert class_residual.sum(dim=1).abs().max() < 1.0e-6
+    (
+        output["mask_residual"].square().mean()
+        + class_residual.square().mean()
+    ).backward()
+    assert conditioner.mask_residual.weight.grad is not None
+    assert conditioner.class_residual.weight.grad is not None
+    assert torch.count_nonzero(conditioner.mask_residual.weight.grad) > 0
+    assert torch.count_nonzero(conditioner.class_residual.weight.grad) > 0
+
+
 def test_room_graph_weights_suppress_absent_query_slots() -> None:
     weights = room_graph_weights(
         torch.zeros(1, 3, 3),
@@ -214,6 +248,11 @@ def test_room_adjacency_loss_reaches_query_head() -> None:
         dense["room_instance_logits"].shape[0],
         *dense["room_instance_logits"].shape[-2:],
     )
+    owner_class_spread = (
+        dense["room_owner_fused_logits"].amax(dim=1)
+        - dense["room_owner_fused_logits"].amin(dim=1)
+    )
+    assert owner_class_spread.max() > 0.0
     assert torch.isfinite(loss)
     loss.backward()
     assert stage.room_adjacency_head.projection.weight.grad is not None

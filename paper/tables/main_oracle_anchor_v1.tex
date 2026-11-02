@@ -1,0 +1,18 @@
+\begin{table*}[t]
+\centering
+\caption{Oracle-control editing anchor on CubiCasa5K test503. Intervals resample floorplans; repeated seeds are not independent plans. Delta metrics measure change support, not target-class correctness.}
+\label{tab:oracle}
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+Operation & $N$ & $\Delta$IoU [95\% CI] & $\Delta$MSE & Outside exact & Vector validity \\
+\midrule
+Room type & 487 & 0.999199 [0.998420, 0.999747] & 0.000069 & 1.000000 & 0.956879 \\
+Room add & 495 & 0.999801 [0.999545, 0.999990] & 0.000030 & 1.000000 & 0.955556 \\
+Room remove & 500 & 0.999756 [0.999479, 0.999966] & 0.000019 & 1.000000 & 0.954000 \\
+Opening delete & 502 & 0.956703 [0.941316, 0.970424] & 0.000096 & 1.000000 & 0.912351 \\
+Furniture delete & 495 & 0.987812 [0.982565, 0.992375] & 0.000083 & 1.000000 & 0.951515 \\
+\bottomrule
+\end{tabular}
+\par\smallskip\footnotesize Pooled FP-Eval validity 1.000; conditional watertightness 0.9579--0.9675. FEVP five-check validity 0.9124--0.9569.
+\end{table*}

@@ -35,6 +35,28 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--batch-size", type=int, default=4)
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--device", default="cuda:0")
+    parser.add_argument(
+        "--evaluate-deterministic-wall-source",
+        action="store_true",
+    )
+    parser.add_argument(
+        "--owner-mode",
+        choices=("checkpoint", "absolute", "relative"),
+        default="checkpoint",
+    )
+    parser.add_argument(
+        "--graph-residual-mode",
+        choices=(
+            "checkpoint",
+            "free",
+            "area_preserving",
+            "margin",
+            "area_preserving_margin",
+            "class_only",
+            "bypass",
+        ),
+        default="checkpoint",
+    )
     return parser.parse_args()
 
 
@@ -49,6 +71,9 @@ def _config(args: argparse.Namespace, config: dict) -> Namespace:
     values["batch_size"] = args.batch_size
     values["workers"] = args.workers
     values["device"] = args.device
+    values["evaluate_deterministic_wall_source"] = bool(
+        args.evaluate_deterministic_wall_source
+    )
     return Namespace(**values)
 
 
@@ -80,10 +105,16 @@ def main() -> None:
         pin_memory=device.type == "cuda",
         persistent_workers=cli.workers > 0,
     )
-    model = build_predicted_channel_model(
-        taxonomy,
-        checkpoint["config"],
-    )
+    model_config = dict(checkpoint["config"])
+    if cli.owner_mode != "checkpoint":
+        model_config["owner_preserving_room_readout"] = cli.owner_mode
+    if cli.graph_residual_mode != "checkpoint":
+        model_config["area_preserving_mask_residual"] = (
+            False
+            if cli.graph_residual_mode == "free"
+            else cli.graph_residual_mode
+        )
+    model = build_predicted_channel_model(taxonomy, model_config)
     model.load_state_dict(checkpoint["model"])
     model = model.to(device).eval()
     stage_runtime = CadStageRuntime(
@@ -118,6 +149,11 @@ def main() -> None:
         "checkpoint_epoch": int(checkpoint.get("epoch", 0)),
         "cases": len(rows),
         "target_used_at_inference": False,
+        "owner_mode": cli.owner_mode,
+        "evaluate_deterministic_wall_source": bool(
+            cli.evaluate_deterministic_wall_source
+        ),
+        "graph_residual_mode": cli.graph_residual_mode,
         "metrics": metrics,
         "rows": str(cli.output),
     }

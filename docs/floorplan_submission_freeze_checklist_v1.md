@@ -1,54 +1,79 @@
-# Floorplan Submission Freeze Checklist v1
+# FloorPlan Submission Freeze Checklist v2
 
-Status: ready for use after the paused predicted-model search is resolved.
+Status date: 2026-11-02. Local status: `passed_scoped_release`; package status:
+`ready_for_user_submission`.
 
-## Preconditions
+## Scope
 
-- Select one explicit checkpoint; do not freeze a directory of candidates.
-- Commit the selected model code, operation parser, evaluators, and thresholds.
-- Require `git status --porcelain` to be empty.
-- Obtain a case manifest that has not been inferred or evaluated by any current
-  predicted model.
-- Verify that no test-derived metric has been used for checkpoint selection.
+- [x] Use the existing oracle test503, predicted val491, and development-exposed
+  operation evidence.
+- [x] Keep the optional fresh held-out extension as
+  `optional_generalization_not_evaluated`.
+- [x] Do not represent OpenReview enrollment, upload, or a venue receipt as a
+  completed local action.
 
-## Freeze Inputs
+## Evidence Identity
 
-- selected checkpoint;
-- predicted-control generation config;
-- held-out prompt manifest generated from case IDs only;
-- taxonomy;
-- operation-success contract;
-- FEVP, graph, and structural evaluator source hashes;
-- metric tolerances and thresholds.
+- [x] Source registry: `docs/floorplan_submission_source_registry_v2.json`.
+- [x] Provenance audit: `outputs/reports/floorplan_source_provenance_audit_v2.json`.
+- [x] Freeze: `configs/floorplan_submission_evidence_freeze_v2.json`.
+- [x] Freeze audit: `outputs/reports/floorplan_evidence_freeze_audit_v2.json`.
+- [x] Four generated tables and four PDF/SVG figure pairs.
+- [x] Figure case manifest: `outputs/reports/floorplan_figure_case_manifest_v1.json`.
+- [x] Local integrity audit:
+  `outputs/reports/floorplan_submission_integrity_v1.json`.
 
-## Required Command Shape
+## Claim Integrity
+
+- [x] Oracle, predicted, identity-fallback, generation, and free-text populations
+  are never pooled.
+- [x] Repeated seeds are executions, not independent plans.
+- [x] Raw and functional/componentwise watertightness remain separate.
+- [x] Supported execution, abstention, and object/ghost-state contracts are not
+  semantic success.
+- [x] The val191 semantic diagnostic is labeled by model age and split.
+- [x] HouseMind-E is cross-dataset context and Raster2Seq is a reconstruction
+  wrapper.
+- [x] Development-exposed test prompts are not called held out.
+
+## Official Format
+
+- [x] Official CVPR template and bibliography style are stored under `paper/`.
+- [x] Main and supplement are anonymous and use the review option.
+- [x] Main paper is six pages including figures and tables, within the eight-page
+  limit.
+- [x] References and the mandatory LLM Usage Statement are present.
+- [x] No overfull box, undefined reference, or missing-file error remains.
+
+## Required Commands
 
 ```bash
+uv run python scripts/build_floorplan_submission_evidence_v2.py
+uv run python scripts/build_floorplan_submission_tables_v2.py
+uv run python scripts/build_floorplan_submission_figures_v1.py
+(cd paper && latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex)
+(cd paper && latexmk -pdf -interaction=nonstopmode -halt-on-error supplement.tex)
 uv run python scripts/prepare_predicted_control_submission_freeze_v1.py \
-  --checkpoint <selected.pt> \
-  --config <selected-config.json> \
-  --prompt-manifest <heldout-case-ids.json> \
-  --taxonomy outputs/cache/cubicasa5k_full_v2/taxonomy.json \
-  --operation-contract configs/predicted_operation_success_contract_v1.json \
-  --heldout-manifest <heldout-manifest.json> \
-  --output configs/predicted_control_submission_freeze_v1.json
+  --mode existing_evidence_scoped \
+  --output configs/floorplan_submission_evidence_freeze_v2.json
+uv run python scripts/audit_floorplan_evidence_freeze_v2.py
+uv run python scripts/build_floorplan_submission_artifact_v1.py
+uv run python scripts/audit_floorplan_submission_integrity_v1.py
 ```
 
-The command refuses a dirty worktree.
+The scoped freeze records the current commit and dirty state for transparency but
+does not require a clean research worktree. Unrelated research changes remain
+outside the selected release identity set.
 
-## One-Shot Rules
+## Optional Held-Out Extension
 
-1. Run the frozen model on the new split once.
-2. Do not change thresholds, checkpoint, prompt filtering, or evaluator after
-   seeing outcomes.
-3. Retain semantic failures, graph failures, abstentions, and negative metrics.
-4. Recompute operation success, locality, validity, plausibility, fidelity, and
-   graph diagnostics from the same rows.
-5. Replace candidate paper columns with the frozen result.
-6. Re-run integrity, figure, PDF, anonymity, and artifact checks.
+This branch is not invoked. It requires a compatible unopened split and a frozen
+candidate before access. Its absence blocks only a fresh-generalization claim and
+does not block the scoped oracle, predicted, safety, or structural-reasonableness
+claims.
 
-## Current Blocker
+## Local Result
 
-No strictly fresh CubiCasa test subset is available: all 503 test cases were
-inferred by the predicted completion run. A new compatible held-out manifest is
-required before final submission.
+- Scoped release audit: `passed_scoped_release`.
+- Artifact checklist: `ready_for_user_submission`.
+- Submission state: ready for the user to review and authorize external upload.

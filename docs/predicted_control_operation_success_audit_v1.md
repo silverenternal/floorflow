@@ -4,110 +4,81 @@ Status date: 2026-11-02
 
 ## Purpose
 
-This audit separates three properties that were previously conflated:
+This audit separates three properties:
 
-1. the edit was supported by the typed operation contract;
-2. the edit executed without violating locality or validity;
+1. the request is supported by the typed operation contract;
+2. the edit executes with exact locality and structural validity;
 3. the requested semantic change is visible in the resulting plan.
 
-Only the third property is operation-specific semantic success.
+Only the third property is operation-specific semantic success. Safety,
+abstention, object-delete contracts, ghost-state contracts, and semantic
+realization are reported as separate evidence axes.
 
-## Evaluation Status
+## Evidence Populations
 
-The predicted-control model is still under development. The current audit uses
-the older val191 output rows and is therefore preliminary:
+- Safety: 738 development-exposed test503 prompts; 438 supported prompts
+  executed and 300 unsupported or ambiguous prompts abstained.
+- Semantic diagnostic: older val191 rows from a predicted model that is not the
+  selected release checkpoint. This is a diagnostic boundary, not a held-out
+  result and not a release gate.
+- Contract checks: deterministic object-delete and inactive-ghost probes.
 
-- model frozen: false;
-- test used: false;
-- semantic thresholds: proposed, not submission-frozen;
-- result status: below the proposed `0.90` success gate for several operations.
+Every safety prompt row reports outside pixel exactness `1.0`, outside room-label
+exactness `1.0`, and validity `1.0`. These are scoped observed values, not a
+general guarantee for unseen inputs.
 
-## Preliminary Results
+## Semantic Diagnostic
 
-| Operation | Prompts | Semantic successes | Success rate | Inside change rate |
-|---|---:|---:|---:|---:|
-| room add | 100 | 92 | 0.92 | 0.96 |
-| room type | 100 | 55 | 0.55 | 1.00 |
-| room remove | 100 | 20 | 0.20 | 0.85 |
-| opening delete | 59 | 30 | 0.5085 | 0.5085 |
-| furniture delete | 15 | 0 | 0.00 | 0.00 |
+| Operation | Prompts | Semantic successes | Success rate | Changed prompts | Source present | Source drift |
+|---|---:|---:|---:|---:|---:|---:|
+| room add | 100 | 92 | 0.9200 | 96 | 68 | 63 |
+| room type | 100 | 55 | 0.5500 | 100 | 47 | 47 |
+| room remove | 100 | 20 | 0.2000 | 85 | 96 | 29 |
+| opening delete | 59 | 30 | 0.5085 | 30 | 30 | 30 |
+| furniture delete | 15 | 0 | 0.0000 | 0 | 0 | 0 |
 
-Unsupported and ambiguous categories retain 100% abstention, exact outside
-pixel/room-label preservation, and validity `1.0`.
+The `0.90` semantic target is retained only as a historical exploratory target.
+It is not a prerequisite for the scoped release. Low semantic success is visible
+in the main paper rather than reclassified as safety failure.
 
-The latest five-prompt smoke rows show the same pattern:
+## Contract Evidence
 
-| Operation | Success rate |
-|---|---:|
-| room add | 0.80 |
-| room type | 0.80 |
-| room remove | 0.20 |
-| opening delete | 0.40 |
-| furniture delete | 0.00 |
+The object-delete audit checks family deletion inside the edit region, room-pixel
+preservation, and exactness outside the region. The ghost-state audit checks that
+inactive instance ids, tokens, classes, adjacency, masks, and assignments are
+masked. Both pass their listed deterministic checks. Neither is semantic
+success evidence.
 
-These smoke rates are directional only because each category has five prompts.
+## Exposure Correction
+
+The 738 prompt rows contain `split=test`. A legacy evaluator summary wrote
+`split=val191` and `test_opened=false`. The row-level values govern the report.
+The run is development-exposed and must not be described as held-out.
 
 ## Interpretation
 
-The current evidence supports:
+Supported claims:
 
-- safe execution;
-- safe abstention;
-- exact locality;
-- structural validity;
-- structural plausibility.
+- every supported prompt in the declared development set executed through the
+  typed path;
+- every unsupported or ambiguous prompt abstained;
+- observed outside exactness and validity are `1.0` on those prompts;
+- structural reasonableness is supported separately on val491.
 
-It does not yet support a claim that all supported operations realize their
-requested semantic change at a high rate.
+Not supported:
 
-The main failure families are:
-
-- room removal retains the source class or merges into multiple classes;
-- room type realizes only part of the requested conversion;
-- opening deletion is often a no-op because the source family is absent from
-  the current plan;
-- furniture deletion has no visible target-family change in the current val491
-  completion raster.
-
-## Old Control-Source Policy
-
-Using the pre-edit control source is a valid editing input. CAD editors also
-operate from the old drawing state. This audit therefore does not penalize
-source dependence itself.
-
-It separately measures:
-
-- whether the source exists in the current plan;
-- whether the requested target is realized;
-- whether the source family/class is removed when required;
-- whether the edit changes the current plan at all.
-
-This distinguishes a valid source-conditioned request from a request that
-cannot be synchronized with the current output state.
-
-## Metadata Correction
-
-The latest 738-prompt report contains prompt rows with `split=test`. A legacy
-evaluator bug wrote `split=val191` and `test_opened=false` into its summary.
-`scripts/evaluate_residential_predicted_edit_v1.py` now writes those fields from
-the actual run arguments.
-
-The affected run remains development exposure and cannot be used as the final
-held-out claim.
-
-## Required Follow-Up
-
-1. Re-run this audit after the predicted model and control contract are frozen.
-2. Apply the `0.90` semantic-success threshold to every supported operation.
-3. Report source-present and source-drifting subsets separately.
-4. Keep semantic success, safety, and reference fidelity in separate tables.
-5. Use a fresh unopened held-out split for final submission.
+- uniformly high semantic realization;
+- a fresh held-out generalization claim;
+- a claim that object-delete or ghost-state contracts establish semantic
+  correctness.
 
 ## Sources
 
 - `configs/predicted_operation_success_contract_v1.json`
 - `src/floorflow/evaluation/predicted_operation_success.py`
 - `scripts/evaluate_predicted_operation_success_v1.py`
+- `outputs/reports/predicted_operation_evidence_v2.json`
 - `outputs/reports/predicted_operation_success_val191_v1.json`
-- `outputs/reports/predicted_operation_success_smoke5_v12.json`
 - `outputs/reports/residential_instruction_robustness_test503_final_v1.json`
+- `outputs/reports/predicted_edit_object_delete_audit_v1.json`
+- `outputs/reports/predicted_edit_ghost_state_audit_v1.json`

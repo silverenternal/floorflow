@@ -227,6 +227,8 @@ def test_room_adapter_trains_program_action_routing_controls() -> None:
     model = _model(action_route=True)
     configure_typed_channel_scope(model, "room_adapter")
     graph = model.action_graph
+    assert graph.projections["program"].weight.requires_grad
+    assert graph.gates["program"][-1].weight.requires_grad
     assert graph.route_budget["program"][-1].weight.requires_grad
     assert graph.route_gate["program"][-1].weight.requires_grad
     assert graph.route_scale is not None

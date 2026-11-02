@@ -17,11 +17,13 @@ CONTROL_KEYS = (
     "opening_family_probability",
     "opening_foreground_probability",
     "opening_family_logits",
+    "opening_center_probability",
+    "opening_interval_width",
     "junction_probability",
 )
 FEATURE_KEYS = ("field_features", "evidence", "source_tokens")
 CONTROL_CONTRACT = (
-    "typed-channel-frozen-features-v2-independent-opening-junction"
+    "typed-channel-frozen-features-v3-opening-geometry-controls"
 )
 
 

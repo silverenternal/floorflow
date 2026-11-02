@@ -1,0 +1,389 @@
+{
+  "schema_version": "oracle-submission-statistics-v2",
+  "status": "passed_scoped_release",
+  "scope": "CubiCasa5K test503 declared oracle controls; seed19 rows for cluster intervals; all five repeated-seed summaries retained.",
+  "population": {
+    "edit_instances": 2479,
+    "operations": 5,
+    "seeds": [
+      19,
+      20,
+      21,
+      22,
+      23
+    ],
+    "cluster_key": "floorplan name including floor identifier"
+  },
+  "statistical_unit": {
+    "intervals": "Resample floorplans with replacement and average all edit instances inside a sampled floorplan.",
+    "seed_handling": "Seed variation is reported separately; repeated seed rows are not treated as independent floorplans.",
+    "paired_baseline": "One mean FloorFlow-minus-frozen-Raster2Seq difference per unique floorplan; Wilcoxon on unique floorplans with Holm adjustment across five operations."
+  },
+  "multiple_comparisons": {
+    "primary_interval_adjustment": "none; 95% intervals are descriptive",
+    "paired_baseline_adjustment": "Holm over five operations"
+  },
+  "trace_audit": {
+    "source": "outputs/reports/oracle_metric_trace_audit_20261102.json",
+    "scope": "seed19 all 2479 rows; no inference or training",
+    "seed19_rows_recomputed": 2479,
+    "zero_iou_error_required": true
+  },
+  "pooled_topology": {
+    "source": "outputs/reports/fp_control_gated_hard_gate_v1.json",
+    "validity_min": 1.0,
+    "conditional_watertight": {
+      "conditional_watertight_mean": 0.9626373626373625,
+      "conditional_watertight_min": 0.9578754578754579,
+      "conditional_watertight_max": 0.9674908424908425
+    },
+    "boundary": "Pooled across the fixed five-operation row set; not an operation-specific estimate."
+  },
+  "operations": {
+    "room_type": {
+      "cases": 487,
+      "unique_floorplans": 487,
+      "primary_method": "typed_before_floorflow_after",
+      "delta_iou": {
+        "mean": 0.9991991840110203,
+        "ci95_low": 0.9984203678314503,
+        "ci95_high": 0.9997474720672958,
+        "clusters": 487,
+        "rows": 487,
+        "ci_method": "floorplan_cluster_percentile_bootstrap",
+        "iterations": 10000,
+        "rng_seed": 20261102
+      },
+      "delta_mse": {
+        "mean": 6.915920129147678e-05,
+        "ci95_low": 2.9050582243536348e-05,
+        "ci95_high": 0.00012121832089544537,
+        "clusters": 487,
+        "rows": 487,
+        "ci_method": "floorplan_cluster_percentile_bootstrap",
+        "iterations": 10000,
+        "rng_seed": 20261102
+      },
+      "outside_exact_ratio": {
+        "mean": 1.0,
+        "ci95_low": 1.0,
+        "ci95_high": 1.0,
+        "clusters": 487,
+        "rows": 487,
+        "ci_method": "floorplan_cluster_percentile_bootstrap",
+        "iterations": 10000,
+        "rng_seed": 20261102
+      },
+      "seed_variation": {
+        "seeds": [
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "delta_iou_values": [
+          0.9991991840110203,
+          0.9991991840110203,
+          0.9991991840110203,
+          0.9991991840110203,
+          0.9991991840110203
+        ],
+        "delta_mse_values": [
+          6.915920129147678e-05,
+          6.915920129147678e-05,
+          6.915920129147678e-05,
+          6.915920129147678e-05,
+          6.915920129147678e-05
+        ],
+        "primary_metric_identical_across_seeds": true,
+        "unit": "repeated execution seed on the same selected rows"
+      },
+      "paired_vs_frozen_raster2seq": {
+        "cases": 487,
+        "mean_delta": 0.8620387992338472,
+        "median_delta": 0.9865951742627346,
+        "rank_biserial": 1.0,
+        "statistic": 97903.0,
+        "p_value": 6.018544312934138e-75
+      },
+      "paired_wilcoxon_holm_p": 1.2037088625868275e-74
+    },
+    "room_add": {
+      "cases": 495,
+      "unique_floorplans": 495,
+      "primary_method": "typed_before_floorflow_after",
+      "delta_iou": {
+        "mean": 0.9998006091318032,
+        "ci95_low": 0.9995450710908859,
+        "ci95_high": 0.9999901532182849,
+        "clusters": 495,
+        "rows": 495,
+        "ci_method": "floorplan_cluster_percentile_bootstrap",
+        "iterations": 10000,
+        "rng_seed": 20261102
+      },
+      "delta_mse": {
+        "mean": 3.028145450419591e-05,
+        "ci95_low": 4.0558293359495246e-07,
+        "ci95_high": 7.451029539245633e-05,
+        "clusters": 495,
+        "rows": 495,
+        "ci_method": "floorplan_cluster_percentile_bootstrap",
+        "iterations": 10000,
+        "rng_seed": 20261102
+      },
+      "outside_exact_ratio": {
+        "mean": 1.0,
+        "ci95_low": 1.0,
+        "ci95_high": 1.0,
+        "clusters": 495,
+        "rows": 495,
+        "ci_method": "floorplan_cluster_percentile_bootstrap",
+        "iterations": 10000,
+        "rng_seed": 20261102
+      },
+      "seed_variation": {
+        "seeds": [
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "delta_iou_values": [
+          0.9998006091318032,
+          0.9998006091318032,
+          0.9998006091318032,
+          0.9998006091318032,
+          0.9998006091318032
+        ],
+        "delta_mse_values": [
+          3.028145450419591e-05,
+          3.028145450419591e-05,
+          3.028145450419591e-05,
+          3.028145450419591e-05,
+          3.028145450419591e-05
+        ],
+        "primary_metric_identical_across_seeds": true,
+        "unit": "repeated execution seed on the same selected rows"
+      },
+      "paired_vs_frozen_raster2seq": {
+        "cases": 495,
+        "mean_delta": 0.8330443468212658,
+        "median_delta": 0.955719557195572,
+        "rank_biserial": 1.0,
+        "statistic": 115440.0,
+        "p_value": 9.319112824043556e-81
+      },
+      "paired_wilcoxon_holm_p": 2.7957338472130667e-80
+    },
+    "room_remove": {
+      "cases": 500,
+      "unique_floorplans": 500,
+      "primary_method": "typed_before_floorflow_after",
+      "delta_iou": {
+        "mean": 0.9997559952768602,
+        "ci95_low": 0.9994794048158345,
+        "ci95_high": 0.9999664119849596,
+        "clusters": 500,
+        "rows": 500,
+        "ci_method": "floorplan_cluster_percentile_bootstrap",
+        "iterations": 10000,
+        "rng_seed": 20261102
+      },
+      "delta_mse": {
+        "mean": 1.8663442751858384e-05,
+        "ci95_low": 3.21853566201753e-06,
+        "ci95_high": 4.423491981106053e-05,
+        "clusters": 500,
+        "rows": 500,
+        "ci_method": "floorplan_cluster_percentile_bootstrap",
+        "iterations": 10000,
+        "rng_seed": 20261102
+      },
+      "outside_exact_ratio": {
+        "mean": 1.0,
+        "ci95_low": 1.0,
+        "ci95_high": 1.0,
+        "clusters": 500,
+        "rows": 500,
+        "ci_method": "floorplan_cluster_percentile_bootstrap",
+        "iterations": 10000,
+        "rng_seed": 20261102
+      },
+      "seed_variation": {
+        "seeds": [
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "delta_iou_values": [
+          0.9997559952768602,
+          0.9997559952768602,
+          0.9997559952768602,
+          0.9997559952768602,
+          0.9997559952768602
+        ],
+        "delta_mse_values": [
+          1.8663442751858384e-05,
+          1.8663442751858384e-05,
+          1.8663442751858384e-05,
+          1.8663442751858384e-05,
+          1.8663442751858384e-05
+        ],
+        "primary_metric_identical_across_seeds": true,
+        "unit": "repeated execution seed on the same selected rows"
+      },
+      "paired_vs_frozen_raster2seq": {
+        "cases": 500,
+        "mean_delta": 0.8224897142384515,
+        "median_delta": 0.9862532832907003,
+        "rank_biserial": 1.0,
+        "statistic": 96141.0,
+        "p_value": 1.595401766153825e-74
+      },
+      "paired_wilcoxon_holm_p": 1.595401766153825e-74
+    },
+    "opening_delete": {
+      "cases": 502,
+      "unique_floorplans": 502,
+      "primary_method": "floorflow",
+      "delta_iou": {
+        "mean": 0.9567032400416569,
+        "ci95_low": 0.9413164548300272,
+        "ci95_high": 0.970424092895311,
+        "clusters": 502,
+        "rows": 502,
+        "ci_method": "floorplan_cluster_percentile_bootstrap",
+        "iterations": 10000,
+        "rng_seed": 20261102
+      },
+      "delta_mse": {
+        "mean": 9.582009079892316e-05,
+        "ci95_low": 6.431198230892192e-05,
+        "ci95_high": 0.00013163638492401386,
+        "clusters": 502,
+        "rows": 502,
+        "ci_method": "floorplan_cluster_percentile_bootstrap",
+        "iterations": 10000,
+        "rng_seed": 20261102
+      },
+      "outside_exact_ratio": {
+        "mean": 1.0,
+        "ci95_low": 1.0,
+        "ci95_high": 1.0,
+        "clusters": 502,
+        "rows": 502,
+        "ci_method": "floorplan_cluster_percentile_bootstrap",
+        "iterations": 10000,
+        "rng_seed": 20261102
+      },
+      "seed_variation": {
+        "seeds": [
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "delta_iou_values": [
+          0.9567032400416569,
+          0.9567032400416569,
+          0.9567032400416569,
+          0.9567032400416569,
+          0.9567032400416569
+        ],
+        "delta_mse_values": [
+          9.582009079892316e-05,
+          9.582009079892316e-05,
+          9.582009079892316e-05,
+          9.582009079892316e-05,
+          9.582009079892316e-05
+        ],
+        "primary_metric_identical_across_seeds": true,
+        "unit": "repeated execution seed on the same selected rows"
+      },
+      "paired_vs_frozen_raster2seq": {
+        "cases": 502,
+        "mean_delta": 0.7672123932344699,
+        "median_delta": 0.8754310344827586,
+        "rank_biserial": 0.9977811998079248,
+        "statistic": 120652.0,
+        "p_value": 2.9018213661083105e-82
+      },
+      "paired_wilcoxon_holm_p": 1.1607285464433242e-81
+    },
+    "furniture_delete": {
+      "cases": 495,
+      "unique_floorplans": 495,
+      "primary_method": "floorflow",
+      "delta_iou": {
+        "mean": 0.9878121218363792,
+        "ci95_low": 0.9825649990400407,
+        "ci95_high": 0.9923747414130593,
+        "clusters": 495,
+        "rows": 495,
+        "ci_method": "floorplan_cluster_percentile_bootstrap",
+        "iterations": 10000,
+        "rng_seed": 20261102
+      },
+      "delta_mse": {
+        "mean": 8.32390730970979e-05,
+        "ci95_low": 6.0759505885278376e-05,
+        "ci95_high": 0.00010988925516431488,
+        "clusters": 495,
+        "rows": 495,
+        "ci_method": "floorplan_cluster_percentile_bootstrap",
+        "iterations": 10000,
+        "rng_seed": 20261102
+      },
+      "outside_exact_ratio": {
+        "mean": 1.0,
+        "ci95_low": 1.0,
+        "ci95_high": 1.0,
+        "clusters": 495,
+        "rows": 495,
+        "ci_method": "floorplan_cluster_percentile_bootstrap",
+        "iterations": 10000,
+        "rng_seed": 20261102
+      },
+      "seed_variation": {
+        "seeds": [
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "delta_iou_values": [
+          0.9878121218363792,
+          0.9878121218363792,
+          0.9878121218363792,
+          0.9878121218363792,
+          0.9878121218363792
+        ],
+        "delta_mse_values": [
+          8.32390730970979e-05,
+          8.32390730970979e-05,
+          8.32390730970979e-05,
+          8.32390730970979e-05,
+          8.32390730970979e-05
+        ],
+        "primary_metric_identical_across_seeds": true,
+        "unit": "repeated execution seed on the same selected rows"
+      },
+      "paired_vs_frozen_raster2seq": {
+        "cases": 495,
+        "mean_delta": 0.8424450203195817,
+        "median_delta": 0.9030172413793104,
+        "rank_biserial": 1.0,
+        "statistic": 122760.0,
+        "p_value": 3.044212210413595e-83
+      },
+      "paired_wilcoxon_holm_p": 1.5221061052067974e-82
+    }
+  }
+}

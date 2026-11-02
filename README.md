@@ -104,19 +104,26 @@ contour+program predictor 和 guided CFM 的 room IoU 分别只有
 
 ## 数据
 
-项目中的 `.data/cubicasa5k` 已包含本机完整解压数据：
+项目中的 `.data/cubicasa5k` 用于放置本机完整解压数据：
 
 ```text
-/home/hugo/codes/planB/.data/cubicasa5k
+./.data/cubicasa5k
 ```
 
 `.data/cubicasa5k_source` 是同一目录的兼容链接。`.data/` 和生成的
 `outputs/` 已被 Git 忽略。需要从原始 ZIP 重新解压时，将数据放到：
 
-GitHub 仓库只提交源码、测试、配置、论文和文档。`third_party/` 中的第三方
-源码树、数据集和 checkpoint、`.data/`、`outputs/`、虚拟环境及 wandb 缓存
-均不进入版本控制；所需外部依赖按
+GitHub 仓库只提交源码、测试、配置、论文、文档和体积较小的冻结提交证据。
+`third_party/` 中的第三方源码树、数据集和 checkpoint、`.data/` 下的大文件、
+`outputs/` 中的缓存与训练产物、虚拟环境及 wandb 缓存均不进入版本控制；所需外部依赖按
 [`third_party/README.md`](third_party/README.md) 列出的固定 revision 单独获取。
+
+投稿证据的唯一来源索引为
+[`docs/floorplan_submission_source_registry_v2.json`](docs/floorplan_submission_source_registry_v2.json)，
+冻结配置为
+[`configs/floorplan_submission_evidence_freeze_v2.json`](configs/floorplan_submission_evidence_freeze_v2.json)。
+对应的关键审计结果以显式路径提交到 `outputs/reports/`；完整匿名包、缓存、checkpoint
+和逐案例大型 JSON 仍保留在本机 `outputs/` 中。
 
 ```bash
 mkdir -p .data
@@ -133,10 +140,11 @@ floor id:  1..4              # 楼层条件
 
 ## 环境
 
-本机训练使用现成的 `pocket311` 环境：
+本机训练使用现成的 `pocket311` 环境。执行下文命令前先激活该环境；如使用其他
+Python 3.11 环境，请确保其具备相同的 PyTorch/CUDA 依赖并直接替换 `python`：
 
 ```bash
-/home/hugo/micromamba/envs/pocket311/bin/python
+python --version
 ```
 
 该环境提供 Python 3.11、PyTorch 2.11、CUDA 12.8、NumPy 和 Pillow。脚本已自动加入 `src/`，不需要先安装 Python 包。
@@ -149,7 +157,7 @@ floor id:  1..4              # 楼层条件
 `outputs/reports/data_audit.json` 记录旧 cache 到新 cache 的类别像素变化。重新生成：
 
 ```bash
-/home/hugo/micromamba/envs/pocket311/bin/python scripts/preprocess.py \
+python scripts/preprocess.py \
   --cache-root outputs/cache/cubicasa5k_full_v2 \
   --splits train val test \
   --image-size 256 \
@@ -163,7 +171,7 @@ floor id:  1..4              # 楼层条件
 当前完整配置：
 
 ```bash
-/home/hugo/micromamba/envs/pocket311/bin/python scripts/train.py \
+python scripts/train.py \
   --cache-root outputs/cache/cubicasa5k_full_v1 \
   --image-size 256 \
   --epochs 8 \
@@ -213,7 +221,7 @@ outputs/train/floorflow_full_v1/train.jsonl
 例如先做 256/96 短训练，而不是直接全量：
 
 ```bash
-/home/hugo/micromamba/envs/pocket311/bin/python scripts/train_room_mask_decoder.py \
+python scripts/train_room_mask_decoder.py \
   --checkpoint outputs/train/floorflow_full_v1_direct/best.pt \
   --cache-root outputs/cache/cubicasa5k_full_v2 \
   --limit-train 256 --limit-val 96 --epochs 3 \
@@ -224,7 +232,7 @@ outputs/train/floorflow_full_v1/train.jsonl
 ### 3. 当前分层 pipeline 的验证与冻结测试
 
 ```bash
-PYTHONPATH=src /home/hugo/micromamba/envs/pocket311/bin/python \
+PYTHONPATH=src python \
   scripts/evaluate_layered_pipeline.py \
   --room-checkpoint outputs/train/layout_refiner_full_s224/best.pt \
   --structure-checkpoint outputs/train/coarse_structure_type_full_v1/best.pt \
@@ -241,7 +249,7 @@ PYTHONPATH=src /home/hugo/micromamba/envs/pocket311/bin/python \
 生成发布 gate：
 
 ```bash
-PYTHONPATH=src /home/hugo/micromamba/envs/pocket311/bin/python \
+PYTHONPATH=src python \
   scripts/build_layered_pipeline_gate.py \
   --metrics outputs/eval/layered_pipeline_test503_frozen_v2/metrics.json \
   --per-case outputs/eval/layered_pipeline_test503_frozen_v2/per_case.json \
@@ -251,7 +259,7 @@ PYTHONPATH=src /home/hugo/micromamba/envs/pocket311/bin/python \
 ### 4. 旧版单模型评估
 
 ```bash
-/home/hugo/micromamba/envs/pocket311/bin/python scripts/evaluate.py \
+python scripts/evaluate.py \
   --checkpoint outputs/train/floorflow_full_v1_direct/best.pt \
   --cache-root outputs/cache/cubicasa5k_full_v1 \
   --split test \
@@ -276,7 +284,7 @@ PYTHONPATH=src /home/hugo/micromamba/envs/pocket311/bin/python \
 ### 5. 任意外轮廓推理
 
 ```bash
-/home/hugo/micromamba/envs/pocket311/bin/python scripts/infer.py \
+python scripts/infer.py \
   --checkpoint outputs/train/floorflow_full_v1_direct/best.pt \
   --footprint /path/to/outer_contour.png \
   --samples 8 \
@@ -293,7 +301,7 @@ PYTHONPATH=src /home/hugo/micromamba/envs/pocket311/bin/python \
 检查每个类别学到的尺度选择：
 
 ```bash
-/home/hugo/micromamba/envs/pocket311/bin/python scripts/inspect_scale_router.py \
+python scripts/inspect_scale_router.py \
   --checkpoint outputs/train/floorflow_full_v1_direct/best.pt \
   --limit 32
 ```

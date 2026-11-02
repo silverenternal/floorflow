@@ -1,0 +1,130 @@
+{
+  "status": "passed",
+  "scope": "CubiCasa5K official test509 residential identity reconstruction",
+  "selection_split": "val503",
+  "official_test509_used": true,
+  "policy": "eight-view room-count consensus followed by selected-view orientation-aware five-view polygon fusion",
+  "checkpoint": {
+    "path": "outputs/external_baselines/raster2seq/checkpoint_blends_v2/ema_alpha_0.75.pth",
+    "sha256": "5c738ba5cda8842856a945aba67e60e8b373a8f5c86047af0c1c23c19e362311"
+  },
+  "validation": {
+    "selected": "support5_iou085_selected3",
+    "room_f1": 0.9076177354603189,
+    "room_iou": 0.6505365021556055,
+    "corner_f1": 0.6187404585401943,
+    "paired_room_iou": {
+      "cases": 503,
+      "mean_delta": 0.0018200788880545068,
+      "baseline_mean": 0.6487164232675511,
+      "relative_delta": 0.0028056618004009574,
+      "median_delta": 0.0,
+      "ci_low": 0.0007080139439695449,
+      "ci_high": 0.0029589770121451033,
+      "ci_method": "paired_percentile_bootstrap",
+      "ci_iterations": 4000,
+      "ci_seed": 261001,
+      "improved": 69,
+      "worsened": 29,
+      "unchanged": 405,
+      "rank_biserial": 0.47309833024118736,
+      "cliffs_delta": 0.014584461422320946
+    },
+    "selection_rule": {
+      "primary": "paired Room-IoU 95% CI lower bound > 0",
+      "room_f1_noninferiority_margin": 0.001,
+      "corner_f1_noninferiority_margin": 0.001,
+      "paired_room_f1_ci_lower_floor": -0.002
+    }
+  },
+  "test_metrics": {
+    "room_f1": 0.8989483324496967,
+    "room_iou": 0.6250510684632508,
+    "corner_f1": 0.6057389089808843,
+    "window_door_f1": 0.36008835369787884
+  },
+  "baselines": {
+    "original_checkpoint": {
+      "room_f1": 0.8872897049424242,
+      "room_iou": 0.6191139330901432,
+      "corner_f1": 0.5960383558114676
+    },
+    "eight_view_count_consensus": {
+      "room_f1": 0.8989483324496967,
+      "room_iou": 0.6232601470011748,
+      "corner_f1": 0.605223677066353
+    },
+    "published_room_f1": 0.887
+  },
+  "deltas": {
+    "room_f1_vs_published": 0.01194833244969673,
+    "room_f1_vs_count_consensus": 0.0,
+    "room_iou_vs_original": 0.005937135373107583,
+    "room_iou_vs_count_consensus": 0.001790921462075934,
+    "corner_f1_vs_original": 0.009700553169416759
+  },
+  "paired_test_vs_count_consensus": {
+    "room_f1": {
+      "cases": 509,
+      "mean_delta": 0.0,
+      "baseline_mean": 0.8943539974669693,
+      "relative_delta": 0.0,
+      "median_delta": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "ci_method": "paired_percentile_bootstrap",
+      "ci_iterations": 4000,
+      "ci_seed": 261001,
+      "improved": 0,
+      "worsened": 0,
+      "unchanged": 509,
+      "rank_biserial": 0.0,
+      "cliffs_delta": 0.0
+    },
+    "room_iou": {
+      "cases": 509,
+      "mean_delta": 0.0017909214620759597,
+      "baseline_mean": 0.6232601470011748,
+      "relative_delta": 0.002873473413458255,
+      "median_delta": 0.0,
+      "ci_low": 0.0007785020888685827,
+      "ci_high": 0.002793553959115025,
+      "ci_method": "paired_percentile_bootstrap",
+      "ci_iterations": 4000,
+      "ci_seed": 261001,
+      "improved": 62,
+      "worsened": 31,
+      "unchanged": 416,
+      "rank_biserial": 0.41203385952871197,
+      "cliffs_delta": 0.012463283683481229,
+      "wilcoxon_p_greater": 0.0002799302462537662
+    },
+    "corner_f1": {
+      "cases": 509,
+      "mean_delta": 0.0004604057311211276,
+      "baseline_mean": 0.6011142903380559,
+      "relative_delta": 0.0007659204555962289,
+      "median_delta": 0.0,
+      "ci_low": -0.0004774321057632839,
+      "ci_high": 0.0013990365544072779,
+      "ci_method": "paired_percentile_bootstrap",
+      "ci_iterations": 4000,
+      "ci_seed": 261001,
+      "improved": 97,
+      "worsened": 47,
+      "unchanged": 365,
+      "rank_biserial": 0.17911877394636017,
+      "cliffs_delta": 0.000980388372748291
+    }
+  },
+  "checks": {
+    "validation_selected_fusion": true,
+    "room_f1_unchanged_on_test": true,
+    "room_iou_paired_ci_positive": true,
+    "room_iou_above_previous": true,
+    "corner_f1_not_below_previous": true,
+    "room_f1_above_published_anchor": true
+  },
+  "claim": "On CubiCasa5K test509, validation-frozen polygon fusion preserves RoomF1 0.898948, raises Room IoU to 0.625051 with paired 95% CI [0.000779, 0.002794], and leaves RoomF1 exactly unchanged for all 509 cases.",
+  "boundary": "The paired Room-IoU gain is specific to validation-selected five-view polygon fusion on the official test509 protocol. Semantic labels remain outside the claim."
+}

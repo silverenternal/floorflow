@@ -1,0 +1,67 @@
+{
+  "status": "assets_ready_official_code_unreleased",
+  "method": "HouseMind",
+  "paper": "https://arxiv.org/abs/2603.11640",
+  "project_page": "https://housemind.github.io/",
+  "benchmark_source": "https://cloud.tsinghua.edu.cn/f/7cbe9e7039f843e78236/",
+  "weights_source": "https://cloud.tsinghua.edu.cn/f/e1e91fedfd3f4d80b8f0/",
+  "official_code_status": "Code Soon on the official project page",
+  "benchmark": {
+    "path": "/tmp/housemind_data_test.zip",
+    "available": true,
+    "bytes": 7499006,
+    "sha256": "a0aac3189063c72a00977bbb7479fd3d01eacd02c298108305025d6fc557e136",
+    "files": 9235,
+    "preview": [
+      "data_test/generation.jsonl",
+      "data_test/before_edit_256/36680.png",
+      "data_test/before_edit_256/40514.png",
+      "data_test/before_edit_256/18920.png",
+      "data_test/before_edit_256/21237.png",
+      "data_test/before_edit_256/36929.png",
+      "data_test/before_edit_256/70742.png",
+      "data_test/before_edit_256/42597.png",
+      "data_test/before_edit_256/11447.png",
+      "data_test/before_edit_256/29587.png",
+      "data_test/before_edit_256/63586.png",
+      "data_test/before_edit_256/18449.png"
+    ]
+  },
+  "weights": {
+    "path": "/tmp/housemind_weights.zip",
+    "available": true,
+    "bytes": 2274633246,
+    "sha256": "1fe7235dbe0945a3d612a1ccc0828169fd0310aa3ff4fb693b279266e45ba119",
+    "files": 15,
+    "preview": [
+      "weights/housemind-omni/special_tokens_map.json",
+      "weights/housemind-omni/merges.txt",
+      "weights/housemind-omni/chat_template.jinja",
+      "weights/housemind-omni/generation_config.json",
+      "weights/housemind-omni/config.json",
+      "weights/housemind-omni/training_args.bin",
+      "weights/housemind-omni/vocab.json",
+      "weights/housemind-omni/model.safetensors",
+      "weights/housemind-omni/tokenizer_config.json",
+      "weights/housemind-omni/added_tokens.json",
+      "weights/housemind-omni/tokenizer.json",
+      "weights/room_vqvae/config.yaml"
+    ]
+  },
+  "released_assets": {
+    "joint_test_cases": 2308,
+    "layers": [
+      "outline_256",
+      "before_edit_256",
+      "after_edit_256",
+      "gt_256"
+    ],
+    "weights": [
+      "housemind-omni",
+      "outline_vqvae",
+      "room_vqvae"
+    ]
+  },
+  "reproduction_blocker": "The official inference code and prompt/token assembly are not released. Weights and data alone are insufficient to reconstruct the authoritative HouseMind-E edit pipeline without guessing its serialization contract.",
+  "decision": "Do not claim a HouseMind same-benchmark result. Preserve the CubiCasa protocol anchor and matched Raster2Seq comparison."
+}

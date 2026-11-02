@@ -1,0 +1,10 @@
+{
+  "schema_version": "predicted-channel-v6-program-route-only",
+  "extends": "predicted_channel_v6_room_identity_adapter_control.json",
+  "status": "isolated_program_route_candidate",
+  "model": {
+    "program_room_action_fusion": true,
+    "differentiable_route_budget": true
+  },
+  "claim_boundary": "Isolates program-token room fusion and differentiable CAD route budgets from query separation and the rejected mixed identity bundle. Single-subset mechanism evidence only."
+}

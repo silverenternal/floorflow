@@ -98,11 +98,84 @@ def read_opening_detections(
     return detections
 
 
+def _opening_component_class(
+    labels: np.ndarray,
+    ys: np.ndarray,
+    xs: np.ndarray,
+    taxonomy: FloorplanTaxonomy,
+    family_probability: np.ndarray | None,
+) -> tuple[int, str]:
+    counts = np.bincount(
+        labels[ys, xs],
+        minlength=len(taxonomy.class_names),
+    )
+    family_name = None
+    if family_probability is not None:
+        family_index = int(
+            family_probability[:, ys, xs].mean(axis=1).argmax()
+        )
+        family_name = "window" if family_index == 1 else "door"
+        candidates = [
+            class_id
+            for class_id in taxonomy.opening_ids
+            if taxonomy.class_names[class_id].startswith(
+                f"{family_name}:"
+            )
+        ]
+        if not candidates:
+            candidates = list(taxonomy.opening_ids)
+            family_name = None
+    else:
+        candidates = list(taxonomy.opening_ids)
+    class_id = max(candidates, key=lambda value: counts[value])
+    return class_id, (
+        family_name
+        if family_name is not None
+        else (
+            "window"
+            if taxonomy.class_names[class_id].startswith("window:")
+            else "door"
+        )
+    )
+
+
+def consolidate_opening_components(
+    labels: np.ndarray,
+    taxonomy: FloorplanTaxonomy,
+    family_probability: np.ndarray,
+) -> np.ndarray:
+    """Assign one learned door/window family to each connected opening."""
+
+    family = np.asarray(family_probability, dtype=np.float32)
+    if family.ndim != 3 or family.shape[0] != 2:
+        raise ValueError("family probability must be [2,H,W]")
+    output = np.asarray(labels).copy()
+    opening_mask = np.isin(output, np.asarray(taxonomy.opening_ids))
+    components, count = component_label(opening_mask)
+    for component_id in range(1, int(count) + 1):
+        mask = components == component_id
+        ys, xs = np.nonzero(mask)
+        class_id, _family = _opening_component_class(
+            output,
+            ys,
+            xs,
+            taxonomy,
+            family,
+        )
+        output[mask] = class_id
+    return output
+
+
 def detections_from_labels(
     labels: np.ndarray,
     taxonomy: FloorplanTaxonomy,
     wall_plan: RasterWallPlan | None = None,
+    family_probability: np.ndarray | None = None,
 ) -> list[OpeningDetection]:
+    if family_probability is not None:
+        family_probability = np.asarray(family_probability, dtype=np.float32)
+        if family_probability.ndim != 3 or family_probability.shape[0] != 2:
+            raise ValueError("family probability must be [2,H,W]")
     detections = []
     opening_mask = np.isin(labels, np.asarray(taxonomy.opening_ids))
     components, count = component_label(opening_mask)
@@ -111,15 +184,20 @@ def detections_from_labels(
         ys, xs = np.nonzero(mask)
         if not len(xs):
             continue
-        class_id = int(np.bincount(labels[ys, xs]).argmax())
-        name = taxonomy.class_names[class_id]
+        class_id, family_name = _opening_component_class(
+            labels,
+            ys,
+            xs,
+            taxonomy,
+            family_probability,
+        )
         center = (float(xs.mean()), float(ys.mean()))
         wall_index, wall_distance = _nearest_wall(center, wall_plan)
         detections.append(
             OpeningDetection(
                 center=center,
                 width=float(max(xs.max() - xs.min() + 1, ys.max() - ys.min() + 1)),
-                family="window" if name.startswith("window:") else "door",
+                family=family_name,
                 class_id=class_id,
                 score=1.0,
                 wall_index=wall_index,

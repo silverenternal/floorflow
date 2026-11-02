@@ -1,0 +1,19 @@
+\begin{table*}[t]
+\centering
+\caption{External context and fidelity boundary. Rows use different datasets, inputs, and protocols and must not be read as a leaderboard.}
+\label{tab:external}
+\footnotesize
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{p{0.13\linewidth}p{0.16\linewidth}rrrrrp{0.15\linewidth}}
+\toprule
+Source & Task / input & $\Delta$IoU & $\Delta$MSE & Node F1 & Edge & GED & Interpretation \\
+\midrule
+FloorFlow oracle & CubiCasa test503 oracle controls & 0.956703--0.999801 & 0.000019--0.000096 & -- & -- & -- & Scoped anchor \\
+FloorFlow typed & 12,395 strict-locality rows & 0.937473 & -- & 0.955068 & 0.890007 & 2.120855 & Diagnostic \\
+FloorFlow predicted & val491 target-free controls & -- & -- & 0.660202 & 0.264622 & 11.600815 & Weak fidelity \\
+HouseMind-E & RPLAN editing, published & 0.608000 & 0.001900 & 0.998000 & 0.934000 & 0.467000 & External context \\
+Raster2Seq wrapper & CubiCasa frozen redraw & 0.137160--0.189491 & -- & -- & -- & -- & Reconstruction wrapper \\
+\bottomrule
+\end{tabular}
+\par\smallskip\footnotesize FloorFlow oracle $\Delta$IoU/$\Delta$MSE numerically exceed the published HouseMind-E pair under different datasets and inputs. Graph and predicted-fidelity metrics are not uniformly superior; predicted room macro IoU is 0.269701.
+\end{table*}

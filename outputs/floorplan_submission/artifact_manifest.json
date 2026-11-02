@@ -1,0 +1,4788 @@
+{
+  "schema_version": "floorplan-submission-artifact-v2",
+  "created_at": "2026-11-02T13:36:50.350088+00:00",
+  "source_commit": "0977a22d971c2bcd8ad4df73c00a8f80348bc918",
+  "status": "ready_for_user_submission",
+  "scope": "scoped FloorFlow oracle/predicted floorplan-editing evidence release",
+  "anonymous": true,
+  "contains_datasets_or_checkpoints": false,
+  "registry": "docs/floorplan_submission_source_registry_v2.json",
+  "freeze": "configs/floorplan_submission_evidence_freeze_v2.json",
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 713,
+      "sha256": "5ef48932cd8a6719501c5b047610fa445e004e28ca2b158558391dc06d6fd3a2"
+    },
+    {
+      "path": ".python-version",
+      "bytes": 5,
+      "sha256": "49a506dd32096b010d75205acf3430c9ae6c40351888129499e5a5e487126c93"
+    },
+    {
+      "path": "PROJECT_README.md",
+      "bytes": 16801,
+      "sha256": "1637f1abf592527495cfb342a6f80164f6f1b762d31c2c41b20ef848af7cf7df"
+    },
+    {
+      "path": "configs/fevp_metric_contract_v2.json",
+      "bytes": 6553,
+      "sha256": "0fd546de836bf5aa30e87f8b48d5eafa841c7eca65c10a9b7639287022ba75ab"
+    },
+    {
+      "path": "configs/floorplan_submission_evidence_freeze_v2.json",
+      "bytes": 16446,
+      "sha256": "fc614fd1866fb8701f08ee8127143c231a72578579556261a10a87bde5c2f2f4"
+    },
+    {
+      "path": "configs/fp_control_contract_v1.json",
+      "bytes": 2213,
+      "sha256": "d7f87bf07172ffcd0c754b8d83f446eadf701b280983e6c6f24c6c26b4dd9d2a"
+    },
+    {
+      "path": "configs/predicted_control_reasonableness_contract_v1.json",
+      "bytes": 9780,
+      "sha256": "b332904d1d15630102f3313655f4517bf294ce0eea0b05a175f3a0d32ab2fffd"
+    },
+    {
+      "path": "configs/predicted_operation_success_contract_v1.json",
+      "bytes": 3142,
+      "sha256": "288e1498c8148ab92fc7716d23f930432a9165ebd7ae983c31c8de93ae8e825a"
+    },
+    {
+      "path": "docs/fevp_claim_language_v1.md",
+      "bytes": 1399,
+      "sha256": "b642d30e5baa33fc452af23fde667cfa4d614428597d91cd947fbcd73439ecfc"
+    },
+    {
+      "path": "docs/fevp_final_claim_v4.md",
+      "bytes": 5186,
+      "sha256": "a3fb6c70ea5c8341e184560bfb637441fa17bf158cfd19d9ad20a14b52ef1ff6"
+    },
+    {
+      "path": "docs/fevp_formal_spec_v3.md",
+      "bytes": 5249,
+      "sha256": "6ed19f3b6f2a39818972e6e0322496a829dff92ec81db1044170957723f1f35d"
+    },
+    {
+      "path": "docs/fevp_housemind_positioning_v2.md",
+      "bytes": 1289,
+      "sha256": "2a41723b3f7514bab0c762dc585b0eac18eb4ac63d7b07c3a356d1b1dc0460aa"
+    },
+    {
+      "path": "docs/fevp_metric_contracts_v2.md",
+      "bytes": 4262,
+      "sha256": "c808c2aa3c7a4f357cd73e7d6f6356344ff58fc6274c4d053e7cf8cf40675940"
+    },
+    {
+      "path": "docs/floorplan_claim_evidence_matrix_v1.md",
+      "bytes": 3506,
+      "sha256": "02440ccd693f470ff6b83eb835c0f236bd1ea3fd036f682680685e243c4f9fc0"
+    },
+    {
+      "path": "docs/floorplan_heldout_availability_v1.md",
+      "bytes": 1354,
+      "sha256": "5f87d59e609762086e3313d0b311640ece07217a387ddeb88bf7946804af6c7a"
+    },
+    {
+      "path": "docs/floorplan_submission_freeze_checklist_v1.md",
+      "bytes": 3446,
+      "sha256": "aa64efa7be086d38f0afe5288712a120b700b0ea1f9e5a2bbf3e774514f22a1f"
+    },
+    {
+      "path": "docs/floorplan_submission_review_v1.md",
+      "bytes": 3999,
+      "sha256": "99d9f783e4c6c3b06c09b29a550a22e3984b01f3e47d1e30259b0cf400dfd404"
+    },
+    {
+      "path": "docs/floorplan_submission_source_registry_v2.json",
+      "bytes": 8941870,
+      "sha256": "56952b2d613a12198bc279f041a283aa9e0fbbcbf0263d660acb00c3bf0cc189"
+    },
+    {
+      "path": "docs/fp_identity_metric_definition_v1.md",
+      "bytes": 1081,
+      "sha256": "c974deb069fd44baed7fd9f1d9fafda6d740db6af5e969ddf49de5234f812f66"
+    },
+    {
+      "path": "docs/fp_oracle_control_protocol_status_v1.md",
+      "bytes": 7354,
+      "sha256": "63e5c35d08c565ea6dd95754bad827b96a5778e837e01844959ef25f3b85a5eb"
+    },
+    {
+      "path": "docs/fp_room_graph_metric_protocol_v1.md",
+      "bytes": 4418,
+      "sha256": "6ce7da3293d2e5a4d38f01f3bfa7aa5e48158eede1ead8f60747d550db6939a8"
+    },
+    {
+      "path": "docs/fp_strict_locality_protocol_v2.md",
+      "bytes": 2345,
+      "sha256": "efae7abb4524808d9cd19002f1d0cb6998e2cbcc639f87f47a9f43e179d696c1"
+    },
+    {
+      "path": "docs/predicted_control_plausibility_v2.md",
+      "bytes": 8769,
+      "sha256": "491b13c917f42566296138551980ef74069f624492becda6ca39011dae7073ba"
+    },
+    {
+      "path": "docs/predicted_control_reasonableness_results_v1.md",
+      "bytes": 2483,
+      "sha256": "f44f51c72286b7bc6f9bd6978c06997d6b625398db1d2cdea1795c3eb5e9f96b"
+    },
+    {
+      "path": "docs/predicted_control_zero_path_audit_v1.md",
+      "bytes": 11265,
+      "sha256": "6a706dfc150f99c086abc30e74ea72c7f30b8061f7b1684991c4f6aa38c20356"
+    },
+    {
+      "path": "outputs/reports/external_baseline_protocol_audit_v2.json",
+      "bytes": 2406,
+      "sha256": "31c9d3a7f593665c3dd89bfa477958a80ad67e10be86186c9eb8c860ee11d6d6"
+    },
+    {
+      "path": "outputs/reports/fevp_attack_supplement_v1.json",
+      "bytes": 4650,
+      "sha256": "48216c3e147813476a5828a911520cb0c969accb363914dd16554ffecd34cf80"
+    },
+    {
+      "path": "outputs/reports/fevp_budget_matched_control_v2.json",
+      "bytes": 3666,
+      "sha256": "4fd0c6387f290c59ba4bb4f052465b6764280d58abc8e639ff066ed1f12fbae2"
+    },
+    {
+      "path": "outputs/reports/fevp_mechanism_pareto_v3.json",
+      "bytes": 8014809,
+      "sha256": "9113d637d46a05ddc880d3391b17610d26d9acc9b9da5e1d71a1f5831b6249b8"
+    },
+    {
+      "path": "outputs/reports/fevp_protocol_attacks_v2.json",
+      "bytes": 9492,
+      "sha256": "af43ac5cb410ebfef6b9429643b2a758b97cd23fc0de9828e59da215d4969d1f"
+    },
+    {
+      "path": "outputs/reports/floorplan_evidence_freeze_audit_v2.json",
+      "bytes": 1251,
+      "sha256": "d7a6e2d54c8cc32ba1bd1c512d4c3ddd722f985cd01195c1f5b990b0cd216282"
+    },
+    {
+      "path": "outputs/reports/floorplan_figure_case_manifest_v1.json",
+      "bytes": 1245,
+      "sha256": "eae63ff002c1835ad29879fb5895abd70fec2cb2e2b8f5dd11ce07a71b1409ae"
+    },
+    {
+      "path": "outputs/reports/floorplan_heldout_availability_v1.json",
+      "bytes": 1070,
+      "sha256": "c2026eb3d5918b687ebf3d95bebc4da807ac5489dc336867c7e7fb7ea3a5617b"
+    },
+    {
+      "path": "outputs/reports/floorplan_source_provenance_audit_v2.json",
+      "bytes": 1233,
+      "sha256": "3edbdd8655faac5ce427b4cce6953008c360b7598cf653d40d62655dd2e6bb83"
+    },
+    {
+      "path": "outputs/reports/fp_housemind_reproduction_status_v1.json",
+      "bytes": 2620,
+      "sha256": "a30115b355c04c0e53403648c4d78ff2b3ecde979fc207377647b44353c9eec9"
+    },
+    {
+      "path": "outputs/reports/fp_raster2seq_local_redraw_v1.json",
+      "bytes": 491254,
+      "sha256": "e4ddd567b23287967ffb24a45651f10d368ae53464f2bc05fe5eff73a0c6c98e"
+    },
+    {
+      "path": "outputs/reports/matched_local_editing_baselines_v2.json",
+      "bytes": 9199,
+      "sha256": "c8264678d841c56c72d8fba6f71c09c560dba427a0b5ce5d57d5fd779b6fe14f"
+    },
+    {
+      "path": "outputs/reports/oracle_metric_trace_audit_20261102.json",
+      "bytes": 1465,
+      "sha256": "2b3d4026475cd2ea30275f842d31ff004bb9bb04fe655375043ef841e503ee49"
+    },
+    {
+      "path": "outputs/reports/oracle_submission_statistics_v2.json",
+      "bytes": 11803,
+      "sha256": "459c700f9e7bb54decd2cdc9bcb51bfb8f169c7cca50e4fa0cad0d2f78001e3f"
+    },
+    {
+      "path": "outputs/reports/predicted_control_fidelity_val491_v3.json",
+      "bytes": 2171025,
+      "sha256": "2d98de71fe01f4877013cdc924d97cf3dc6d5ef8950b295851624e9b72f6760b"
+    },
+    {
+      "path": "outputs/reports/predicted_control_plausibility_fiveseed_v12.json",
+      "bytes": 9930,
+      "sha256": "dd13ef8503552121115643360488fc5fe94b63dbad4c5c41cfe8d924be1d0dee"
+    },
+    {
+      "path": "outputs/reports/predicted_control_plausibility_val491_final_v12.json",
+      "bytes": 1305796,
+      "sha256": "52b08755139d23e526b4dd5e58807e3cdebac5173762427f8aeba5e9a5b82fd9"
+    },
+    {
+      "path": "outputs/reports/predicted_edit_ghost_state_audit_v1.json",
+      "bytes": 611,
+      "sha256": "1f0e6bd6396d843928b1902848061e2551a5b460f2499735826840304fa9c882"
+    },
+    {
+      "path": "outputs/reports/predicted_edit_object_delete_audit_v1.json",
+      "bytes": 489,
+      "sha256": "a8b546a4bf286c86c34800d83ad56ec25c79531ca891a1e502fc1e30035e6d08"
+    },
+    {
+      "path": "outputs/reports/predicted_operation_evidence_v2.json",
+      "bytes": 4201,
+      "sha256": "ada46bec708d357b9275756f887be2f6323392b5749d5d5a786cf5d9ffab17e0"
+    },
+    {
+      "path": "outputs/reports/predicted_operation_success_val191_v1.json",
+      "bytes": 939599,
+      "sha256": "6262bfb8d7fad80459886ffb2acddbf43871a882369d5f6f854cc3f757c5241a"
+    },
+    {
+      "path": "outputs/reports/residential_edit_test503_v1.json",
+      "bytes": 34703,
+      "sha256": "c9569af55c4a6d4460359d4d931b06486e2faac122ff4e40450e839851aceccf"
+    },
+    {
+      "path": "outputs/reports/residential_edit_vector_protocol_raw_v1.json",
+      "bytes": 1187940,
+      "sha256": "0ea33d895e114f87c4544ea6ce22647c61a4021250921dcad23f032fd913af46"
+    },
+    {
+      "path": "outputs/reports/residential_editing_aware_baseline_v1.json",
+      "bytes": 2167113,
+      "sha256": "1659e56fc3904213db5aacaf847295b4c4d7ff10239f09b7e4d198c8e699ad81"
+    },
+    {
+      "path": "outputs/reports/residential_identity_test509_v4_summary.json",
+      "bytes": 4505,
+      "sha256": "96c07652c5950efa3f8e8ac3a6a56a525da4ddef4db912a15536ca44c87c3e94"
+    },
+    {
+      "path": "outputs/reports/residential_instruction_robustness_test503_final_v1.json",
+      "bytes": 1089824,
+      "sha256": "6da1e766c2ad984bde7188605ccba5f110becedaf6031803309cab4ee0e06438"
+    },
+    {
+      "path": "paper/cvpr.sty",
+      "bytes": 17883,
+      "sha256": "ae8e51adc7270b118833b2092310ca1151a19fab0c09b1ab35a485ac4004ac0f"
+    },
+    {
+      "path": "paper/cvpr_claim_sections_v3.md",
+      "bytes": 5952,
+      "sha256": "f5fc7c3678bb47668e83d187838582178664e05800e402ab27bc4c9465f8f5b4"
+    },
+    {
+      "path": "paper/cvpr_experiment_structure_v1.md",
+      "bytes": 4287,
+      "sha256": "32115a2e6973cee90f9a9834fa6d30e9c44b2a487dde21a3ac02905225721b26"
+    },
+    {
+      "path": "paper/cvpr_manuscript_skeleton_v1.md",
+      "bytes": 3891,
+      "sha256": "3224f33da7738e0a477588e0f4ba7559160a6f0785ae37ed884cfeec138a2d2d"
+    },
+    {
+      "path": "paper/figures/floorplan_failure_taxonomy_v1.pdf",
+      "bytes": 18054,
+      "sha256": "37c9cc760fa69db962ad35f7e922ba7b1f2240d6abb3777ea8d1547dd8a8ceba"
+    },
+    {
+      "path": "paper/figures/floorplan_failure_taxonomy_v1.svg",
+      "bytes": 71617,
+      "sha256": "bb6dc9c2dc7a970e093bdb285c5fdfe771c4419aaf99ccfadca1eea176faa966"
+    },
+    {
+      "path": "paper/figures/floorplan_protocol_overview_v1.pdf",
+      "bytes": 24188,
+      "sha256": "630277cab8339b32890d516eb8688ea49c80194d3c83eb749fe702c28a50acba"
+    },
+    {
+      "path": "paper/figures/floorplan_protocol_overview_v1.svg",
+      "bytes": 45946,
+      "sha256": "76b99994bfbdfc8964db3d3fecb5a688ca26124cc7c9c65d552e60e0ee01c6b0"
+    },
+    {
+      "path": "paper/figures/floorplan_qualitative_cases_v1.pdf",
+      "bytes": 28057,
+      "sha256": "712ed61d0ffc643b145016504abce5374520edfc07fb497b8d7d4a743aafd591"
+    },
+    {
+      "path": "paper/figures/floorplan_qualitative_cases_v1.svg",
+      "bytes": 83536,
+      "sha256": "6cf288a2e6da98436be0275b66be2ef5d7d8029ab812424ce369f44f650abe16"
+    },
+    {
+      "path": "paper/figures/predicted_control_operation_panels_v1.pdf",
+      "bytes": 16705,
+      "sha256": "682609631ad59d26140b56f985b133de4ec53b2fd6a882364a00b5598efabf99"
+    },
+    {
+      "path": "paper/figures/predicted_control_operation_panels_v1.svg",
+      "bytes": 80680,
+      "sha256": "1045da926fb9046670de123e067ee7f376074b2e4be18cdccf8dac1fb2c8a0db"
+    },
+    {
+      "path": "paper/ieeenat_fullname.bst",
+      "bytes": 26900,
+      "sha256": "e38e6166bd7b1e6d23a1b79dcdb55c656e4fcdbe91bdf6b50d827e6b5d1aacfc"
+    },
+    {
+      "path": "paper/main.pdf",
+      "bytes": 222171,
+      "sha256": "927c0c33d9cba374b913030126ce049906b682c3665206e4eb5c3f70a3bac1b1"
+    },
+    {
+      "path": "paper/main.tex",
+      "bytes": 18126,
+      "sha256": "589a33d81549d4b7d6f46627f4b22b4650675458cad42825b752bdce768066c3"
+    },
+    {
+      "path": "paper/references.bib",
+      "bytes": 1294,
+      "sha256": "734fb86fbd627ce4f01b22fc0b1ea513355ae9231e380eac656dde664e88e38f"
+    },
+    {
+      "path": "paper/supplement.pdf",
+      "bytes": 135084,
+      "sha256": "712f8934d1b7145f06d493074fdf03b300a16fabfb3af0336495e712fbd5ec51"
+    },
+    {
+      "path": "paper/supplement.tex",
+      "bytes": 7553,
+      "sha256": "d7b399e79dcb6aac3c399abd65d3acbdee8685adb1756ebb4aec38ae2b1cc1fd"
+    },
+    {
+      "path": "paper/tables/main_external_context_v1.md",
+      "bytes": 2126,
+      "sha256": "3c420c773909e52a29fd396843ce3f64bdbe019efa3788b33aa8392e67ac92a7"
+    },
+    {
+      "path": "paper/tables/main_external_context_v1.tex",
+      "bytes": 1296,
+      "sha256": "6ffd8e9d99ea809b66b4c4079a8f6e29551e976fe82c4202bf3a6d6be78d6d9d"
+    },
+    {
+      "path": "paper/tables/main_oracle_anchor_v1.md",
+      "bytes": 1789,
+      "sha256": "216e6c15e443a84bf837a75cf980bf7481f65c86c95fee1c0042b95eb526103b"
+    },
+    {
+      "path": "paper/tables/main_oracle_anchor_v1.tex",
+      "bytes": 1007,
+      "sha256": "9303b0584444601ffc0f34c8c484980cedcb2d4809028396789def20afdfd6ff"
+    },
+    {
+      "path": "paper/tables/main_predicted_reliability_v1.md",
+      "bytes": 2431,
+      "sha256": "041ecfb4993fb24b76c7e066dd81b943991f96ff4e408239c73c59fb6327384f"
+    },
+    {
+      "path": "paper/tables/main_predicted_reliability_v1.tex",
+      "bytes": 1627,
+      "sha256": "73341981b98bada763f80174d1d0b15f93476975ce458078625d15f8587678a1"
+    },
+    {
+      "path": "paper/tables/main_resource_and_ablation_v1.md",
+      "bytes": 2879,
+      "sha256": "3c836fbb12a9ce368f98d4b9c94580b3e663c8ee7f4ac8bc95e18bbf18069b27"
+    },
+    {
+      "path": "paper/tables/main_resource_and_ablation_v1.tex",
+      "bytes": 1599,
+      "sha256": "2bd7ea78f9d1ec20e786a5ff191e2c0f1822a2e785af08da1b020089a9f1f3b6"
+    },
+    {
+      "path": "paper/tables/main_results.md",
+      "bytes": 3556,
+      "sha256": "da02b9571c7ecd4db3efb8db9f6260994263cf2b2e0f940116bd73ee894be655"
+    },
+    {
+      "path": "paper/tables/oracle_control_cvpr_dossier_v1.md",
+      "bytes": 5775,
+      "sha256": "a08aba094ba57442623585bc51bb88b92d2c7d2df2b1e2a733996a149a36fcbd"
+    },
+    {
+      "path": "paper/tables/predicted_control_reasonableness_dossier_v1.md",
+      "bytes": 5956,
+      "sha256": "db11128ff880518b93b6ddb3dbbf262d9715e784fa1b96269c99e6a4c76d9e2a"
+    },
+    {
+      "path": "paper/writing_source_policy_v1.md",
+      "bytes": 3892,
+      "sha256": "915c01a0eb5c739fa39a296fbded9f3ea521b07ce5c77651d658dc7787ef8a3d"
+    },
+    {
+      "path": "pyproject.toml",
+      "bytes": 1343,
+      "sha256": "2a88d560cdb8955e965909ebd281a5db3813ecb3006d577c64ecaf0e64d6e431"
+    },
+    {
+      "path": "scripts/audit_floorplan_evidence_freeze_v2.py",
+      "bytes": 7280,
+      "sha256": "385c4c792792efbd67b179d52837820d292974be23a82767d4fd02a2ec730154"
+    },
+    {
+      "path": "scripts/audit_floorplan_submission_integrity_v1.py",
+      "bytes": 18676,
+      "sha256": "0cc99003269efadfa3ffd4c0a855d6f5028ca9bf8462cbdd5a2f56ac4b33efad"
+    },
+    {
+      "path": "scripts/build_floorplan_matched_baselines_v1.py",
+      "bytes": 7233,
+      "sha256": "5bbe6d6c09bcb9ef98af35ba52c35a086d5846eb1a8e86ab664674a1aeae1c45"
+    },
+    {
+      "path": "scripts/build_floorplan_submission_artifact_v1.py",
+      "bytes": 11469,
+      "sha256": "fa92bb8f043528b6e7eda6041f8dd444369c53cc9ce5de6cadc18616bd59c8ab"
+    },
+    {
+      "path": "scripts/build_floorplan_submission_evidence_v2.py",
+      "bytes": 41029,
+      "sha256": "9caa7d5bd0bcdd977f576ecd589ad08f0f0981d9d1cf33e3ee08c4efa1a03cae"
+    },
+    {
+      "path": "scripts/build_floorplan_submission_figures_v1.py",
+      "bytes": 18276,
+      "sha256": "bac0ebb40c50ba7199f3a85bd752a46a84e2b626a8bf9ea0c7cc6a3337a85c5f"
+    },
+    {
+      "path": "scripts/build_floorplan_submission_tables_v2.py",
+      "bytes": 21956,
+      "sha256": "34d2fe0cd20b498b9eed57688b8e67e02f226e872e6eb631220f426389c42e63"
+    },
+    {
+      "path": "scripts/build_residential_edit_fiveseed_report_v1.py",
+      "bytes": 9901,
+      "sha256": "2e14c956848afb00e2b61475b1b8451c1b0383e3a7a2e92d7de7d6671c5157cc"
+    },
+    {
+      "path": "scripts/build_residential_sota_main_table_v2.py",
+      "bytes": 10367,
+      "sha256": "cadbbaff071a40452f1a9e47bf7f42b32250696975998d96ee6384abd2fd17c4"
+    },
+    {
+      "path": "scripts/evaluate_predicted_operation_success_v1.py",
+      "bytes": 9631,
+      "sha256": "76c2c6110ae1f91008e007d507fe4c7cb4641e9cf81b2fa84102ad883fe5f4dc"
+    },
+    {
+      "path": "scripts/prepare_predicted_control_submission_freeze_v1.py",
+      "bytes": 11545,
+      "sha256": "0f856026342fda5f32602aa7c75392cfda590685e823a2b5b709e3ec6000b6f3"
+    },
+    {
+      "path": "src/floorflow/__init__.py",
+      "bytes": 443,
+      "sha256": "22a1465605ec53045169856676897f22cc2f6897d2857efa5f422c91f2f40943"
+    },
+    {
+      "path": "src/floorflow/_compat.py",
+      "bytes": 1194,
+      "sha256": "5b0a7c984204fd88dad0e182b41c2523e31ae2b0ecd3c633d023585c695f9da1"
+    },
+    {
+      "path": "src/floorflow/_module_map.py",
+      "bytes": 5265,
+      "sha256": "8bbaf0975d391d0b37d8c32c4c86d96b21ed892fa3aa6b8583c9167c4966d4be"
+    },
+    {
+      "path": "src/floorflow/chip_flow/__init__.py",
+      "bytes": 226,
+      "sha256": "4b31279ca4a27296d72e77159b76b5db1a7e19e928b5d6b7556c270d543e8ebd"
+    },
+    {
+      "path": "src/floorflow/chip_flow/analytical_feedback.py",
+      "bytes": 14999,
+      "sha256": "d18fc5721c223c45341ce3fad63b5752cec5489a3ab5d80aa26cab9221be4d27"
+    },
+    {
+      "path": "src/floorflow/chip_flow/atom_health.py",
+      "bytes": 2379,
+      "sha256": "b916dca6b50d3a907805875cc3856da461a52e7289782431aabaf0a5c199626e"
+    },
+    {
+      "path": "src/floorflow/chip_flow/atom_probe_fixtures.py",
+      "bytes": 6776,
+      "sha256": "1c0d6ec4a40d904af5253520efb319b02b682f3b9f33e320f7d61e20f07c9cef"
+    },
+    {
+      "path": "src/floorflow/chip_flow/atom_score_heads.py",
+      "bytes": 13726,
+      "sha256": "a07ef5a4afe305078909e4ef4ab1ffb450a2323b90e328002783da2e6befb53b"
+    },
+    {
+      "path": "src/floorflow/chip_flow/auxiliary_objectives.py",
+      "bytes": 2607,
+      "sha256": "332bd9138736c5a689e486fa58347382ae1b27ff5cd70e8073488aea84a743c7"
+    },
+    {
+      "path": "src/floorflow/chip_flow/backbone_lora.py",
+      "bytes": 3007,
+      "sha256": "5e35fc8279aa51b10ef715a45594fd5d305e2188382b49be8426c77bf1e18401"
+    },
+    {
+      "path": "src/floorflow/chip_flow/batch_prefetch.py",
+      "bytes": 5010,
+      "sha256": "0c7fe2465009a6c8c8bff7f62759dfd261305c761bd47b84921addc72d13e699"
+    },
+    {
+      "path": "src/floorflow/chip_flow/batched.py",
+      "bytes": 18997,
+      "sha256": "bbf60ce84ab651c8c0458db65491ea4ba6817a5d6b2f72d02de2001bd9cd38d3"
+    },
+    {
+      "path": "src/floorflow/chip_flow/boundary_anchor_coupler.py",
+      "bytes": 4295,
+      "sha256": "c752c651dfb0fe3d46369a46db6c9bb1bd788bbf4faa99208e9d1362ccc946a6"
+    },
+    {
+      "path": "src/floorflow/chip_flow/boundary_snap.py",
+      "bytes": 4624,
+      "sha256": "05c7d9c11407e39d040857ed798ed285f33458065da0f5eded46a64a34b40501"
+    },
+    {
+      "path": "src/floorflow/chip_flow/branch_health.py",
+      "bytes": 3822,
+      "sha256": "1896539530469f56fe72700d4768a4e5199727b3cb538b35dfa92ecc4afc687d"
+    },
+    {
+      "path": "src/floorflow/chip_flow/branch_registry.py",
+      "bytes": 3261,
+      "sha256": "435fa6a5695aef0d07a467eea9e680ec08515e97e2fc7cb1211099b19ca637d0"
+    },
+    {
+      "path": "src/floorflow/chip_flow/cache.py",
+      "bytes": 17259,
+      "sha256": "d817dc2e78fa920bc4206dc24560823ec3f137d9237cdce10f2e3933198a4f71"
+    },
+    {
+      "path": "src/floorflow/chip_flow/candidate_consensus.py",
+      "bytes": 8421,
+      "sha256": "76bd924dfe03f74e327d4ddc4ecf6f65eb63eaa6b0a1d28411714a4d4941b208"
+    },
+    {
+      "path": "src/floorflow/chip_flow/candidate_consensus_evaluation.py",
+      "bytes": 7359,
+      "sha256": "2074119637a59b847b38a281da9012614bc7a1c84f6c9764cc0d576c2b813ded"
+    },
+    {
+      "path": "src/floorflow/chip_flow/candidate_consensus_training.py",
+      "bytes": 9715,
+      "sha256": "b85c08457b79b43548733db49920c438752950e8f5b15b0fe25011e3aa9070d3"
+    },
+    {
+      "path": "src/floorflow/chip_flow/candidate_legalizability.py",
+      "bytes": 4773,
+      "sha256": "f4dbb455578e99cbefe6594974345ad185dfd0f32d5d7ae05a10693102a8553c"
+    },
+    {
+      "path": "src/floorflow/chip_flow/candidate_manifest.py",
+      "bytes": 7196,
+      "sha256": "74855b0125850a770a5459c4f23ae8a1a4a864bf57a4f6f12cf020d42fed17f5"
+    },
+    {
+      "path": "src/floorflow/chip_flow/candidate_structural_selector.py",
+      "bytes": 4549,
+      "sha256": "7fa80f8f6a36a49d7dcc1baa98200c620cbdb9a9c080b36b9097143e4b5ce56f"
+    },
+    {
+      "path": "src/floorflow/chip_flow/candidate_subset_audit.py",
+      "bytes": 1948,
+      "sha256": "a07e7b1f8a2ff81e2914792e3e49223f4d1a209d5e6ffe0c7840c34e83578711"
+    },
+    {
+      "path": "src/floorflow/chip_flow/checkpoint_loading.py",
+      "bytes": 18098,
+      "sha256": "81f6d45421ad9e64766c7bc950a86d528d9a7735fd2cc2876693fa70bb675d85"
+    },
+    {
+      "path": "src/floorflow/chip_flow/checkpoint_policy.py",
+      "bytes": 2047,
+      "sha256": "c20fa9b9c2efa1ec0117d2b6b2305d40d550805f01db0d254b5d0d981cc415ef"
+    },
+    {
+      "path": "src/floorflow/chip_flow/checkpoint_selection.py",
+      "bytes": 1411,
+      "sha256": "65a13d7c750a2516ab6990e4a80cdadc9e439c61f157b4f565189b637f333dcb"
+    },
+    {
+      "path": "src/floorflow/chip_flow/checkpoint_soup.py",
+      "bytes": 1729,
+      "sha256": "dd492b04872bf70cc66b8c8b63bc757d2e23636e4406d0f7bbf4050661050620"
+    },
+    {
+      "path": "src/floorflow/chip_flow/chip_checkpoint_io.py",
+      "bytes": 1826,
+      "sha256": "fecec4943bc0aedf76de05de5c42d1943e64394c617de5bc692a7e93baa610c0"
+    },
+    {
+      "path": "src/floorflow/chip_flow/chip_hierarchy_conditioning.py",
+      "bytes": 4449,
+      "sha256": "811e700090924037f4461b359b010d996176d844a22c8da5b67c3310b8333e14"
+    },
+    {
+      "path": "src/floorflow/chip_flow/chip_training_step.py",
+      "bytes": 2397,
+      "sha256": "cccc2393b6e3badc97b5919fe305ac5d523579c156eb9c065b7e871483a2ef00"
+    },
+    {
+      "path": "src/floorflow/chip_flow/coarse_to_fine_coupler.py",
+      "bytes": 4722,
+      "sha256": "77e40d7bc86fc52dd01127efd2cc251a30001fa42ddd81c9751c6a91befbff77"
+    },
+    {
+      "path": "src/floorflow/chip_flow/complexity_conditioning.py",
+      "bytes": 3332,
+      "sha256": "8654caef02f76e88613c0773b6db1cb85ccc7c26cbdc3b025da7a12f86d4141c"
+    },
+    {
+      "path": "src/floorflow/chip_flow/complexity_sampler.py",
+      "bytes": 4977,
+      "sha256": "7cbe43b91fc03fd845ab967599aa2d6ba6164ef6504ad4e9cf29e74c87cf5eb8"
+    },
+    {
+      "path": "src/floorflow/chip_flow/complexity_slot_adapter.py",
+      "bytes": 3443,
+      "sha256": "737654e0685941aea5dd450fe24ef51ea1c8deb12dd164f6329285b319714819"
+    },
+    {
+      "path": "src/floorflow/chip_flow/data_manifest.py",
+      "bytes": 1994,
+      "sha256": "593abcff40d2aeb98b7dc2bdfe5ad40f717ab0d4c153d88ecc436bad6e623392"
+    },
+    {
+      "path": "src/floorflow/chip_flow/dataset.py",
+      "bytes": 6951,
+      "sha256": "c15b2caac435565e530e196883d222187b0a3c2a63554f8708c0f037afeca16f"
+    },
+    {
+      "path": "src/floorflow/chip_flow/dbu_endpoint_portfolio.py",
+      "bytes": 5151,
+      "sha256": "bd479d0b0f9aa683d05426d846df345d8e0dd1a5f78766944f7f277d9af734eb"
+    },
+    {
+      "path": "src/floorflow/chip_flow/dbu_packing.py",
+      "bytes": 14530,
+      "sha256": "2323620c0f2aa4f06fabba79cda08a5e45b947f5a531336ef03322aadcb1733c"
+    },
+    {
+      "path": "src/floorflow/chip_flow/dbu_projection.py",
+      "bytes": 22587,
+      "sha256": "dde4905099de081cbc23566619af7cf095b5235f96e3aabb491fc47430180578"
+    },
+    {
+      "path": "src/floorflow/chip_flow/dbu_quantization.py",
+      "bytes": 10211,
+      "sha256": "138e9eb370edde0a64fb220958abcb537397a3e64e7cfa64bc10f08d5ed98b70"
+    },
+    {
+      "path": "src/floorflow/chip_flow/dbu_shape_quantization.py",
+      "bytes": 11111,
+      "sha256": "7645cc0bb6b8c9d9bab221f264a3ac9cec102a2e575dd4372ec20d3837435758"
+    },
+    {
+      "path": "src/floorflow/chip_flow/def_graph.py",
+      "bytes": 6432,
+      "sha256": "235783a1f585bc2653b7abca4f47891dccd55c3ae6875fe7f61e7f8b04773aa6"
+    },
+    {
+      "path": "src/floorflow/chip_flow/def_materialize.py",
+      "bytes": 3626,
+      "sha256": "2bf38a90cade368e984e2c070064dae158a1a5eaae7337fe4f4943970b9a0db3"
+    },
+    {
+      "path": "src/floorflow/chip_flow/def_pin_alignment.py",
+      "bytes": 7547,
+      "sha256": "7124672280fdd98b4f6ff96dd34c14d8aa0ac0e1272240660e308fdddded942a"
+    },
+    {
+      "path": "src/floorflow/chip_flow/degree_conditioned_expert.py",
+      "bytes": 4755,
+      "sha256": "1328460ea04ad47ac3ba242650bc5147b9f6c9607f043cafaed80352021ea6fd"
+    },
+    {
+      "path": "src/floorflow/chip_flow/endpoint_compatibility.py",
+      "bytes": 13605,
+      "sha256": "1c197b92812ccbf7d793198fcc964afd951feb5191b7d369c5061a5cdea4efe2"
+    },
+    {
+      "path": "src/floorflow/chip_flow/eval_curve_manifest.py",
+      "bytes": 2855,
+      "sha256": "5a36bae7d1706f6eff73fcc36ba49070b889109347a23bec37bb99e1a3b66ef8"
+    },
+    {
+      "path": "src/floorflow/chip_flow/evaluation_accumulators.py",
+      "bytes": 379,
+      "sha256": "6da5dbbdf1c8ff7c45a7bf0118886b5d9cd68c581dfc17825dcfac7315c1234f"
+    },
+    {
+      "path": "src/floorflow/chip_flow/external_graph_conditioning.py",
+      "bytes": 8265,
+      "sha256": "4090bde59c460eb58e695c397b3dff6e9f43648dfd9a5ef71b9ca52ad598b2aa"
+    },
+    {
+      "path": "src/floorflow/chip_flow/external_portfolio.py",
+      "bytes": 11331,
+      "sha256": "dc01058ed81f4b5f9385fb58a896e2b26f01d6330398f1e51614b774ffec174d"
+    },
+    {
+      "path": "src/floorflow/chip_flow/floorset.py",
+      "bytes": 7807,
+      "sha256": "82c89dabac89f431c919ab0b1e781255d4fb3f2d10f988bba8cc5687c006e250"
+    },
+    {
+      "path": "src/floorflow/chip_flow/flow_adapter.py",
+      "bytes": 17671,
+      "sha256": "c6cf9116a7ba1ef4538927a49801edd29689ff17eec761b4385f7c402406af90"
+    },
+    {
+      "path": "src/floorflow/chip_flow/global_bbox_consensus.py",
+      "bytes": 2973,
+      "sha256": "c990d708e1000d03cc8f4f846a256cb7145a6218000059a709b3833a439021f3"
+    },
+    {
+      "path": "src/floorflow/chip_flow/global_spec.py",
+      "bytes": 3903,
+      "sha256": "cc3ffb78232cc107eeb9dda7bea75afba6c4b86ff8a380a9e05e158b41e2aeda"
+    },
+    {
+      "path": "src/floorflow/chip_flow/graph_conditioning.py",
+      "bytes": 8849,
+      "sha256": "6798534f958484080138434b4d9f241a6cacd397db8746cbde45feea035ab0e2"
+    },
+    {
+      "path": "src/floorflow/chip_flow/group_moment_coupler.py",
+      "bytes": 7123,
+      "sha256": "c94ce580a82e2c4850bc7fcaa2df9f1880a5fa797ad752d03a0905ca32916d2e"
+    },
+    {
+      "path": "src/floorflow/chip_flow/guided_sampling.py",
+      "bytes": 4812,
+      "sha256": "df52821a7fab7ae477542a58968417ea89712c6e2dd34d068f85e72119e52f06"
+    },
+    {
+      "path": "src/floorflow/chip_flow/hard_constraint_projector.py",
+      "bytes": 10855,
+      "sha256": "d2e71cf05c189702924103213e2ab65821a6f94e1793c44e04fc3dda9edbd716"
+    },
+    {
+      "path": "src/floorflow/chip_flow/head_supervision.py",
+      "bytes": 5931,
+      "sha256": "866c7e38f2ff12db1369a6dea57a00dd36a50a217786ccdce0910a097bf7655f"
+    },
+    {
+      "path": "src/floorflow/chip_flow/hierarchical_advance.py",
+      "bytes": 4329,
+      "sha256": "9ce92e3f8a97f002cebb2c3e430376c18a3c666c399f72f31f12a59753956822"
+    },
+    {
+      "path": "src/floorflow/chip_flow/hierarchical_flow.py",
+      "bytes": 27915,
+      "sha256": "55edbf4d121adb514998eef5c4f9699aaddcd8e2370989f7b850604bd36eaf36"
+    },
+    {
+      "path": "src/floorflow/chip_flow/hierarchical_flow_runtime.py",
+      "bytes": 18775,
+      "sha256": "b2efb6cc97afa654c6f0605df284d1df41d8bc5eda1395debbfb48ce1eb7eb0a"
+    },
+    {
+      "path": "src/floorflow/chip_flow/hierarchical_model.py",
+      "bytes": 5439,
+      "sha256": "0c9619e19122a3b2c3a97e79032764c0e4d971ef785989f807d493db31af7aba"
+    },
+    {
+      "path": "src/floorflow/chip_flow/hierarchy_adapters.py",
+      "bytes": 16381,
+      "sha256": "b1c82bf37a53fd17e7cbce28a654d992f003f362dfcf749cf77db4993d126fca"
+    },
+    {
+      "path": "src/floorflow/chip_flow/hierarchy_consistency.py",
+      "bytes": 2720,
+      "sha256": "c89d9614029917dfa64bbdd28e92087d0cef8ffe69431f951aff1faac0ae23e0"
+    },
+    {
+      "path": "src/floorflow/chip_flow/hierarchy_context.py",
+      "bytes": 7676,
+      "sha256": "53cf6264dd05fab886097ed5045a6f189891fe585d6ccba5e683eee365fef48d"
+    },
+    {
+      "path": "src/floorflow/chip_flow/hierarchy_coordinates.py",
+      "bytes": 6917,
+      "sha256": "9962e40796832fdb7e4979f5a26d77f6dd38580f18e4bfdcc357a7f5effa1ad0"
+    },
+    {
+      "path": "src/floorflow/chip_flow/hierarchy_sampling.py",
+      "bytes": 11337,
+      "sha256": "4568422175896ea459d3fe29695b299d31612b87df0d43abc0c3d7dfae51ce96"
+    },
+    {
+      "path": "src/floorflow/chip_flow/hierarchy_state.py",
+      "bytes": 2490,
+      "sha256": "060c94e0787fa631effba98c11d1360c63059e960e3d6938ce8073d951a7deff"
+    },
+    {
+      "path": "src/floorflow/chip_flow/hierarchy_structure.py",
+      "bytes": 585,
+      "sha256": "15aab2ac32d1592a43ddc5229fe04942391d0d627cd6be553034e78fec58c45e"
+    },
+    {
+      "path": "src/floorflow/chip_flow/hierarchy_targets.py",
+      "bytes": 2238,
+      "sha256": "96b7de4719e4528e1faa6790b0fe04c2a7ad671f627ab1307c8ae180ac1e4ec6"
+    },
+    {
+      "path": "src/floorflow/chip_flow/hierarchy_token_bridge.py",
+      "bytes": 6405,
+      "sha256": "9c9ba4aabe646faf470423bae48355e203a7af433ebdfd397023208d673018b8"
+    },
+    {
+      "path": "src/floorflow/chip_flow/house_tokens.py",
+      "bytes": 4310,
+      "sha256": "e8ce6c597f11c6528c5aa917606e6c67e100e216a5d36d25cc58335be181f80e"
+    },
+    {
+      "path": "src/floorflow/chip_flow/legal_parent_reflow.py",
+      "bytes": 7951,
+      "sha256": "1cb5ba38e62d87bd2bf79e4fb0ed4d2cbb695635d0d214faadf5f3259ba40acb"
+    },
+    {
+      "path": "src/floorflow/chip_flow/legalization.py",
+      "bytes": 3095,
+      "sha256": "107cf5085c92dd12eb5414dea6d0e9f784d90f60690c5debef3e7827d6513009"
+    },
+    {
+      "path": "src/floorflow/chip_flow/legalization_survival.py",
+      "bytes": 6869,
+      "sha256": "90fb2261793f039ea9c22a9bd7f7654892aacda0131f4778baed65bd7b279d44"
+    },
+    {
+      "path": "src/floorflow/chip_flow/legalized_cluster_reflow.py",
+      "bytes": 17401,
+      "sha256": "0b3e5ad0045fbdcd22abaaa54df4cd41b3928cb79b3916ff18b97e278665acce"
+    },
+    {
+      "path": "src/floorflow/chip_flow/legalized_group_actions.py",
+      "bytes": 15154,
+      "sha256": "f53a04618415cdceed6143ee11beea87cc2684c9386f138c72f659072ae26f15"
+    },
+    {
+      "path": "src/floorflow/chip_flow/legalized_group_repair.py",
+      "bytes": 9252,
+      "sha256": "6a67c5efdbade0a795cffd93b5759df4c976e2d5527f481ab24b5676d7e86a00"
+    },
+    {
+      "path": "src/floorflow/chip_flow/legalizer_counterfactual.py",
+      "bytes": 2456,
+      "sha256": "eae314a6c56fd59b393385943d234457a11b01e2f15899f3c097ed6b604887f8"
+    },
+    {
+      "path": "src/floorflow/chip_flow/legalizer_policy.py",
+      "bytes": 1061,
+      "sha256": "39e9780daf695c25c4643f0ff731fc4c3b8b31db4da203d08e6cf6e0a194f98a"
+    },
+    {
+      "path": "src/floorflow/chip_flow/legalizer_portfolio.py",
+      "bytes": 4749,
+      "sha256": "b0fee6aa012098d9ae5c1562c13f45e60f2423b0777e94607d82e9f39c5eb87d"
+    },
+    {
+      "path": "src/floorflow/chip_flow/legalizer_response.py",
+      "bytes": 8544,
+      "sha256": "7fa1037160ce5db43a0f4880d4bc54f62924d27233d7a978aa9502b7ece637b1"
+    },
+    {
+      "path": "src/floorflow/chip_flow/local_geometry_features.py",
+      "bytes": 4359,
+      "sha256": "ae5e9af48f0b866a2900ecd2ee32eec1ef2c22fbf5433f079c3247fa48e32a80"
+    },
+    {
+      "path": "src/floorflow/chip_flow/mechanism_screening.py",
+      "bytes": 1350,
+      "sha256": "ee35fa6e79d7832f7249301c28687176e599143af09dea122458f8258aabf9c9"
+    },
+    {
+      "path": "src/floorflow/chip_flow/model.py",
+      "bytes": 6923,
+      "sha256": "e2ddacc1099beb2b565c126c50e4b4e51c67c4f9d608e26f1a13ecdb22254ddb"
+    },
+    {
+      "path": "src/floorflow/chip_flow/model_config.py",
+      "bytes": 8393,
+      "sha256": "ce4750b1ea43e8a66b64883e3d20dbd81c49adaa6ebdd580cb95200efb347268"
+    },
+    {
+      "path": "src/floorflow/chip_flow/multi_objective_balance.py",
+      "bytes": 1148,
+      "sha256": "ca903744e8abc5932f0e70a66aba93cd7ce67d95cce2900ef6a6c6fa34648e41"
+    },
+    {
+      "path": "src/floorflow/chip_flow/netlist_hypergraph.py",
+      "bytes": 9447,
+      "sha256": "504c98dd7ef960092eb365fcc8dc56cd0cdf30de65a71a70a86007597d09cf96"
+    },
+    {
+      "path": "src/floorflow/chip_flow/nfe_consistency.py",
+      "bytes": 5927,
+      "sha256": "1385efa2e9143001addcc3e03b05dbc1561d1bc99a977e133a40c2c2295d51d9"
+    },
+    {
+      "path": "src/floorflow/chip_flow/objective_schedules.py",
+      "bytes": 3741,
+      "sha256": "63c56c4fbac5c89c6556766715d543143a15c500a134115c1f4db816c6ba3e1e"
+    },
+    {
+      "path": "src/floorflow/chip_flow/observed_hierarchy.py",
+      "bytes": 4458,
+      "sha256": "6540e0bd72782db062785aedb18779f906dffc5b7b7b6b54a98651acc33bac42"
+    },
+    {
+      "path": "src/floorflow/chip_flow/official_cost_surrogate.py",
+      "bytes": 9337,
+      "sha256": "f214813e2151369e02b17d94b46dc32dafabc346331ed1796f6343893201f770"
+    },
+    {
+      "path": "src/floorflow/chip_flow/ordered_group_staging.py",
+      "bytes": 5762,
+      "sha256": "1e41fa8e762782017491a437f3b8f519d0df7e0f38cb7ca36feb6e5d67067f5a"
+    },
+    {
+      "path": "src/floorflow/chip_flow/orfs_runtime.py",
+      "bytes": 4497,
+      "sha256": "48a23eb035b556222d3dd663e382caf8476eeeb35ce8ae9d3d5277cd90fe918c"
+    },
+    {
+      "path": "src/floorflow/chip_flow/outline_conditions.py",
+      "bytes": 2376,
+      "sha256": "ac109f7bc900a1df9defb7335957111c4ca2f0496c73abad0d0bf806a0d5e91a"
+    },
+    {
+      "path": "src/floorflow/chip_flow/outline_packing.py",
+      "bytes": 13999,
+      "sha256": "2726ae8dc28ea51734549f9ee7ed3c3d59fb0e4b9b258721f85b428c3fd644ea"
+    },
+    {
+      "path": "src/floorflow/chip_flow/placereasoner_bench.py",
+      "bytes": 3986,
+      "sha256": "878ff86c27201af5f4f68d8dbba2b1e5c4b1d7c3e594260ee132c92e4f833359"
+    },
+    {
+      "path": "src/floorflow/chip_flow/port_consensus_coupler.py",
+      "bytes": 5638,
+      "sha256": "1148cbd13916f7ddf97f2af53a01a399add5562b7250e22cf2d0c0499ea00ac1"
+    },
+    {
+      "path": "src/floorflow/chip_flow/portfolio_router.py",
+      "bytes": 4965,
+      "sha256": "478ed11edad4bca45f00cd83471a9e71d22c530f4b1c59cbc64c8d2c00bce721"
+    },
+    {
+      "path": "src/floorflow/chip_flow/ppa_external.py",
+      "bytes": 19058,
+      "sha256": "611cbabac6ee2cac548baffbda761f852a1a1fc583650db8fec9d73eff16373c"
+    },
+    {
+      "path": "src/floorflow/chip_flow/projections.py",
+      "bytes": 5092,
+      "sha256": "868559759a972c84bbdae784f644ee95c0032d57b018f68e3cd52b5eb14d1f8c"
+    },
+    {
+      "path": "src/floorflow/chip_flow/projector_endpoint_contract.py",
+      "bytes": 1475,
+      "sha256": "532789ab0e7c6db80c54515b5ae8666f476f8e04c608efa24f99ce2818b3a749"
+    },
+    {
+      "path": "src/floorflow/chip_flow/projector_geometry.py",
+      "bytes": 13719,
+      "sha256": "96df143d4c972c31887a96bf1800e408662704eb494ec786c15cf597b2b58f68"
+    },
+    {
+      "path": "src/floorflow/chip_flow/projector_residual_head.py",
+      "bytes": 1064,
+      "sha256": "23342ab3a92f3d8583ca46410fa620b511b0d7eea220600d62bfd845e29083d7"
+    },
+    {
+      "path": "src/floorflow/chip_flow/proposals.py",
+      "bytes": 5042,
+      "sha256": "f8a2d415b2b933e8b5858194383b62499f7829d2735b1d787ec1f0fd404319a1"
+    },
+    {
+      "path": "src/floorflow/chip_flow/refiner_config.py",
+      "bytes": 6554,
+      "sha256": "5388a28274156bd8dde1acf3592df84a21e1bac61e1be473eb1c9c651ec69a14"
+    },
+    {
+      "path": "src/floorflow/chip_flow/relation_gate_balance.py",
+      "bytes": 682,
+      "sha256": "31a28809eae61246023316ac6d2c3e472396141a12f693d4fbc064dc204760cc"
+    },
+    {
+      "path": "src/floorflow/chip_flow/reproducibility.py",
+      "bytes": 979,
+      "sha256": "59c96f510ffffbd212d84cb5b5d046196bab9ee6c755f99f0815c202cfc29754"
+    },
+    {
+      "path": "src/floorflow/chip_flow/response_sidecar.py",
+      "bytes": 6040,
+      "sha256": "95c4fae2c1bd62c4043f2972332b5da80dde45c93f45b1cfad6a51e6e9fc72a4"
+    },
+    {
+      "path": "src/floorflow/chip_flow/response_sidecar_selection.py",
+      "bytes": 1732,
+      "sha256": "4e7bf4209af17f61b73379722fac264b73459b5c563dac54e090d8d962b8257c"
+    },
+    {
+      "path": "src/floorflow/chip_flow/rho_predictability.py",
+      "bytes": 2411,
+      "sha256": "d9e6b7c20cedd392f5bdd2edcdad49017143f6ec03c3a3990bf902b66011470b"
+    },
+    {
+      "path": "src/floorflow/chip_flow/score_diagnostics.py",
+      "bytes": 3080,
+      "sha256": "720be60c8c0916e8d3c3ed08e7efa03ef594ddae97a918c24a20fff5440f2709"
+    },
+    {
+      "path": "src/floorflow/chip_flow/semantic_conditioning.py",
+      "bytes": 1756,
+      "sha256": "f3e048b7d5f24320425c88e630955da41ded4e6e3bce093836902f36d730ad55"
+    },
+    {
+      "path": "src/floorflow/chip_flow/shape_mode_features.py",
+      "bytes": 3626,
+      "sha256": "12fd9dceb16176bce57e6e67c0c0af414b4ee49c53577fc97ca65f15c01f786e"
+    },
+    {
+      "path": "src/floorflow/chip_flow/shape_mode_head.py",
+      "bytes": 17515,
+      "sha256": "ac503351cb292f760b73fa3d78d6b4d12d825686433e4e831383e62be0564162"
+    },
+    {
+      "path": "src/floorflow/chip_flow/shape_mode_objectives.py",
+      "bytes": 10496,
+      "sha256": "6c5aba34e5a8995abe428d6fce93230ec7910848bce6758f056b185723abe696"
+    },
+    {
+      "path": "src/floorflow/chip_flow/shape_pin_consistency.py",
+      "bytes": 5105,
+      "sha256": "f3ab31d1c554505ccf41c7ce1bbe5d80d008fd3022246260b9dbfd4db71923b6"
+    },
+    {
+      "path": "src/floorflow/chip_flow/slot_model.py",
+      "bytes": 11576,
+      "sha256": "7cbcac26abf9fe95a85d9149c0634cbcfd746cdf406ef070e013ffe4b5c42419"
+    },
+    {
+      "path": "src/floorflow/chip_flow/source_mixing.py",
+      "bytes": 2317,
+      "sha256": "752d34ff21e41b2caad703971c6008491e3cde564dd8e464c236ac985b955202"
+    },
+    {
+      "path": "src/floorflow/chip_flow/sparse_flow_model.py",
+      "bytes": 12647,
+      "sha256": "83bc76169b3b26ef2873604f4f1f195309b709ddeb104b1649441eecbc124c36"
+    },
+    {
+      "path": "src/floorflow/chip_flow/sparse_hierarchy.py",
+      "bytes": 12105,
+      "sha256": "2327abf64fcb1953b74a9a795106bf2828669be3713597c3bf3c0a23f49e6460"
+    },
+    {
+      "path": "src/floorflow/chip_flow/sparse_layers.py",
+      "bytes": 18274,
+      "sha256": "95ddaa1a3586a47841cdf628b3fb4815f41b9019dd81b6b58d88ae90cecfda9d"
+    },
+    {
+      "path": "src/floorflow/chip_flow/sparse_slot_flow.py",
+      "bytes": 11574,
+      "sha256": "9c1460f70321ec17ff945cbdb3d298285e9631245f29f7160200392c7bbd0823"
+    },
+    {
+      "path": "src/floorflow/chip_flow/spatial_occupancy_coupler.py",
+      "bytes": 20343,
+      "sha256": "7311dee9b42c39744534cc7de8e6efef90c8035b50b1c1fd3b8849362ef43509"
+    },
+    {
+      "path": "src/floorflow/chip_flow/state_conditioned_edge_bias.py",
+      "bytes": 3390,
+      "sha256": "69003e08b483195000b80de40e1d550538a98dfa57ddf25919d0d32bd85d9154"
+    },
+    {
+      "path": "src/floorflow/chip_flow/structural_relations.py",
+      "bytes": 7815,
+      "sha256": "794bc2c701e020133e519a9698c3fc175f2cd0cc10ec33935481223bb7dbf736"
+    },
+    {
+      "path": "src/floorflow/chip_flow/structured_heads.py",
+      "bytes": 21479,
+      "sha256": "b5c05e742d7bb7c0c24fe8b7c3043b747a145008bd01b6d9d7d68733baa57b24"
+    },
+    {
+      "path": "src/floorflow/chip_flow/target_free_geometry.py",
+      "bytes": 2085,
+      "sha256": "952b2ebd7a44d09c2b4722e6a0c21861cc13cfdd63cee38d773e5b4e5564ff7e"
+    },
+    {
+      "path": "src/floorflow/chip_flow/train_cli.py",
+      "bytes": 22383,
+      "sha256": "a52e4809b7d0f9db20c398221ba8495d15684df63530add09139b1f42409ecaa"
+    },
+    {
+      "path": "src/floorflow/chip_flow/train_cli_options.py",
+      "bytes": 4125,
+      "sha256": "806789d367fbbc71cfcdfd7a62e924b142ee802cc14cdcbffb7e446071dc5f46"
+    },
+    {
+      "path": "src/floorflow/chip_flow/train_evaluation.py",
+      "bytes": 14810,
+      "sha256": "35a6b4ca2ea42a36da64d6a93dcf5d3d54b296bb2ad1e3393dc901bfbcdcdf15"
+    },
+    {
+      "path": "src/floorflow/chip_flow/train_objective.py",
+      "bytes": 21289,
+      "sha256": "5393e536681a132630d2437b9a6bbbb7573a86987572061ab6c5352e8e72ce82"
+    },
+    {
+      "path": "src/floorflow/chip_flow/training_endpoint.py",
+      "bytes": 6084,
+      "sha256": "c60e5feb8ff5b4e0090e7d0961ba911a6056accc51da4464d6eb2dcc858ff5d3"
+    },
+    {
+      "path": "src/floorflow/chip_flow/training_manifest.py",
+      "bytes": 6033,
+      "sha256": "b687e26643273c28b0c50d06cabd452daf29f7a2c0d044aa17c2fc3772f77d9e"
+    },
+    {
+      "path": "src/floorflow/chip_flow/training_runtime.py",
+      "bytes": 14136,
+      "sha256": "1268053c45dabf374dda85dd6181197eb4879eeedbb89c0507c3bf6c8152fc50"
+    },
+    {
+      "path": "src/floorflow/chip_flow/training_scopes.py",
+      "bytes": 13388,
+      "sha256": "c785c7d991027aec05bf76a5fa90ec8be3f3da8c98ce46df75a122df03e3d0f5"
+    },
+    {
+      "path": "src/floorflow/chip_flow/training_validation.py",
+      "bytes": 15326,
+      "sha256": "c16c321c111d91fb84221e456f87d8a997a9a3845a61d8f6a1a0219b87b1ce01"
+    },
+    {
+      "path": "src/floorflow/chip_flow/trinity_backbone_init.py",
+      "bytes": 1764,
+      "sha256": "a272748d6505b59c61e804b094d468dfa7e925e29bb28193a6b4e31a302933e3"
+    },
+    {
+      "path": "src/floorflow/chip_flow/trinity_release.py",
+      "bytes": 1716,
+      "sha256": "0a6b5b315c26fdec40afe919710b8c2250403bc3d454beca94cadb59045e2f10"
+    },
+    {
+      "path": "src/floorflow/chip_flow/trinity_token_flow.py",
+      "bytes": 3916,
+      "sha256": "02cb54e9180c550343375533d89e12124252b546f793e40235574a532dcb2b73"
+    },
+    {
+      "path": "src/floorflow/chip_flow/typed_atom_aggregator.py",
+      "bytes": 10168,
+      "sha256": "8a9719cb2266542e1fd210b9a4b405da73f908cba5a3027bacca706259f82e8b"
+    },
+    {
+      "path": "src/floorflow/chip_flow/typed_channel_cache.py",
+      "bytes": 15361,
+      "sha256": "aa8c47ab31ae81e589730473c5884899b223016cc4cfbdecb9d32a34c9cebdf3"
+    },
+    {
+      "path": "src/floorflow/chip_flow/typed_channel_fusion.py",
+      "bytes": 2315,
+      "sha256": "b1b961288143add30fec22da019cc17b512364a6c1f3068ec13118102bece271"
+    },
+    {
+      "path": "src/floorflow/chip_flow/typed_channel_state.py",
+      "bytes": 2605,
+      "sha256": "0bf465bfe6883429a097bb4f98732e74833ffe7ae9d50596de6999a072e8158a"
+    },
+    {
+      "path": "src/floorflow/chip_flow/typed_cross_attention.py",
+      "bytes": 5185,
+      "sha256": "7452c3b17346d5bc100fac0b41ee717c5c2044041ad59d0367dceed0dabc7b5e"
+    },
+    {
+      "path": "src/floorflow/chip_flow/typed_graph_encoder.py",
+      "bytes": 20741,
+      "sha256": "e481b3daeab220625fe54ac0021cc4853439437363455e18b667eb70c34c0f99"
+    },
+    {
+      "path": "src/floorflow/chip_physics/__init__.py",
+      "bytes": 499,
+      "sha256": "8473ef04fdfc58396307470a517a49685a2cabbdc08aacffa86cd275f222e36a"
+    },
+    {
+      "path": "src/floorflow/chip_physics/terms.py",
+      "bytes": 9121,
+      "sha256": "facf4caccaf0e7931d740323c508e76312033a7670b21272a3ada2cc19073df4"
+    },
+    {
+      "path": "src/floorflow/data/__init__.py",
+      "bytes": 77,
+      "sha256": "207b388015c34f2d6d17f9b1c0517bd870fe40cbd2f426cdccd58b434ef2d8ff"
+    },
+    {
+      "path": "src/floorflow/data/class_balance.py",
+      "bytes": 2429,
+      "sha256": "0f232ea8d18260fdc004db10ce6ef20cb3d471ed0c21e122dc81d51e3cda6850"
+    },
+    {
+      "path": "src/floorflow/data/classes.py",
+      "bytes": 5122,
+      "sha256": "908d0e7085afc9b000e1d1f7075f3d2b3bd863a0dd81c3c262041f74922bebb8"
+    },
+    {
+      "path": "src/floorflow/data/constraint_action_dataset.py",
+      "bytes": 18678,
+      "sha256": "305e7aa838196bfa5046e4d26a869619d3e5f824deee8642a4c1408e605f9801"
+    },
+    {
+      "path": "src/floorflow/data/constraint_candidate_dataset.py",
+      "bytes": 7682,
+      "sha256": "328b55fd6d9ab78d746b768262f21dc08607b546b2cf1ad4ca1b0b0df5dcd2f0"
+    },
+    {
+      "path": "src/floorflow/data/constraint_candidates.py",
+      "bytes": 20172,
+      "sha256": "05f9b53f6e7e200ea05de2b204c4cc05c862802972853050e023f23a1edc9184"
+    },
+    {
+      "path": "src/floorflow/data/control_cache.py",
+      "bytes": 4426,
+      "sha256": "b179ec1a315624b6910490e7d257eddffccefe7eab09941099408dc1fda8ed73"
+    },
+    {
+      "path": "src/floorflow/data/control_contract.py",
+      "bytes": 6305,
+      "sha256": "c79a7e3bbd03143b412b0389d7d60160c41585be3b6bd3f4a19c76e9d63a89da"
+    },
+    {
+      "path": "src/floorflow/data/control_fusion.py",
+      "bytes": 3014,
+      "sha256": "e2c513f38668bcdd477def070b0f7af9361a854581b6ea95370fc0d8b261742e"
+    },
+    {
+      "path": "src/floorflow/data/control_perturbation.py",
+      "bytes": 2599,
+      "sha256": "9b26bde048efde39f03de79f7a1ae7c43f12efbebfc5d0461ef0ffc58caec508"
+    },
+    {
+      "path": "src/floorflow/data/data_balance.py",
+      "bytes": 3110,
+      "sha256": "2c6b8609a4e3d08e0c383f2ea0ba64a7f990f5f21939901aa4e643f477377ec8"
+    },
+    {
+      "path": "src/floorflow/data/dataset.py",
+      "bytes": 17480,
+      "sha256": "4cb3862a109365218f6467805880fcceb7fe504c8d348bd87ad042e0789d8d91"
+    },
+    {
+      "path": "src/floorflow/data/design_points.py",
+      "bytes": 4718,
+      "sha256": "823ad9e12319046bf4af009125d30966ffb9c2bbd06634f5f40e12cde6d14507"
+    },
+    {
+      "path": "src/floorflow/data/domain_alignment.py",
+      "bytes": 2575,
+      "sha256": "4b14d877916535857efa1b6793d4fd817c13456df09981863a9a9a33d0ed733a"
+    },
+    {
+      "path": "src/floorflow/data/dynamic_curriculum.py",
+      "bytes": 18062,
+      "sha256": "dafc466fa87efd870c6fb299bb5e8532a191f22fad0b928b77bbf06890c89141"
+    },
+    {
+      "path": "src/floorflow/data/floorplan_token_targets.py",
+      "bytes": 8594,
+      "sha256": "e4152eacf2af9e9582917f250bd927da84a778f2671902d1c151e92b89a00706"
+    },
+    {
+      "path": "src/floorflow/data/geometry_cache.py",
+      "bytes": 20598,
+      "sha256": "de26c9bf9ed3faf6af36b461636b1623af3188ec389abf615d5a7c4a48ae06be"
+    },
+    {
+      "path": "src/floorflow/data/interaction_candidate_dataset.py",
+      "bytes": 16473,
+      "sha256": "a3be885fdac740e86e1c1c9e9ee2d01dc8529650281f1fad81ef0941696cfa79"
+    },
+    {
+      "path": "src/floorflow/data/interaction_context.py",
+      "bytes": 2871,
+      "sha256": "02c4c2704af42d4c7df2002fd9d54b53f592f153a64280d06a4f172d3ea188c2"
+    },
+    {
+      "path": "src/floorflow/data/length_bucketing.py",
+      "bytes": 2272,
+      "sha256": "b2418a56acc689316701fd85e9e70f34f9be08322ffd9004f4d67afde8cdb09d"
+    },
+    {
+      "path": "src/floorflow/data/local_control_edits.py",
+      "bytes": 9564,
+      "sha256": "d495f3e87c4fd17e1b98af57fae53bf93e7112ca0c9e9ab8c014d44bd4689773"
+    },
+    {
+      "path": "src/floorflow/data/mixed_dataset.py",
+      "bytes": 2622,
+      "sha256": "dac49e0ee45e8fb5c660726c91bb63474ff757bf0e016680765805297f655fd7"
+    },
+    {
+      "path": "src/floorflow/data/model_candidate_dataset.py",
+      "bytes": 21443,
+      "sha256": "26832a9f6109018565e7196cae240215fc186bf3d0f7f3bf7cec0e7b76947383"
+    },
+    {
+      "path": "src/floorflow/data/predicted_control_raster.py",
+      "bytes": 7939,
+      "sha256": "76cb8dac08ef3d3da553a96c2df184c2b0e376568b873bdf7c1b48d590e8475c"
+    },
+    {
+      "path": "src/floorflow/data/raster2seq_proposal_cache.py",
+      "bytes": 8555,
+      "sha256": "39f01bb86946d2117f95e0f875d93278bc8335be0eb8e5f0791be358456757d6"
+    },
+    {
+      "path": "src/floorflow/data/raster_control.py",
+      "bytes": 15156,
+      "sha256": "f2a0825cfc0ab299dd5437d8b85eb641aadb371e3c10750b733a20eee805f8a9"
+    },
+    {
+      "path": "src/floorflow/data/raster_vector_geometry_dataset.py",
+      "bytes": 1506,
+      "sha256": "221de049c71862626307aeb50669cd5699d1f65aa1e2f8a1543545445cb4fee2"
+    },
+    {
+      "path": "src/floorflow/data/retrieval_control_dataset.py",
+      "bytes": 3250,
+      "sha256": "807888906860d27276d003c7828a83d6d484d5f9647780ec71008cb72f575168"
+    },
+    {
+      "path": "src/floorflow/data/rplan_boundary_adapter.py",
+      "bytes": 21133,
+      "sha256": "b1f19ab9c6f020fea18c3ee4bc2f438e46bc45d12788267ed7dcf5d3b280f761"
+    },
+    {
+      "path": "src/floorflow/data/rplan_collate.py",
+      "bytes": 4489,
+      "sha256": "c6d42e1a1106a8b6dd9758e01e2faab5cf9ec38424cf669c73062c6bddd8e22c"
+    },
+    {
+      "path": "src/floorflow/data/rplan_model_limits.py",
+      "bytes": 1103,
+      "sha256": "667ff849db958cd1f78f685754f74c70018682a8d48b21685e3ea78977bdeedd"
+    },
+    {
+      "path": "src/floorflow/data/rplan_room_limits.py",
+      "bytes": 923,
+      "sha256": "38dd4b6efd8c65293246e54cc5966c719e186e6021deb6b4f7a51c03dbdce9fb"
+    },
+    {
+      "path": "src/floorflow/data/skv4.py",
+      "bytes": 3538,
+      "sha256": "41e50f0e2ca1a34892ded26b4a70cabf2b0dd52b8a13f1acad4b0b68521ec6a3"
+    },
+    {
+      "path": "src/floorflow/data/skv4_dataset.py",
+      "bytes": 2003,
+      "sha256": "320f2f9cc186deb36f31feb49598bfb862b21a4b22244ce23b2fefa108e565e8"
+    },
+    {
+      "path": "src/floorflow/data/stratified_sampling.py",
+      "bytes": 12471,
+      "sha256": "1c684dcca7f466582ee422724f4786b00c8529d6aa655656b3317d4699da85e9"
+    },
+    {
+      "path": "src/floorflow/data/svg.py",
+      "bytes": 15656,
+      "sha256": "0b04f4759afe217defa103dcde77606d90808c20c2e9801dc0748cb027a38f9a"
+    },
+    {
+      "path": "src/floorflow/data/synthetic_data.py",
+      "bytes": 8279,
+      "sha256": "3c64f39f1c0cf4b876ade205c232d144df6b5e0a790afe281e39595f2471ba19"
+    },
+    {
+      "path": "src/floorflow/data/taxonomy.py",
+      "bytes": 7949,
+      "sha256": "0cde8d71d2c11edc774aef43192a9213ab3b6262ec94b5ee9a91530243cbb36f"
+    },
+    {
+      "path": "src/floorflow/data/vector_geometry_dataset.py",
+      "bytes": 6258,
+      "sha256": "e2797b5b0c5c30fe2b6b1334015e64464e9f252033b64edd3a48b5228dbff3da"
+    },
+    {
+      "path": "src/floorflow/data/vector_primitive_target_bank.py",
+      "bytes": 4312,
+      "sha256": "a3fcc021e1909131a42d4e2f06bdc5db1ce34782ee00096cb74ab7d7bcba0306"
+    },
+    {
+      "path": "src/floorflow/distribution/__init__.py",
+      "bytes": 1534,
+      "sha256": "c24e9ebf871ac363ad89c6ff1aa1f1241b481351d7c6b21afc0a3a006c8bc9e4"
+    },
+    {
+      "path": "src/floorflow/distribution/adversarial.py",
+      "bytes": 8358,
+      "sha256": "505130ae4e8ff6dc81d2f4916185d30a7accffdcf4b699497b2cb1822b17bf93"
+    },
+    {
+      "path": "src/floorflow/distribution/cfm_audit.py",
+      "bytes": 2574,
+      "sha256": "36ed3f50ab5d229ce1ba57963922f17ff3ab3ca7661afbc6102fb4b39ba5c392"
+    },
+    {
+      "path": "src/floorflow/distribution/cfm_bridge.py",
+      "bytes": 2941,
+      "sha256": "1eb22c00b7f8b1230b28ad6332af2781133ab836585f25d40115a09866f93ad9"
+    },
+    {
+      "path": "src/floorflow/distribution/cfm_model.py",
+      "bytes": 8716,
+      "sha256": "3f10168954ad129ce45f1a0f5d1cabf2de72a71a287d8779708963444f4fcf7a"
+    },
+    {
+      "path": "src/floorflow/distribution/checkpoint.py",
+      "bytes": 8711,
+      "sha256": "038f869ed6a752d40c3f91bbf31de9c17eb1e959b785372b7581e2d843822aaf"
+    },
+    {
+      "path": "src/floorflow/distribution/coupling_loss.py",
+      "bytes": 6808,
+      "sha256": "75059226b69b669f91137f3fc66c93b5d1d850dc3ee5c701627e875535b9a3d7"
+    },
+    {
+      "path": "src/floorflow/distribution/element_head.py",
+      "bytes": 20823,
+      "sha256": "2d34e36f7ff5952ac27b02d736fbd936dda760dbf3c23df2d2e310a07e41abc2"
+    },
+    {
+      "path": "src/floorflow/distribution/element_loss.py",
+      "bytes": 7296,
+      "sha256": "389f3d0cc62805aab5ee573ee56ccab1cd6d15a46ed8b32fcec027c265361288"
+    },
+    {
+      "path": "src/floorflow/distribution/element_parents.py",
+      "bytes": 1499,
+      "sha256": "6d08b0cea5a88329a6d3c43016ace3801a86fefcadbf4f9aa8c15d2541167aaa"
+    },
+    {
+      "path": "src/floorflow/distribution/element_query_geometry.py",
+      "bytes": 1658,
+      "sha256": "0ad9f1a32d5adb8151faec128f7e2277eb08f50404bdab4a1707542a4a830643"
+    },
+    {
+      "path": "src/floorflow/distribution/element_targets.py",
+      "bytes": 2791,
+      "sha256": "a9e3c9ef5cdc4b93ee5b147a73aca398dabcf1549414f69c040bdebf5c91a75f"
+    },
+    {
+      "path": "src/floorflow/distribution/hierarchy.py",
+      "bytes": 1852,
+      "sha256": "ad83273ff7efc3bb6cc4a15bca2622cd14bee02e84cb5021ccc4e4e54d90e0b6"
+    },
+    {
+      "path": "src/floorflow/distribution/hub.py",
+      "bytes": 6354,
+      "sha256": "117a49408416c08f4ae7521c9c2de268e859f981622e7fffd9f5d7f426533fbd"
+    },
+    {
+      "path": "src/floorflow/distribution/joint_loss.py",
+      "bytes": 9551,
+      "sha256": "95f017c4b1d0133fa967f67e15e7f35a98703e08bf828352c0edb45aa887a6bf"
+    },
+    {
+      "path": "src/floorflow/distribution/parent_gate.py",
+      "bytes": 1810,
+      "sha256": "5b02b329b740efe4764dd0b4afaf4edd1797d18121ff86b64d42ddebfebeeeea"
+    },
+    {
+      "path": "src/floorflow/distribution/pixel_head.py",
+      "bytes": 8543,
+      "sha256": "aec79da69d1488b16679110af7dddb70488f255bdb6586f8c663f3a63bf1557d"
+    },
+    {
+      "path": "src/floorflow/distribution/query_budget.py",
+      "bytes": 2611,
+      "sha256": "614d10b7cdfeaf8202223513487c641a22bce627d5067ea779f37ff506c22a76"
+    },
+    {
+      "path": "src/floorflow/distribution/sampling.py",
+      "bytes": 4052,
+      "sha256": "0c4ae1f6f2c97e084a0d656d8f0f5087e19015a8dcf9e0c77eb40353362d07bd"
+    },
+    {
+      "path": "src/floorflow/distribution/style_conditioning.py",
+      "bytes": 11036,
+      "sha256": "1be487e04d90a50c88325a7d9301599c009063f387e0430012ba9c071584f28e"
+    },
+    {
+      "path": "src/floorflow/distribution/style_semantic.py",
+      "bytes": 5040,
+      "sha256": "144ce82acae6400f87171385ab6ec191d2e4aef3501da8ebb2a203986178bc8d"
+    },
+    {
+      "path": "src/floorflow/distribution/support_gate.py",
+      "bytes": 1668,
+      "sha256": "4c14a8b92fbbeb70736dcdac557f391183835617f7fb77341546d8a30fbdd0eb"
+    },
+    {
+      "path": "src/floorflow/distribution/velocity_refiner.py",
+      "bytes": 2296,
+      "sha256": "e3045b459573700ee65f51ddf9902ca28d6d537e3a1210460f985a7409b31561"
+    },
+    {
+      "path": "src/floorflow/evaluation/__init__.py",
+      "bytes": 65,
+      "sha256": "455dff79275007b0c122ffa1eb01af4f52e38f5ea8e4c57f80a8f3519101f885"
+    },
+    {
+      "path": "src/floorflow/evaluation/architecture_profile.py",
+      "bytes": 2411,
+      "sha256": "0b4024ae96d178c13466b9a363efe6a0d9865f6cf53d04eedd0807f75133bb50"
+    },
+    {
+      "path": "src/floorflow/evaluation/atom_layer_proxies.py",
+      "bytes": 3336,
+      "sha256": "ca95c382107ad9b79a36236fde13e12e21beb43421e9aab732479d3edaf93a92"
+    },
+    {
+      "path": "src/floorflow/evaluation/atom_measurement_builder.py",
+      "bytes": 3894,
+      "sha256": "a8efdb53eb1970dc691bef4d2e2b59fb862340592b1c936bb66553abd14008c9"
+    },
+    {
+      "path": "src/floorflow/evaluation/atom_metric_contract.py",
+      "bytes": 9307,
+      "sha256": "0466aa5e26886efb17846fb4178a97f7fef5f993479f88e03a9f27183f303621"
+    },
+    {
+      "path": "src/floorflow/evaluation/atom_proxy_consistency.py",
+      "bytes": 19044,
+      "sha256": "c5f59e856a12d8a9f8eefa528f141f1fc77fbdcb73badb6b21abbc0fb9120270"
+    },
+    {
+      "path": "src/floorflow/evaluation/cad_candidate_plan.py",
+      "bytes": 4080,
+      "sha256": "884d9e1b754c0e5a19182f7bcc3faac2d408d13fccdfb14f1e9d45615b29de8f"
+    },
+    {
+      "path": "src/floorflow/evaluation/cad_furniture_ablation.py",
+      "bytes": 2828,
+      "sha256": "9a23504ec548ba75c4db894da1c1e38806ebbab5fd3eb77d2d524f6943bca150"
+    },
+    {
+      "path": "src/floorflow/evaluation/cad_metric_suite.py",
+      "bytes": 11834,
+      "sha256": "2218f725f0b4053e502bf9537a42985717c9f38e6fbd984b88287f5ee7f89dd0"
+    },
+    {
+      "path": "src/floorflow/evaluation/cad_plan_metrics.py",
+      "bytes": 2160,
+      "sha256": "15850f41723a00af525a9263e40b5436f9ce2bfb008e283403e5915d8041559f"
+    },
+    {
+      "path": "src/floorflow/evaluation/cad_stage_audit.py",
+      "bytes": 3208,
+      "sha256": "67fe5284e726c0fb129c74e79be8625d2c13b39d8b41c4b13715392e93a3c467"
+    },
+    {
+      "path": "src/floorflow/evaluation/candidate_delta.py",
+      "bytes": 567,
+      "sha256": "d01c919d833db03cf87b093b0fcb7f0e8d68e8ece236728a79cee47cc97dde0b"
+    },
+    {
+      "path": "src/floorflow/evaluation/canonical_floorplan.py",
+      "bytes": 12322,
+      "sha256": "0b02a3e052046da35bec335cd0c1dd3ca8b92d3fa90520bd0c84d4a2f6a770b2"
+    },
+    {
+      "path": "src/floorflow/evaluation/ce2eplan_adapter.py",
+      "bytes": 3623,
+      "sha256": "5109ab72329c285650820d5f8dd3952faf52d8c75cbe4d769ebeacd4b98c06bc"
+    },
+    {
+      "path": "src/floorflow/evaluation/chip_gap.py",
+      "bytes": 11700,
+      "sha256": "e928bb58d6a52e8126bf22673027fce80cd9f382ce57872bf9a9eeac74ad5646"
+    },
+    {
+      "path": "src/floorflow/evaluation/completion_utility.py",
+      "bytes": 1617,
+      "sha256": "74f5ea51b662d1f95a5d4934cdcdb890c965c458ca105e6b6d44d598c00495fc"
+    },
+    {
+      "path": "src/floorflow/evaluation/condition_evaluation.py",
+      "bytes": 10890,
+      "sha256": "4bb74a865d921d67b866ccc200ebb3d417badf3809821f4867b81f22b7f74f08"
+    },
+    {
+      "path": "src/floorflow/evaluation/conditional_ceiling.py",
+      "bytes": 1607,
+      "sha256": "12d767b58c22827a4911545c9b1c82a02d93f9bbd5bf34454e700a1c5ee27d7e"
+    },
+    {
+      "path": "src/floorflow/evaluation/constraint_calibration.py",
+      "bytes": 7128,
+      "sha256": "ed5a9b5f414b2ceae729d98403e1277cb338a73180b41dc672ae7b4a5c5e65ca"
+    },
+    {
+      "path": "src/floorflow/evaluation/constraint_gate_runtime.py",
+      "bytes": 3613,
+      "sha256": "96064bf606394b668b5fc524d93bdb79a1ad835e577b5dd726794af4e0984854"
+    },
+    {
+      "path": "src/floorflow/evaluation/constraint_ranking.py",
+      "bytes": 835,
+      "sha256": "15549ec7e81b9f00e349367d6000a278df3ff7eb34a69b86ffd2d1fb82a95fb2"
+    },
+    {
+      "path": "src/floorflow/evaluation/contour_manifest.py",
+      "bytes": 2331,
+      "sha256": "003dfc38a389df0aa543ab64d6f8922ed968c9bf54ace32eb3a988b351df9cac"
+    },
+    {
+      "path": "src/floorflow/evaluation/control_baseline.py",
+      "bytes": 3186,
+      "sha256": "ddfd02443f6ea6b169ef9ccb376b808e2dacfdad30c2aaf1b580852bb66abbe3"
+    },
+    {
+      "path": "src/floorflow/evaluation/control_source_parity.py",
+      "bytes": 12857,
+      "sha256": "cf1208265521f4fa147e3b81ababc6845654a740218b20256c9b00846c78c13d"
+    },
+    {
+      "path": "src/floorflow/evaluation/control_utility.py",
+      "bytes": 5934,
+      "sha256": "e15674c12072ed2bfa94b73d85e3fa56a3cc08a6706684a4c9b2b8c064be7371"
+    },
+    {
+      "path": "src/floorflow/evaluation/delta_mse_decomposition.py",
+      "bytes": 5198,
+      "sha256": "3b11806f106d6bb4eb9d64a96728144f4c200fbfa8e7580a155b73fac09ee5de"
+    },
+    {
+      "path": "src/floorflow/evaluation/dense_query_blend_multiseed.py",
+      "bytes": 7226,
+      "sha256": "2f732189da4677a52787632efc5f8c3e0a8867ee23f8748120483fc70c3ad067"
+    },
+    {
+      "path": "src/floorflow/evaluation/deterministic_archive.py",
+      "bytes": 1927,
+      "sha256": "a36ccdf5d99772e0896438672c2bf7779e187d160f11acd00f2470eda39f528b"
+    },
+    {
+      "path": "src/floorflow/evaluation/distribution_decode_bridge.py",
+      "bytes": 1124,
+      "sha256": "164f6879da4837e8f2218dc44c9763e51af01e033ac98271bda1156e28fb1930"
+    },
+    {
+      "path": "src/floorflow/evaluation/distribution_overlay_metrics.py",
+      "bytes": 5768,
+      "sha256": "d9ecb6db7e87cfb155f1c8ac0d9b95ccb810fa29002f8d4eee8422f168b309e5"
+    },
+    {
+      "path": "src/floorflow/evaluation/e2e_benchmark_contract.py",
+      "bytes": 4287,
+      "sha256": "063fbca638cc2afcfbe9a29ad54978efa9054e1ce7e4e41383d161580c66b5a5"
+    },
+    {
+      "path": "src/floorflow/evaluation/edit_detection.py",
+      "bytes": 1776,
+      "sha256": "e42808c1ff0031ab8ba8a795b1bbfa45683b83ea783f518c86102df3e4037856"
+    },
+    {
+      "path": "src/floorflow/evaluation/external_baseline_metrics.py",
+      "bytes": 7801,
+      "sha256": "acc518f30f849dfeabf0e38e802bad280aee28397381df97b86067f54c05a02d"
+    },
+    {
+      "path": "src/floorflow/evaluation/external_claim_matrix.py",
+      "bytes": 1170,
+      "sha256": "a8fcfd830494dc1f4e8002e2afc7bdebdf9e09788383d6dd43afc930bb3f48a6"
+    },
+    {
+      "path": "src/floorflow/evaluation/external_program_adapter.py",
+      "bytes": 7120,
+      "sha256": "9ded764e8f85389449b245a01bb5c45656b168a2e3405872b7c5f8f3b65f275a"
+    },
+    {
+      "path": "src/floorflow/evaluation/failure_taxonomy.py",
+      "bytes": 1877,
+      "sha256": "f27e9ecc72fd037f405bbe4b93085c84c7035b0db02bf143112c1e2a35543f51"
+    },
+    {
+      "path": "src/floorflow/evaluation/fevp_metric_contracts.py",
+      "bytes": 18751,
+      "sha256": "99a36b395c2b8e3adc0a98294fe5b0654a9b214068200385e1f436dc5757f9ee"
+    },
+    {
+      "path": "src/floorflow/evaluation/fevp_protocol.py",
+      "bytes": 13705,
+      "sha256": "615f1ae93d2b1c487d5cba2efe8fcc2bcd88b20588a845b8b944a4be01b67c33"
+    },
+    {
+      "path": "src/floorflow/evaluation/fp_completion_pipeline.py",
+      "bytes": 4235,
+      "sha256": "17e0c7a2d0169815dadafb7f89326fdf127ee8ba4318160c4ba5bcfe6fdf91bf"
+    },
+    {
+      "path": "src/floorflow/evaluation/fpeval_bridge.py",
+      "bytes": 10544,
+      "sha256": "625e62b9e83b2127785fff35950e1822cb3c503fb48cb9c42c0a99ac3fbb940d"
+    },
+    {
+      "path": "src/floorflow/evaluation/full_cli.py",
+      "bytes": 6037,
+      "sha256": "f78e7d2afece029d8c45df6e398f259f3e2132f8e80274fe462b0b56ca43b82b"
+    },
+    {
+      "path": "src/floorflow/evaluation/furniture_query_bridge.py",
+      "bytes": 2529,
+      "sha256": "84cab96ce48f35d34cd57f1bb61bda11667f82ed60a98f5320cb5509df0c941e"
+    },
+    {
+      "path": "src/floorflow/evaluation/furniture_vector_metrics.py",
+      "bytes": 6064,
+      "sha256": "91ad2e414fe447b8a5e4ef9fc90af0e590431f5c760c5d5baefb6a69c0a307ca"
+    },
+    {
+      "path": "src/floorflow/evaluation/generation_plausibility.py",
+      "bytes": 19550,
+      "sha256": "5b174da95b325f7c5d1b25a25e8d0d19ee9b050fcdd7f4be4afccd1f0980c6d4"
+    },
+    {
+      "path": "src/floorflow/evaluation/housemind_free_text_metrics.py",
+      "bytes": 3302,
+      "sha256": "ca71d6743b6b6926d6b00a810a8cb1832a615a8b45f7a131aee90bb641a1dddc"
+    },
+    {
+      "path": "src/floorflow/evaluation/housemind_structure.py",
+      "bytes": 16013,
+      "sha256": "04d7f6fc36d34ea91afed79394b788f72dea054993110cf2caf7d0ef0e8d1977"
+    },
+    {
+      "path": "src/floorflow/evaluation/identifiability.py",
+      "bytes": 5920,
+      "sha256": "b81cd262a05a6728fc4f4649c1f76886b28aa80d730a364801ebea6d91d24f48"
+    },
+    {
+      "path": "src/floorflow/evaluation/metric_hierarchy.py",
+      "bytes": 12235,
+      "sha256": "5a67de8f2715d9969923a5009fd2ce86616854edc654a6e0c7476e54ce1f1805"
+    },
+    {
+      "path": "src/floorflow/evaluation/metrics.py",
+      "bytes": 6164,
+      "sha256": "74172f378d5990da038bb4d5bc5c5948b17f447afb9d989d58495a8db2d74e0e"
+    },
+    {
+      "path": "src/floorflow/evaluation/multiseed_validation.py",
+      "bytes": 6376,
+      "sha256": "19faa281b0ac6db8a7816531af7687483100131b404b9a3b71f34edb47335fc0"
+    },
+    {
+      "path": "src/floorflow/evaluation/opening_consumer_comparison.py",
+      "bytes": 3992,
+      "sha256": "945da8cc141b937ba221a81d8bb3a78fe6526ddc8af3c453d922a26e7436dee3"
+    },
+    {
+      "path": "src/floorflow/evaluation/opening_failure_strata.py",
+      "bytes": 6048,
+      "sha256": "14f2511aea4cc3dd9ff05cc0bbeeb0e467fb465367501a328158ebaab64e7e49"
+    },
+    {
+      "path": "src/floorflow/evaluation/opening_vector_proxy.py",
+      "bytes": 3242,
+      "sha256": "618a52297f5b239ad407b3b0473349b725aeb08ddfc41e20bd706c3a8a973909"
+    },
+    {
+      "path": "src/floorflow/evaluation/overlay_cli.py",
+      "bytes": 5439,
+      "sha256": "8aff571852423f08cd60bf7a65a2e32a30472c9f63004ab72d699e7ce41d0d08"
+    },
+    {
+      "path": "src/floorflow/evaluation/overlay_report.py",
+      "bytes": 4987,
+      "sha256": "13ada0eaf2cf3bfa83a108ddc44da8761a74e891778c718c0381e55e56b43214"
+    },
+    {
+      "path": "src/floorflow/evaluation/paired_bootstrap.py",
+      "bytes": 7771,
+      "sha256": "d652fedf658c0a88fb9786be539773df3fb3d4d96f99227c7d8f5cb0234a6511"
+    },
+    {
+      "path": "src/floorflow/evaluation/predicted_control_fidelity.py",
+      "bytes": 12214,
+      "sha256": "d6c5ba69557e0cf4c4c397b865d4c24359ac134294107c622c0b8e24a7c46d31"
+    },
+    {
+      "path": "src/floorflow/evaluation/predicted_control_reporting.py",
+      "bytes": 6726,
+      "sha256": "bb4910d93ef6b42cb596d2b85b1deb4b9b51cbcdfacbfeec496851a60a4de92f"
+    },
+    {
+      "path": "src/floorflow/evaluation/predicted_edit_graph_diagnostics.py",
+      "bytes": 1396,
+      "sha256": "6178fe753768594d1b65b19575dcf51aa36bce517f887e160d175f87425e388f"
+    },
+    {
+      "path": "src/floorflow/evaluation/predicted_edit_graph_metrics.py",
+      "bytes": 3247,
+      "sha256": "17d72e0ef12a70b461fffdb8035f635c51b629d8ce2d37f082e5952b5dab3bf8"
+    },
+    {
+      "path": "src/floorflow/evaluation/predicted_operation_success.py",
+      "bytes": 6903,
+      "sha256": "496521ab2b8ea9bca398e97d0d2f0a8c8e5c718f60fc45513b6bcc48564d2967"
+    },
+    {
+      "path": "src/floorflow/evaluation/raster2seq_external.py",
+      "bytes": 10247,
+      "sha256": "0b309dee7e2f8adb70c3cc416efe7d8e31c2f02cd5ebab6d70b9ea77304b21cd"
+    },
+    {
+      "path": "src/floorflow/evaluation/raster2seq_polygon_fusion.py",
+      "bytes": 7474,
+      "sha256": "55804cac909632425e5fa5a9161bd31aa78ba9a96f9048233cea76bb9efd1fce"
+    },
+    {
+      "path": "src/floorflow/evaluation/raster_control_runtime.py",
+      "bytes": 964,
+      "sha256": "74c1c7bab2c94bf7f070771a1fb9158c326448f47f4810c625c9ac71e0c431ff"
+    },
+    {
+      "path": "src/floorflow/evaluation/recursive_prior_bridge.py",
+      "bytes": 2597,
+      "sha256": "d218ca514c6d7d9a77494ef106d03f3c0a7211967679099a25bc5f9e085aab37"
+    },
+    {
+      "path": "src/floorflow/evaluation/report_contract.py",
+      "bytes": 341,
+      "sha256": "0ff0e1ff079ea2e9bba8f8a4249c99a4c7bd90c5123a06f1f1cd3c8dc307530a"
+    },
+    {
+      "path": "src/floorflow/evaluation/residential_graph_frontier.py",
+      "bytes": 5655,
+      "sha256": "5f1e5565999cf6727147b5c959121734f06d478ccc3bfc9ab5807af7de0d25f0"
+    },
+    {
+      "path": "src/floorflow/evaluation/room_corner_metrics.py",
+      "bytes": 6465,
+      "sha256": "2b9fb130587356560c87f7239b601942592524c4e9251776c9833eded8637e5b"
+    },
+    {
+      "path": "src/floorflow/evaluation/room_error_decomposition.py",
+      "bytes": 14858,
+      "sha256": "10029a16cb0e49504e9054d868eaf7e9110d0d285a9063ec68771824fe391720"
+    },
+    {
+      "path": "src/floorflow/evaluation/room_graph_edit.py",
+      "bytes": 3141,
+      "sha256": "e3bd0044f626ab17ad804cda8e427462d29e4b4df2567bea18dfe36c07f5a76e"
+    },
+    {
+      "path": "src/floorflow/evaluation/room_graph_matching.py",
+      "bytes": 18800,
+      "sha256": "5a60f413ce20b7b8e59f3e1b44baaea10d991d2591cad9c8e7bce3609a59de93"
+    },
+    {
+      "path": "src/floorflow/evaluation/room_graph_strata.py",
+      "bytes": 11551,
+      "sha256": "4634ba200e37dbdcd5760ff5bad917c3f22f249e950390c274154da21cf3e1cb"
+    },
+    {
+      "path": "src/floorflow/evaluation/room_metric_suite.py",
+      "bytes": 10600,
+      "sha256": "3b2ef8e52d1c609847fc409ef5c3ff614946f67bdffb8433463615ce22b98cce"
+    },
+    {
+      "path": "src/floorflow/evaluation/room_module_attribution.py",
+      "bytes": 2264,
+      "sha256": "d51453717723e6b0b7e33d1de7bd918a56a66ad9b2fd56f7d4ef3776e6bf42b2"
+    },
+    {
+      "path": "src/floorflow/evaluation/rplan_mask_partition.py",
+      "bytes": 3605,
+      "sha256": "240b43a141e8dbeea191ca1612ba70e0e7a2acbd17bdc7ddc226b7c3103877d4"
+    },
+    {
+      "path": "src/floorflow/evaluation/rplan_target_contract.py",
+      "bytes": 3964,
+      "sha256": "5f3754d48b75f26f3911238f68011d34cda2613b3e7a2d60f469b81bb88abcf8"
+    },
+    {
+      "path": "src/floorflow/evaluation/rplan_token_contract.py",
+      "bytes": 2003,
+      "sha256": "212600ac1bfc45954a187f95cfb357d673dbcc61bc41194d8326860d0dcba554"
+    },
+    {
+      "path": "src/floorflow/evaluation/rplan_token_roundtrip.py",
+      "bytes": 2295,
+      "sha256": "108d3de005f3b47ec0bcff0dd1a88d4026a3581eabdd9a4cc065c2d8542729f3"
+    },
+    {
+      "path": "src/floorflow/evaluation/sample_diversity.py",
+      "bytes": 2228,
+      "sha256": "4d593630f2afe8ee70097c83c5512c16cd1f873812a166cee97431f7602a80b7"
+    },
+    {
+      "path": "src/floorflow/evaluation/scaling_report.py",
+      "bytes": 3779,
+      "sha256": "dd7d563ffcb809a3b31271bc31768e2221fc6dc9ef2aae65eec20a04482a0216"
+    },
+    {
+      "path": "src/floorflow/evaluation/sota_protocol.py",
+      "bytes": 11677,
+      "sha256": "a64aba8191d71688b0d62714fc51d5db22f96023aa56a752a36f0b595dd2ae0c"
+    },
+    {
+      "path": "src/floorflow/evaluation/space_syntax.py",
+      "bytes": 2341,
+      "sha256": "86acd59333f9a2376fe99f20c50a5ac5fef9a51f852d6ca77d485843a1471f1a"
+    },
+    {
+      "path": "src/floorflow/evaluation/statistical_effect_sizes.py",
+      "bytes": 1267,
+      "sha256": "5bd5f5f48c06924100223d6b247acb25f8b5180af34edc3ff22904909e1b51de"
+    },
+    {
+      "path": "src/floorflow/evaluation/structural_legality.py",
+      "bytes": 7140,
+      "sha256": "aa788997a3433fe08a6eefbb724329a9d8799f2ae20b5f5af01483fceba32de5"
+    },
+    {
+      "path": "src/floorflow/evaluation/structural_metrics.py",
+      "bytes": 3792,
+      "sha256": "688f5d53ebb9bb086bbe9c9d9957f156a2f1d91ef540380958f58e4c0b29c9a8"
+    },
+    {
+      "path": "src/floorflow/evaluation/style_gate_calibration.py",
+      "bytes": 1589,
+      "sha256": "edacecf9bd7278fcb466478703d8353086f47549986f300786e57f21a26f91a7"
+    },
+    {
+      "path": "src/floorflow/evaluation/style_provenance.py",
+      "bytes": 2742,
+      "sha256": "92af57f7d67766d41c6a0e0f0c1355dfb724cdee36819d233e839f1c7ffcac73"
+    },
+    {
+      "path": "src/floorflow/evaluation/token_readout.py",
+      "bytes": 7849,
+      "sha256": "4597882cacb378491fe81af76842d7acd0f01180bfed0d2637387561b8663763"
+    },
+    {
+      "path": "src/floorflow/evaluation/typed_edit_metrics.py",
+      "bytes": 4747,
+      "sha256": "8030cfbf0b152b47283fecf42596552b8d37b31d47e55ccbe748d8f03ac99733"
+    },
+    {
+      "path": "src/floorflow/evaluation/vector_edit_attacks.py",
+      "bytes": 3786,
+      "sha256": "18b226b635c54498539c92be02d033b3d4b61382ee8f768098364e5b9d9dfda3"
+    },
+    {
+      "path": "src/floorflow/evaluation/vector_edit_protocol.py",
+      "bytes": 17746,
+      "sha256": "7706ddecbb16d28d7d52b460ad72073485e8089d03ff41639f1efcd3f545a640"
+    },
+    {
+      "path": "src/floorflow/evaluation/visualize.py",
+      "bytes": 1822,
+      "sha256": "d299e174b44c73cdcdda083ae481bbce4531c8651732d186c6b5e5044d8892aa"
+    },
+    {
+      "path": "src/floorflow/evaluation/wall_false_positive.py",
+      "bytes": 3961,
+      "sha256": "2eb22690ec8cc981f1819f857e1a176e15b4fc8171440717e9a281bcd3f74e4c"
+    },
+    {
+      "path": "src/floorflow/evaluation/wall_junction.py",
+      "bytes": 5742,
+      "sha256": "8437cf26afbfb920f7e62a632a86e17987b1d411b4fc733eab79cdd07749ec69"
+    },
+    {
+      "path": "src/floorflow/evaluation/wall_metrics.py",
+      "bytes": 3916,
+      "sha256": "38ba0665e0639b956fc6ad49b0f8cae9d6af94bc64dde9643cb6762947cfcc73"
+    },
+    {
+      "path": "src/floorflow/flow/__init__.py",
+      "bytes": 73,
+      "sha256": "85bc00addba453fd8f3cdebec6891d7fa9efe2a6bfe43c988f7897b75026882f"
+    },
+    {
+      "path": "src/floorflow/flow/cfm_backend.py",
+      "bytes": 4809,
+      "sha256": "68fcdb29bc609258a6f995095eab407905f828d9f1eca01c4a550523a6d00d74"
+    },
+    {
+      "path": "src/floorflow/flow/coarse_to_face.py",
+      "bytes": 4622,
+      "sha256": "8b194fcda116a25c6f33e4733388e48d7c225c43776982d7e4b798c6cb3552ae"
+    },
+    {
+      "path": "src/floorflow/flow/condition_training.py",
+      "bytes": 2364,
+      "sha256": "cb28f96ca054f313a31c0b30074a8c737c14a8b2f2c8e37c3c927675164f3783"
+    },
+    {
+      "path": "src/floorflow/flow/condition_view.py",
+      "bytes": 6891,
+      "sha256": "ad75bc38eeee92de9be1076f558596a0a9877e60df4284117885461e77c52dc2"
+    },
+    {
+      "path": "src/floorflow/flow/core.py",
+      "bytes": 19147,
+      "sha256": "c33c8dc9e4f2be426e0245fb1c896ec744253bfbb435d57693919aa220ab1fbc"
+    },
+    {
+      "path": "src/floorflow/flow/guided_control.py",
+      "bytes": 3990,
+      "sha256": "6ba6486aecfc5a851422edaa029fe4a941a8bddeac2c6f38b2b5a2bce6a56f4c"
+    },
+    {
+      "path": "src/floorflow/flow/mask_policies.py",
+      "bytes": 11113,
+      "sha256": "8bfffb0d4f91d8afd57ddae60597b70fca2ebaec3e6b7522b8d0fd26829dabbf"
+    },
+    {
+      "path": "src/floorflow/flow/masked_control.py",
+      "bytes": 4840,
+      "sha256": "8de3ea044c6d3f67a13666c246d0a0463d28af95f1cc1f143dd41a076d862d6a"
+    },
+    {
+      "path": "src/floorflow/flow/presets.py",
+      "bytes": 1103,
+      "sha256": "7f0c8bc504a7e74ca04c1c1ea05d6d4a101b3b38bff344fc6260f6ee34d9360b"
+    },
+    {
+      "path": "src/floorflow/geometry/__init__.py",
+      "bytes": 87,
+      "sha256": "2db0d84aa950de2009e35e1142f883ea930c47108301aea040058562aa3eb55d"
+    },
+    {
+      "path": "src/floorflow/geometry/boundary_edge_graph.py",
+      "bytes": 5183,
+      "sha256": "dd9b0145bae264234e4c11fd9641781eae178439839c3e68d39bc5b48e98c440"
+    },
+    {
+      "path": "src/floorflow/geometry/boundary_geometry.py",
+      "bytes": 4337,
+      "sha256": "242d8909a3bceceefc899440926cf6eed264b2d0e254b20f3bc1b2c28e7396b4"
+    },
+    {
+      "path": "src/floorflow/geometry/cad_wall_candidates.py",
+      "bytes": 6341,
+      "sha256": "d994bc40ae746b39607ddce8f8bba42915feab7ae3490f64a62a0d7685f1a11e"
+    },
+    {
+      "path": "src/floorflow/geometry/core.py",
+      "bytes": 1942,
+      "sha256": "6eb2dbe286fd0900353e369021fcf2f550af37ae6abe2a3a6738dc5062ddb0ec"
+    },
+    {
+      "path": "src/floorflow/geometry/deterministic_pooling.py",
+      "bytes": 938,
+      "sha256": "75edac7d19a7ac51f7b696c854d0f60755b651080a9e0e4e7c5c998379af1f4f"
+    },
+    {
+      "path": "src/floorflow/geometry/diff_ras.py",
+      "bytes": 4486,
+      "sha256": "47d0504fc4ecaecb1ee79da8f9a6289d15cdd0d751d464a0433abef99910125f"
+    },
+    {
+      "path": "src/floorflow/geometry/dynamic_closure.py",
+      "bytes": 3133,
+      "sha256": "b662bd8572534e92a9da95c964ae158a9a96cda10ccebd97d4495a679754132f"
+    },
+    {
+      "path": "src/floorflow/geometry/entrance_condition.py",
+      "bytes": 2158,
+      "sha256": "09e43071ab43ef6a4e70322b613e7818a2e2a54bde7cacc29e1b057152050328"
+    },
+    {
+      "path": "src/floorflow/geometry/geometry_graph.py",
+      "bytes": 4523,
+      "sha256": "8a4e86e19d0571cbdfe1706289d9fd9c2d0d0fc28e06de397425e8e64099356c"
+    },
+    {
+      "path": "src/floorflow/geometry/interior_wall.py",
+      "bytes": 3041,
+      "sha256": "7d1727677674cc78179eecd49add065cf9e4e6cd414e5ad16ae88eca6d1fff2e"
+    },
+    {
+      "path": "src/floorflow/geometry/ip_reconcile.py",
+      "bytes": 13784,
+      "sha256": "80aec4bde629072cf2c4c6e46a37880c694b320da60901f54b66446fecca5dc6"
+    },
+    {
+      "path": "src/floorflow/geometry/learned_wall_fusion.py",
+      "bytes": 6567,
+      "sha256": "e4d4d9f7376f7c13d6980cf747549a99f6764f623995ce50928f7e57b8f46544"
+    },
+    {
+      "path": "src/floorflow/geometry/opening_readout.py",
+      "bytes": 19996,
+      "sha256": "7e65e2c52153502163027ed7c17025d3ab6b6a287a49d56ca29b90b133b1c039"
+    },
+    {
+      "path": "src/floorflow/geometry/owner_cell_complex.py",
+      "bytes": 18230,
+      "sha256": "9c22534eab9f230c412a1732456118c61e970a4a10c7de48507bf170ac548917"
+    },
+    {
+      "path": "src/floorflow/geometry/partition_edge_evidence.py",
+      "bytes": 906,
+      "sha256": "7ba99fb7f5934c82751cb43a3908aa61f74ff8ce17a095bb1f586daac4493412"
+    },
+    {
+      "path": "src/floorflow/geometry/partition_polygons.py",
+      "bytes": 4853,
+      "sha256": "8fa01445e9aeca94e0912e1d9e518e3bc04c0f631a498fee6e941f408547a67c"
+    },
+    {
+      "path": "src/floorflow/geometry/reconciliation.py",
+      "bytes": 12507,
+      "sha256": "c5d42e6c02664512c8bf1c31e0f484e1bce5e0f639ee06188fb7514d7ddfb38d"
+    },
+    {
+      "path": "src/floorflow/geometry/room_polygons.py",
+      "bytes": 3175,
+      "sha256": "e759ad75ece973297955e8096182187dd8a515368a896a9eef9b3d2decad84c7"
+    },
+    {
+      "path": "src/floorflow/geometry/wall_deduplication.py",
+      "bytes": 4522,
+      "sha256": "81b1e6ebd828990a48fe9adb5dbbb3ab3aba4348118c6d7ffedf91061a6aff20"
+    },
+    {
+      "path": "src/floorflow/geometry/wall_graph_readout.py",
+      "bytes": 13690,
+      "sha256": "ee239e0e32ecfa43dccafaa627fb27222fc0a1bd0a20e0053a29008d17c4d29d"
+    },
+    {
+      "path": "src/floorflow/heads/__init__.py",
+      "bytes": 57,
+      "sha256": "da609a4e6473bdad3052289d81049b9efb4ffabdf25900610374ec6508c6a60f"
+    },
+    {
+      "path": "src/floorflow/heads/adaptive_query_reference.py",
+      "bytes": 6178,
+      "sha256": "a32e9f82a718e28ceca6898a769d709c9a3a19dc2732c5e01ac6c1cd793d047f"
+    },
+    {
+      "path": "src/floorflow/heads/algorithmic_dynamic_head.py",
+      "bytes": 10607,
+      "sha256": "33f0ef470860a029679a4957f66c6a2cc0e8b871f157e8f9af5ae66593d11df6"
+    },
+    {
+      "path": "src/floorflow/heads/attention_masks.py",
+      "bytes": 3598,
+      "sha256": "854c01006d6cb19c42e64b16448f9504d24b47c716c2dea05d726103f767cf32"
+    },
+    {
+      "path": "src/floorflow/heads/cad_topology_repair.py",
+      "bytes": 7750,
+      "sha256": "fb6b37c4cdec5008c59ad6c820a6704e6de051f92969270c524560a93a528ce0"
+    },
+    {
+      "path": "src/floorflow/heads/cad_wall_candidate_scorer.py",
+      "bytes": 11237,
+      "sha256": "79eb6890dedd847f90dad434fd7e63e36f568c3b957c710a29a248713ebbd8c9"
+    },
+    {
+      "path": "src/floorflow/heads/channel_reliability.py",
+      "bytes": 1181,
+      "sha256": "52c2791811283cdd37816c2e40a66135258ac78e47539bb8994e3a7322e3bc58"
+    },
+    {
+      "path": "src/floorflow/heads/coarse_furniture_refiner.py",
+      "bytes": 3466,
+      "sha256": "18d426f2995acd5487f7b2217f09fc92006c08eb6a42846b0afbf5d5b39bc096"
+    },
+    {
+      "path": "src/floorflow/heads/coarse_layout_refiner.py",
+      "bytes": 3614,
+      "sha256": "e459ca6ce4eb75673b0123606dfde30631a0c71d32ae6a7a080d36d6f818f0e1"
+    },
+    {
+      "path": "src/floorflow/heads/coarse_structure_refiner.py",
+      "bytes": 12072,
+      "sha256": "3f441002cfd5fe021991b1cb636ea9cb9b37a1fea4bdb78bfbb4f2e18fed7122"
+    },
+    {
+      "path": "src/floorflow/heads/coarse_support_refiner.py",
+      "bytes": 3365,
+      "sha256": "f889f31ae997e25ee70d4c7384b9731679108d50cdc3f0b512541fe2a806343a"
+    },
+    {
+      "path": "src/floorflow/heads/codetree_anchor_decoder.py",
+      "bytes": 4984,
+      "sha256": "c48fbe9a9aefb68b7c5073776f9d087e55d1f72019e04795db314542046bbded"
+    },
+    {
+      "path": "src/floorflow/heads/compact_boundary_encoder.py",
+      "bytes": 4776,
+      "sha256": "f019da05d9f521b350812afda65808f22ddf754c64d92d26dffc2a3249b614dd"
+    },
+    {
+      "path": "src/floorflow/heads/component_image_semantics.py",
+      "bytes": 4108,
+      "sha256": "10d9038f55f34ad6b109e357941fe80c5298f3ad13db39b542f437840eac3294"
+    },
+    {
+      "path": "src/floorflow/heads/component_semantic.py",
+      "bytes": 5208,
+      "sha256": "2899fb538c503695988052e1443a8fd6bee2257d4575a8e4cdbeafb3cbf9a73e"
+    },
+    {
+      "path": "src/floorflow/heads/contour_program_layout.py",
+      "bytes": 4841,
+      "sha256": "d1671b67d50488b3a1272154448bd9e0b8f9a499300e487a5cbfdb94becdf687"
+    },
+    {
+      "path": "src/floorflow/heads/contour_style_classifier.py",
+      "bytes": 1519,
+      "sha256": "1a67e48ce6ddf9a7762e52b99dd225d19c4a374ea843756736167c5884d06f66"
+    },
+    {
+      "path": "src/floorflow/heads/convnext_room_control.py",
+      "bytes": 3470,
+      "sha256": "dd1b359129cc92fc9b1e10b6b383a09904c4b36e548c876c5c128a33a7e42fc0"
+    },
+    {
+      "path": "src/floorflow/heads/dense_query_support_gate.py",
+      "bytes": 15090,
+      "sha256": "1ec06dbdc2a1a2ad9b3082a07af586142d001a5711900a3097ad38d333fc4abc"
+    },
+    {
+      "path": "src/floorflow/heads/dual_room_mask_decoder.py",
+      "bytes": 1546,
+      "sha256": "dbd281054ea36a74d3905fcde57027b702ca9ccce5f9d0d3fbd15d794bc281c5"
+    },
+    {
+      "path": "src/floorflow/heads/dynamic_object_instance.py",
+      "bytes": 12293,
+      "sha256": "42bacff6ed719bfe9c1ed3807a0bf2c3c4b8e9d52d805e46488445cdbeb78997"
+    },
+    {
+      "path": "src/floorflow/heads/dynamic_output.py",
+      "bytes": 2058,
+      "sha256": "21ad52530f24a1e7dc71aa79dbafff42e36fc7badff7a317673dd6b416b836ee"
+    },
+    {
+      "path": "src/floorflow/heads/dynamic_stage_refiner.py",
+      "bytes": 8618,
+      "sha256": "ab87b3a0a125ca2c890e3c7bee5d9a377c4d700e190964e8788f4f7f60b649c4"
+    },
+    {
+      "path": "src/floorflow/heads/face_semantics.py",
+      "bytes": 11498,
+      "sha256": "07f4faf5cba996c273231c1f959e3fca1186f195fa909e8e96a62ea36492fb7b"
+    },
+    {
+      "path": "src/floorflow/heads/floorplan_token_head.py",
+      "bytes": 13999,
+      "sha256": "c81338da8519ed962e8b80a1a955487bb5de40324ff88f074547e2837615db80"
+    },
+    {
+      "path": "src/floorflow/heads/full_resolution_class_sampler.py",
+      "bytes": 4123,
+      "sha256": "5e9a653259dd4b4044968d12f1ae9a4a148bf2798672249fa507661f3a63a76b"
+    },
+    {
+      "path": "src/floorflow/heads/furniture_action.py",
+      "bytes": 1394,
+      "sha256": "cb2c4455d6fcf8b5c5712fc1e5f2992e6b024e4772dbd5787ba52ba7a96d24e7"
+    },
+    {
+      "path": "src/floorflow/heads/geometry_heads.py",
+      "bytes": 11911,
+      "sha256": "f95587353ee4017ba0654b6ae884bad621c98030f3d9e8c1ced82a6bc37ca2fe"
+    },
+    {
+      "path": "src/floorflow/heads/joint_control_loading.py",
+      "bytes": 1790,
+      "sha256": "fe7ed6f524d33c31ffb378086cf0bb5ef756bac7efdef86bdd9e7f82dcf7b624"
+    },
+    {
+      "path": "src/floorflow/heads/joint_control_repair.py",
+      "bytes": 8236,
+      "sha256": "29fd7cb122c7a21bcd24a3ed200ad31c014b060f864562b3769a4f56192e87c7"
+    },
+    {
+      "path": "src/floorflow/heads/mask_pooled_class_fusion.py",
+      "bytes": 3619,
+      "sha256": "83ad0421554fefb28db3551258b17144833d549e1025fc0e8a2a12e54900559e"
+    },
+    {
+      "path": "src/floorflow/heads/masked_channel_distribution.py",
+      "bytes": 21186,
+      "sha256": "431c1fca72529a19c55c65c7f0353a65f739199ae182990a70cd01a7436f2676"
+    },
+    {
+      "path": "src/floorflow/heads/opening_detection.py",
+      "bytes": 13512,
+      "sha256": "1f702192292685ac5bc57d8a0ba2dcf3201b48c5e3460c72526983310e37615e"
+    },
+    {
+      "path": "src/floorflow/heads/opening_host_router.py",
+      "bytes": 19417,
+      "sha256": "3df42c6ba4344d3e7e833eb85ae443f6a394cd942a11faa4630ea098f849a95e"
+    },
+    {
+      "path": "src/floorflow/heads/opening_interval_head.py",
+      "bytes": 7459,
+      "sha256": "fea1b5dd38607224ea8be77e94d482c75e7fdd7ca029462a997b1dbefabd0fbd"
+    },
+    {
+      "path": "src/floorflow/heads/opening_query_encoder.py",
+      "bytes": 2009,
+      "sha256": "5c6ac2fe37fb544f56ceb46c15ecf63bc127b34352132631664e6a188fcbf768"
+    },
+    {
+      "path": "src/floorflow/heads/owner_semantic_reassignment.py",
+      "bytes": 2532,
+      "sha256": "831f05eb041dba950bed584ce40601e1e99369923f762743d3d21dcc45350b9a"
+    },
+    {
+      "path": "src/floorflow/heads/pixel_distribution.py",
+      "bytes": 13129,
+      "sha256": "36456b1b475f6fdd367d21b7bee32e9b114e8ec924314e8689b156e0d4c6f953"
+    },
+    {
+      "path": "src/floorflow/heads/plan_repair_acceptance.py",
+      "bytes": 2764,
+      "sha256": "587a595d8170693411b8e8c535202b35e16434ea2eba331bd8a80ecfee36d315"
+    },
+    {
+      "path": "src/floorflow/heads/polygon_loop.py",
+      "bytes": 15271,
+      "sha256": "b4639d4e566d98b702000433dc6b1f25ec14e4569eb2e693679fa4aa59ffff85"
+    },
+    {
+      "path": "src/floorflow/heads/predicted_channel_adapters.py",
+      "bytes": 12136,
+      "sha256": "66056bca43dd4692868ece76f09a552079a817a7a8c86b8022a10d0c4729d73d"
+    },
+    {
+      "path": "src/floorflow/heads/predicted_room_identity.py",
+      "bytes": 6332,
+      "sha256": "5a83d1eb52a1a945aa4ce52b57c90288ddba038ac172edb0496b9fe196ce662f"
+    },
+    {
+      "path": "src/floorflow/heads/proposal_room_classifier.py",
+      "bytes": 6487,
+      "sha256": "0a4e3f163eff1cb90151869d1233be88dab31cab2cd7ae4857c142aad83b2d0c"
+    },
+    {
+      "path": "src/floorflow/heads/query_aware_pool.py",
+      "bytes": 1380,
+      "sha256": "641af22c38a0f0122dc99da9d12a3a1a1f26769580f7bc544774a0b43885f286"
+    },
+    {
+      "path": "src/floorflow/heads/query_mask_graph.py",
+      "bytes": 8047,
+      "sha256": "fcc804965d3d7138a1460c6b409067b0cc29376bf59bb63b4332f2be10af7d2d"
+    },
+    {
+      "path": "src/floorflow/heads/raster_control_adapters.py",
+      "bytes": 6099,
+      "sha256": "073a106e74942695f0fbc14b736d4941b54e0ee4bde6f7f437ea754184c6efc7"
+    },
+    {
+      "path": "src/floorflow/heads/raster_control_bank.py",
+      "bytes": 20422,
+      "sha256": "41ccd5a7edb397037d44db2d7fbf87260de99c62d3959a542a1f97018ef20c3d"
+    },
+    {
+      "path": "src/floorflow/heads/raster_control_bank_loading.py",
+      "bytes": 5028,
+      "sha256": "74bca3e01ff01b73d36d7115c505f4fabdb65136eb2f90b6b16f2ea6960789f0"
+    },
+    {
+      "path": "src/floorflow/heads/raster_room_model_build.py",
+      "bytes": 1341,
+      "sha256": "39c7d498633e76fe2180e14443f30142592a7ed144de6016fc2cd39c34387196"
+    },
+    {
+      "path": "src/floorflow/heads/registry.py",
+      "bytes": 1418,
+      "sha256": "a4e1a8552900df7fd0eeac6a98304edef682f3c328d8cb75cae88736008ea8c3"
+    },
+    {
+      "path": "src/floorflow/heads/revision_state_head.py",
+      "bytes": 5448,
+      "sha256": "567ed3d08cb8b6b5106ec215b2acbfedd0a9dc6ffc5b1fdd86947f5bdecadcc3"
+    },
+    {
+      "path": "src/floorflow/heads/room_adjacency.py",
+      "bytes": 14057,
+      "sha256": "3059180790a19c2a963fc88574760b485c1d37b7bb682ed0ec643a713a52f1b2"
+    },
+    {
+      "path": "src/floorflow/heads/room_boundary_owner_refiner.py",
+      "bytes": 2342,
+      "sha256": "d14f43804081e64da7b2171f6b83486bf27ff0a80c07f318d3213f49e0feec27"
+    },
+    {
+      "path": "src/floorflow/heads/room_conditioned_furniture_semantics.py",
+      "bytes": 3015,
+      "sha256": "d2750aeb3801a04a0b22ea669e179eca66ce749b09bfae9e03329266f21e1aa4"
+    },
+    {
+      "path": "src/floorflow/heads/room_fragment_graph.py",
+      "bytes": 17638,
+      "sha256": "611b680afefc25ad029ef209089c3c246e5a2ab21c00e21df82f9b314e2fe06f"
+    },
+    {
+      "path": "src/floorflow/heads/room_furniture_vector_head.py",
+      "bytes": 7388,
+      "sha256": "dee4c20deff3b5bcc43fbb72a80ae25875f7380208ae819943cd91160bc9803b"
+    },
+    {
+      "path": "src/floorflow/heads/room_groups.py",
+      "bytes": 4218,
+      "sha256": "03b57a307914eb5581646fd4f6fe1aac17367f0b767f7150db71e883bfe1a6db"
+    },
+    {
+      "path": "src/floorflow/heads/room_instance_boundary.py",
+      "bytes": 12202,
+      "sha256": "886931ee5d84e299e51c592f3c61360160e29bcf7e15e2f48f8e317b8031c9eb"
+    },
+    {
+      "path": "src/floorflow/heads/room_instance_token_head.py",
+      "bytes": 1315,
+      "sha256": "b4aa6d8183b30cc16a6024ac3cc1b1a8202c8d1a6c6ec1846a402edfd80947c0"
+    },
+    {
+      "path": "src/floorflow/heads/room_mask_area.py",
+      "bytes": 1403,
+      "sha256": "bf6cea8f741cb4bd8c369c95b744daef6e4eb5741f6b7e9abff1319f9f60fce3"
+    },
+    {
+      "path": "src/floorflow/heads/room_mask_class_fusion.py",
+      "bytes": 2126,
+      "sha256": "9c431ae3e4d8655bd7fecf4ad17f3f04c541e4e1786b1e6886673424bf111194"
+    },
+    {
+      "path": "src/floorflow/heads/room_mask_decoder.py",
+      "bytes": 24150,
+      "sha256": "a3d113ac4f7504ab11b912cd02b7e3ff9501520c33cf9fdfa68e3f2ac5ace16e"
+    },
+    {
+      "path": "src/floorflow/heads/room_mask_fusion.py",
+      "bytes": 9839,
+      "sha256": "b2adf92c9dd8833060ff60d654fd0cf07b29fe106a0e270b161b000d41cad12e"
+    },
+    {
+      "path": "src/floorflow/heads/room_mask_geometry.py",
+      "bytes": 1752,
+      "sha256": "a8b3763f1c550ba658faa89572ca4fe879a058d810330b0c2803f45b600dad41"
+    },
+    {
+      "path": "src/floorflow/heads/room_mask_losses.py",
+      "bytes": 23244,
+      "sha256": "395b5fd3bd3565dc461fc55c95c62faffe3a21a14a9cddf86a684bc9dbe5018c"
+    },
+    {
+      "path": "src/floorflow/heads/room_model_contract.py",
+      "bytes": 2385,
+      "sha256": "281a300999569f67883374ea185104f2743b1f4e3335c0d2288d5ac62804199c"
+    },
+    {
+      "path": "src/floorflow/heads/room_owner_readout.py",
+      "bytes": 6209,
+      "sha256": "abd9754ac413c64fc1b38bb54c6dfc65e36093701f80af1eacd12535604a6b7d"
+    },
+    {
+      "path": "src/floorflow/heads/room_partition.py",
+      "bytes": 9262,
+      "sha256": "f3f67bffe20842a1ecb24b0deb3501bc66892a2cb8b2a98b34e0ceddf06db600"
+    },
+    {
+      "path": "src/floorflow/heads/room_polygon_decoder.py",
+      "bytes": 6481,
+      "sha256": "ee2bc4b1d597936a21f9569f32ec1c0d2417d9453392a90d563cd1c61c7d01c2"
+    },
+    {
+      "path": "src/floorflow/heads/room_program.py",
+      "bytes": 5655,
+      "sha256": "b51fc13ff477a3a44b7f29527f0b65222c1694ba98941cdb91108a22fbcc87ab"
+    },
+    {
+      "path": "src/floorflow/heads/room_program_set.py",
+      "bytes": 14643,
+      "sha256": "297913d618631081599fe37c0216d05ac29418ffd040a3fc7771f64a956d1672"
+    },
+    {
+      "path": "src/floorflow/heads/room_query_set_head.py",
+      "bytes": 17469,
+      "sha256": "666751c177094c539476d0a99b87507329326ad5bc3635bfb63e69faab72d5f8"
+    },
+    {
+      "path": "src/floorflow/heads/room_query_set_objective.py",
+      "bytes": 14700,
+      "sha256": "ab34b3c08e7eaa2ba0b10d8e111500587d2c4146126dc8e244e0b3ff0c69ec0c"
+    },
+    {
+      "path": "src/floorflow/heads/room_query_utils.py",
+      "bytes": 965,
+      "sha256": "9f07e1d0a1749c3d9cdd33c42d8c75321e5105e931730c7fc76b80a4b21b29ee"
+    },
+    {
+      "path": "src/floorflow/heads/room_region_refiner.py",
+      "bytes": 2414,
+      "sha256": "15c46282b04389f48aebf59b8d4732282afbfd9df38efc94cf66481d628c97c5"
+    },
+    {
+      "path": "src/floorflow/heads/room_segmenter.py",
+      "bytes": 4941,
+      "sha256": "5950adcebdaf02791adbd49c196defabc5284e54ef4115b07433dc4d018a2b4f"
+    },
+    {
+      "path": "src/floorflow/heads/room_set.py",
+      "bytes": 8612,
+      "sha256": "97785ae0a951ee1e61c890976fd787e6dad9f84a0f43e3f60692d014ca1a0e5f"
+    },
+    {
+      "path": "src/floorflow/heads/room_slot_state.py",
+      "bytes": 8336,
+      "sha256": "875c8dfac46f8e7f06bd2d9b1d7a847551d4d6084f2991ffc40ba6f1c5bfedb2"
+    },
+    {
+      "path": "src/floorflow/heads/semantic_head.py",
+      "bytes": 664,
+      "sha256": "b01a20dc076d86c86bf2a6a00580019e0efc39ab98f1dec24198d4e56ede68c3"
+    },
+    {
+      "path": "src/floorflow/heads/spatial_velocity_head.py",
+      "bytes": 1745,
+      "sha256": "75854300aac2f120a2a04d3f9ae726a52ca3f74211e45228a3470d9e78a08b77"
+    },
+    {
+      "path": "src/floorflow/heads/structure_context.py",
+      "bytes": 3433,
+      "sha256": "49286db9169fdf1c200280d4410817f0af4e1465b055151c25ef4230c58613b7"
+    },
+    {
+      "path": "src/floorflow/heads/structure_mita_router.py",
+      "bytes": 5221,
+      "sha256": "d8f9bc4b48e40229e0c188857ae12ab4111deb2f2dac15a8275cbdd148f436e7"
+    },
+    {
+      "path": "src/floorflow/heads/structured_objects.py",
+      "bytes": 16554,
+      "sha256": "3c8d291948840f63804de439bf12c4124e375cbc3828ea3abc3109cff55c7286"
+    },
+    {
+      "path": "src/floorflow/heads/token_graph_residual_head.py",
+      "bytes": 9249,
+      "sha256": "f3a3607e700f3c9d4bf83c3a5c9b92c923a9ce70a78d962f88041fcbe3e5f8e0"
+    },
+    {
+      "path": "src/floorflow/heads/token_refinement_runtime.py",
+      "bytes": 2993,
+      "sha256": "9404eb56b7a0725f0622853ac9c972d435b252dd358d02492150a57607f48dd8"
+    },
+    {
+      "path": "src/floorflow/heads/token_vector_refiner.py",
+      "bytes": 6687,
+      "sha256": "f277878a082fc228253c8019a88d68b799793776f54c14e839f897790ef5d4e5"
+    },
+    {
+      "path": "src/floorflow/heads/topology.py",
+      "bytes": 5139,
+      "sha256": "2fddd637dafcf35c6093a1da6696f26a38adff64c7cb3ae375c764b0219280c1"
+    },
+    {
+      "path": "src/floorflow/heads/topology_moe.py",
+      "bytes": 2145,
+      "sha256": "286b9e37ac3ff82e38b92715791d131ea6580c31684ee97042910906fd442ec9"
+    },
+    {
+      "path": "src/floorflow/heads/typed_source_spatial_router.py",
+      "bytes": 5097,
+      "sha256": "955fc4df19b56616b115033de613224363497c1d52a1caab15e6eeb23440b0a4"
+    },
+    {
+      "path": "src/floorflow/heads/typed_token_memory.py",
+      "bytes": 2877,
+      "sha256": "cab955cbd3a7ecc78eb073cd0db2fd28f49055749c34b7630ca3a2ba4731e8c0"
+    },
+    {
+      "path": "src/floorflow/heads/vector_primitive_head.py",
+      "bytes": 17478,
+      "sha256": "b437747c14e27f3a4ae85eaa3f6d0820038de5650581b14747738ac6c97088c0"
+    },
+    {
+      "path": "src/floorflow/heads/vector_proposal_refiner.py",
+      "bytes": 5231,
+      "sha256": "b45f5d158d16167157488b4244dbde8f59c86245a3680833eb6be24eac6f1c25"
+    },
+    {
+      "path": "src/floorflow/heads/vector_quantizer.py",
+      "bytes": 764,
+      "sha256": "b84ef53b9173580142f595f3a98e452b45bbaf406453f956628dcbcd363a5d12"
+    },
+    {
+      "path": "src/floorflow/inference/__init__.py",
+      "bytes": 90,
+      "sha256": "40137e5305fe0b1e20575b469fa98e5f76231469294415e2aaea1a745c34feab"
+    },
+    {
+      "path": "src/floorflow/inference/cached_contour_controls.py",
+      "bytes": 1056,
+      "sha256": "c40f484d425396178231ef7aab78649c88322f83e5dd4505ff47644a0f030bba"
+    },
+    {
+      "path": "src/floorflow/inference/cad_layer_vectorizer.py",
+      "bytes": 10902,
+      "sha256": "bac084a35a10c0db97ec2fc8387377ea04ca7c69caa65f7194afd3f91a41867d"
+    },
+    {
+      "path": "src/floorflow/inference/cad_stage_runtime.py",
+      "bytes": 12315,
+      "sha256": "66683228c23ac478f569b08974140a4af3fdf00092b3e13465d9157a44e21965"
+    },
+    {
+      "path": "src/floorflow/inference/cad_wall_candidate_runtime.py",
+      "bytes": 10767,
+      "sha256": "efed09cbb5bd68344baba4be34b66ed494b41178acc8f5461f7d9c5527af179a"
+    },
+    {
+      "path": "src/floorflow/inference/canonical_layer_composition.py",
+      "bytes": 1551,
+      "sha256": "fad5f90aca9fafddeef50bc4e5cc9d0a714c6324ed1d9135b1ad3da4e1262641"
+    },
+    {
+      "path": "src/floorflow/inference/constraint_action_runtime.py",
+      "bytes": 8124,
+      "sha256": "590ef0e4d280ac1964573934ee2453a7178d0921c5fbe7790eef4898a89b8476"
+    },
+    {
+      "path": "src/floorflow/inference/contour_controls.py",
+      "bytes": 11700,
+      "sha256": "ee3766f690f418d637f7ca12c2957b07a46c5ad2abb5f15ad72470dbd3bcdc47"
+    },
+    {
+      "path": "src/floorflow/inference/contour_program.py",
+      "bytes": 3039,
+      "sha256": "59fe4868d98bf0bb52d0f915810b3df8cb975d67e6f342178737090e6f10811d"
+    },
+    {
+      "path": "src/floorflow/inference/control_reliability_router.py",
+      "bytes": 3232,
+      "sha256": "3c83734feedffd266d3c344b54f8499a57cee11fa393072a05532ca420de587c"
+    },
+    {
+      "path": "src/floorflow/inference/core.py",
+      "bytes": 776,
+      "sha256": "dc0304bc320e577a3c2c1f411de83c8235ddb1136c8bfc717394a18a4e181c20"
+    },
+    {
+      "path": "src/floorflow/inference/dense_colorized_raster2seq.py",
+      "bytes": 3131,
+      "sha256": "51b28cf98c1f0a93163fe4cf10276fcee1d61aa5cbdf53b06cfaf7958ef55d2b"
+    },
+    {
+      "path": "src/floorflow/inference/dense_query_eval_cli.py",
+      "bytes": 3831,
+      "sha256": "12ca6eb16ebd92ce3b76eb56eed198ed6c26015b7b32a68f11db2b3adf97e461"
+    },
+    {
+      "path": "src/floorflow/inference/dense_room_wall_fusion.py",
+      "bytes": 3625,
+      "sha256": "287ff5ebfcc3658bf9df00dc036355a57ae8dec6fa8305943d33b4db233e5253"
+    },
+    {
+      "path": "src/floorflow/inference/distribution_ensemble.py",
+      "bytes": 1302,
+      "sha256": "69c30524ba245aa3f2a121d4e26fea8d7f80ba224a5a9d0549e290237623d8d5"
+    },
+    {
+      "path": "src/floorflow/inference/distribution_overlay.py",
+      "bytes": 5706,
+      "sha256": "e80bcfdda186b4cb2c8a344345618764754848b6a8b1ce5129640f046cd5af51"
+    },
+    {
+      "path": "src/floorflow/inference/dual_pass.py",
+      "bytes": 3738,
+      "sha256": "869187947b235131db77fe13cebea841a9addf661c53685a94c5068efd138cfd"
+    },
+    {
+      "path": "src/floorflow/inference/dynamic_legalization.py",
+      "bytes": 2505,
+      "sha256": "42dca94ddb94b8a1250aca568cc88611cb467fc4d794c76b8d2251a763667a7d"
+    },
+    {
+      "path": "src/floorflow/inference/final_stage_wall_source.py",
+      "bytes": 1529,
+      "sha256": "b52f4a3a149fda313932a7dcdea013a6900eb1bb8d28955313a062db2fdb9b50"
+    },
+    {
+      "path": "src/floorflow/inference/floorplan_token_generation.py",
+      "bytes": 4349,
+      "sha256": "0d45d8fc39787bcb2550b48b470d0e44393b8e24bdfedbd5afe79c06b76b07ca"
+    },
+    {
+      "path": "src/floorflow/inference/furniture_vector_readout.py",
+      "bytes": 10982,
+      "sha256": "3a383ac4aa07d7fdf336c7bb9d8e9ee3f151488e64c307512609f6589177d823"
+    },
+    {
+      "path": "src/floorflow/inference/gated_room_decoupling.py",
+      "bytes": 6799,
+      "sha256": "1f3c77cdbbdf83f4685acc86a1e52333f598af791e26fea4907b306f03b0c4cf"
+    },
+    {
+      "path": "src/floorflow/inference/generated_floorplan_readout.py",
+      "bytes": 14348,
+      "sha256": "cf7d3897a86a59378bced9f3965672688b2534852631f673a367da0e288b75ea"
+    },
+    {
+      "path": "src/floorflow/inference/geometry_wall.py",
+      "bytes": 3489,
+      "sha256": "7f049553a40deed8adee774144e87ce462716e9b5127c4095116a2951521890b"
+    },
+    {
+      "path": "src/floorflow/inference/housemind_free_text_editor.py",
+      "bytes": 10459,
+      "sha256": "5d008192db2c86fc26223ac364cdbf667b96d0c71aeebdd3f80aa42d594ad033"
+    },
+    {
+      "path": "src/floorflow/inference/hybrid_decode.py",
+      "bytes": 837,
+      "sha256": "7d1918a7cb9c0ded62e02e85f2a4710a3a5f12bb9e8e0c4b85a1af68c244017b"
+    },
+    {
+      "path": "src/floorflow/inference/instance_semantics.py",
+      "bytes": 19721,
+      "sha256": "bd2b3bce45c069a6754a96f400175a96d6b4fe68219257994c481ac6f4a601b0"
+    },
+    {
+      "path": "src/floorflow/inference/iterative_control_sampling.py",
+      "bytes": 2304,
+      "sha256": "df0dcc7ff0a0a29d20538133763837017e11ab2ce5c28b15deb32955e6709ae7"
+    },
+    {
+      "path": "src/floorflow/inference/junction_face_readout.py",
+      "bytes": 2285,
+      "sha256": "3a268ec4f889a0fc4e4789fd2773c783f056fd43298f4ceb38519867f6d64782"
+    },
+    {
+      "path": "src/floorflow/inference/layered_decode.py",
+      "bytes": 2487,
+      "sha256": "83545b5bffd7b0a24cb58e7487dd95ce8b46b60752668a447a79ec1262fa2602"
+    },
+    {
+      "path": "src/floorflow/inference/layered_structure_readout.py",
+      "bytes": 914,
+      "sha256": "7f0e2b6af9d13547aae8a8c5d9b75638dfc31454fd8d8c255c20fd90e2756641"
+    },
+    {
+      "path": "src/floorflow/inference/learned_revision.py",
+      "bytes": 2803,
+      "sha256": "90a3138374f2ad913bf6e21f4cb4b15738186583fddeeb551b68cdfb9ee7bfe2"
+    },
+    {
+      "path": "src/floorflow/inference/local_delta.py",
+      "bytes": 2412,
+      "sha256": "c8f4888cf589ad960d6a52e17b657dfc617ec611deefb928c63a1784fc56d22b"
+    },
+    {
+      "path": "src/floorflow/inference/mask_partition_readout.py",
+      "bytes": 19149,
+      "sha256": "1ed37656eb53ccb563d306f45cc6fdbb8d5c049bf2b05b7e3aa11c7d494eee69"
+    },
+    {
+      "path": "src/floorflow/inference/opening_candidate_batch.py",
+      "bytes": 4940,
+      "sha256": "f3f24a4d2f2f2b7a30b52284316f6036a7ce1e662667067ede6a5c96014f70ec"
+    },
+    {
+      "path": "src/floorflow/inference/opening_candidate_ranker.py",
+      "bytes": 16802,
+      "sha256": "f531cd7dd77671e7fd1553cda61a3c05af35002d513832caf8a081b31ce99d99"
+    },
+    {
+      "path": "src/floorflow/inference/opening_candidate_torch.py",
+      "bytes": 5661,
+      "sha256": "f453a35a3ea7208c9054ffca540d4f27c74cff397595772a3e251dc0ffaf0f31"
+    },
+    {
+      "path": "src/floorflow/inference/opening_center_width_decoder.py",
+      "bytes": 13402,
+      "sha256": "e5fad8428b2d5ba72dbe084dad2c41ad7aac9b0777f41868ee6c638965be1747"
+    },
+    {
+      "path": "src/floorflow/inference/opening_evidence_fusion.py",
+      "bytes": 1225,
+      "sha256": "f1f83969fa92efcb6d98f703621d951feaa3c8a8f2485e12c291cc25ef1afd4b"
+    },
+    {
+      "path": "src/floorflow/inference/opening_heatmap_decoder.py",
+      "bytes": 18169,
+      "sha256": "4b6d91d98168c99a2c79f821e9ea0fd4639da8c92e7db69b31a5783b7d3336cf"
+    },
+    {
+      "path": "src/floorflow/inference/opening_host_projection.py",
+      "bytes": 3748,
+      "sha256": "ea23df44df3624d5a8db03bbf67e08b1ac131f8e803595626573311d4253e89f"
+    },
+    {
+      "path": "src/floorflow/inference/overlay_decoder.py",
+      "bytes": 7350,
+      "sha256": "e6867ae55311dcb88379d7586c17a0864344296dd380eeeabba0f248863e9a87"
+    },
+    {
+      "path": "src/floorflow/inference/owner_wall_action.py",
+      "bytes": 9317,
+      "sha256": "af95e49022453dd58bffd9b2a80b2ed4157e25df5e90c397c839a5bae3147270"
+    },
+    {
+      "path": "src/floorflow/inference/predicted_control_edit.py",
+      "bytes": 5027,
+      "sha256": "6315376beca862e956901ca08122e8f1235580ee8ec3e69b703b375b009fd357"
+    },
+    {
+      "path": "src/floorflow/inference/predicted_control_state.py",
+      "bytes": 6294,
+      "sha256": "24a18ee0c1df6e87108fcf47bb7e346ce13a68f7e51bcb361253430f7c81133f"
+    },
+    {
+      "path": "src/floorflow/inference/predicted_prior.py",
+      "bytes": 1368,
+      "sha256": "8f7cbd8245ca2edb923b9499035be34ac7d978264db8950e2edb28e7bae2a758"
+    },
+    {
+      "path": "src/floorflow/inference/predicted_refiner_runtime.py",
+      "bytes": 2605,
+      "sha256": "cd16f219ba22894aa6801ab85f3ede8a03baf7c28c675a78c9b034bf9318764e"
+    },
+    {
+      "path": "src/floorflow/inference/raster2seq_identity_refiner.py",
+      "bytes": 8017,
+      "sha256": "9be36b04e4a77b47122a27eb81216730f41c47b0c931d9f0259595bdf7783737"
+    },
+    {
+      "path": "src/floorflow/inference/recursive_room_prior.py",
+      "bytes": 9476,
+      "sha256": "e0939781533650eda3934b776c0fea30f04e096524e52ce9c301d3c61ee112a2"
+    },
+    {
+      "path": "src/floorflow/inference/repair_acceptance.py",
+      "bytes": 2526,
+      "sha256": "3be0b43abbd39ee8fbd871a66b930a7297d56badb86b489d6ef88f10694a582e"
+    },
+    {
+      "path": "src/floorflow/inference/repair_features.py",
+      "bytes": 2478,
+      "sha256": "862148946938c93bfa68bca4ff2f7a21423fab568049ccaaf6c3816837687580"
+    },
+    {
+      "path": "src/floorflow/inference/repair_registry.py",
+      "bytes": 4516,
+      "sha256": "d95d92319c71deb7d7f947098afef88bb3da7df7c900236dfe7919cfd4a4972b"
+    },
+    {
+      "path": "src/floorflow/inference/retrieval_prior.py",
+      "bytes": 4878,
+      "sha256": "0788be33b8f21609136a7b9a9f87fa3cc8685701323283a33fc5f94c1e022392"
+    },
+    {
+      "path": "src/floorflow/inference/room_graph_refinement.py",
+      "bytes": 4537,
+      "sha256": "355f263e8389aee9485cd57d9492dabf3667e9242459a28a75a46d80224e4d67"
+    },
+    {
+      "path": "src/floorflow/inference/room_identity_arbitration.py",
+      "bytes": 6280,
+      "sha256": "171074a8b1d7afc916fb66a26f4c7661e12bb06caf69054ecdfcb011fd556fcd"
+    },
+    {
+      "path": "src/floorflow/inference/room_polygon_readout.py",
+      "bytes": 2655,
+      "sha256": "98262301dffa8d7cd067f62cd6baa1db6d83765b8267af5f5c6bc17cf11a3c23"
+    },
+    {
+      "path": "src/floorflow/inference/room_repair.py",
+      "bytes": 3343,
+      "sha256": "1379da9ee7ce768f741a0d56b3cad382db185324ac929d45b07eb373e9af56a6"
+    },
+    {
+      "path": "src/floorflow/inference/room_segmenter_prior.py",
+      "bytes": 1727,
+      "sha256": "87ae7132e529c6d6b92fa3a39ee797494cbf7dc0bddf5c401e789a8cfda91c92"
+    },
+    {
+      "path": "src/floorflow/inference/rplan_query_quality_arbitration.py",
+      "bytes": 5756,
+      "sha256": "eb5a783471d6aa8c599675914f5d08c2b50be2896112c9958f03cfc996876ab3"
+    },
+    {
+      "path": "src/floorflow/inference/sampling_policy.py",
+      "bytes": 4706,
+      "sha256": "36781085c1bc7da9d777cbd5ab77c41aca1953d84b0d7794e12685fab63acc51"
+    },
+    {
+      "path": "src/floorflow/inference/strict_local_projection.py",
+      "bytes": 8953,
+      "sha256": "8f7600bce23b807427e3217a583b1a3bce7d0e371f3b6594ad8c895ebd4ba7fd"
+    },
+    {
+      "path": "src/floorflow/inference/structural_attention_repair.py",
+      "bytes": 1231,
+      "sha256": "44b8c81202b727c38325801aa585ca3240d51ab8642937236b8d678d41d0df59"
+    },
+    {
+      "path": "src/floorflow/inference/structure_compositor.py",
+      "bytes": 16369,
+      "sha256": "7195ebb493217e86ba7bd5e64078758a78698ad2b3ce703ef0b3c350cb3ffb20"
+    },
+    {
+      "path": "src/floorflow/inference/structure_evidence.py",
+      "bytes": 5751,
+      "sha256": "dee0c0477c923f385919c09f1a2750be42ce61efc483c0517f2dfc8de019b9b4"
+    },
+    {
+      "path": "src/floorflow/inference/structure_fusion.py",
+      "bytes": 1211,
+      "sha256": "2db4e5eaad800446603367f03adbf3ad715779247274535fc2133f58a99f1ebd"
+    },
+    {
+      "path": "src/floorflow/inference/structured_decode.py",
+      "bytes": 11682,
+      "sha256": "e49d24743134deccb0bde4f2af1b76e647b23e9c3acda47ac0d223c8ccd385f2"
+    },
+    {
+      "path": "src/floorflow/inference/style_predictor.py",
+      "bytes": 1810,
+      "sha256": "d9db7f2ebc517218d4f56be78ff431fe74f4cf3cbff03b5976d8260192cf4189"
+    },
+    {
+      "path": "src/floorflow/inference/support_structure_fusion.py",
+      "bytes": 3166,
+      "sha256": "1a1c398a87384aec9d033bb83ef02188f799fb66ba56850b5c8d30e1c23f814b"
+    },
+    {
+      "path": "src/floorflow/inference/target_free.py",
+      "bytes": 3891,
+      "sha256": "d1617ed1731c0c22223eb0fad1cfb243fe1d73e4380f8934f332b4bb6e8e407d"
+    },
+    {
+      "path": "src/floorflow/inference/token_beam_search.py",
+      "bytes": 7864,
+      "sha256": "db00ccf2affe2a428a38d921723aa66133820d6445488a35a956d48b0bed8ccb"
+    },
+    {
+      "path": "src/floorflow/inference/token_graph_projection.py",
+      "bytes": 1886,
+      "sha256": "44e54f27241e8f4f6af165051288d510da003fe51065d465e6b646d82bb72dc8"
+    },
+    {
+      "path": "src/floorflow/inference/token_refined_inference.py",
+      "bytes": 4639,
+      "sha256": "1333a034402234b0a060b3dff3e47b0d63a20f9c17d6dca6d78982082c53cfc1"
+    },
+    {
+      "path": "src/floorflow/inference/topology_scaffold.py",
+      "bytes": 2311,
+      "sha256": "d6efc121cd567e825b15ae889a5cd102e888c6af1adbcd31845e7e055d74b797"
+    },
+    {
+      "path": "src/floorflow/inference/trinity_refine.py",
+      "bytes": 6017,
+      "sha256": "e2d141c44454ee06484558c619ce6bfa25f3738783b88fd18fbbbd54f27bf70b"
+    },
+    {
+      "path": "src/floorflow/inference/typed_edit_graph.py",
+      "bytes": 8162,
+      "sha256": "e851ad86ecff08d2f26be8df14a6bf7369e547cdac0aeb32f5ca2ff6f10be8f1"
+    },
+    {
+      "path": "src/floorflow/inference/typed_junction_stage.py",
+      "bytes": 1973,
+      "sha256": "8ad5959fa5d0a6075acd2aaf8a49cdab6adfcb7c1a02f2e67c1f5ea147f033c1"
+    },
+    {
+      "path": "src/floorflow/inference/typed_state_machine.py",
+      "bytes": 1298,
+      "sha256": "0f4bad66e74194583d24598412a225f66d276646ed86381f2f4f7d3c13bdff0e"
+    },
+    {
+      "path": "src/floorflow/inference/vector_residual_refiner.py",
+      "bytes": 6781,
+      "sha256": "dfbee9b732f4372254a2b51a0664db78a07822bf25005ce2bb32093bd8e7e2cd"
+    },
+    {
+      "path": "src/floorflow/inference/vector_scaffold_readout.py",
+      "bytes": 4953,
+      "sha256": "284fd8d14865fab62c8fc987194f07e288bf177cfa187e230fb7c675a78acca7"
+    },
+    {
+      "path": "src/floorflow/inference/vector_topology_projection.py",
+      "bytes": 6964,
+      "sha256": "a241448e09c47963da3da42d2b689f9e00e547a2f85d8f88269470d3b10a684e"
+    },
+    {
+      "path": "src/floorflow/inference/verified_repair_loop.py",
+      "bytes": 1539,
+      "sha256": "505cc7261475b4bc110b593611135c1e2c65e2c29567b56f7cf217307a875e2d"
+    },
+    {
+      "path": "src/floorflow/inference/wall_centerline_fusion.py",
+      "bytes": 2780,
+      "sha256": "ace5a1975c514db2e2721cfe571b0ebb4a7d10259fd68aa1587d962921ffea96"
+    },
+    {
+      "path": "src/floorflow/model/__init__.py",
+      "bytes": 92,
+      "sha256": "fb3e819c0001ec352e4de12d616580294eb1abf06e20b9b5ae3bfcd76cb51f3a"
+    },
+    {
+      "path": "src/floorflow/model/anchor_fusion.py",
+      "bytes": 1478,
+      "sha256": "1d5472be8c00d3a87d6bbbb4eeb60fbc65958733a9b60008f98adda0af0cf9e2"
+    },
+    {
+      "path": "src/floorflow/model/backbone.py",
+      "bytes": 18764,
+      "sha256": "b7d7569fdd9e528fea69b646eb22ac19687a799e4d8d44babbcad02e582d8f4c"
+    },
+    {
+      "path": "src/floorflow/model/backbone_aux.py",
+      "bytes": 7747,
+      "sha256": "709f49891ee97e719a84390127c6ac3c6f176c2e10aad287a471e8f0f20ceb2b"
+    },
+    {
+      "path": "src/floorflow/model/backbone_ops.py",
+      "bytes": 7720,
+      "sha256": "059c74185215a1fce668c7509a7639c8d9ed1e1461d70f732efeb508f6386fbb"
+    },
+    {
+      "path": "src/floorflow/model/budget.py",
+      "bytes": 7100,
+      "sha256": "28bf0670858e8c5a3fba960c096b5773514191821c1a7ec712a921926741d7d5"
+    },
+    {
+      "path": "src/floorflow/model/builder.py",
+      "bytes": 9608,
+      "sha256": "310529529d7a2bd9e5e9c1e0d46289e9de9f656605556b08d68443b23b5b13c9"
+    },
+    {
+      "path": "src/floorflow/model/cad_action_graph.py",
+      "bytes": 12005,
+      "sha256": "be096944d5ab3e7423eed293b8287984aefcef02e1f89d301a904ead8a464860"
+    },
+    {
+      "path": "src/floorflow/model/cad_furniture_stage.py",
+      "bytes": 5834,
+      "sha256": "2026298558b050cf8e4d315e01d5429c9a57f0a3ad7dd211be0bbfbef4bf8785"
+    },
+    {
+      "path": "src/floorflow/model/cad_layers.py",
+      "bytes": 4888,
+      "sha256": "e728f58b0d20abf782955e42be22a590e0174cbb56b2baf971318bd52adae839"
+    },
+    {
+      "path": "src/floorflow/model/cad_stage_heads.py",
+      "bytes": 2986,
+      "sha256": "550012ddb0de5a3ea50a38984eff3a909fccd14c06c054e2ee08589986e3bc3e"
+    },
+    {
+      "path": "src/floorflow/model/cad_stage_readout.py",
+      "bytes": 2408,
+      "sha256": "20647396db86ac169583f824654d4c894ae85750f635082a34e74a450f764dc7"
+    },
+    {
+      "path": "src/floorflow/model/cfm_backbone_mixin.py",
+      "bytes": 2469,
+      "sha256": "508ad3418ebccf8a85cb24329830bddb0f143ecbf400b08e399d859cf9a5af33"
+    },
+    {
+      "path": "src/floorflow/model/cfm_structure_adapter.py",
+      "bytes": 9272,
+      "sha256": "530d6b73ddab1ee2024b34095555f9c382dc32407895e3fa2ae2a7610976eded"
+    },
+    {
+      "path": "src/floorflow/model/constraint_aware_gate.py",
+      "bytes": 3622,
+      "sha256": "0033dea963aee43fdeef9ae942dfc5dd887ef7a45718a9d33858a8b26894b5da"
+    },
+    {
+      "path": "src/floorflow/model/constraint_state_encoder.py",
+      "bytes": 6388,
+      "sha256": "d10f36372dda3ca164427dfd0c76dcbfaeb76f5d7f0cf46ce6c6a4afd4758b43"
+    },
+    {
+      "path": "src/floorflow/model/distribution_controller.py",
+      "bytes": 5308,
+      "sha256": "67124c9877f1786719c8569750d50206e585d5a921475137d96ea69e2180495f"
+    },
+    {
+      "path": "src/floorflow/model/distribution_initializer.py",
+      "bytes": 1967,
+      "sha256": "ecece030821a7da989a283495e87150cdcbfab28d5a9c747ceec2eaf126efc45"
+    },
+    {
+      "path": "src/floorflow/model/dynamic_budget.py",
+      "bytes": 5132,
+      "sha256": "892d84271ff34ec0e00a785f7e7814848bf66ed17b4e17d18f69bb6b59f2e554"
+    },
+    {
+      "path": "src/floorflow/model/family_stream_mixer.py",
+      "bytes": 6821,
+      "sha256": "618ad98dd25037c234766f5392a5e18f7f17368465951b0e1b8052a266a39b84"
+    },
+    {
+      "path": "src/floorflow/model/floorflow_v2_generator.py",
+      "bytes": 1228,
+      "sha256": "2cee6c9e4d9c801cb62a708287242e774d7e0ca37917ea93aad316ed4ca1e533"
+    },
+    {
+      "path": "src/floorflow/model/flow_blocks.py",
+      "bytes": 5656,
+      "sha256": "3d56e6be02e198603ccdca349d9f2b440915c7c6aa4e2e89c3ac90616f651c7d"
+    },
+    {
+      "path": "src/floorflow/model/footprint_cross_channel.py",
+      "bytes": 6451,
+      "sha256": "f47b7e57ae25a52f10db20c3514f21bc676a88926ecc2b6ca3f071c442db25a0"
+    },
+    {
+      "path": "src/floorflow/model/graph_edit_encoder.py",
+      "bytes": 3530,
+      "sha256": "6e5559a2aef8f29ec095b8b1e39e5edae5deef57d3f4f341bdee30f65173c2d6"
+    },
+    {
+      "path": "src/floorflow/model/hierarchical_pipeline.py",
+      "bytes": 12203,
+      "sha256": "ca5ba57ab825d71e0fe6a7f8f91063e2b10286f2fbbd28bb3686f0c2058a6202"
+    },
+    {
+      "path": "src/floorflow/model/interaction_constraint_gate.py",
+      "bytes": 3817,
+      "sha256": "35b03c68a51e37a775044352e93c0b0dcee2f2bafbd3ac280b0caddf2dddb68b"
+    },
+    {
+      "path": "src/floorflow/model/layout_router.py",
+      "bytes": 2195,
+      "sha256": "8beab869ccfadc189d8203b3fdcae593d21b4ad5a516eaa97a72e682cbb853e6"
+    },
+    {
+      "path": "src/floorflow/model/layout_stream_mixer.py",
+      "bytes": 2016,
+      "sha256": "b0c5817fff6e34aaba92c4b1cd9eb6b2ebd31f0ee8123c0296778c1715db90cd"
+    },
+    {
+      "path": "src/floorflow/model/layoutbridge_adapters.py",
+      "bytes": 6308,
+      "sha256": "12c8bfd49a70f31d5fd86fc207d0503c77cd6655bc0b06e7cabfd4783da0a4b0"
+    },
+    {
+      "path": "src/floorflow/model/learned_mask_generator.py",
+      "bytes": 9391,
+      "sha256": "381210bf2cf39546ee9dcac48de4a649b7a371712560f486a483810306aed8e6"
+    },
+    {
+      "path": "src/floorflow/model/mask_discriminator.py",
+      "bytes": 4185,
+      "sha256": "7cb2e5ac646e7cbd717cf7bf54b651c3bea62663a2ddb119123f4dd91217ea0f"
+    },
+    {
+      "path": "src/floorflow/model/mixture_topk_attention.py",
+      "bytes": 8626,
+      "sha256": "b209533cefd93490e8528dc5a479ceac494f997fd9d67e309df6b1c691f57033"
+    },
+    {
+      "path": "src/floorflow/model/modality_encoders.py",
+      "bytes": 1374,
+      "sha256": "b188137c0e0204bef24e1997b9c73a3f09d9ccf7f095bfc13b5cd908871431b7"
+    },
+    {
+      "path": "src/floorflow/model/multiscale_pixel_decoder.py",
+      "bytes": 3358,
+      "sha256": "23ab62117a5639bd2bdf661367d94b03ebd8b0fa6246db1129b75933b16e1fb6"
+    },
+    {
+      "path": "src/floorflow/model/official_mita_route.py",
+      "bytes": 12065,
+      "sha256": "183c13049babd02c24f747ec4e413a52b4db30e0967c18154cfe9340ac9f0494"
+    },
+    {
+      "path": "src/floorflow/model/pmt_mask_decoder.py",
+      "bytes": 10286,
+      "sha256": "37a9e36bcc10925891e9e6242cdb202b6f7139fd4e5912909115c847f815ed6a"
+    },
+    {
+      "path": "src/floorflow/model/predicted_action_context.py",
+      "bytes": 1502,
+      "sha256": "79adcd5cf994bed3fe32854e95ed3381bc5c6a3058a648dbf8b40ae3e10c8116"
+    },
+    {
+      "path": "src/floorflow/model/predicted_channel_checkpoint.py",
+      "bytes": 10799,
+      "sha256": "577664f802f90be5d353ddc846c39fd9acf7729cc28b89c01c1cf44370a16744"
+    },
+    {
+      "path": "src/floorflow/model/predicted_channel_model.py",
+      "bytes": 25513,
+      "sha256": "3a06bc7e530d4726dfb8662bfdfe98cfc934af61a306ef7fffac59d2673e27f6"
+    },
+    {
+      "path": "src/floorflow/model/predicted_control_prior.py",
+      "bytes": 2108,
+      "sha256": "1b9dc3f0f6f2c6ad57d5214997769ce708e99c1b102b8ebc194587761ecf7664"
+    },
+    {
+      "path": "src/floorflow/model/predicted_field_encoder.py",
+      "bytes": 5891,
+      "sha256": "86de963612a74bebed09342154b2f5bd2b917563e32c704b8f259d10d441590d"
+    },
+    {
+      "path": "src/floorflow/model/predicted_furniture_runtime.py",
+      "bytes": 1596,
+      "sha256": "093fc00179d95899402a5e00ad29b7173f11c136caa2182dfc1e5d5c56dc6a41"
+    },
+    {
+      "path": "src/floorflow/model/predicted_optional_stages.py",
+      "bytes": 12195,
+      "sha256": "8a419d661fe9df6aed7fe456240f71baa933518c7ffd2b9b8504cb9635b34241"
+    },
+    {
+      "path": "src/floorflow/model/predicted_room_runtime.py",
+      "bytes": 6022,
+      "sha256": "39072a60f882a2f0acdd67c33cba68c5d94b66a74b8da47721a505fe52d128bd"
+    },
+    {
+      "path": "src/floorflow/model/pretrained_vit.py",
+      "bytes": 2092,
+      "sha256": "169a3c3c4427297b1e8ab65f872c286df1e3c7920d5a32edf5a41c12d2def4ae"
+    },
+    {
+      "path": "src/floorflow/model/program_instance_router.py",
+      "bytes": 3027,
+      "sha256": "fba915f8a9d15e83549ad2a2a8905127179271366bb79369b3d3e81c7eb17897"
+    },
+    {
+      "path": "src/floorflow/model/registries.py",
+      "bytes": 3099,
+      "sha256": "e198c0d82f8e036126750883f36443d47ebf0fcb24c78a4595a1304e6d892b7e"
+    },
+    {
+      "path": "src/floorflow/model/retrieval_fusion.py",
+      "bytes": 3502,
+      "sha256": "c885e00279ce0bb1c803dbb71989f49c7e53ac60c27406204fdc87aace026de2"
+    },
+    {
+      "path": "src/floorflow/model/room_graph_transport.py",
+      "bytes": 1215,
+      "sha256": "c50c523d1fed1c594b1a779cf6d3a1fe4b8c0f3969951f6b94444771f84c3385"
+    },
+    {
+      "path": "src/floorflow/model/room_instance_identity_stage.py",
+      "bytes": 22801,
+      "sha256": "9727881012e724199e6823e745b174a73f467510fda3105cfafdbaf10e3c4d7f"
+    },
+    {
+      "path": "src/floorflow/model/semantic_attention.py",
+      "bytes": 7187,
+      "sha256": "cadcc3a9d2b0d10ecbd3520926d654c9ad9f9c0411ac2dfe546340be4156fae5"
+    },
+    {
+      "path": "src/floorflow/model/sparse_control_attention.py",
+      "bytes": 10262,
+      "sha256": "0012eee46deb98ecf456981dc748d248d2b453e9ada05931d21eb4632bc3ca68"
+    },
+    {
+      "path": "src/floorflow/model/specs.py",
+      "bytes": 7215,
+      "sha256": "bd06102881bf1feaebd7bbe681f967b64bd6b7f4523566a4d1e321cd6a8e2c09"
+    },
+    {
+      "path": "src/floorflow/model/three_layer_controller.py",
+      "bytes": 3686,
+      "sha256": "b353fbaaf010d2ec11f4d298b2f8398ed29329887984e1531020d23053f438c3"
+    },
+    {
+      "path": "src/floorflow/model/trinity_contour_room.py",
+      "bytes": 7568,
+      "sha256": "fdff5d43d1450657b044d30a6b4d4db3b7c7bbb6210b56e2ab6c4c419ae584b2"
+    },
+    {
+      "path": "src/floorflow/model/typed_channel_graph.py",
+      "bytes": 2341,
+      "sha256": "af9d5a3101dfba7c0bb3177b362bbbde20d52ed100f18703438f398c122244fc"
+    },
+    {
+      "path": "src/floorflow/model/unified_floorplan_generator.py",
+      "bytes": 22764,
+      "sha256": "d43203a8eff8203d5c0c51af97e2fd7e0325450dbcba31f22ad1951d7bcc694a"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/__init__.py",
+      "bytes": 509,
+      "sha256": "6b6d05e9460449183baabf2b3126e8ccb1bcfae921af525b992819a89c42907c"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/_generated_protocol.py",
+      "bytes": 3591,
+      "sha256": "c1fcca150d541d09eb7ea92d22591e91f7f28f74d15973879b2e64a1d9445abc"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/architecture.py",
+      "bytes": 7704,
+      "sha256": "650b581d0b19588061c67f81f1029ee444fbefc1a132635d436e221dcaf9a64b"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/architecture_search.py",
+      "bytes": 17620,
+      "sha256": "7bdf062e502a4668fb424e81ef871679e03a2df498c536a1956c53df1bc9e21c"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/architecture_search_trainer.py",
+      "bytes": 10368,
+      "sha256": "a32298e9ece8aef1e4a6f0daba321c929dbf8fbe8aadcf8cb097098ed1468c43"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/architecture_search_types.py",
+      "bytes": 8080,
+      "sha256": "02b0a6d38603ea450e09c2152227c6db1fe9e4265b44d8df00adca5860a2c75d"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_cfm.py",
+      "bytes": 22617,
+      "sha256": "9144c339d55e1e015070815858562114737e2fb21bacec21880a3bc8fa3fbc52"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_cfm_data.py",
+      "bytes": 19157,
+      "sha256": "b45c44e97664be439db1e5e61952047f1ade45d09264677fd4c1ee5116f4b2a1"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_cfm_decoding.py",
+      "bytes": 3111,
+      "sha256": "8bfee85ca0f45e0021acb3c1bd34ca790cf853b0405f1189b180eba5e1f26e0b"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_cfm_objectives.py",
+      "bytes": 5919,
+      "sha256": "43d06a08b330c3c2322f98fd5e06c7c4d4260f7cc056eb1c3f7f66ed89af361d"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_cfm_runtime.py",
+      "bytes": 3736,
+      "sha256": "b67d92176bf1a91a7c81ec466be45d7229555d6b5e96bf71c5247a28b4b2dbfc"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_codec.py",
+      "bytes": 18511,
+      "sha256": "246a234c6034a9991087a23db881c088173071d550ce5d9e5f61626a6a9ff467"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_codec_io.py",
+      "bytes": 10241,
+      "sha256": "70e413da2de0f9bbb588d5935c5e8cba5c0ae1b16c045e51e24b848ebf9b4f37"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_codec_metrics.py",
+      "bytes": 6713,
+      "sha256": "3a3c1358c54944675e6e2ec7f521b0c3a3b13987420ec2fc3995be0174efe92b"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_codec_parser.py",
+      "bytes": 3181,
+      "sha256": "fa31ecfec73c4a44cdc8f989659d057c59cffd962f899fe5149d776c20e1680f"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_corpus.py",
+      "bytes": 14213,
+      "sha256": "633b3941cd638874d2f93280a7f3300fc5ff7a864571c8fe54951b44aa12febe"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_discrete_flow.py",
+      "bytes": 9672,
+      "sha256": "26b9bf82660535759f92a109d929335e744acaf3e2d217e0a337be6aa0c4474b"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_freeze.py",
+      "bytes": 6417,
+      "sha256": "7829e73fbe0ae51a4db995b2b4ce9f9b00fcc53a8887f156724fbbda2f068a6b"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_generation.py",
+      "bytes": 10033,
+      "sha256": "f11475696eab10ab72691f0ff6c128cebae56acbbdfd107c25502c559295c9bd"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_grammar.py",
+      "bytes": 14032,
+      "sha256": "1d47b606ffc1153ddca7075bcb67d1cb94c59a6dd122aa9bade5526ec8b4c40e"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_grammar_ablation.py",
+      "bytes": 7110,
+      "sha256": "e3998cc77e55afe2f9fbea0d6f72df3b7a9afd7f1410b95341ddd4fc097c566d"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_grammar_audit.py",
+      "bytes": 5547,
+      "sha256": "5a6efb8247769d2e840bd39bc35e726cf66a443919c643857bd3cea6e12452c4"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_grammar_training.py",
+      "bytes": 11178,
+      "sha256": "7ace03d043d53a571234da4010596e39fcc0b4777a7f546557e85df43eb06cb9"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_holdout.py",
+      "bytes": 8061,
+      "sha256": "52ab9dc844babf614c0843b282f930d84293c881f9759d1db63b6f0c8a1cfcd8"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_leaf_classifier.py",
+      "bytes": 849,
+      "sha256": "78a424ffe60e7941109b81ab3361c338e4b9c14d132303d31e0eeb6e49111a28"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_negative_data.py",
+      "bytes": 7669,
+      "sha256": "a8412d4fa9a17a4b44fa022cefe20b44593775b1bd03a67424ecfdf3da241fa5"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_quality_gate.py",
+      "bytes": 7397,
+      "sha256": "88934b84e7f9fbf420f51d4f4783b576aae4f9887fa388cbca9e80ff13a83d61"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_recovery.py",
+      "bytes": 3987,
+      "sha256": "94eb3944f426871b68a10459f318a4eb8b93b88b41f1bef8e93eb5517b47e5f1"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_recovery_probe.py",
+      "bytes": 1292,
+      "sha256": "b3d0d727812077c8db5ae61bdca6f23e403a112b0f876cb5e9dda9669234b9e6"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_token_decoder.py",
+      "bytes": 13256,
+      "sha256": "e41e200db2d45f3f376b2750459aa7a43c9d44ad0590be8660c9760ab5142037"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/ast_transition_grammar.py",
+      "bytes": 17963,
+      "sha256": "6be24fa7b4b8b7a655d314da50ec325bc628c80731d7c443e98beac0470d7e55"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/benchmark_alignment.py",
+      "bytes": 5727,
+      "sha256": "8671a7d8f7c8d5e64bd74b9d53b5ea2de0f5798845245bc3e974a2abb56dae31"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/benchmark_contamination.py",
+      "bytes": 2781,
+      "sha256": "c844a4a9da50d77656ecb2b8055a10fcd93305d9c5e73a516c2d933370672e28"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/benchmark_metrics.py",
+      "bytes": 6099,
+      "sha256": "1787a33e8e6f3b00a31a46eaade060bff7d8860bb30afc0246a918565439e1cd"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/benchmarks.py",
+      "bytes": 5760,
+      "sha256": "a73e9e9e04f7dacd555ecf01cd8394f125b8162414f81e1440bf2dc60428d1f0"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/cfm_training.py",
+      "bytes": 4972,
+      "sha256": "c69aad39a63614f3b1473554aa4a68e1f2b61d555dba07dcda7cee7144238200"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/chat.py",
+      "bytes": 9813,
+      "sha256": "58154988da858c95dcc09a4c714cc757782bab83fbabc6b4da23837b251eba14"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/code_objectives.py",
+      "bytes": 4941,
+      "sha256": "571186e3a7b8e96ce61c3f43968d11da59454e1647b2745f252786b7a8051d31"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/corpus.py",
+      "bytes": 6947,
+      "sha256": "8adb2441574ca30981e9e037f8cfa8747878721398ca83ec281b5fe3c2e54639"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/corpus_build.py",
+      "bytes": 1686,
+      "sha256": "2c72c2528e1dba098ca826f7e612f0fce6aca0a8a8900b1338c0032038b614e9"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/data_efficiency.py",
+      "bytes": 17785,
+      "sha256": "19aee9a64be9ac66b7edf6ae3a3b1a896d63ff178ed5bdd9372073d02c3b311b"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/data_efficiency_loading.py",
+      "bytes": 3831,
+      "sha256": "3037409ad1c9f857aead500f3d29c11f32ddf1560028bf4e32f304e664809e0a"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/data_efficiency_metrics.py",
+      "bytes": 3341,
+      "sha256": "1ab39fafb2e3b6691798f3d0ef59bfea1fc11536b3a70baa9c019e7630ab78bb"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/engineering/__init__.py",
+      "bytes": 1340,
+      "sha256": "c01c0c09555880402a2e7aebc29e96b89b3de5c4e71b8f7eba5afb2cea21b0c1"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/engineering/artifacts.py",
+      "bytes": 1900,
+      "sha256": "0dfe4bdb36a492a6390a4511953dbdc4562bb9f76fc4fe548926722816bf413a"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/engineering/budget.py",
+      "bytes": 2636,
+      "sha256": "e09a26c1262ada0831a42fb1427f98168d119aacd40be4e0d6f952b8930c5df2"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/engineering/checkpoint.py",
+      "bytes": 4335,
+      "sha256": "79ebbb538509e3b2cd5fb4735af43e7c95416eeb8e15285d920ef9ab9b02bdc1"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/engineering/runtime.py",
+      "bytes": 2366,
+      "sha256": "6603144b67d7350cfb52f79b59ad3b12ee55f8b841e61d0a874d05b60a3228f6"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/engineering/schedule_free.py",
+      "bytes": 4745,
+      "sha256": "a267178ebf7e80353a3b6ee333309035f0cb8f9bebf450cf274e54acd74a0139"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/engineering/spec.py",
+      "bytes": 6336,
+      "sha256": "e3aa0cc30b140b35b5acbf5c41b05745947564ec859574baa9dce8843702f307"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/executors.py",
+      "bytes": 3099,
+      "sha256": "a87c0023869353eed132cb537fdd9a90649a7e583763e17ecdd2560ee84733fc"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/experiment_config.py",
+      "bytes": 5389,
+      "sha256": "6c89df88dcd4e473a2bc0e13295b200c3167492233606d67be4c2231b3fcd157"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/fixed_moe.py",
+      "bytes": 2485,
+      "sha256": "484bf6428f10fcf03ee8dc82a068c4dd7d116f214d01ab8119ed9737b378e236"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/growth.py",
+      "bytes": 9299,
+      "sha256": "c58d78c35c9b32262813037ce23f5d545abf08dcbcdd22ffaf0d4a5b05aabc0f"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/growth_controller.py",
+      "bytes": 7848,
+      "sha256": "a55443e43e33ab554bfeeb2896de7d0c38574c846ec28281554eefe62d5846b6"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/instruction_data.py",
+      "bytes": 13086,
+      "sha256": "0d23f4cbd2b47ff8452f4dd4e0e89b2cd31657d0c32a54ba85d40b6bcaae02b8"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/json_contract.py",
+      "bytes": 3695,
+      "sha256": "aefc5c0d2bbcbd8a1faa0583d84d6c789744cee7c12bbd0a2547519ef3ce9469"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/json_generation.py",
+      "bytes": 7448,
+      "sha256": "3eb4243faa30d35af0775dfb3c42e99be10e1e3cf3dd53e34b12be795d500fa0"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/json_tree.py",
+      "bytes": 5508,
+      "sha256": "fc1f93c0963fe66c57c31c238a6ea9450b5d66b5735f40dc80efc345780c3d7e"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/json_validity.py",
+      "bytes": 4194,
+      "sha256": "20762e691e8766505bfa817176f7350d5d27e3ee88b1dcfca57416ab2f554818"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/leaf_pointer.py",
+      "bytes": 14248,
+      "sha256": "be4319ffec32ff76619f1c02f3490a6587d396443286c24536e2eb9ed3130774"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/loss_balance.py",
+      "bytes": 1664,
+      "sha256": "36920d650a4789333b30af8c4054fbf690a4b284806e0a7ea0647833d323e1fc"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/meta_growth.py",
+      "bytes": 7084,
+      "sha256": "d9334741a7294fd0dafb9430946800d4634a8f12cfe851d74321cf6ec2c50b9a"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/__init__.py",
+      "bytes": 3705,
+      "sha256": "700b0263d29faba39a9c96cdb7ac917135bd2b60920179f3c69e530603d707f4"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/benchmark_proxy.py",
+      "bytes": 13634,
+      "sha256": "2cfc29552d88f93f7cc7eba4ffe241e68dd4e981bbdc9931f728e06c2ded268b"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/blocks.py",
+      "bytes": 6845,
+      "sha256": "88152ee1c598dcac93ead4ba38261d44afcdf4131a0bc535ed1d599e6e419a0f"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/cfm.py",
+      "bytes": 6569,
+      "sha256": "69ccc08434ead236196c4b1e98ff03d7e4d3c010c15d58215b44b160f8f84311"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/channel_objectives.py",
+      "bytes": 3438,
+      "sha256": "533d40d28887f3fce78275b119f6e72f3f0af29cecd8d995b4fe7f3b698161d9"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/channels.py",
+      "bytes": 3943,
+      "sha256": "459772310517522db2d39ab4bdf21acb55f22aa6f45d39ffaa8bc308711119ce"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/competence.py",
+      "bytes": 15777,
+      "sha256": "9b9bc80bc08200dca790f1f4a200a7c9b85ae214c055387dfa1678b5bbc146d8"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/config.py",
+      "bytes": 12156,
+      "sha256": "b4e5414799262dad029cbfb3d85a3b767bd8b5c0f696c3514c9945a2c80778eb"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/conversation.py",
+      "bytes": 5792,
+      "sha256": "2ff81af2368481ea6b43a1211b4923b0a3bffe2c46b6c6d132acf175fd60fd18"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/dynamic_stack.py",
+      "bytes": 12800,
+      "sha256": "1ba318b56f613893ff78b729ea1c1bd175215f08207ee6a418822dbe9726f38d"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/emergence.py",
+      "bytes": 15824,
+      "sha256": "feda432feb31ee9697bd22e01f464b9fb5eecf775e5b5807a0d53cad828b118e"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/expert_bank.py",
+      "bytes": 7374,
+      "sha256": "62bc6f658750c6e98fad585b4acc95266cb252727b9e8ac620ebb407fb691165"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/expert_factory.py",
+      "bytes": 5717,
+      "sha256": "1d2e5793b3d4d66a1dc38df97ee5c72de8000b2271180c91b027234166067984"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/feature_cache.py",
+      "bytes": 1631,
+      "sha256": "d299e32224f117cf898a1f36fcbc939268b2077105b0a72d156ce9a35d53f299"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/fusion.py",
+      "bytes": 6632,
+      "sha256": "625d882b02c9140abb6d424230f35fc8477311abd8db8bc9d4bfa7f5b147cf47"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/gap_ensemble.py",
+      "bytes": 9715,
+      "sha256": "5544f955045181b4aeea8e45626d83100367410fa536f19628611fcbc7f071ef"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/heads.py",
+      "bytes": 1497,
+      "sha256": "307135d4075696840904cd83f5be3ffd30ff520098f1f1feefee0ac3e99489b5"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/json_grammar.py",
+      "bytes": 17514,
+      "sha256": "6ec763dcf064b5974b5ea212e6a138dbe93d07d4ace1926e4a4b2672f902664c"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/model.py",
+      "bytes": 22382,
+      "sha256": "302412203eebaa8af4ad230573d07eef5500e48b09bc67afb6ca36c709903011"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/neuron_module.py",
+      "bytes": 3589,
+      "sha256": "104acb276348b33c81a9fc4f716d90c4f9f365da6c3dd8c1a9d318ae712a2688"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/prompt_encoding.py",
+      "bytes": 4633,
+      "sha256": "f181240cd22be1940b1f1eae94be67a4f4fec22c466ebfeb167f50b00a4b7d92"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/proxy_losses.py",
+      "bytes": 4937,
+      "sha256": "4894c414a5898a87b719d25816f54392cc291675533d86c5825dfca06be31acc"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/runtime_competence.py",
+      "bytes": 14488,
+      "sha256": "114c98558237a877d41fe0aaddcf625bd59da413c3d23cf11281abe486d1ad85"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/runtime_model_api.py",
+      "bytes": 5813,
+      "sha256": "1bca6c5f12ecd7d9e0679f82641517cba760ca93ce31b499f5ea33495134270e"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/task_metadata.py",
+      "bytes": 868,
+      "sha256": "20dfdcd2721fc186807134fe80024319df0d77edd67552dd1bf594bc286e2558"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/model/training_scopes.py",
+      "bytes": 6168,
+      "sha256": "d931eea6d158ff1e31d988e32f30502027da6232754738b30d50fb000ad92ec8"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/output_contract.py",
+      "bytes": 1913,
+      "sha256": "0f286a460da52aef805caa4fbf55e5ba8291af8d0492d2cea1c2e7b7f3c43573"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/prefix_policy_data.py",
+      "bytes": 6784,
+      "sha256": "7bbd18babf9b09aaba6ed86fbabf79cee736d4a302a70a54de6a4a1be626a1db"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/prefix_tree_policy.py",
+      "bytes": 18160,
+      "sha256": "412fd9c47f87c51db8e9eefd452fe861aa19149205218cbd18bdc7b8a0615b1a"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/prefix_tree_runtime.py",
+      "bytes": 8222,
+      "sha256": "c3abb9af1fc16a324d275c246c51297481dd6e6f93fc4d9a5944ebe387a39bb6"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/protocol.py",
+      "bytes": 7339,
+      "sha256": "4601f2f117f69e8575d60bc723132980e3946955bce9b3e8e7284a580d646759"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/proxy_labels.py",
+      "bytes": 8294,
+      "sha256": "9c26bf909c0e41b7d9544cce3ca1076b7a9f8e01a9b05cf2736ab996108bd3ef"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/real_corpus_action_data.py",
+      "bytes": 18819,
+      "sha256": "6ada97e33046e9eb93867152103f192d3336fd1e150672a20ba0bcd47e104a52"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/real_corpus_policy_data.py",
+      "bytes": 18755,
+      "sha256": "4e1e76b2374f0ef3e4caf19967b42b84f04ab1a372f1db8d34fa70aab33876d8"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/real_corpus_tree_policy.py",
+      "bytes": 16705,
+      "sha256": "ca54c1de47f045edb4836f11c63af22a3cf3d7385fd5216521262c6bbe5f27f8"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/real_corpus_tree_runtime.py",
+      "bytes": 15710,
+      "sha256": "46535afda39c09265102e1b38d6690a3c0dd3c4728df2bc6548cecd4be013739"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/real_corpus_vocabulary.py",
+      "bytes": 4735,
+      "sha256": "723adecf5066b46a6c6401afdc9bd0e546f860a78b0050afe7e4329253726e26"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/result_cfm.py",
+      "bytes": 20899,
+      "sha256": "577c0ff7d755b2daaac5ea098d587a357026f6bb98576e70408e6480308f2073"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/source_fetch.py",
+      "bytes": 610,
+      "sha256": "df6585ca389673d051a82be552cedd5ec254bcb4350ba2c11b158206600ea5a1"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/source_registry.py",
+      "bytes": 2839,
+      "sha256": "1f8a10ed06337c5522291318361b74f42e008ca75b32467439b2e58300520dfb"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/stage_b_execution.py",
+      "bytes": 1675,
+      "sha256": "44332c9578b217a6eb9750d36513e6a3b2d033e5f79926d92baad0f971ed48c7"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/structured_generation.py",
+      "bytes": 3495,
+      "sha256": "b2177b8f1c326943b21abf80272b7484e06e7f08267c2c9204574bcc95492e92"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/synthetic.py",
+      "bytes": 3095,
+      "sha256": "26ab43aeea36524f89c7f6640d8fed5a6e23bb8be6582c29186141c651d050ff"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/synthetic_tasks.py",
+      "bytes": 5997,
+      "sha256": "9f98f14ba1ca971df2f564d04d809e2ac1030da46e87128cd9ebbfaa9ae317f3"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/synthetic_tree_policy.py",
+      "bytes": 14577,
+      "sha256": "690db0c99ed180585d440bcc7415261be8bffad5330e7a75da8a17efad0fdbdd"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/synthetic_tree_runtime.py",
+      "bytes": 15136,
+      "sha256": "4d94a430756ab11f5044de3cfc9de3379cfe7bf363bbeb41f65dd83cba897352"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/target.py",
+      "bytes": 8047,
+      "sha256": "66ca6faf1085af7517a6b599b744d7ea28d2bc22c9bcd7eec441490649f0c90a"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/todo.py",
+      "bytes": 17417,
+      "sha256": "f94edff9cbb552e0b76d23ad19f502c43c64680d8d35ea977905a0d59fad5671"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/training_data.py",
+      "bytes": 9699,
+      "sha256": "3c0b227f64361afdab4b32eb32afc7a8f6842acacdacbdb7e5fa3cfc471cc695"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/training_losses.py",
+      "bytes": 6727,
+      "sha256": "979942badddf2fd62e24f00a38cbb52b83e51cd99ff5b08c1cc9ff77dfcee530"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/tree_action_decoder.py",
+      "bytes": 12084,
+      "sha256": "5ef0ff2bc75ea36bc52c2a2bad0af42192fd93301bebdd783f57f2b3edc1336e"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/triton_executor.py",
+      "bytes": 4420,
+      "sha256": "beca3fc7c03f363f3d677e32496a28d7955fae058a8176e7b452d6c7f285e647"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/two_stage_control.py",
+      "bytes": 11942,
+      "sha256": "41a279567c7cb278fb9b68b969cfab97943cfb2f1665e68077aac7358556c735"
+    },
+    {
+      "path": "src/floorflow/nlp_flow/typed_tree.py",
+      "bytes": 5772,
+      "sha256": "8f62e70d328e14d3647e25f5399c5c49ba093fceda7f22fa4a99e0874d2f0658"
+    },
+    {
+      "path": "src/floorflow/objectives/__init__.py",
+      "bytes": 55,
+      "sha256": "a4663e07bc313b12f4de565e3fbe8b8b13a958e809098f86e6f4aa9245d13ddd"
+    },
+    {
+      "path": "src/floorflow/objectives/cad_stage_loss.py",
+      "bytes": 7679,
+      "sha256": "6c232b04645c63092ceeacb0c93b65a181e2aeb013415f20d4e47dd0fc0f706e"
+    },
+    {
+      "path": "src/floorflow/objectives/candidate_filtration_loss.py",
+      "bytes": 2820,
+      "sha256": "085532d5bd884cab7527573dc4872a2469ba9e55b48b82fe01b153df1c06fea0"
+    },
+    {
+      "path": "src/floorflow/objectives/cfm_structural.py",
+      "bytes": 5514,
+      "sha256": "0f08a0941f97820c12c27b574e4a8e9531cba42fe29b0d0f42e5ba06decd9201"
+    },
+    {
+      "path": "src/floorflow/objectives/condition_objective.py",
+      "bytes": 21140,
+      "sha256": "556cf1c3b148409e9aa421a85dce3b9cab5eca7060ed52ffb052bc27e20f588f"
+    },
+    {
+      "path": "src/floorflow/objectives/constraint_contrastive.py",
+      "bytes": 2059,
+      "sha256": "be8ef93e5c6e8ed8d4d24fbeec258b644f5a691d86efe5bae9980e34dd6d1cf0"
+    },
+    {
+      "path": "src/floorflow/objectives/constraint_fusion.py",
+      "bytes": 6199,
+      "sha256": "951cfa6f23017999364cafd27c16134aff63aa9dc04d5c32d6986447f0704e36"
+    },
+    {
+      "path": "src/floorflow/objectives/constraint_gate_loss.py",
+      "bytes": 2045,
+      "sha256": "389e9fb37efff81c7bc313ec7c1cf43e5f55c3154e147cf0e4fa68fd609961a4"
+    },
+    {
+      "path": "src/floorflow/objectives/constraint_policy.py",
+      "bytes": 2739,
+      "sha256": "bf8dde4735032be8a1e1f85e5ae71567414f6415ad4b4d040cf81b1da6dcc846"
+    },
+    {
+      "path": "src/floorflow/objectives/control_repair.py",
+      "bytes": 5197,
+      "sha256": "1e9d31a851aac0eb6e594c3710e28faa01b6824287399bc0020ebaa825ef0aab"
+    },
+    {
+      "path": "src/floorflow/objectives/design_reward.py",
+      "bytes": 1659,
+      "sha256": "b2024db1ccea60227fbc3139814cedce151ad5e5fe18555036d803e82de6bab9"
+    },
+    {
+      "path": "src/floorflow/objectives/differentiable_fevp.py",
+      "bytes": 6492,
+      "sha256": "f7255c3e6dc8a6b34e52bacfb799dd1139ea475c1161180352931ce1ef49e8f3"
+    },
+    {
+      "path": "src/floorflow/objectives/furniture_vector_refine.py",
+      "bytes": 4456,
+      "sha256": "3925589f047b98662895c1a1cce8a539e90af090df47d76dc3232982cc541640"
+    },
+    {
+      "path": "src/floorflow/objectives/gpu_assignment.py",
+      "bytes": 6461,
+      "sha256": "813598199c03204bb003da9cfd798de7a52eeee049325ad6417f22ef92affe54"
+    },
+    {
+      "path": "src/floorflow/objectives/gradient_balance.py",
+      "bytes": 1522,
+      "sha256": "7514d7cdbbc16e9dc7fd3edb57376fd1c3a9975aff68b7ea897e6b25b5fa4367"
+    },
+    {
+      "path": "src/floorflow/objectives/gradient_balancer.py",
+      "bytes": 7781,
+      "sha256": "f0a17a0d7275eb72b200de877acb1d0315abdbd27a90b8081cd3bb09e74c0f63"
+    },
+    {
+      "path": "src/floorflow/objectives/gradient_conflict.py",
+      "bytes": 6277,
+      "sha256": "69edaacf8fc57f9094a3940e9939731d0bfc0d610473550d34c892a50388b2f2"
+    },
+    {
+      "path": "src/floorflow/objectives/loss_audit.py",
+      "bytes": 4280,
+      "sha256": "3d73fc86ba7927729ff0b13d250b5a76070bd13df6b82ac66a87974d03865742"
+    },
+    {
+      "path": "src/floorflow/objectives/observable_room_loss.py",
+      "bytes": 4430,
+      "sha256": "b681796df2d3855febad785e75215f4edeb090002c2b6ed775405bad2713787d"
+    },
+    {
+      "path": "src/floorflow/objectives/per_case_binary.py",
+      "bytes": 4485,
+      "sha256": "9c0725cb024a1d337608c460d21a83fb2ee2ee6ff33513e6fa0d349ac2875794"
+    },
+    {
+      "path": "src/floorflow/objectives/room_adjacency.py",
+      "bytes": 19928,
+      "sha256": "18eafc9dd90642af7b4995950ceb75dd6575af553d907289023c75cc441fef7b"
+    },
+    {
+      "path": "src/floorflow/objectives/room_assignment_cost.py",
+      "bytes": 1093,
+      "sha256": "2555fd967d9cc0622f6ea9fd3d0224993e9201bbebab303acc5f1168cd807e5e"
+    },
+    {
+      "path": "src/floorflow/objectives/room_boundary_loss.py",
+      "bytes": 1912,
+      "sha256": "62270d05c2de0d4ea2a46057755ce214949070b7825df1a6f338a1bb9d12968c"
+    },
+    {
+      "path": "src/floorflow/objectives/room_matching_types.py",
+      "bytes": 358,
+      "sha256": "a77edf4522d380c1ad04b445fdb7860f1229fd3162ec73f53a964099cf003f2f"
+    },
+    {
+      "path": "src/floorflow/objectives/room_query_matching.py",
+      "bytes": 7266,
+      "sha256": "79c80e9c10b83e240a5db885ff44900473a3e10230c4a9d8a1153423348c90e9"
+    },
+    {
+      "path": "src/floorflow/objectives/room_query_separation.py",
+      "bytes": 8032,
+      "sha256": "5324c66b5e22b54f17c811edc773140c491ad055542464b89c2f66288b74e298"
+    },
+    {
+      "path": "src/floorflow/objectives/room_support_assignment.py",
+      "bytes": 5033,
+      "sha256": "466712b7029dea9bed5a8e656c0aceb4f7e012761598e1d2ae3aec5c43470e64"
+    },
+    {
+      "path": "src/floorflow/objectives/routing_regularization.py",
+      "bytes": 3992,
+      "sha256": "cea4fc9154133beec1df5db9f5a541fb37c4a045a30935bfee54fff9fc7993fe"
+    },
+    {
+      "path": "src/floorflow/objectives/semantic_losses.py",
+      "bytes": 5455,
+      "sha256": "555ba3f1163d3ced6a2bca6d94fc963b39dfb7b5ba12de3f7e9c8f0a56006482"
+    },
+    {
+      "path": "src/floorflow/objectives/soft_graph_edit.py",
+      "bytes": 4749,
+      "sha256": "6b8b5bea12d02d024976d77e78ca71d6e71c1cb44c5166bd1e5b011e6ede7a49"
+    },
+    {
+      "path": "src/floorflow/objectives/structural_consistency.py",
+      "bytes": 4048,
+      "sha256": "93ed09befa8449322e33b999079420ee2c6560492e3f6a3581b9ee69fd6805e2"
+    },
+    {
+      "path": "src/floorflow/objectives/structure_refinement.py",
+      "bytes": 6096,
+      "sha256": "a8feae8e5a38759b052a60297590d0e33fa21dd57bae24597d9962cb800d6620"
+    },
+    {
+      "path": "src/floorflow/objectives/token_grammar.py",
+      "bytes": 16572,
+      "sha256": "2a190c08a939cd069590c9b504add70422c2a58ac4e9f567cf96c0db32970c24"
+    },
+    {
+      "path": "src/floorflow/objectives/token_grpo.py",
+      "bytes": 2344,
+      "sha256": "d23e8488c5eeec6786d59aa16a0656490342ff5cca55c2a149b1c172952c2c50"
+    },
+    {
+      "path": "src/floorflow/objectives/token_optimal_transport.py",
+      "bytes": 8471,
+      "sha256": "76496a78e075fc97d65cd62ae73e99d949774b5523acd13f386568e132726c2d"
+    },
+    {
+      "path": "src/floorflow/objectives/token_reward.py",
+      "bytes": 1060,
+      "sha256": "0bb3277d1328a0b57906beefeaece031c2d5da3d99a9a8125d3fcf00f10b6e03"
+    },
+    {
+      "path": "src/floorflow/objectives/token_soft_graph.py",
+      "bytes": 8206,
+      "sha256": "008496ad6dc62e9f2793d1f28c3f880b2748dea77cf3aaeccb99281debc96eea"
+    },
+    {
+      "path": "src/floorflow/objectives/token_structure_consistency.py",
+      "bytes": 12953,
+      "sha256": "7e303ea52c33ff73a835a96f8ef14e89ee4ff05c1215195feee0ff35325dca44"
+    },
+    {
+      "path": "src/floorflow/objectives/token_training_loss.py",
+      "bytes": 6841,
+      "sha256": "e43a2c57ce5f20c75c7c9187ddb2f3ef4266e70a14e35adcdd03304ba3a01bed"
+    },
+    {
+      "path": "src/floorflow/objectives/token_vocabulary_closure.py",
+      "bytes": 948,
+      "sha256": "c549215ddf5569141901151a68b90c9bf6d81a5c698c2c3996e188461d5c2a81"
+    },
+    {
+      "path": "src/floorflow/objectives/topology_closure.py",
+      "bytes": 2791,
+      "sha256": "1aa25f544854ed78c0dc3723b98c64c1fa9709cbd82b5b84999334c175feb6e7"
+    },
+    {
+      "path": "src/floorflow/objectives/trinity_constraints.py",
+      "bytes": 4533,
+      "sha256": "a80835c79b2da284336a3e811a5cf16c8a60988ae830263f13a64b7cbdee59b4"
+    },
+    {
+      "path": "src/floorflow/objectives/triton_ops.py",
+      "bytes": 5858,
+      "sha256": "ecebdf5c7c97ee30e3aaec6cffa59b7909bc99dcbb47256e31ff5b1a2d9ac92d"
+    },
+    {
+      "path": "src/floorflow/objectives/typed_state_hierarchy_loss.py",
+      "bytes": 1322,
+      "sha256": "216badbc43e0019eb3e055f6eb9106101db7be1dd02bf338303c0bdcc385aa84"
+    },
+    {
+      "path": "src/floorflow/objectives/vector_primitive_loss.py",
+      "bytes": 3613,
+      "sha256": "2dd0182c3c67f73f6ac928af5245b7864e36e0affc9b9a470ae42d3b11ca360e"
+    },
+    {
+      "path": "src/floorflow/objectives/verifier_policy.py",
+      "bytes": 1800,
+      "sha256": "b17fb50d773ad1eb80d0981b6b457f2a0442157dde8b1a4308f80bcaa8616732"
+    },
+    {
+      "path": "src/floorflow/recursion/__init__.py",
+      "bytes": 790,
+      "sha256": "d038429c0c37786fc538398a518bebbe4dafe70df2521ed24af7707336a29897"
+    },
+    {
+      "path": "src/floorflow/recursion/budget.py",
+      "bytes": 1597,
+      "sha256": "14e77006b3170e3e2f7f58f788339a303e2f5d7a88662202ff6a61c4b957b6e7"
+    },
+    {
+      "path": "src/floorflow/recursion/complexity.py",
+      "bytes": 10586,
+      "sha256": "f10fd3751f0a6178789f286dc6e345c699f1813dffe9d30545a56d3081bfe442"
+    },
+    {
+      "path": "src/floorflow/recursion/graph.py",
+      "bytes": 7184,
+      "sha256": "b2eedb1544a8df148af697a3f9832e53018f5c6b976f33775e222bbc009710c5"
+    },
+    {
+      "path": "src/floorflow/recursion/graph_adapter.py",
+      "bytes": 8817,
+      "sha256": "719d9c305415e870fb08a4ae08c89c5a3781a3ef8af69e3d16718f2173511fba"
+    },
+    {
+      "path": "src/floorflow/recursion/inward_flow.py",
+      "bytes": 4126,
+      "sha256": "18c3b860121c4f736d36e28a9300a533948369d5235fa3a83f8cbf1a4921061b"
+    },
+    {
+      "path": "src/floorflow/recursion/partition.py",
+      "bytes": 9498,
+      "sha256": "5f0b32b8b53c2c3042e66ede2088e076d90d59c4dc98040d91a14cbebedd7161"
+    },
+    {
+      "path": "src/floorflow/recursion/trust_gate.py",
+      "bytes": 3871,
+      "sha256": "c792726ebecc48c5a0908ebe9b7251f8bcc1e7f7b835fada5ea45e0577b8a4ee"
+    },
+    {
+      "path": "src/floorflow/representation/__init__.py",
+      "bytes": 77,
+      "sha256": "ada4deb1121fdd6425d5269d96371b6e219f6aea9e14c0cac8d11885425010d6"
+    },
+    {
+      "path": "src/floorflow/representation/canonical_assembly_support.py",
+      "bytes": 2230,
+      "sha256": "a2fa3e12690651367be9b1937892de22b9a09b4fbc5a7a51000efaff7b637b59"
+    },
+    {
+      "path": "src/floorflow/representation/canonical_plan_adapter.py",
+      "bytes": 4398,
+      "sha256": "7c6d069791f957787df1a268d7c9585823cfd95104edd97ab9e17cfe6c55d87a"
+    },
+    {
+      "path": "src/floorflow/representation/coarse_layout.py",
+      "bytes": 1366,
+      "sha256": "be5df0cd8bdc906545ef416aa7cfb1fe302221adcd01cf531d8e18ca792126eb"
+    },
+    {
+      "path": "src/floorflow/representation/conditioning.py",
+      "bytes": 3032,
+      "sha256": "48878e02996a88bd39e817ee6ea240cadb6749ab88312c6c751c73ef19e5ebe4"
+    },
+    {
+      "path": "src/floorflow/representation/contour_memory.py",
+      "bytes": 10382,
+      "sha256": "dc51b8811cd21a0d6495e6f0dbc875719d616204b17ca477cd229eba03d2b30b"
+    },
+    {
+      "path": "src/floorflow/representation/core.py",
+      "bytes": 9475,
+      "sha256": "8325653fee7172fbe4dbb4c6ccdf577d35d56af7bd3f2bfd25f251a3b40bcd8f"
+    },
+    {
+      "path": "src/floorflow/representation/floorplan_token_io.py",
+      "bytes": 2334,
+      "sha256": "4378c80110559288a6c23494e2584a9c97072bc844dce9a146d88df5867733c2"
+    },
+    {
+      "path": "src/floorflow/representation/gate_diagnostics.py",
+      "bytes": 815,
+      "sha256": "aa0fa5de68228711d0797f97a1f8f8b0c8142ba608de24590046f80264495f4a"
+    },
+    {
+      "path": "src/floorflow/representation/junction_canonicalization.py",
+      "bytes": 2220,
+      "sha256": "6e696292ffe4aeb32ff4bfe45825c47296392c8a7c2cdefc8594c2f4766bc523"
+    },
+    {
+      "path": "src/floorflow/representation/layered_floorplan.py",
+      "bytes": 1688,
+      "sha256": "28956f7db45b6fa2ab3706704e48fb8977b785732de44aad6a26e26941cf576d"
+    },
+    {
+      "path": "src/floorflow/representation/masks.py",
+      "bytes": 2178,
+      "sha256": "19255876e3917ac4fd7708f753f79a527712806f4ffcb8c7c0773be92b0d7a78"
+    },
+    {
+      "path": "src/floorflow/representation/plan_canonical_adapter.py",
+      "bytes": 8957,
+      "sha256": "ac41466d2053eec3636a74ad9244b5b6c0ca4c950cf63e2546c29a97def66590"
+    },
+    {
+      "path": "src/floorflow/representation/polygon_targets.py",
+      "bytes": 6940,
+      "sha256": "e7b0bfb3c33b32ac654c51c6b65d983b492ddfe5104583654c04eb5d5c377cb3"
+    },
+    {
+      "path": "src/floorflow/representation/program_conditioning.py",
+      "bytes": 4128,
+      "sha256": "b2cc1c55f5a855fbdd41240ec41bdf9eda857e8358f6a4d4494b4872d42522a5"
+    },
+    {
+      "path": "src/floorflow/representation/room_pair_prior.py",
+      "bytes": 2817,
+      "sha256": "6889e92d8a19ca23e494dd28812ab342593941c6069fbec23002b55be93b42e7"
+    },
+    {
+      "path": "src/floorflow/representation/slots.py",
+      "bytes": 4565,
+      "sha256": "9785cdce387d15d6b38531d573a6156826a4ffd72cfaae89cb01357d9d19520b"
+    },
+    {
+      "path": "src/floorflow/representation/tensor_checks.py",
+      "bytes": 479,
+      "sha256": "86d151d0b037a9712ca28650908b7a935e5e035460ea64ab82d1069494cf5d10"
+    },
+    {
+      "path": "src/floorflow/representation/trinity_latent.py",
+      "bytes": 9226,
+      "sha256": "f4f773d25bd694ae7e3b079b93e812d98a3b6cee8cc24d391e6d16fccd08f33e"
+    },
+    {
+      "path": "src/floorflow/representation/trinity_polygons.py",
+      "bytes": 7806,
+      "sha256": "ad0f3706700c2b83e01367f3480a1d8e77dc91482d1fa65234db177ba4eb26aa"
+    },
+    {
+      "path": "src/floorflow/representation/typed_floorplan_state.py",
+      "bytes": 9451,
+      "sha256": "66ef1d8a745ef8b5f34fe6994cb1c16f6a45c305e9d46a48fb79973ab5ae73d7"
+    },
+    {
+      "path": "src/floorflow/representation/typed_stage_layers.py",
+      "bytes": 2352,
+      "sha256": "deda75e8572ea0399625dac0d1dc796bccb3d441b10372f64e5f53e3fc4b47f1"
+    },
+    {
+      "path": "src/floorflow/representation/typed_state_transition.py",
+      "bytes": 2899,
+      "sha256": "b5bd7a5deeed74835ec6b5217fd71cbd5e7140a2454abd3cd9fc4d252ee67a44"
+    },
+    {
+      "path": "src/floorflow/representation/unified_floorplan_token_codec.py",
+      "bytes": 10220,
+      "sha256": "b8817e41c5cdceb28102a513adc9b2b62e71cafe93357597e3b92f218634c9e4"
+    },
+    {
+      "path": "src/floorflow/representation/unified_floorplan_tokens.py",
+      "bytes": 19045,
+      "sha256": "19bfdc1d0deb3e3afb365013eb8de2f2767e58e7eae779242ef17566169dd625"
+    },
+    {
+      "path": "src/floorflow/representation/vector_floorplan_assembly.py",
+      "bytes": 19223,
+      "sha256": "25dee0b4c6dc9b69794b458dd570506feefc2c52c0baf4d4845c0a68f1b63861"
+    },
+    {
+      "path": "src/floorflow/representation/vector_floorplan_raster.py",
+      "bytes": 6045,
+      "sha256": "9a9af486162e2e2a683486f34f5d468f002d6104bc31fcb640b5a744279ea783"
+    },
+    {
+      "path": "src/floorflow/training/__init__.py",
+      "bytes": 94,
+      "sha256": "b5bb7ec2bec09fc0851582a26c3b72cce3f3a35856ee7725b607a7d7a83d9338"
+    },
+    {
+      "path": "src/floorflow/training/cad_furniture_assignment.py",
+      "bytes": 7217,
+      "sha256": "65e5e74a0829d0df44bea844c6debee34c34fa4e55364a892718b56b89135b43"
+    },
+    {
+      "path": "src/floorflow/training/cad_furniture_vector_training.py",
+      "bytes": 9916,
+      "sha256": "7046b15d3f5a23d3e177ee7ff71d4a5c9229f385b83e29c0838bd77e9ac7548d"
+    },
+    {
+      "path": "src/floorflow/training/cad_wall_candidate_epoch_cache.py",
+      "bytes": 15944,
+      "sha256": "4c82d26cd5a9a8fa1cefa6195f6b82f358a502dab42b38b6b8f18a0b6149f37c"
+    },
+    {
+      "path": "src/floorflow/training/cad_wall_candidate_training.py",
+      "bytes": 12871,
+      "sha256": "68fd2c8f1dfdd42d7d55c90c416cd715e00581d41db27c8fdf4f11dcf2618052"
+    },
+    {
+      "path": "src/floorflow/training/cfm_convergence.py",
+      "bytes": 4320,
+      "sha256": "06c5b1d74d147914fbdc442a865da3985303d4b56ecd63a79732e3ca9fbb464a"
+    },
+    {
+      "path": "src/floorflow/training/checkpoint.py",
+      "bytes": 7609,
+      "sha256": "3278beacae286bf402f739fd9e6a84859b777344e5b665139a8e7938aebb21ef"
+    },
+    {
+      "path": "src/floorflow/training/cli.py",
+      "bytes": 8629,
+      "sha256": "dc328e86172ebca5a68cc12399a3c977d869ecf85830d690d6c29a5aced49ee6"
+    },
+    {
+      "path": "src/floorflow/training/condition_model.py",
+      "bytes": 4492,
+      "sha256": "d504fab4ffd80370e405e2f23adf1457698f4e217c1e6b2f879ca7a4ae109515"
+    },
+    {
+      "path": "src/floorflow/training/crop_curriculum.py",
+      "bytes": 2647,
+      "sha256": "77bf621e2d541f8da853b86a8daf285e6f14792e81b26b44eeb29cfaedbd15b2"
+    },
+    {
+      "path": "src/floorflow/training/distribution_cli.py",
+      "bytes": 8253,
+      "sha256": "efe8817469975aa0c195dadf2547fc948a50d6e5cc73045dede55da90a751fd2"
+    },
+    {
+      "path": "src/floorflow/training/distribution_data.py",
+      "bytes": 2108,
+      "sha256": "fc5aad090752d7ac882b9f6955689abb2623a61e1331f7f56c5036ce385835b0"
+    },
+    {
+      "path": "src/floorflow/training/distribution_integration.py",
+      "bytes": 3061,
+      "sha256": "f222ba8d231ad1f5627a34c0c2c4fd9dc1434a50a07c83d73be819752eb24f83"
+    },
+    {
+      "path": "src/floorflow/training/distribution_manifest.py",
+      "bytes": 3215,
+      "sha256": "efd6b779cabdbc8288e92a2978b6e1344c49edeaff565b28ee81875bc1badefc"
+    },
+    {
+      "path": "src/floorflow/training/distribution_runtime.py",
+      "bytes": 3378,
+      "sha256": "7b1656ed4a7d2e023d5893379424a56b853266e765b85d48825226a5a1b4e901"
+    },
+    {
+      "path": "src/floorflow/training/distribution_validation.py",
+      "bytes": 2872,
+      "sha256": "d87853e22a2cfc04f4f48305efc8d02db64e8fb00afdf01a297588a597820960"
+    },
+    {
+      "path": "src/floorflow/training/dynamic_policy.py",
+      "bytes": 3997,
+      "sha256": "a9d6c05bc34eb78f6c586097934862d70847b45ee3d1a8923ebd44ec465b3bd6"
+    },
+    {
+      "path": "src/floorflow/training/floorplan_token_training_runtime.py",
+      "bytes": 16673,
+      "sha256": "353d2d48f6f68ca52d49fd6b92eda214b82316f5820d0a508166537ad386073a"
+    },
+    {
+      "path": "src/floorflow/training/fp_completion_seed.py",
+      "bytes": 2472,
+      "sha256": "58328f8e16b9fab060f56849c28e7c0a73799fe925687f74457f748f5522e6bf"
+    },
+    {
+      "path": "src/floorflow/training/gpu_checks.py",
+      "bytes": 1167,
+      "sha256": "6e866da9ed04c51d5d37c782ac3caeaae6b6541be1212310ba5e9be5ebfa6328"
+    },
+    {
+      "path": "src/floorflow/training/gpu_profiler.py",
+      "bytes": 2274,
+      "sha256": "5e6673c94c64934866203fbacde1913a5ca502a10ab5ea163573c909ca945499"
+    },
+    {
+      "path": "src/floorflow/training/gradient_health.py",
+      "bytes": 1374,
+      "sha256": "b7f8a609956e545b7894678000465651b49e1795dabe12cfb0832e205f89fe1a"
+    },
+    {
+      "path": "src/floorflow/training/guided_arguments.py",
+      "bytes": 4179,
+      "sha256": "f9a6f69375ed88f55b8fb60e9759d1fb483f216fdf4af6057b8d0375011423e8"
+    },
+    {
+      "path": "src/floorflow/training/guided_validation.py",
+      "bytes": 4005,
+      "sha256": "3d881860f85e34d88504dab78e6cbdd8f31e4126e8fc62a881404ef4db5a5d86"
+    },
+    {
+      "path": "src/floorflow/training/interaction_policy_data.py",
+      "bytes": 7002,
+      "sha256": "9871e54481f1a6bf7c1950875bf23df08200923026e2696763fb32b36a63ced0"
+    },
+    {
+      "path": "src/floorflow/training/io.py",
+      "bytes": 1033,
+      "sha256": "a84a30932e626cbd2b53a6f9470ba8be6de5d8f4a5b69b98eb181701b9873348"
+    },
+    {
+      "path": "src/floorflow/training/loss_metric_guard.py",
+      "bytes": 2276,
+      "sha256": "f22872695d7191b6c32e24927d5ea0928a01fbdf63591d7e4dfc2b07e47e28ba"
+    },
+    {
+      "path": "src/floorflow/training/mask_curriculum.py",
+      "bytes": 1279,
+      "sha256": "eae1b6469c361afdf3c5b7424ef40ddfc7c53a14cd7e24d079cd3e5f8e6e8790"
+    },
+    {
+      "path": "src/floorflow/training/masked_conditioning.py",
+      "bytes": 4868,
+      "sha256": "65a10eb89008125d4244d696150f96a8cdc6fa7696b49bd405da57d14d958ea3"
+    },
+    {
+      "path": "src/floorflow/training/metric_accumulator.py",
+      "bytes": 4153,
+      "sha256": "d1098f9ab9a3168628f4ced3965f18335821b34b5f1044cfff17878c793ea7b0"
+    },
+    {
+      "path": "src/floorflow/training/opening_candidate_ranker_cli.py",
+      "bytes": 2088,
+      "sha256": "6ba8c326c4b650be8c67b3799079ec4981ec0b6d0b35a930b2d38a28436ee786"
+    },
+    {
+      "path": "src/floorflow/training/opening_head_scopes.py",
+      "bytes": 2084,
+      "sha256": "8172debf427ab57897d4058d00b339b6561f6f1ba5780c2bc83a92d2b7d4f6f0"
+    },
+    {
+      "path": "src/floorflow/training/opening_host_training.py",
+      "bytes": 13581,
+      "sha256": "244180fec3ba9f59c439fad665d3db9ffeda5b1f61a2147653845147c1f10936"
+    },
+    {
+      "path": "src/floorflow/training/opening_loss_matching.py",
+      "bytes": 1960,
+      "sha256": "8e9a64a222b3777bf77f9654281890f14cf8c4dffbb703ea29ef40f8d4ebcc6c"
+    },
+    {
+      "path": "src/floorflow/training/optimizer.py",
+      "bytes": 2116,
+      "sha256": "f6206a08e0b19a3022615bf4e81eee589892fca0f023d8273ae66184f472ddb8"
+    },
+    {
+      "path": "src/floorflow/training/parameter_scope.py",
+      "bytes": 870,
+      "sha256": "4bc4ef2169fc2eb42c9c3c524da06c9f880b71186e344890bd2791d972856a42"
+    },
+    {
+      "path": "src/floorflow/training/program_instance_training.py",
+      "bytes": 3735,
+      "sha256": "647ae78be58efe3eb610a6b2a32db8a7b0cd63b10a8d4008dac730cfa9a0e825"
+    },
+    {
+      "path": "src/floorflow/training/proposal_distillation.py",
+      "bytes": 11393,
+      "sha256": "87a56dfae8601ffd6798b89d0e10c52dd2c9d861d362f655c4541a6e7e09a0f2"
+    },
+    {
+      "path": "src/floorflow/training/raster2seq_teacher_runtime.py",
+      "bytes": 1023,
+      "sha256": "cd6019dc97da4d95d6c0e7225f31339a91727ec557f22f0b3a780565a69c1a1c"
+    },
+    {
+      "path": "src/floorflow/training/raster_instance_cli.py",
+      "bytes": 13040,
+      "sha256": "87f66be1be03a05f6685d6544d934b64d1f2c41f7a53511bf85febd936798d73"
+    },
+    {
+      "path": "src/floorflow/training/raster_instance_control.py",
+      "bytes": 2395,
+      "sha256": "9d39d55171438e4851181e76ce72861b4458d3bfe39cc53e19f29db198221d04"
+    },
+    {
+      "path": "src/floorflow/training/raster_instance_evaluation.py",
+      "bytes": 8415,
+      "sha256": "47a11027f1988a8a061accae1a87837c416f9183e953962f797e9220b0814589"
+    },
+    {
+      "path": "src/floorflow/training/raster_instance_setup.py",
+      "bytes": 10149,
+      "sha256": "33e6d97cd8088838bc4e85825f3226c33da1433a7de43c34dbd749828b2129a0"
+    },
+    {
+      "path": "src/floorflow/training/raster_structure_bridge_cli.py",
+      "bytes": 5710,
+      "sha256": "f1e9e507981001ed8d596d39f6c73d82c88b2ae3049cf3f69abc68b12dc23346"
+    },
+    {
+      "path": "src/floorflow/training/raster_structure_bridge_data.py",
+      "bytes": 2735,
+      "sha256": "7d6e06d2259e79fe620601238479b41b8f9135283bd45d1b54fa17d8e9cd6e2c"
+    },
+    {
+      "path": "src/floorflow/training/retrieval_distillation.py",
+      "bytes": 1332,
+      "sha256": "b11919df8c0aee71ca761698b754fe1aa6a32ce1263b3de134c509981ac0465d"
+    },
+    {
+      "path": "src/floorflow/training/room_capability_training.py",
+      "bytes": 15084,
+      "sha256": "231cd9579928815400693ae6b41858d6917134c9858e47eabbc3d0bcb61995ec"
+    },
+    {
+      "path": "src/floorflow/training/room_instance_integration.py",
+      "bytes": 934,
+      "sha256": "c73f0aab208f090ff739055cf54afbc25e1040bb854ccc2fb0a4d79977ae06eb"
+    },
+    {
+      "path": "src/floorflow/training/room_mask_finetune.py",
+      "bytes": 3503,
+      "sha256": "d26e6b8fcbe20385256ca0449bd6e64f06fd2ca1547259e0a1615af87d286e75"
+    },
+    {
+      "path": "src/floorflow/training/room_sampling.py",
+      "bytes": 4178,
+      "sha256": "fda7c9bac74591178bdac107aab62d3f8921ed1c74f3b7846907f08f6a5848b9"
+    },
+    {
+      "path": "src/floorflow/training/rplan_full_cad_epoch.py",
+      "bytes": 17696,
+      "sha256": "25cedb2fbc6f17b5733b6cae9dc44fcc3131cd69dfa716b687b4dadb06dfa11e"
+    },
+    {
+      "path": "src/floorflow/training/rplan_generator_cli.py",
+      "bytes": 11475,
+      "sha256": "6c5d87ac96dbcef3e63d895c208f99199c97ef402118189b150a75b06865b0d5"
+    },
+    {
+      "path": "src/floorflow/training/rplan_generator_contract.py",
+      "bytes": 3856,
+      "sha256": "09da331b6ab9ecdc1eb839c2104e75f4f816d2b6ae4cc2d6298069d8b3e0586d"
+    },
+    {
+      "path": "src/floorflow/training/rplan_runtime_setup.py",
+      "bytes": 3053,
+      "sha256": "f37f22bad3ff5683bb7dad5f62fbd7eba592fe5f5a958a79b2fb49fa67d70d7d"
+    },
+    {
+      "path": "src/floorflow/training/rplan_selection.py",
+      "bytes": 3936,
+      "sha256": "7563bb318ce788d6d1fbd8121d59c300728a5b3632131f3c9053d81457ec4c97"
+    },
+    {
+      "path": "src/floorflow/training/runtime_acceleration.py",
+      "bytes": 5820,
+      "sha256": "ea5551b165958584dcea7f532017857ad1ab0e6619490f13f060761682f3768d"
+    },
+    {
+      "path": "src/floorflow/training/token_consumer_validation.py",
+      "bytes": 18571,
+      "sha256": "de1ac2cc4bad5bd49ae17e3d7bb65eb2e80a58deeadcb82305185722aad3de15"
+    },
+    {
+      "path": "src/floorflow/training/token_optimizer.py",
+      "bytes": 1925,
+      "sha256": "d0b23e3d4b56863e1103ed235a89d4e8f41f847c5fa1e36d49dc8373ba8f0695"
+    },
+    {
+      "path": "src/floorflow/training/token_validation.py",
+      "bytes": 1953,
+      "sha256": "74c722c32ad35d81a9d7caca6adc44888053211507363c6ec17d8201e32fa6b6"
+    },
+    {
+      "path": "src/floorflow/training/training.py",
+      "bytes": 4341,
+      "sha256": "736eb6077a24a60142f6bc8009423541d6ef9d4df260d2fa203237426f042329"
+    },
+    {
+      "path": "src/floorflow/training/trinity_flow.py",
+      "bytes": 5615,
+      "sha256": "a5843e74ac4fa3b61f02acdf6ecb0dcff481793046ddefb1ed35211f9e4a5aee"
+    },
+    {
+      "path": "src/floorflow/training/typed_channel_cli.py",
+      "bytes": 21981,
+      "sha256": "ab44614a22449b1f915a4feab4472e9d226863104e371220fa3e6a5d29575b33"
+    },
+    {
+      "path": "src/floorflow/training/typed_channel_eval.py",
+      "bytes": 17644,
+      "sha256": "5d1a23d0c6cdcf83e92c711cf53e4687ca7ea67c95eba02ee937a86b8ee914d5"
+    },
+    {
+      "path": "src/floorflow/training/typed_channel_feature_cache.py",
+      "bytes": 5908,
+      "sha256": "072406011f79dc0906402658ca883d93313c414f8abdaa9cb7ea4476f82b3738"
+    },
+    {
+      "path": "src/floorflow/training/typed_channel_init.py",
+      "bytes": 1731,
+      "sha256": "5b6becb2d4eda1af8bde54eec29e2023647d1fd15d9e7f4b2ded27808eb230db"
+    },
+    {
+      "path": "src/floorflow/training/typed_channel_instance_loss_kwargs.py",
+      "bytes": 2159,
+      "sha256": "75de3cfd0d036ba003993627323814a119a093e2adf94e7edafb51f01e6182f6"
+    },
+    {
+      "path": "src/floorflow/training/typed_channel_loss_balance.py",
+      "bytes": 3966,
+      "sha256": "7238740a11669ebc910c39740e39c3d4777967621549621900cb480a7be64b59"
+    },
+    {
+      "path": "src/floorflow/training/typed_channel_query_metrics.py",
+      "bytes": 4930,
+      "sha256": "a405f9438ec3e7e1f3247522b31b5fd39c25f050bf9c97c6f265bf6f00e6f7b5"
+    },
+    {
+      "path": "src/floorflow/training/typed_channel_route_metrics.py",
+      "bytes": 9335,
+      "sha256": "ab72c2dde3ac20e5bacb78d8b2a4003bea51f1793a8584da31815b628e62e792"
+    },
+    {
+      "path": "src/floorflow/training/typed_channel_scopes.py",
+      "bytes": 7261,
+      "sha256": "941ee1a166379296ff787143bfddc8d1cd39ec65c07883cf905e94d2761151f1"
+    },
+    {
+      "path": "src/floorflow/training/typed_channel_validation.py",
+      "bytes": 19983,
+      "sha256": "39d90a363a4a78ecd80cec7594d92d9b04ebc1d1df43dd7388f2b940ca52d31a"
+    },
+    {
+      "path": "src/floorflow/training/unified_plan_generator_matching.py",
+      "bytes": 3498,
+      "sha256": "862451e50e8114e0b66223f79f195927bf1aab70ccf6777f49ec61c5a55690be"
+    },
+    {
+      "path": "src/floorflow/training/unified_plan_generator_training.py",
+      "bytes": 23058,
+      "sha256": "4cc8714ef2283654534853b335df1457e9127c7146dcb89df2857551c29b9ada"
+    },
+    {
+      "path": "src/floorflow/training/val_selection.py",
+      "bytes": 2444,
+      "sha256": "2e8f6348d479cd16ac752dc96d0bba46b3379b9dbdcc9cc7990279cced45fa7a"
+    },
+    {
+      "path": "src/floorflow/training/verifier_reward_feedback.py",
+      "bytes": 1945,
+      "sha256": "64fe6c2d5514d7cae3858095837fa31577924bbe267518d7b28b7db9425f6983"
+    },
+    {
+      "path": "src/floorflow/training/verifier_reward_replay.py",
+      "bytes": 11305,
+      "sha256": "09bbfc3a5db37a6a74c7d5c6cd0824dbfea66e304b985e4e13557bb4a911637e"
+    },
+    {
+      "path": "tests/test_fevp_metric_contracts.py",
+      "bytes": 5396,
+      "sha256": "c69f59a54e2ad188ed80c8d2d21dc6b9e2c4d91aedbf6bfd823e6695a4dafe14"
+    },
+    {
+      "path": "tests/test_fevp_protocol.py",
+      "bytes": 2924,
+      "sha256": "10857c45ff234324501b00e3cca56469ba272914485b54c8cdd6b4769f172f94"
+    },
+    {
+      "path": "tests/test_floorplan_token_head.py",
+      "bytes": 2614,
+      "sha256": "5e1ed4598c1e9334bddf69d1f7c82e38584ca756e68b6ed9e5d0378694524727"
+    },
+    {
+      "path": "tests/test_floorplan_token_training.py",
+      "bytes": 10839,
+      "sha256": "cf6afff9bb5a6b8f564631be8493d0d20d9b3b0d507b3c19aa5f4dd668ead98c"
+    },
+    {
+      "path": "tests/test_fp_control_baselines.py",
+      "bytes": 1113,
+      "sha256": "b60ddc77545bd0fe2b3af9e2cfae45b909ba0f58277a6e77330d7dcd1e81d2fb"
+    },
+    {
+      "path": "tests/test_fp_control_corruption.py",
+      "bytes": 1576,
+      "sha256": "7fea1ff8d4c9b886d98a3e86217c33ce4f7338fe31380337872569c64363943c"
+    },
+    {
+      "path": "tests/test_layered_floorplan.py",
+      "bytes": 1490,
+      "sha256": "03a47ddc480eefd66ce3e0fc74d9db348d3fce9a1e01988dbaeb0f48811c60c6"
+    },
+    {
+      "path": "tests/test_predicted_control_edit.py",
+      "bytes": 5853,
+      "sha256": "f4eeba17f1beb983ad80fad6e085c964b9f45684c4d25c48193ca7efeadc9f97"
+    },
+    {
+      "path": "tests/test_predicted_control_fidelity.py",
+      "bytes": 2338,
+      "sha256": "a0c6dbb29fef27f42231dcf03c707616070a5fbb405620bc16e84ed9ea47f69b"
+    },
+    {
+      "path": "tests/test_predicted_control_reasonableness_contract.py",
+      "bytes": 2398,
+      "sha256": "115e4e2ff1df37bb5aa240d873e6eeb847d02977b43114105ead8b5797e94a3d"
+    },
+    {
+      "path": "tests/test_predicted_control_state.py",
+      "bytes": 5186,
+      "sha256": "a15f5144344f59306248906d418af50351952d7ad01f5b8b88bc8c547ee3c329"
+    },
+    {
+      "path": "tests/test_predicted_operation_success.py",
+      "bytes": 3767,
+      "sha256": "ab66575f875d5ef7b2fa6dcc9edb39b97fc0263738ede030d1786f4e89d12fd7"
+    },
+    {
+      "path": "tests/test_unified_floorplan_generator.py",
+      "bytes": 16816,
+      "sha256": "da4ddb58440f606ea2cbca234c4dbe1bbf5b14559b3a6fdcf437b909c46b90a3"
+    },
+    {
+      "path": "tests/test_unified_floorplan_tokens.py",
+      "bytes": 12120,
+      "sha256": "4e6403e4989f18c952bd09bd7c2a085082531ca6e5a0eb21de31dec147504197"
+    },
+    {
+      "path": "uv.lock",
+      "bytes": 978661,
+      "sha256": "afe20628c4e77c417be2308c869e4a35d3548bb3d41be7b228a8d7712db7a9be"
+    },
+    {
+      "path": "submission_checklist.json",
+      "bytes": 1519,
+      "sha256": "240c88f4081150dbc545b1487c198e185df60f12acd46eeb3daaf3377d4ac281"
+    },
+    {
+      "path": "README.md",
+      "bytes": 909,
+      "sha256": "fbe662b1fdf85a822e5c8b868ee5a8f90ad0035445f67987f3a86fbbf9d9c1fc"
+    }
+  ]
+}

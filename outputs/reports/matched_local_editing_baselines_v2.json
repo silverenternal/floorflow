@@ -1,0 +1,234 @@
+{
+  "schema_version": "floorplan-matched-local-baselines-v2",
+  "status": "passed_scoped_release",
+  "scope": "CubiCasa test503 oracle-control rows with shared pre/post controls",
+  "protocol": {
+    "controls": "declared oracle controls",
+    "deployable": false,
+    "case_unit": "paired pre/post edit",
+    "seeds": [
+      19,
+      20,
+      21,
+      22,
+      23
+    ],
+    "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json",
+    "outside_freeze": true,
+    "native_editing_aware_baseline": false
+  },
+  "external_context": {
+    "HouseMind-E": {
+      "delta_iou": 0.608,
+      "delta_mse": 0.0019,
+      "status": "published cross-dataset context only"
+    }
+  },
+  "operations": {
+    "room_type": {
+      "cases": 487,
+      "floorflow_delta_iou": 0.9991991840110203,
+      "floorflow_delta_mse": 6.915920129147678e-05,
+      "floorflow_outside_exact": 1.0,
+      "raster2seq_delta_iou": 0.13716038477717304,
+      "raster2seq_delta_mse": 0.12374033771824136,
+      "raster2seq_outside_exact": 1.0,
+      "paired_vs_raster2seq": {
+        "cases": 487,
+        "mean_delta": 0.8620387992338472,
+        "median_delta": 0.9865951742627346,
+        "rank_biserial": 1.0,
+        "statistic": 97903.0,
+        "p_value": 6.018544312934138e-75
+      },
+      "editing_aware_delta_iou": 0.909799681286836,
+      "editing_aware_delta_mse": 0.011077620733215403,
+      "editing_aware_runner_floorflow_delta_iou": 0.9992853946756483,
+      "editing_aware_runner_floorflow_delta_mse": 6.229078034223468e-05,
+      "runner_floorflow_delta_iou_abs_gap": 8.621066462799476e-05,
+      "paired_vs_editing_aware": {
+        "cases": 487,
+        "mean_delta": 0.08948571338881227,
+        "baseline_mean": 0.909799681286836,
+        "relative_delta": 0.09835760028212163,
+        "median_delta": 0.0,
+        "ci_low": 0.06588269862758632,
+        "ci_high": 0.11508252992367173,
+        "ci_method": "paired_percentile_bootstrap",
+        "ci_iterations": 4000,
+        "ci_seed": 261201,
+        "improved": 50,
+        "worsened": 0,
+        "unchanged": 437,
+        "rank_biserial": 1.0
+      }
+    },
+    "room_add": {
+      "cases": 495,
+      "floorflow_delta_iou": 0.9998006091318032,
+      "floorflow_delta_mse": 3.028145450419591e-05,
+      "floorflow_outside_exact": 1.0,
+      "raster2seq_delta_iou": 0.16675626231053742,
+      "raster2seq_delta_mse": 0.07635157590948347,
+      "raster2seq_outside_exact": 1.0,
+      "paired_vs_raster2seq": {
+        "cases": 495,
+        "mean_delta": 0.8330443468212658,
+        "median_delta": 0.955719557195572,
+        "rank_biserial": 1.0,
+        "statistic": 115440.0,
+        "p_value": 9.319112824043556e-81
+      },
+      "editing_aware_delta_iou": 0.9959848706738862,
+      "editing_aware_delta_mse": 0.0008561723097477395,
+      "editing_aware_runner_floorflow_delta_iou": 1.0,
+      "editing_aware_runner_floorflow_delta_mse": 0.0,
+      "runner_floorflow_delta_iou_abs_gap": 0.00019939086819675822,
+      "paired_vs_editing_aware": {
+        "cases": 495,
+        "mean_delta": 0.004015129326113716,
+        "baseline_mean": 0.9959848706738862,
+        "relative_delta": 0.004031315579519866,
+        "median_delta": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.010048403440229654,
+        "ci_method": "paired_percentile_bootstrap",
+        "ci_iterations": 4000,
+        "ci_seed": 261201,
+        "improved": 3,
+        "worsened": 0,
+        "unchanged": 492,
+        "rank_biserial": 1.0
+      }
+    },
+    "room_remove": {
+      "cases": 500,
+      "floorflow_delta_iou": 0.9997559952768602,
+      "floorflow_delta_mse": 1.8663442751858384e-05,
+      "floorflow_outside_exact": 1.0,
+      "raster2seq_delta_iou": 0.17726628103840875,
+      "raster2seq_delta_mse": 0.12230392756292713,
+      "raster2seq_outside_exact": 1.0,
+      "paired_vs_raster2seq": {
+        "cases": 500,
+        "mean_delta": 0.8224897142384515,
+        "median_delta": 0.9862532832907003,
+        "rank_biserial": 1.0,
+        "statistic": 96141.0,
+        "p_value": 1.595401766153825e-74
+      },
+      "editing_aware_delta_iou": 0.9985077524473105,
+      "editing_aware_delta_mse": 8.635509692248888e-05,
+      "editing_aware_runner_floorflow_delta_iou": 0.9998480665834361,
+      "editing_aware_runner_floorflow_delta_mse": 1.4606214390369133e-05,
+      "runner_floorflow_delta_iou_abs_gap": 9.207130657584717e-05,
+      "paired_vs_editing_aware": {
+        "cases": 500,
+        "mean_delta": 0.0013403141361256546,
+        "baseline_mean": 0.9985077524473105,
+        "relative_delta": 0.0013423172056907797,
+        "median_delta": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.004020942408376964,
+        "ci_method": "paired_percentile_bootstrap",
+        "ci_iterations": 4000,
+        "ci_seed": 261201,
+        "improved": 1,
+        "worsened": 0,
+        "unchanged": 499,
+        "rank_biserial": 1.0
+      }
+    },
+    "opening_delete": {
+      "cases": 502,
+      "floorflow_delta_iou": 0.9567032400416569,
+      "floorflow_delta_mse": 9.582009079892316e-05,
+      "floorflow_outside_exact": 1.0,
+      "raster2seq_delta_iou": 0.18949084680718686,
+      "raster2seq_delta_mse": 0.014699093935328473,
+      "raster2seq_outside_exact": 1.0,
+      "paired_vs_raster2seq": {
+        "cases": 502,
+        "mean_delta": 0.7672123932344699,
+        "median_delta": 0.8754310344827586,
+        "rank_biserial": 0.9977811998079248,
+        "statistic": 120652.0,
+        "p_value": 2.9018213661083105e-82
+      },
+      "editing_aware_delta_iou": 0.7311511580046184,
+      "editing_aware_delta_mse": 0.0009907249151868188,
+      "editing_aware_runner_floorflow_delta_iou": 0.9567032400416569,
+      "editing_aware_runner_floorflow_delta_mse": 9.582009079892316e-05,
+      "runner_floorflow_delta_iou_abs_gap": 0.0,
+      "paired_vs_editing_aware": {
+        "cases": 502,
+        "mean_delta": 0.22555208203703836,
+        "baseline_mean": 0.7311511580046184,
+        "relative_delta": 0.30848898968113736,
+        "median_delta": 0.26530612244897955,
+        "ci_low": 0.2046700605648172,
+        "ci_high": 0.2459533943923086,
+        "ci_method": "paired_percentile_bootstrap",
+        "ci_iterations": 4000,
+        "ci_seed": 261201,
+        "improved": 333,
+        "worsened": 21,
+        "unchanged": 148,
+        "rank_biserial": 0.8885334606509111
+      }
+    },
+    "furniture_delete": {
+      "cases": 495,
+      "floorflow_delta_iou": 0.9878121218363792,
+      "floorflow_delta_mse": 8.32390730970979e-05,
+      "floorflow_outside_exact": 1.0,
+      "raster2seq_delta_iou": 0.14536710151679758,
+      "raster2seq_delta_mse": 0.029981939606615483,
+      "raster2seq_outside_exact": 1.0,
+      "paired_vs_raster2seq": {
+        "cases": 495,
+        "mean_delta": 0.8424450203195817,
+        "median_delta": 0.9030172413793104,
+        "rank_biserial": 1.0,
+        "statistic": 122760.0,
+        "p_value": 3.044212210413595e-83
+      },
+      "editing_aware_delta_iou": 0.7424687266884322,
+      "editing_aware_delta_mse": 0.0038248816466783853,
+      "editing_aware_runner_floorflow_delta_iou": 0.9878121218363792,
+      "editing_aware_runner_floorflow_delta_mse": 8.32390730970979e-05,
+      "runner_floorflow_delta_iou_abs_gap": 0.0,
+      "paired_vs_editing_aware": {
+        "cases": 495,
+        "mean_delta": 0.2453433951479471,
+        "baseline_mean": 0.7424687266884322,
+        "relative_delta": 0.33044273291109594,
+        "median_delta": 0.14598540145985406,
+        "ci_low": 0.22346457779475182,
+        "ci_high": 0.2686252295399901,
+        "ci_method": "paired_percentile_bootstrap",
+        "ci_iterations": 4000,
+        "ci_seed": 261201,
+        "improved": 455,
+        "worsened": 8,
+        "unchanged": 32,
+        "rank_biserial": 0.9896663439338647
+      }
+    }
+  },
+  "boundaries": {
+    "raster2seq": "The frozen wrapper keeps the before prediction outside the declared region and redraws only inside it. Outside exactness is therefore not evidence of native editing awareness.",
+    "editing_aware": "The control-delta replacement is intentionally weak: it paints control labels inside the changed-control mask. Gains are reported, but this is not a strong learned editing baseline.",
+    "before_state_asymmetry": "The editing-aware runner recomputes its own paired FloorFlow row. Its FloorFlow Delta-IoU can differ slightly from the T1 five-seed report because the runs were produced by separate consumers; all paired interval estimates use only the rows from their own run.",
+    "optional_generalization": "Predicted-control fresh held-out comparison is not part of the scoped release and is reported as not evaluated."
+  },
+  "extensions_not_evaluated": [
+    "Any stronger executable editing-aware baseline",
+    "Fresh held-out predicted-control comparison"
+  ],
+  "sources": {
+    "outputs/reports/residential_edit_test503_v1.json": "c9569af55c4a6d4460359d4d931b06486e2faac122ff4e40450e839851aceccf",
+    "outputs/reports/residential_editing_aware_baseline_v1.json": "1659e56fc3904213db5aacaf847295b4c4d7ff10239f09b7e4d198c8e699ad81",
+    "outputs/reports/fp_raster2seq_local_redraw_v1.json": "e4ddd567b23287967ffb24a45651f10d368ae53464f2bc05fe5eff73a0c6c98e"
+  }
+}

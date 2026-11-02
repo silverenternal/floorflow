@@ -1,0 +1,376 @@
+{
+  "status": "complete",
+  "contract_version": "2.0",
+  "contract_sha256": "0fd546de836bf5aa30e87f8b48d5eafa841c7eca65c10a9b7639287022ba75ab",
+  "tolerances": {
+    "room_match_min_iou": 0.5,
+    "room_polygon_hausdorff_px": 0.5,
+    "room_min_area_px": 4.0,
+    "room_overlap_area_px2": 4.0,
+    "edge_contact_px": 2.0,
+    "edge_snap_px": 1.5,
+    "wall_junction_cluster_px": 2.0,
+    "hole_min_area_px": 0.25,
+    "changed_pixel_epsilon": 0.0,
+    "float_report_decimals": 6
+  },
+  "attacks": 26,
+  "by_metric": {
+    "outside_exact": {
+      "attacks": 4,
+      "sensitive": 4,
+      "false_pass_rate": 0.0,
+      "false_fail_rate": 0.0
+    },
+    "validity": {
+      "attacks": 6,
+      "sensitive": 6,
+      "false_pass_rate": 0.0,
+      "false_fail_rate": 0.0
+    },
+    "conditional_watertightness": {
+      "attacks": 4,
+      "sensitive": 4,
+      "false_pass_rate": 0.0,
+      "false_fail_rate": 0.0
+    },
+    "node_f1": {
+      "attacks": 6,
+      "sensitive": 6,
+      "false_pass_rate": 0.0,
+      "false_fail_rate": 0.0
+    },
+    "edge_overlap": {
+      "attacks": 5,
+      "sensitive": 5,
+      "false_pass_rate": 0.0,
+      "false_fail_rate": 0.0
+    },
+    "ged": {
+      "attacks": 1,
+      "sensitive": 1,
+      "false_pass_rate": 0.0,
+      "false_fail_rate": 0.0
+    }
+  },
+  "checks": {
+    "all_mandatory_metrics_attacked": true,
+    "all_attacks_sensitive": true,
+    "all_metric_baselines_reached": true
+  },
+  "rows": [
+    {
+      "metric": "outside_exact",
+      "attack": "move_untouched_room_1px",
+      "submetric": "outside_room_level_exact",
+      "baseline": 1.0,
+      "attacked": 0.0,
+      "delta": -1.0,
+      "direction": "decrease",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "outside_exact",
+      "attack": "change_untouched_room_label",
+      "submetric": "outside_room_label_exact",
+      "baseline": 1.0,
+      "attacked": 0.0,
+      "delta": -1.0,
+      "direction": "decrease",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "outside_exact",
+      "attack": "shift_untouched_room_beyond_2px",
+      "submetric": "outside_edge_exact",
+      "baseline": 1.0,
+      "attacked": 0.0,
+      "delta": -1.0,
+      "direction": "decrease",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "outside_exact",
+      "attack": "inject_outside_pixel_change",
+      "submetric": "locality_violation_rate",
+      "baseline": 0.0,
+      "attacked": 0.17708333333333334,
+      "delta": 0.17708333333333334,
+      "direction": "increase",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "validity",
+      "attack": "open_outer_boundary",
+      "submetric": "outer_boundary_closed",
+      "baseline": 1.0,
+      "attacked": 0.0,
+      "delta": -1.0,
+      "direction": "decrease",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "validity",
+      "attack": "open_room_polygon",
+      "submetric": "room_polygon_closed",
+      "baseline": 1.0,
+      "attacked": 0.0,
+      "delta": -1.0,
+      "direction": "decrease",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "validity",
+      "attack": "self_intersecting_room",
+      "submetric": "no_self_intersection",
+      "baseline": 1.0,
+      "attacked": 0.0,
+      "delta": -1.0,
+      "direction": "decrease",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "validity",
+      "attack": "overlap_two_rooms",
+      "submetric": "no_room_overlap",
+      "baseline": 1.0,
+      "attacked": 0.0,
+      "delta": -1.0,
+      "direction": "decrease",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "validity",
+      "attack": "illegal_room_label",
+      "submetric": "semantic_complete",
+      "baseline": 1.0,
+      "attacked": 0.0,
+      "delta": -1.0,
+      "direction": "decrease",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "validity",
+      "attack": "joint_validity_after_self_intersection",
+      "submetric": "validity",
+      "baseline": 1.0,
+      "attacked": 0.0,
+      "delta": -1.0,
+      "direction": "decrease",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "conditional_watertightness",
+      "attack": "inject_one_pixel_hole",
+      "submetric": "hole_count",
+      "baseline": 0.0,
+      "attacked": 1.0,
+      "delta": 1.0,
+      "direction": "increase",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "conditional_watertightness",
+      "attack": "disconnect_room_component",
+      "submetric": "disconnected_component_count",
+      "baseline": 0.0,
+      "attacked": 1.0,
+      "delta": 1.0,
+      "direction": "increase",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "conditional_watertightness",
+      "attack": "open_dangling_wall",
+      "submetric": "dangling_endpoint_rate",
+      "baseline": 0.0,
+      "attacked": 0.125,
+      "delta": 0.125,
+      "direction": "increase",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "conditional_watertightness",
+      "attack": "one_pixel_hole_watertight_rate",
+      "submetric": "watertight_rate",
+      "baseline": 1.0,
+      "attacked": 0.0,
+      "delta": -1.0,
+      "direction": "decrease",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "node_f1",
+      "attack": "delete_node_type",
+      "submetric": "recall",
+      "baseline": 1.0,
+      "attacked": 0.5,
+      "delta": -0.5,
+      "direction": "decrease",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "node_f1",
+      "attack": "delete_node_type_f1",
+      "submetric": "f1",
+      "baseline": 1.0,
+      "attacked": 0.6666666666666666,
+      "delta": -0.33333333333333337,
+      "direction": "decrease",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "node_f1",
+      "attack": "add_spurious_node_type",
+      "submetric": "precision",
+      "baseline": 1.0,
+      "attacked": 0.6666666666666666,
+      "delta": -0.33333333333333337,
+      "direction": "decrease",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "node_f1",
+      "attack": "add_spurious_node_type_f1",
+      "submetric": "f1",
+      "baseline": 1.0,
+      "attacked": 0.8,
+      "delta": -0.19999999999999996,
+      "direction": "decrease",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "node_f1",
+      "attack": "relabel_one_node_type",
+      "submetric": "precision",
+      "baseline": 1.0,
+      "attacked": 0.5,
+      "delta": -0.5,
+      "direction": "decrease",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "node_f1",
+      "attack": "relabel_one_node_type_f1",
+      "submetric": "f1",
+      "baseline": 1.0,
+      "attacked": 0.5,
+      "delta": -0.5,
+      "direction": "decrease",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "edge_overlap",
+      "attack": "delete_adjacency_edge",
+      "submetric": "recall",
+      "baseline": 1.0,
+      "attacked": 0.0,
+      "delta": -1.0,
+      "direction": "decrease",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "edge_overlap",
+      "attack": "delete_adjacency_edge_f1",
+      "submetric": "f1",
+      "baseline": 1.0,
+      "attacked": 0.0,
+      "delta": -1.0,
+      "direction": "decrease",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "edge_overlap",
+      "attack": "insert_spurious_adjacency",
+      "submetric": "precision",
+      "baseline": 1.0,
+      "attacked": 0.5,
+      "delta": -0.5,
+      "direction": "decrease",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "edge_overlap",
+      "attack": "insert_spurious_adjacency_f1",
+      "submetric": "f1",
+      "baseline": 1.0,
+      "attacked": 0.6666666666666666,
+      "delta": -0.33333333333333337,
+      "direction": "decrease",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "edge_overlap",
+      "attack": "shift_edge_beyond_2px",
+      "submetric": "outside_edge_exact",
+      "baseline": 1.0,
+      "attacked": 0.0,
+      "delta": -1.0,
+      "direction": "decrease",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    },
+    {
+      "metric": "ged",
+      "attack": "relabel_one_node_type",
+      "submetric": "ged",
+      "baseline": 0.0,
+      "attacked": 1.0,
+      "delta": 1.0,
+      "direction": "increase",
+      "sensitive": true,
+      "false_pass": false,
+      "false_fail": false
+    }
+  ],
+  "boundary": "These deterministic synthetic attacks test evaluator sensitivity, not model quality."
+}

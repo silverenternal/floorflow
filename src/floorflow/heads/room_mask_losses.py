@@ -9,6 +9,7 @@ import torch
 import torch.nn.functional as F
 
 from floorflow.data.taxonomy import FloorplanTaxonomy
+from floorflow.heads.room_mask_area import matched_mask_area_loss
 from floorflow.heads.room_mask_fusion import fused_room_mask_logits
 from floorflow.heads.room_mask_geometry import (
     matched_mask_centroid_error,
@@ -43,12 +44,7 @@ def soft_tversky_loss(
     true_positive = (probability * target).sum(dim=dimensions)
     false_positive = (probability * (1.0 - target)).sum(dim=dimensions)
     false_negative = ((1.0 - probability) * target).sum(dim=dimensions)
-    index = (true_positive + 1.0) / (
-        true_positive
-        + float(alpha) * false_positive
-        + float(beta) * false_negative
-        + 1.0
-    )
+    index = (true_positive + 1.0) / (true_positive + float(alpha) * false_positive + float(beta) * false_negative + 1.0)
     return (1.0 - index).mean()
 
 
@@ -89,14 +85,9 @@ def query_partition_loss(
         label_smoothing=float(label_smoothing),
     )
     valid_weight = valid.to(cross_entropy.dtype)
-    cross_entropy = (
-        cross_entropy * valid_weight
-    ).sum() / valid_weight.sum().clamp_min(1.0)
+    cross_entropy = (cross_entropy * valid_weight).sum() / valid_weight.sum().clamp_min(1.0)
     exact = (
-        (
-            partition_logits.argmax(dim=1).eq(target)
-            & valid
-        ).to(valid_weight.dtype) * valid_weight
+        (partition_logits.argmax(dim=1).eq(target) & valid).to(valid_weight.dtype) * valid_weight
     ).sum() / valid_weight.sum().clamp_min(1.0)
     return cross_entropy, exact.detach(), valid_weight.sum().detach()
 
@@ -125,7 +116,9 @@ def _single_room_mask_loss(
     class_aware_query_separation: bool = True,
     target_counts: Sequence[int] | None = None,
     matches: Sequence[RoomQueryMatch] | None = None,
-    reference_anchor_weight: float = 0.0, mask_centroid_weight: float = 0.0,
+    reference_anchor_weight: float = 0.0,
+    mask_centroid_weight: float = 0.0,
+    mask_area_weight: float = 0.0,
 ) -> tuple[torch.Tensor, dict[str, torch.Tensor]]:
     class_probability = predictions["class_logits"].softmax(dim=-1)
     mask_probability = predictions["mask_logits"].sigmoid()
@@ -138,15 +131,14 @@ def _single_room_mask_loss(
     matched_predicted_area_values = []
     matched_target_area_values = []
     matched_centroid_errors = []
+    matched_area_losses = []
     reference_anchor_losses = []
     unmatched_predicted_area_values = []
     query_assignments = []
     query_valid_target = torch.zeros_like(class_probability[..., 0])
     weights_all = None
     if class_weights is not None:
-        weights_all = torch.cat(
-            [class_weights, torch.ones(1, device=class_weights.device, dtype=class_weights.dtype)]
-        )
+        weights_all = torch.cat([class_weights, torch.ones(1, device=class_weights.device, dtype=class_weights.dtype)])
     counts = (
         [int(value) for value in target_counts]
         if target_counts is not None
@@ -221,19 +213,16 @@ def _single_room_mask_loss(
         matched_probability = mask_probability[index, rows_gpu]
         matched_logits = predictions["mask_logits"][index, rows_gpu]
         matched_target = target_masks[index, columns_gpu]
-        dice = 1.0 - (
-            2.0 * (matched_probability * matched_target).sum(dim=(1, 2)) + 1.0
-        ) / (
+        dice = 1.0 - (2.0 * (matched_probability * matched_target).sum(dim=(1, 2)) + 1.0) / (
             matched_probability.sum(dim=(1, 2)) + matched_target.sum(dim=(1, 2)) + 1.0
         )
         matched_dice_values.append(1.0 - dice)
         intersection = (matched_probability * matched_target).sum(dim=(1, 2))
-        union = (
-            matched_probability + matched_target - matched_probability * matched_target
-        ).sum(dim=(1, 2))
+        union = (matched_probability + matched_target - matched_probability * matched_target).sum(dim=(1, 2))
         matched_iou_values.append(intersection / union.clamp_min(1.0))
         matched_predicted_area_values.append(matched_probability.mean(dim=(1, 2)))
         matched_target_area_values.append(matched_target.mean(dim=(1, 2)))
+        matched_area_losses.append(matched_mask_area_loss(matched_probability, matched_target))
         matched_centroid_errors.append(matched_mask_centroid_error(matched_probability, matched_target))
         if float(reference_anchor_weight) > 0.0:
             adaptive = predictions.get("adaptive_query_diagnostics") or {}
@@ -253,9 +242,7 @@ def _single_room_mask_loss(
         bce = (bce * weights).sum(dim=(1, 2)) / weights.sum(dim=(1, 2)).clamp_min(1.0)
         matched_mask_losses.append((dice + 0.2 * bce).mean())
         if float(mask_tversky_weight) > 0.0:
-            matched_tversky_losses.append(
-                soft_tversky_loss(matched_logits, matched_target)
-            )
+            matched_tversky_losses.append(soft_tversky_loss(matched_logits, matched_target))
         query_valid_target[index].index_fill_(0, rows_gpu, 1.0)
         matched_query = torch.zeros(
             predictions["mask_logits"].shape[1],
@@ -272,13 +259,10 @@ def _single_room_mask_loss(
         ).mean(dim=(1, 2))
         unmatched_values = unmatched.to(unmatched_bce.dtype)
         if unmatched.any():
-            unmatched_predicted_area_values.append(
-                mask_probability[index, unmatched].mean()
-            )
+            unmatched_predicted_area_values.append(mask_probability[index, unmatched].mean())
         unmatched_mask_losses.append(
             (
-                (unmatched_bce * unmatched_values).sum()
-                / unmatched_values.sum().clamp_min(1.0),
+                (unmatched_bce * unmatched_values).sum() / unmatched_values.sum().clamp_min(1.0),
                 unmatched_values.sum().gt(0).to(unmatched_bce.dtype),
             )
         )
@@ -293,13 +277,8 @@ def _single_room_mask_loss(
         weight=weights_all,
         reduction="none",
     )
-    class_loss = (
-        class_loss * (1.0 - query_valid_target)
-    ).sum() / (1.0 - query_valid_target).sum().clamp_min(1.0)
-    if (
-        float(existence_loss_weight) > 0.0
-        and "query_existence_logits" in predictions
-    ):
+    class_loss = (class_loss * (1.0 - query_valid_target)).sum() / (1.0 - query_valid_target).sum().clamp_min(1.0)
+    if float(existence_loss_weight) > 0.0 and "query_existence_logits" in predictions:
         positive = query_valid_target.sum().clamp_min(1.0)
         negative = (1.0 - query_valid_target).sum().clamp_min(1.0)
         existence_loss = F.binary_cross_entropy_with_logits(
@@ -317,22 +296,13 @@ def _single_room_mask_loss(
     unmatched_mask_loss = (
         (
             torch.stack([value for value, _present in unmatched_mask_losses]).sum()
-            / torch.stack(
-                [present for _value, present in unmatched_mask_losses]
-            ).sum().clamp_min(1.0)
+            / torch.stack([present for _value, present in unmatched_mask_losses]).sum().clamp_min(1.0)
         )
         if unmatched_mask_losses
         else mask_loss * 0.0
     )
-    mask_loss = (
-        mask_loss
-        + float(unmatched_mask_weight) * unmatched_mask_loss
-    )
-    tversky_loss = (
-        torch.stack(matched_tversky_losses).mean()
-        if matched_tversky_losses
-        else mask_loss * 0.0
-    )
+    mask_loss = mask_loss + float(unmatched_mask_weight) * unmatched_mask_loss
+    tversky_loss = torch.stack(matched_tversky_losses).mean() if matched_tversky_losses else mask_loss * 0.0
     mask_loss = mask_loss + float(mask_tversky_weight) * tversky_loss
     raw_class_loss = class_loss
     raw_mask_loss = mask_loss
@@ -359,10 +329,7 @@ def _single_room_mask_loss(
     partition_loss = raw_mask_loss * 0.0
     partition_exact = raw_mask_loss.detach() * 0.0
     partition_pixels = raw_mask_loss.detach() * 0.0
-    if (
-        float(partition_consistency_weight) > 0.0
-        and "room_partition_logits" in predictions
-    ):
+    if float(partition_consistency_weight) > 0.0 and "room_partition_logits" in predictions:
         partition_loss, partition_exact, partition_pixels = query_partition_loss(
             predictions["room_partition_logits"],
             predictions["mask_logits"],
@@ -371,15 +338,14 @@ def _single_room_mask_loss(
             conflict_only=bool(partition_conflict_only),
             label_smoothing=float(partition_label_smoothing),
         )
-        total = (
-            total
-            + float(partition_consistency_weight) * partition_loss
-        )
+        total = total + float(partition_consistency_weight) * partition_loss
     separation_loss = raw_mask_loss * 0.0
     reference_anchor_total = _mean_or_zero(reference_anchor_losses)
     total = total + float(reference_anchor_weight) * reference_anchor_total
     mask_centroid_total = _mean_or_zero(matched_centroid_errors)
     total = total + float(mask_centroid_weight) * mask_centroid_total
+    mask_area_total = _mean_or_zero(matched_area_losses)
+    total = total + float(mask_area_weight) * mask_area_total
 
     if float(query_separation_weight) > 0.0:
         matches = [
@@ -427,28 +393,18 @@ def _single_room_mask_loss(
         "room_mask_existence_loss": existence_loss.detach(),
         "room_query_separation_loss": separation_loss.detach(),
         "_room_mask_separation_term": separation_loss,
-        "room_mask_matched_dice": _mean_or_zero(
-            matched_dice_values
-        ).detach(),
-        "room_mask_matched_iou": _mean_or_zero(
-            matched_iou_values
-        ).detach(),
-        "room_mask_matched_predicted_area": _mean_or_zero(
-            matched_predicted_area_values
-        ).detach(),
-        "room_mask_matched_target_area": _mean_or_zero(
-            matched_target_area_values
-        ).detach(),
-        "room_mask_unmatched_predicted_area": _mean_or_zero(
-            unmatched_predicted_area_values
-        ).detach(),
-        "room_mask_matched_centroid_error": _mean_or_zero(
-            matched_centroid_errors
-        ).detach(),
+        "room_mask_matched_dice": _mean_or_zero(matched_dice_values).detach(),
+        "room_mask_matched_iou": _mean_or_zero(matched_iou_values).detach(),
+        "room_mask_matched_predicted_area": _mean_or_zero(matched_predicted_area_values).detach(),
+        "room_mask_matched_target_area": _mean_or_zero(matched_target_area_values).detach(),
+        "room_mask_unmatched_predicted_area": _mean_or_zero(unmatched_predicted_area_values).detach(),
+        "room_mask_matched_centroid_error": _mean_or_zero(matched_centroid_errors).detach(),
         "room_mask_reference_anchor_loss": reference_anchor_total.detach(),
         "_room_mask_reference_anchor_term": reference_anchor_total,
         "room_mask_centroid_loss": mask_centroid_total.detach(),
         "_room_mask_centroid_term": mask_centroid_total,
+        "room_mask_area_loss": mask_area_total.detach(),
+        "_room_mask_area_term": mask_area_total,
     }
 
 
@@ -477,7 +433,9 @@ def room_mask_loss(
     class_aware_query_separation: bool = True,
     target_counts: Sequence[int] | None = None,
     matches: Sequence[RoomQueryMatch] | None = None,
-    reference_anchor_weight: float = 0.0, mask_centroid_weight: float = 0.0,
+    reference_anchor_weight: float = 0.0,
+    mask_centroid_weight: float = 0.0,
+    mask_area_weight: float = 0.0,
 ) -> tuple[torch.Tensor, dict[str, torch.Tensor]]:
     total, components = _single_room_mask_loss(
         predictions,
@@ -505,6 +463,7 @@ def room_mask_loss(
         matches,
         reference_anchor_weight=reference_anchor_weight,
         mask_centroid_weight=mask_centroid_weight,
+        mask_area_weight=mask_area_weight,
     )
     auxiliary_masks = predictions.get("aux_mask_logits", [])
     auxiliary_classes = predictions.get("aux_class_logits", [])
@@ -535,6 +494,7 @@ def room_mask_loss(
             matches,
             reference_anchor_weight=0.0,
             mask_centroid_weight=0.0,
+            mask_area_weight=0.0,
         )
         total = total + float(auxiliary_weight) * auxiliary
         components[f"room_mask_aux_{level}_loss"] = auxiliary.detach()
@@ -562,27 +522,22 @@ def room_mask_partition_loss(
         weight=class_weights,
         reduction="none",
     )
-    weights = (
-        valid.float()
-        if pixel_weights is None
-        else pixel_weights.float() * valid.float()
-    )
+    weights = valid.float() if pixel_weights is None else pixel_weights.float() * valid.float()
     ce = (ce * weights).sum() / weights.sum().clamp_min(1.0)
     probability = dense_logits.softmax(dim=1)
-    one_hot = F.one_hot(
-        local_target.clamp_min(0),
-        len(taxonomy.room_ids),
-    ).permute(0, 3, 1, 2).float()
+    one_hot = (
+        F.one_hot(
+            local_target.clamp_min(0),
+            len(taxonomy.room_ids),
+        )
+        .permute(0, 3, 1, 2)
+        .float()
+    )
     one_hot = one_hot * weights[:, None]
     intersection = (probability * one_hot).sum(dim=(0, 2, 3))
-    denominator = (
-        (probability * weights[:, None]).sum(dim=(0, 2, 3))
-        + one_hot.sum(dim=(0, 2, 3))
-    )
+    denominator = (probability * weights[:, None]).sum(dim=(0, 2, 3)) + one_hot.sum(dim=(0, 2, 3))
     present = one_hot.sum(dim=(0, 2, 3)) > 0
-    dice_values = 1.0 - (
-        (2.0 * intersection + 1.0) / (denominator + 1.0)
-    )
+    dice_values = 1.0 - ((2.0 * intersection + 1.0) / (denominator + 1.0))
     dice = (dice_values * present).sum() / present.sum().clamp_min(1)
     total = ce + dice
     return total, {
@@ -593,6 +548,9 @@ def room_mask_partition_loss(
 
 
 __all__ = [
-    "pairwise_mask_cost", "query_partition_loss", "room_mask_loss",
-    "room_mask_partition_loss", "soft_tversky_loss",
+    "pairwise_mask_cost",
+    "query_partition_loss",
+    "room_mask_loss",
+    "room_mask_partition_loss",
+    "soft_tversky_loss",
 ]

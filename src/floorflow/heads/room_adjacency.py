@@ -180,6 +180,51 @@ def room_graph_weights(
     return adjacency / adjacency.sum(dim=-1, keepdim=True).clamp_min(1.0e-6)
 
 
+@torch.no_grad()
+def owner_swap_metrics(
+    before_logits: torch.Tensor,
+    after_logits: torch.Tensor,
+    query_presence: torch.Tensor | None = None,
+    *,
+    support_threshold: float = 0.05,
+) -> dict[str, torch.Tensor]:
+    """Measure graph-induced room ownership changes on supported pixels."""
+
+    if before_logits.shape != after_logits.shape:
+        raise ValueError("before and after mask logits must share a shape")
+    if before_logits.ndim != 4:
+        raise ValueError("mask logits must be [B,Q,H,W]")
+    presence = (
+        torch.ones(
+            before_logits.shape[:2],
+            device=before_logits.device,
+            dtype=before_logits.dtype,
+        )
+        if query_presence is None
+        else query_presence
+    )
+    if presence.shape != before_logits.shape[:2]:
+        raise ValueError("query presence must be [B,Q]")
+    before_mass = (
+        before_logits.sigmoid().float() * presence.float()[..., None, None]
+    )
+    after_mass = (
+        after_logits.sigmoid().float() * presence.float()[..., None, None]
+    )
+    support = (
+        torch.maximum(before_mass.amax(dim=1), after_mass.amax(dim=1))
+        >= float(support_threshold)
+    )
+    swapped = (
+        before_mass.argmax(dim=1) != after_mass.argmax(dim=1)
+    ) & support
+    return {
+        "owner_swap_fraction": swapped.float().sum()
+        / support.float().sum().clamp_min(1.0),
+        "owner_swap_support_fraction": support.float().mean(),
+    }
+
+
 class RoomGraphConditioner(nn.Module):
     """Propagate room-adjacency messages into identity and mask predictions."""
 
@@ -188,6 +233,8 @@ class RoomGraphConditioner(nn.Module):
         hidden_dim: int,
         feature_channels: int,
         room_classes: int,
+        *,
+        area_preserving_mask_residual: bool | str = False,
     ) -> None:
         super().__init__()
         hidden_dim = int(hidden_dim)
@@ -199,6 +246,31 @@ class RoomGraphConditioner(nn.Module):
         self.class_residual = nn.Linear(hidden_dim, int(room_classes))
         self.mask_residual = nn.Linear(hidden_dim, int(feature_channels))
         self.scale = nn.Parameter(torch.tensor(0.1))
+        residual_mode = (
+            area_preserving_mask_residual
+            if isinstance(area_preserving_mask_residual, str)
+            else ("area_preserving" if area_preserving_mask_residual else "free")
+        )
+        if residual_mode not in {
+            "free",
+            "area_preserving",
+            "margin",
+            "area_preserving_margin",
+            "class_only",
+            "bypass",
+        }:
+            raise ValueError(f"unknown graph residual mode: {residual_mode}")
+        self.graph_residual_mode = residual_mode
+        self.area_preserving_mask_residual = residual_mode in {
+            "area_preserving",
+            "area_preserving_margin",
+        }
+        self.owner_margin_gated_residual = residual_mode in {
+            "margin",
+            "area_preserving_margin",
+        }
+        self.enable_mask_residual = residual_mode != "class_only"
+        self.bypass_conditioning = residual_mode == "bypass"
         self.reset_graph_residual_heads()
 
     def reset_graph_residual_heads(self, *, std: float = 0.01) -> None:
@@ -215,7 +287,25 @@ class RoomGraphConditioner(nn.Module):
         adjacency_logits: torch.Tensor,
         spatial_features: torch.Tensor,
         query_presence: torch.Tensor | None = None,
+        mask_logits: torch.Tensor | None = None,
     ) -> dict[str, torch.Tensor]:
+        if self.bypass_conditioning:
+            zero_mask = spatial_features.new_zeros(
+                query_features.shape[0],
+                query_features.shape[1],
+                *spatial_features.shape[-2:],
+            )
+            zero_class = query_features.new_zeros(
+                query_features.shape[0],
+                query_features.shape[1],
+                self.class_residual.out_features,
+            )
+            return {
+                "query_features": query_features,
+                "class_residual": zero_class,
+                "mask_residual": zero_mask,
+                "graph_conditioning_scale": self.scale,
+            }
         weights = room_graph_weights(
             adjacency_logits,
             query_presence,
@@ -225,14 +315,74 @@ class RoomGraphConditioner(nn.Module):
             torch.cat([query_features, neighbor], dim=-1)
         )
         mask_bias = self.mask_residual(updated)
+        if self.area_preserving_mask_residual:
+            presence = (
+                torch.ones_like(mask_bias[..., 0])
+                if query_presence is None
+                else query_presence
+            )
+            mean = (mask_bias * presence[..., None]).sum(
+                dim=1,
+                keepdim=True,
+            ) / presence.sum(dim=1, keepdim=True).clamp_min(1.0)[..., None]
+            mask_bias = (mask_bias - mean) * presence[..., None]
         mask_residual = torch.einsum(
             "bqd,bdhw->bqhw",
             mask_bias,
             spatial_features.float(),
         )
+        if self.owner_margin_gated_residual:
+            if mask_logits is None:
+                raise ValueError(
+                    "owner-margin graph residual requires mask logits"
+                )
+            if mask_logits.shape[:2] != mask_residual.shape[:2]:
+                raise ValueError("mask logits must match graph queries")
+            presence = (
+                torch.ones_like(mask_logits[:, :, 0, 0])
+                if query_presence is None
+                else query_presence.float()
+            )
+            mass = mask_logits.float().sigmoid() * presence[..., None, None]
+            support = (mass.amax(dim=1, keepdim=True) / 0.05).clamp(0.0, 1.0)
+            margin = (
+                mass.topk(min(2, mass.shape[1]), dim=1).values
+            )
+            if margin.shape[1] == 1:
+                owner_margin = margin[:, :1]
+            else:
+                owner_margin = margin[:, :1] - margin[:, 1:2]
+            gate = support * (1.0 - owner_margin).clamp(0.0, 1.0)
+            mask_residual = mask_residual * gate
+        if not self.enable_mask_residual:
+            mask_residual = mask_residual * 0.0
+        class_residual = self.class_residual(updated)
+        if self.area_preserving_mask_residual:
+            presence = (
+                torch.ones_like(class_residual[..., 0])
+                if query_presence is None
+                else query_presence
+            )
+            class_mean = (
+                class_residual * presence[..., None]
+            ).sum(dim=1, keepdim=True) / presence.sum(
+                dim=1,
+                keepdim=True,
+            ).clamp_min(1.0)[..., None]
+            class_residual = (
+                class_residual - class_mean
+            ) * presence[..., None]
+            mask_residual = mask_residual - mask_residual.mean(
+                dim=(2, 3),
+                keepdim=True,
+            )
+            if query_presence is not None:
+                mask_residual = (
+                    mask_residual * query_presence[..., None, None]
+                )
         return {
             "query_features": updated,
-            "class_residual": self.class_residual(updated),
+            "class_residual": class_residual,
             "mask_residual": mask_residual,
             "graph_conditioning_scale": self.scale,
         }
@@ -242,6 +392,7 @@ __all__ = [
     "RoomAdjacencyHead",
     "RoomGraphConditioner",
     "mask_contact_logits",
+    "owner_swap_metrics",
     "room_adjacency_logits",
     "room_graph_weights",
 ]

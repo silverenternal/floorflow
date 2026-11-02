@@ -1,0 +1,10 @@
+{
+  "schema_version": "predicted-channel-v6-query-separation-only",
+  "extends": "predicted_channel_v6_room_identity_adapter_control.json",
+  "status": "mechanism_isolation_candidate",
+  "loss_policy": {
+    "room_instance_query_separation_weight": 0.1,
+    "room_instance_query_separation_class_agnostic": true
+  },
+  "claim_boundary": "Isolates count-gated class-agnostic query separation from the mixed identity candidate bundle. Single-subset mechanism evidence only."
+}

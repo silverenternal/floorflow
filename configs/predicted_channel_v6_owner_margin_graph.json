@@ -1,0 +1,11 @@
+{
+  "schema_version": "predicted-channel-v6-owner-margin-graph",
+  "extends": "predicted_channel_v6_room_identity_adapter_control.json",
+  "status": "safe_graph_residual_candidate",
+  "model": {
+    "area_preserving_mask_residual": "area_preserving_margin"
+  },
+  "zero_shot_status": "rejected_as_inference_replacement_on_val32; retain only for matched training",
+  "zero_shot_report": "outputs/reports/owner_margin_graph_same_weight_val32_seed19_compare_v1.json",
+  "claim_boundary": "Constrains graph owner redistribution to low-margin, supported pixels while preserving total mask area. No promotion before matched screening."
+}

@@ -1,0 +1,51 @@
+\begin{table*}[t]
+\centering
+\caption{Target-free predicted-control evidence. (A) Structural reasonableness on val491 across five repeated seeds. (B) Development-exposed safety prompts and a separately labeled older-model semantic diagnostic. Raw and functional watertightness are distinct.}
+\label{tab:predicted}
+\small
+\begin{minipage}[t]{0.52\linewidth}
+\centering
+\begin{tabular}{lr}
+\toprule
+Metric & Mean \\
+\midrule
+Raster plausible & 0.984929 \\
+Plan plausible & 0.986558 \\
+Room coverage & 1.000000 \\
+Room-face retention & 0.995655 \\
+FP-Eval validity & 1.000000 \\
+Raw watertight & 0.816701 \\
+Functional watertight & 0.997963 \\
+Wall continuity & 0.995427 \\
+Opening-wall align & 0.993530 \\
+Furniture containment & 1.000000 \\
+Outside-footprint fraction & 0.000000 \\
+Room overlap ratio & 0.000000 \\
+Room macro IoU (diag.) & 0.269701 \\
+\bottomrule
+\end{tabular}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.45\linewidth}
+\centering
+\begin{tabular}{lrr}
+\toprule
+Safety evidence & Observed & \\
+\midrule
+Supported executed & 438/438 & \\
+Unsupported abstained & 300/300 & \\
+Outside pixel exact & 1.000000 & \\
+Outside room exact & 1.000000 & \\
+Validity & 1.000000 & \\
+\midrule
+Semantic diagnostic & Success / $N$ & Rate \\
+\midrule
+Room add & 92/100 & 0.9200 \\
+Room type & 55/100 & 0.5500 \\
+Room remove & 20/100 & 0.2000 \\
+Opening delete & 30/59 & 0.5085 \\
+Furniture delete & 0/15 & 0.0000 \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+\par\smallskip\footnotesize Semantic rows use an older val191 model and are not a release gate. The safety population is development-exposed test, not held out.
+\end{table*}

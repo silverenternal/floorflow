@@ -1,91 +1,88 @@
-# Floorplan Submission Review v1
+# Floorplan Submission Review v2
 
-Status: review of the current four-page candidate draft.
+Status date: 2026-11-02. Editorial decision: `ready_for_user_submission` for the
+declared scoped release.
 
-## Editorial Decision
+## Decision
 
-`major_revision_before_submission`
-
-The draft now has a defensible research question, executable evidence, figures,
-tables, and an explicit boundary. It is not submission-ready because the
-predicted model and semantic audit are not frozen and no fresh held-out result
-exists.
+The manuscript now has a complete argument, an official-format PDF, generated
+tables and figures, a source registry, a frozen evidence identity set, and an
+anonymous artifact package. The remaining external steps are author eligibility,
+OpenReview enrollment, review of the mandatory LLM Usage Statement, and upload.
+Those actions cannot be represented as completed without an external receipt.
 
 ## Editor
 
-The paper fits the vision and design-system audience. Its central thesis,
-separating edit reliability from reconstruction fidelity, is clearer than a
-single leaderboard claim. The strongest material is the combination of exact
-locality, structural plausibility, and an honest semantic boundary.
+The paper fits the vision and design-system audience because it treats floorplan
+editing as a controlled state transition rather than global image synthesis. The
+strongest contribution is the explicit separation of exact locality, operation
+safety, structural plausibility, topology legality, and reference fidelity.
 
-The main risk is that the result may read as two unrelated regimes. The final
-revision must explain why the old-control editing protocol connects them.
+The previous review treated a fresh held-out split and a newer model as universal
+blockers. That framing was too broad. The current submission narrows the claims to
+existing oracle, val491, development-exposed safety, and older semantic
+diagnostic populations. The held-out extension is optional and explicitly not
+evaluated.
 
 ## Methodology Reviewer
 
-Strengths:
+Resolved issues:
 
-- explicit zero-tolerance outside domain;
-- separate raw and functional watertightness;
-- separate FP-Eval and FEVP validity;
-- deterministic operation-success predicates;
-- source hash and artifact integrity checks;
-- corrected split metadata for future evaluations.
+- every main-table number resolves to a registry pointer or a generated source;
+- repeated seeds are described as repeated executions, not independent plans;
+- paired controls use floorplan-level units and Holm adjustment;
+- raw and functional watertightness are separate;
+- operation execution, abstention, and semantic realization are separate;
+- the test-manifest development exposure is visible in the table and supplement;
+- protocol attacks and matched controls are retained as diagnostics;
+- the final PDF, artifact manifest, and checksum identities are regenerated after
+  the last table, figure, and manuscript edit.
 
-Required revisions:
-
-- rerun semantic audit after model freeze;
-- use a fresh unopened split;
-- report source-present and source-drift strata;
-- clarify that repeated seeds are reproducibility evidence on deterministic
-  oracle rows;
-- add uncertainty for semantic success across cases.
+Residual non-blocking weakness: predicted room identity, graph fidelity, and
+several semantic operation rates are weak. The paper states this directly rather
+than substituting contract success for semantic success.
 
 ## Domain Reviewer
 
-The old CAD/control state is a legitimate editing input and should remain in the
-method rather than being treated as leakage. The paper should use language that
-matches engineering practice: an operator modifies an existing drawing from its
-prior state.
-
-The contribution is stronger as a protocol and reliability study than as a
-generic floorplan generator.
+Using the old CAD state as an input is a legitimate editing interface. The
+manuscript describes it as an engineering prior rather than leakage and keeps the
+target-derived oracle regime clearly separated from target-free predicted use.
+The outside domain, wall dilation, typed-before repair, and changed-control mask
+are specified with executable semantics.
 
 ## Perspective Reviewer
 
-The practical benefit is conservative local editing with exact outside
-preservation and safe refusal. The final paper should quantify the cost of
-abstention and report supported-operation coverage, not only success rates.
+The practical value is conservative local editing with exact outside preservation
+and calibrated abstention. The paper reports support coverage, abstention,
+operation realization, raw topology, functional topology, and fidelity cost. It
+does not hide unsupported requests behind a success rate.
 
 ## Devil's Advocate
 
 Strongest counter-argument:
 
-> The oracle result is target-derived, exact outside preservation follows from
-> local composition, and the predicted setting lacks both high semantic success
-> and a fresh held-out result.
+> Exact outside preservation follows from local composition, oracle controls
+> contain target information, and predicted semantic realization remains mixed.
 
 Current defense:
 
-- no-gate leakage and matched controls show the audit is non-constant;
-- target-free structural plausibility is high;
-- operation-success failures are disclosed rather than relabeled;
-- the test-development metadata error is corrected.
+- target-free val491 structural plausibility is separately measured;
+- matched Raster2Seq and editing-aware controls test freeze-only explanations;
+- supported execution and unsupported abstention are independently audited;
+- raw topology and semantic failures are retained;
+- the paper claims a scoped reliability result, not complete SOTA.
 
-This defense is credible but incomplete until a frozen predicted result is
-available.
+## Required-Fix Audit
 
-## Revision Roadmap
+- Factual errors: corrected frozen Raster2Seq rows, table typesetting, source
+  pointers, split exposure, and page-limit compliance.
+- Missing explanations: added metric separation, statistical units, protocol
+  boundaries, figure provenance, and held-out status.
+- Optional stronger evidence: a fresh held-out run and newer checkpoint remain
+  outside the scoped submission and are not represented as completed.
 
-1. Freeze the improved predicted model and source contract.
-2. Rerun operation semantic success on validation.
-3. Freeze thresholds and evaluator hashes.
-4. Open one fresh held-out split.
-5. Replace candidate predicted columns with frozen results.
-6. Recompile PDF and rerun anonymity, figure, claim, and artifact audits.
+## Submission Boundary
 
-## Submission Decision
-
-Do not submit the current draft as final. The scientific framing is viable; the
-missing evidence is a frozen deployable result, not another round of document
-polish.
+The local package is ready for user review. Actual OpenReview enrollment,
+submission, and any venue receipt require explicit user authorization and an
+external platform action.

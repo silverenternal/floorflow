@@ -1,37 +1,148 @@
-\documentclass[10pt]{article}
-\usepackage[margin=0.8in]{geometry}
-\usepackage{graphicx}
-\usepackage{booktabs}
-\title{Supplementary Material: Reliable Strictly Local Floorplan Editing}
-\author{Anonymous Submission}
+% CVPR 2027 supplementary material
+\documentclass[10pt,twocolumn,letterpaper]{article}
+\usepackage[review]{cvpr}
+\def\confName{CVPR}
+\def\confYear{2027}
+\definecolor{cvprblue}{rgb}{0.21,0.49,0.74}
+\usepackage[pagebackref,breaklinks,colorlinks,allcolors=cvprblue]{hyperref}
+\usepackage{microtype}
+
+\title{Supplementary Material:\\Reliable Strictly Local Floorplan Editing under Imperfect Controls}
+\author{Anonymous CVPR submission}
 \date{}
+
 \begin{document}
 \maketitle
 
-\section{Protocol Boundaries}
-Oracle-control rows are capacity evidence and are not deployable. Predicted
-controls are target-free at inference. Aligned, canonical-instance, and typed
-graph metrics are separate protocols. Raw fpeval watertightness is always
-reported independently of functional and componentwise diagnostics.
+\section{Scope and Evidence Populations}
+This supplement expands the protocol and audit boundary. It does not add a new
+claim. Table~\ref{tab:populations} lists the populations used by the main paper.
+Oracle, predicted, identity-fallback, generation, and free-text rows are never
+pooled.
 
-\section{Operation-Success Predicates}
-Room type and addition require the requested target class to dominate changed
-pixels. Room removal requires source-class removal or merging. Object deletion
-requires removal of the requested family. The old control source is an allowed
-editing input; source drift is reported separately from locality violations.
-
-\section{Reviewer-Facing Evidence}
-The main paper reports positive oracle evidence and retained predicted-control
-limitations. The development test exposure is not presented as held-out
-evidence. A fresh held-out run is required after the model and thresholds are
-frozen.
-
-\begin{figure*}[t]
+\begin{table}[h]
 \centering
-\includegraphics[width=\textwidth]{figures/floorplan_failure_taxonomy_v1.pdf}
-\caption{Semantic outcomes for supported operations with the actual prompt
-denominator. Failures are retained and are not reclassified as abstentions.}
+\caption{Evidence populations and exposure.}
+\label{tab:populations}
+\footnotesize
+\begin{tabular}{p{0.20\linewidth}p{0.28\linewidth}p{0.27\linewidth}}
+\toprule
+Evidence & Population & Exposure boundary \\
+\midrule
+Oracle anchor & CubiCasa5K test503, 2,479 edits, five operations, five repeated seeds & Target-derived controls; non-deployable \\
+Predicted reasonableness & CubiCasa5K val491, 491 cases per seed, five repeated seeds & Target-free inference; validation \\
+Operation safety & 738 typed prompts, 438 supported and 300 abstention & Development-exposed test rows; not held out \\
+Semantic diagnostic & 374 supported prompts from an older val191 model & Diagnostic only; not the selected checkpoint \\
+Composition audit & 12,395 strict-locality rows & Deterministic policy arms; post hoc budget audit \\
+External context & HouseMind-E, Raster2Seq, CubiCasa5K & Heterogeneous protocols; no leaderboard \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Outside Contract}
+The outside domain is
+\begin{equation}
+O = P \land \neg R \land \neg D_1(W_0 \lor W_1),
+\end{equation}
+where $P$ is the footprint, $R$ the declared edit region, $W_0$ and $W_1$ the
+pre/post wall support, and $D_1$ one-pixel dilation. The audit compares pixel,
+room-label, room-mask, polygon, wall, opening, and unaffected-edge content
+exactly. The changed-control mask is an anchor for the edit and cannot expand
+$O$. A violation is a contract failure even if aggregate Delta-IoU is high.
+
+\section{Metric Separation}
+\subsection{Edit Support versus Geometry}
+Delta-IoU and Delta-MSE measure binary change support under aligned metric
+definitions. They do not establish that the requested room class dominates the
+changed pixels. The semantic diagnostic therefore asks a different question: does
+the requested class or family appear, disappear, or dominate the declared change?
+The diagnostic uses only supported prompts and retains every failure.
+
+\subsection{Raw versus Functional Watertightness}
+Raw fpeval watertightness is 0.816701 on val491. Functional watertightness is
+0.997963. Of 491 footprints, 401 are single-component and pass both raw and
+componentwise checks. The remaining 90 are multi-component footprints outside the
+standard single-region FP-Eval boundary. The component-aware value is a declared
+diagnostic, not a replacement for the raw number.
+
+\subsection{Safety versus Semantic Success}
+Supported execution, unsupported abstention, object-delete contract checks, and
+ghost-state checks are safety or state properties. They are not semantic success.
+All 438 supported development-exposed prompts execute and all 300 unsupported or
+ambiguous prompts abstain in the selected audit. The older val191 semantic rates
+remain 0.92, 0.55, 0.20, 0.5085, and 0.00 for room addition, room type, room
+removal, opening deletion, and furniture deletion.
+
+\section{Statistical Units}
+Oracle intervals resample floorplans with replacement and average all edits inside
+a sampled floorplan. Repeated seeds do not create additional independent plans.
+Paired comparisons use one mean difference per unique floorplan and Holm
+adjustment over five operations. The seed19 trace audit recomputes every oracle
+row with zero IoU error. Other seeds are retained as reproducibility checks.
+
+The composition audit compares deterministic routing policies on a fixed row set.
+Its matched-budget analysis is post hoc. Typed routing improves Delta-IoU by
+0.048656 and changes GED by -0.061396 with no added learned parameters, while
+consuming 3.1925 ms versus 0.2666 ms mean routing time. Efficiency is not claimed.
+
+\section{Predicted-Control Behavior}
+Figure~\ref{fig:panels} reports safety, structural plausibility, and semantic
+realization as separate axes. The safety bars are near the ceiling while raw
+watertightness and semantic success expose different failure modes. This is the
+intended reading of the figure: a high safety rate is not evidence of a high
+semantic success rate.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{figures/predicted_control_operation_panels_v1.pdf}
+\caption{Safety, structural plausibility, and semantic operation realization are
+separate axes. The semantic panel uses an older val191 model; the safety prompts
+come from a development-exposed test manifest. Neither is held out.}
+\label{fig:panels}
+\end{figure}
+
+\section{Failure Taxonomy and Case Selection}
+Figure~\ref{fig:failures} retains failed supported prompts. The left panel reports
+success and failure counts with the actual prompt denominator. The image panels
+show one deterministic failed case from the val191 raster cache. The selection
+rule prioritizes room deletion, then room type, opening, and furniture, and takes
+the first lexicographic failed row with an existing raster. The case identifier
+and failure reason are recorded in
+\path{outputs/reports/floorplan_figure_case_manifest_v1.json}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{figures/floorplan_failure_taxonomy_v1.pdf}
+\caption{Supported-operation outcomes and a retained failure. Counts use
+supported-prompt denominators. The displayed case is selected by a recorded rule;
+it is not selected because it is representative of a favorable outcome.}
 \label{fig:failures}
-\end{figure*}
+\end{figure}
+
+\section{Held-Out Availability}
+No fresh held-out split is available for a scoped claim. All test cases were used
+in full predicted-completion inference, so excluding prompt rows would not create
+an unopened model split. The optional extension is reported as
+\texttt{optional\_generalization\_not\_evaluated}. It does not block this release.
+A future held-out claim must freeze the checkpoint, configuration, prompts,
+taxonomy, evaluator, and thresholds before access, execute once, retain negative
+outcomes, and report the extension separately from the main tables.
+
+\section{Artifact and Auditing}
+The anonymous artifact contains source, relevant tests, selected configurations,
+manuscript sources, tables, figures, and registry-bound evidence. It excludes
+datasets, checkpoints, raw arrays, caches, and third-party source trees. The
+source registry, provenance audit, freeze configuration, freeze audit, artifact
+manifest, and checksum list are machine-readable. The local submission checklist
+separates completed package checks from actions requiring author authorization in
+OpenReview.
+
+\section*{LLM Usage Statement}
+Large language model assistance was used for code editing, artifact auditing,
+LaTeX formatting, and language editing. Numerical claims were verified against
+the frozen registry and generated tables. No held-out result, execution receipt,
+or submission receipt was fabricated. The authors remain responsible for the
+final manuscript, data use, and external submission.
 
 \end{document}
+

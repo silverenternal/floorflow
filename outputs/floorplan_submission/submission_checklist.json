@@ -1,0 +1,35 @@
+{
+  "schema_version": "floorplan-submission-checklist-v1",
+  "status": "ready_for_user_submission",
+  "created_at": "2026-11-02T13:36:50.199080+00:00",
+  "checks": {
+    "official_cvpr_template": true,
+    "anonymous_author_block": true,
+    "anonymous_supplement": true,
+    "references_bib_present": true,
+    "main_pdf_present": true,
+    "supplement_pdf_present": true,
+    "source_provenance_passed": true,
+    "evidence_freeze_passed": true,
+    "optional_heldout_not_claimed": true,
+    "artifact_files_present": true,
+    "no_heldout_result_fabricated": true
+  },
+  "official_facts": {
+    "venue": "CVPR 2027",
+    "cfp": "https://cvpr.thecvf.com/Conferences/2027/CallForPapers",
+    "author_guidelines": "https://cvpr.thecvf.com/Conferences/2027/AuthorGuidelines",
+    "template": "https://github.com/cvpr-org/author-kit",
+    "enrollment_deadline_aoe": "2026-11-10T23:59:59-12:00",
+    "paper_deadline_aoe": "2026-11-16T23:59:59-12:00",
+    "supplement_deadline_aoe": "2026-11-23T23:59:59-12:00",
+    "main_page_limit_including_figures_tables": 8,
+    "llm_usage_statement_required": true
+  },
+  "external_actions_requiring_user_authorization": [
+    "Confirm author eligibility and enroll the paper in OpenReview.",
+    "Review the final PDF and enter the mandatory LLM Usage Statement.",
+    "Submit the paper and supplement; this local workflow cannot create a submission receipt."
+  ],
+  "boundary": "Local checks establish package consistency, not venue acceptance or an external submission receipt."
+}

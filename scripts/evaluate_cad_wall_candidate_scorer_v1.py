@@ -21,11 +21,8 @@ from train_vector_topology_scaffold_v1 import GRAPH_STAGES
 
 from floorflow.data.taxonomy import FloorplanTaxonomy
 from floorflow.evaluation.cad_candidate_plan import candidate_plan_metrics
-from floorflow.evaluation.fpeval_bridge import evaluate, to_fpeval_plan, verify
+from floorflow.evaluation.cad_plan_metrics import cad_wall_plan_metrics
 from floorflow.evaluation.paired_bootstrap import paired_delta
-from floorflow.evaluation.structural_legality import wall_junction_summary
-from floorflow.evaluation.wall_junction import wall_junction_metrics
-from floorflow.geometry.wall_graph_readout import raster_labels_to_wall_plan
 from floorflow.heads.cad_wall_candidate_scorer import CadWallCandidateScorer
 from floorflow.inference.cad_stage_runtime import CadStageRuntime
 from floorflow.inference.cad_wall_candidate_runtime import (
@@ -83,55 +80,7 @@ def _wall_opening_evidence(
 
 
 def _plan_metric_row(plan, target: np.ndarray, taxonomy) -> dict[str, float]:
-    target_wall_plan = raster_labels_to_wall_plan(target, taxonomy)
-    target_plan = to_fpeval_plan(target_wall_plan)
-    report = evaluate(to_fpeval_plan(plan), target_plan)
-    plan_verify = verify(to_fpeval_plan(plan))
-    target_verify = verify(target_plan)
-    junction = wall_junction_metrics(
-        plan.walls,
-        target_wall_plan.walls,
-        cluster_tolerance=2.0,
-        match_distance=6.0,
-    )
-    continuity = wall_junction_summary(plan.walls)
-    return {
-        "wall": float(report.walls["f1"]),
-        "wall_precision": float(report.walls["precision"]),
-        "wall_recall": float(report.walls["recall"]),
-        "junction_f1": float(junction["junction_f1"]),
-        "wall_continuity": float(continuity["wall_continuity_rate"]),
-        "opening": float(report.openings["f1"]),
-        "room": float(report.rooms["f1"]),
-        "valid": float(plan_verify.valid),
-        "watertight": float(plan_verify.watertight),
-        "eligible": float(target_verify.watertight),
-        "eligible_wall": (
-            float(report.walls["f1"])
-            if target_verify.watertight
-            else 0.0
-        ),
-        "eligible_opening": (
-            float(report.openings["f1"])
-            if target_verify.watertight
-            else 0.0
-        ),
-        "eligible_room": (
-            float(report.rooms["f1"])
-            if target_verify.watertight
-            else 0.0
-        ),
-        "eligible_valid": (
-            float(plan_verify.valid)
-            if target_verify.watertight
-            else 0.0
-        ),
-        "eligible_watertight": (
-            float(plan_verify.watertight)
-            if target_verify.watertight
-            else 0.0
-        ),
-    }
+    return cad_wall_plan_metrics(plan, target, taxonomy)
 
 
 @torch.inference_mode()

@@ -1,0 +1,9 @@
+{
+  "schema_version": "predicted-channel-v6-route-budget-only",
+  "extends": "predicted_channel_v6_room_identity_adapter_control.json",
+  "status": "isolated_route_budget_candidate",
+  "model": {
+    "differentiable_route_budget": true
+  },
+  "claim_boundary": "Tests only differentiable single- and multi-predecessor route budgets. Program-token fusion and query separation remain disabled."
+}

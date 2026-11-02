@@ -8,6 +8,7 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader
 
 from floorflow.evaluation.atom_layer_proxies import layer_proxy_metrics
+from floorflow.evaluation.cad_plan_metrics import cad_wall_plan_metrics
 from floorflow.evaluation.conditional_ceiling import room_macro_iou_numpy
 from floorflow.evaluation.housemind_structure import housemind_style_metrics
 from floorflow.evaluation.room_metric_suite import (
@@ -23,10 +24,14 @@ from floorflow.objectives.room_adjacency import (
     room_adjacency_proxy_metrics,
 )
 from floorflow.objectives.room_query_separation import (
-    count_gated_query_separation,
+    per_case_query_separation,
 )
 from floorflow.representation.core import extract_room_instances
 from floorflow.representation.layered_floorplan import LayeredFloorplan
+from floorflow.training.cad_wall_candidate_training import (
+    build_candidate_batch,
+    compose_source_candidate_plans,
+)
 from floorflow.training.typed_channel_eval import (
     compose_stage_labels,
     family_metrics,
@@ -73,11 +78,7 @@ def validate_typed_channel(
     for target, footprint, floor_ids, names, image in loader:
         target = target.to(device, non_blocking=non_blocking)
         footprint = footprint.to(device, non_blocking=non_blocking)
-        cached = (
-            read_frozen_batch(cache_root, "val", names, device)
-            if cache_root is not None
-            else None
-        )
+        cached = read_frozen_batch(cache_root, "val", names, device) if cache_root is not None else None
         if cached is None:
             controls = controls_loader(
                 args.predicted_root,
@@ -105,9 +106,7 @@ def validate_typed_channel(
             controls, features = cached
         output = model(controls, footprint, cached_features=features)
         room_proxy_available = (
-            row_sink is not None
-            and "room_instance_mask_logits" in output
-            and "room_instance_class_logits" in output
+            row_sink is not None and "room_instance_mask_logits" in output and "room_instance_class_logits" in output
         )
         if room_proxy_available:
             target_classes, target_masks, target_valid = room_mask_targets(
@@ -124,12 +123,8 @@ def validate_typed_channel(
             room_predictions = {
                 "class_logits": output["room_instance_class_logits"],
                 "mask_logits": room_mask_logits,
-                "query_existence_logits": output.get(
-                    "query_existence_logits"
-                ),
-                "query_count_selection_mask": output.get(
-                    "query_count_selection_mask"
-                ),
+                "query_existence_logits": output.get("query_existence_logits"),
+                "query_count_selection_mask": output.get("query_count_selection_mask"),
                 "aux_mask_logits": [
                     F.interpolate(
                         value,
@@ -142,34 +137,17 @@ def validate_typed_channel(
                 "aux_class_logits": output["room_instance_aux_class_logits"],
             }
             count_targets = target_valid.sum(dim=1)
-            query_separation_proxy = tuple(
-                count_gated_query_separation(
-                    room_predictions["class_logits"][index : index + 1],
-                    room_predictions["mask_logits"][index : index + 1],
-                    (
-                        None
-                        if room_predictions["query_existence_logits"] is None
-                        else room_predictions["query_existence_logits"][
-                            index : index + 1
-                        ]
-                    ),
-                    (
-                        None
-                        if room_predictions["query_count_selection_mask"] is None
-                        else room_predictions["query_count_selection_mask"][
-                            index : index + 1
-                        ]
-                    ),
-                )
-                for index in range(target.shape[0])
+            query_separation_proxy = per_case_query_separation(
+                room_predictions["class_logits"],
+                room_predictions["mask_logits"],
+                room_predictions["query_existence_logits"],
+                room_predictions["query_count_selection_mask"],
             )
             count_probability = (
                 output["room_count_logits"].softmax(dim=-1)
                 if "room_count_logits" in output
                 else poisson_binomial_count_probability(
-                    query_existence_from_class_logits(
-                        output["room_instance_class_logits"]
-                    )
+                    query_existence_from_class_logits(output["room_instance_class_logits"])
                 )
             )
             count_ece = multiclass_ece(
@@ -182,13 +160,60 @@ def validate_typed_channel(
                 dtype=count_probability.dtype,
             )
             expected_count = (count_probability * count_values).sum(dim=-1)
+        opening_family_map = controls.get("opening_family_probability")
+        if isinstance(opening_family_map, torch.Tensor) and (
+            opening_family_map.shape[-2:] != target.shape[-2:]
+        ):
+            opening_family_map = F.interpolate(
+                opening_family_map.float(),
+                size=target.shape[-2:],
+                mode="bilinear",
+                align_corners=False,
+            )
         rendered, visible = compose_stage_labels(
             output,
             tuple(target.shape[-2:]),
             footprint,
             taxonomy,
             furniture_query_threshold=args.furniture_query_threshold,
+            opening_family_probability=opening_family_map,
         )
+        source5_metrics = None
+        if bool(
+            getattr(
+                args,
+                "evaluate_deterministic_wall_source",
+                False,
+            )
+        ):
+            opening_probability = controls.get("opening_family_probability")
+            if not isinstance(opening_probability, torch.Tensor):
+                raise ValueError("source-5 evaluation requires opening family probability")
+            candidates = build_candidate_batch(
+                controls,
+                output,
+                footprint,
+                taxonomy,
+                minimum_room_area=64,
+                max_walls=128,
+                device=footprint.device,
+                candidate_mode="skeleton_portfolio",
+            )
+            source5_plans = compose_source_candidate_plans(
+                candidates,
+                opening_probability,
+                float(footprint.shape[-1]),
+                taxonomy,
+                source=5,
+            )
+            source5_metrics = [
+                cad_wall_plan_metrics(
+                    source5_plans[index],
+                    target[index].cpu().numpy(),
+                    taxonomy,
+                )
+                for index in range(target.shape[0])
+            ]
         for index in range(target.shape[0]):
             room_prediction = rendered.room_labels[index]
             room_support = torch.isin(room_prediction, room_ids)
@@ -205,32 +230,18 @@ def validate_typed_channel(
             )
             target_room_pixels = target_support.sum().clamp_min(1)
             room_class_pixel_accuracy = float(
-                (
-                    (room_prediction == target[index])
-                    & target_support
-                ).sum()
-                / target_room_pixels
+                ((room_prediction == target[index]) & target_support).sum() / target_room_pixels
             )
             class_recalls = []
             for room_id in room_ids.tolist():
                 target_class = target[index] == room_id
                 if target_class.any():
                     class_recalls.append(
-                        float(
-                            (
-                                (room_prediction == room_id)
-                                & target_class
-                            ).sum()
-                            / target_class.sum()
-                        )
+                        float(((room_prediction == room_id) & target_class).sum() / target_class.sum())
                     )
-            room_class_macro_recall = (
-                float(np.mean(class_recalls)) if class_recalls else 0.0
-            )
+            room_class_macro_recall = float(np.mean(class_recalls)) if class_recalls else 0.0
             union = (room_support | target_support).sum().clamp_min(1)
-            room_union_iou = float(
-                (room_support & target_support).sum() / union
-            )
+            room_union_iou = float((room_support & target_support).sum() / union)
             suite = room_metric_suite(
                 room_prediction.cpu().numpy(),
                 target[index].cpu().numpy(),
@@ -246,10 +257,11 @@ def validate_typed_channel(
                 target[index].cpu().numpy(),
                 footprint[index].cpu().numpy(),
                 taxonomy,
-                predicted_room_support=(
-                    torch.isin(rendered.room_labels[index], room_ids)
-                    .cpu()
-                    .numpy()
+                predicted_room_support=(torch.isin(rendered.room_labels[index], room_ids).cpu().numpy()),
+                opening_family_probability=(
+                    opening_family_map[index].cpu().numpy()
+                    if isinstance(opening_family_map, torch.Tensor)
+                    else None
                 ),
             )
             graph_metrics = housemind_style_metrics(
@@ -274,34 +286,16 @@ def validate_typed_channel(
                 visible_labels=visible[index : index + 1],
             )
             row = {
-                "room_macro_iou": float(
-                    suite["visible_semantic"]["room_macro_iou"]
-                ),
+                "room_macro_iou": float(suite["visible_semantic"]["room_macro_iou"]),
                 "room_f1": float(family["room_f1"]),
-                "instance_geometric_iou": float(
-                    instance["matched_geometric_iou"]
-                ),
-                "instance_f1": float(
-                    instance["instance_f1_at_threshold"]
-                ),
-                "instance_type_accuracy": float(
-                    instance["matched_type_accuracy"]
-                ),
-                "instance_count_abs_error": float(
-                    instance["count_abs_error"]
-                ),
-                "room_support_iou": float(
-                    suite["occlusion_aware_support"]["room_support_iou"]
-                ),
-                "query_separation_proxy": float(
-                    query_separation_proxy[index]
-                ),
+                "instance_geometric_iou": float(instance["matched_geometric_iou"]),
+                "instance_f1": float(instance["instance_f1_at_threshold"]),
+                "instance_type_accuracy": float(instance["matched_type_accuracy"]),
+                "instance_count_abs_error": float(instance["count_abs_error"]),
+                "room_support_iou": float(suite["occlusion_aware_support"]["room_support_iou"]),
+                "query_separation_proxy": float(query_separation_proxy[index]),
                 **family,
-                **{
-                    key: value
-                    for key, value in layer_proxies.items()
-                    if key.startswith("opening_vector_")
-                },
+                **{key: value for key, value in layer_proxies.items() if key.startswith("opening_vector_")},
                 "node_f1": float(graph_metrics["node_f1"]),
                 "node_precision": float(graph_metrics["node_precision"]),
                 "node_recall": float(graph_metrics["node_recall"]),
@@ -311,6 +305,8 @@ def validate_typed_channel(
                 "ged": float(graph_metrics["ged"]),
                 **typed_channel_route_metrics(output),
             }
+            if source5_metrics is not None:
+                row.update({f"wall_source5_{name}": value for name, value in source5_metrics[index].items()})
             if "room_adjacency_logits" in output:
                 row.update(
                     room_adjacency_proxy_metrics(
@@ -322,19 +318,10 @@ def validate_typed_channel(
             if row_sink is not None and room_proxy_available:
                 query_metrics = room_mask_metrics(
                     {
-                        "class_logits": room_predictions["class_logits"][
-                            index : index + 1
-                        ],
-                        "mask_logits": room_predictions["mask_logits"][
-                            index : index + 1
-                        ],
-                        "aux_mask_logits": [
-                            value[index : index + 1]
-                            for value in room_predictions["aux_mask_logits"]
-                        ],
-                        "aux_class_logits": room_predictions[
-                            "aux_class_logits"
-                        ][index : index + 1],
+                        "class_logits": room_predictions["class_logits"][index : index + 1],
+                        "mask_logits": room_predictions["mask_logits"][index : index + 1],
+                        "aux_mask_logits": [value[index : index + 1] for value in room_predictions["aux_mask_logits"]],
+                        "aux_class_logits": room_predictions["aux_class_logits"][index : index + 1],
                     },
                     target_classes[index : index + 1],
                     target_masks[index : index + 1],
@@ -371,12 +358,7 @@ def validate_typed_channel(
                     mode="bilinear",
                     align_corners=False,
                 )
-                dense_predicted_labels = (
-                    room_ids[
-                        dense_instance_logits[0].argmax(dim=0)
-                    ]
-                    * footprint[index].long()
-                )
+                dense_predicted_labels = room_ids[dense_instance_logits[0].argmax(dim=0)] * footprint[index].long()
                 dense_predicted_count = len(
                     extract_room_instances(
                         dense_predicted_labels.cpu().numpy(),
@@ -384,72 +366,50 @@ def validate_typed_channel(
                         min_area=8,
                     )
                 )
+                canonical_metrics = {
+                    "room_macro_iou": row["room_macro_iou"],
+                    "instance_f1": row["instance_f1"],
+                    "instance_count_abs_error": row["instance_count_abs_error"],
+                    "instance_type_accuracy": row["instance_type_accuracy"],
+                    "wall_f1": row["wall_f1"],
+                    "opening_f1": row["opening_f1"],
+                    "furniture_f1": row["furniture_f1"],
+                    "node_f1": row["node_f1"],
+                    "edge_overlap": row["edge_overlap"],
+                    "ged": row["ged"],
+                }
+                canonical_metrics.update(
+                    {name: value for name, value in row.items() if name.startswith("wall_source5_")}
+                )
                 row_sink.append(
                     {
                         "seed": int(args.seed),
                         "checkpoint": f"epoch_{int(epoch or 0):02d}",
                         "case_id": str(names[index]),
                         "proxy_metrics": {
-                            "query_mask_dice": float(
-                                query_metrics["mask_iou"]
-                            ),
-                            "matched_class_accuracy": float(
-                                query_metrics["matched_class_accuracy"]
-                            ),
+                            "query_mask_dice": float(query_metrics["mask_iou"]),
+                            "matched_class_accuracy": float(query_metrics["matched_class_accuracy"]),
                             "soft_query_mask_iou": soft_query_iou,
-                            "query_separation_proxy": float(
-                                query_separation_proxy[index]
-                            ),
-                            "query_rendered_room_macro_iou": float(
-                                query_metrics["rendered_room_macro_iou"]
-                            ),
+                            "query_separation_proxy": float(query_separation_proxy[index]),
+                            "query_rendered_room_macro_iou": float(query_metrics["rendered_room_macro_iou"]),
                             "room_union_iou": room_union_iou,
                             "fast_room_macro_iou": fast_room_macro_iou,
-                            "room_class_pixel_accuracy": (
-                                room_class_pixel_accuracy
-                            ),
-                            "room_class_macro_recall": (
-                                room_class_macro_recall
-                            ),
-                            "matched_query_class_nll": (
-                                query_class_metrics["nll"]
-                            ),
-                            "matched_query_class_margin": (
-                                query_class_metrics["margin"]
-                            ),
-                            "fast_instance_type_accuracy": (
-                                fast_instance_type_accuracy
-                            ),
-                            "count_distribution_ece": float(
-                                count_ece[index]
-                            ),
-                            "count_expected_abs_error": float(
-                                (
-                                    expected_count[index]
-                                    - count_targets[index]
-                                ).abs()
-                            ),
+                            "room_class_pixel_accuracy": (room_class_pixel_accuracy),
+                            "room_class_macro_recall": (room_class_macro_recall),
+                            "matched_query_class_nll": (query_class_metrics["nll"]),
+                            "matched_query_class_margin": (query_class_metrics["margin"]),
+                            "fast_instance_type_accuracy": (fast_instance_type_accuracy),
+                            "count_distribution_ece": float(count_ece[index]),
+                            "count_expected_abs_error": float((expected_count[index] - count_targets[index]).abs()),
                             "count_argmax_abs_error": float(
-                                (
-                                    count_probability[index].argmax()
-                                    - count_targets[index]
-                                ).abs()
+                                (count_probability[index].argmax() - count_targets[index]).abs()
                             ),
                             "count_target_nll": float(
-                                -count_probability[index, count_targets[index]]
-                                .clamp_min(1.0e-8)
-                                .log()
+                                -count_probability[index, count_targets[index]].clamp_min(1.0e-8).log()
                             ),
-                            "dense_predicted_count_abs_error": abs(
-                                dense_predicted_count
-                                - int(count_targets[index])
-                            ),
-                            "program_room_assignment_accuracy": (
-                                program_metrics["accuracy"]
-                            ),
-                            "program_room_assignment_loss": (
-                                program_metrics["loss"]
-                            ),
+                            "dense_predicted_count_abs_error": abs(dense_predicted_count - int(count_targets[index])),
+                            "program_room_assignment_accuracy": (program_metrics["accuracy"]),
+                            "program_room_assignment_loss": (program_metrics["loss"]),
                             "wall_pixel_f1": row["wall_f1"],
                             "opening_pixel_f1": row["opening_f1"],
                             "furniture_pixel_f1": row["furniture_f1"],
@@ -458,28 +418,10 @@ def validate_typed_channel(
                             "ged": row["ged"],
                             **layer_proxies,
                         },
-                        "canonical_metrics": {
-                            "room_macro_iou": row["room_macro_iou"],
-                            "instance_f1": row["instance_f1"],
-                            "instance_count_abs_error": row[
-                                "instance_count_abs_error"
-                            ],
-                            "instance_type_accuracy": row[
-                                "instance_type_accuracy"
-                            ],
-                            "wall_f1": row["wall_f1"],
-                            "opening_f1": row["opening_f1"],
-                            "furniture_f1": row["furniture_f1"],
-                            "node_f1": row["node_f1"],
-                            "edge_overlap": row["edge_overlap"],
-                            "ged": row["ged"],
-                        },
+                        "canonical_metrics": canonical_metrics,
                     }
                 )
-    return {
-        key: float(np.mean([row[key] for row in rows]))
-        for key in rows[0]
-    }
+    return {key: float(np.mean([row[key] for row in rows])) for key in rows[0]}
 
 
 def _fast_instance_type_accuracy(
@@ -491,11 +433,7 @@ def _fast_instance_type_accuracy(
     expected = extract_room_instances(target, taxonomy, min_area=8)
     matches = matched_room_instances(predicted, expected)
     accepted = [match for match in matches if match.iou >= 0.5]
-    return (
-        float(np.mean([match.type_correct for match in accepted]))
-        if accepted
-        else 0.0
-    )
+    return float(np.mean([match.type_correct for match in accepted])) if accepted else 0.0
 
 
 __all__ = ["validate_typed_channel"]

@@ -1,0 +1,11 @@
+{
+  "schema_version": "predicted-channel-v6-graph-bypass",
+  "extends": "predicted_channel_v6_room_identity_adapter_control.json",
+  "status": "full_graph_conditioning_ablation",
+  "model": {
+    "area_preserving_mask_residual": "bypass"
+  },
+  "zero_shot_status": "rejected_as_inference_replacement_on_val32",
+  "zero_shot_report": "outputs/reports/graph_bypass_same_weight_val32_seed19_compare_v1.json",
+  "claim_boundary": "Keeps adjacency prediction observable while bypassing graph query/class/mask conditioning. Diagnostic ablation only until matched training."
+}

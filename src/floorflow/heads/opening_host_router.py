@@ -84,13 +84,29 @@ class OpeningHostRouter(nn.Module):
             else None
         )
         if self.route_budget is not None and self.route_gate is not None:
-            nn.init.zeros_(self.route_budget[-1].weight)
+            nn.init.normal_(
+                self.route_budget[-1].weight,
+                mean=0.0,
+                std=1.0e-3,
+            )
             nn.init.zeros_(self.route_budget[-1].bias)
-            nn.init.zeros_(self.route_gate[-1].weight)
+            nn.init.normal_(
+                self.route_gate[-1].weight,
+                mean=0.0,
+                std=1.0e-3,
+            )
             nn.init.zeros_(self.route_gate[-1].bias)
-        nn.init.zeros_(self.interval[-1].weight)
+        nn.init.normal_(
+            self.interval[-1].weight,
+            mean=0.0,
+            std=1.0e-3,
+        )
         nn.init.zeros_(self.interval[-1].bias)
-        nn.init.zeros_(self.host_bias.weight)
+        nn.init.normal_(
+            self.host_bias.weight,
+            mean=0.0,
+            std=1.0e-3,
+        )
         nn.init.zeros_(self.host_bias.bias)
 
     def forward(

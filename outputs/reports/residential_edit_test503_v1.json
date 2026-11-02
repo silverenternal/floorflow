@@ -1,0 +1,934 @@
+{
+  "status": "passed",
+  "scope": "CubiCasa5K test503 strict-locality control-gated editing",
+  "seeds": [
+    19,
+    20,
+    21,
+    22,
+    23
+  ],
+  "operations": {
+    "room_type": {
+      "per_seed": {
+        "19": {
+          "cases": 487,
+          "primary_method": "typed_before_floorflow_after",
+          "primary_edit": {
+            "delta_iou": 0.9991991840110203,
+            "delta_mse": 6.915920129147678e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9961870085242883,
+            "after_room_support_iou": 0.9752531483694173
+          },
+          "floorflow": {
+            "delta_iou": 0.9989753668365582,
+            "delta_mse": 8.490006360203865e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967966396824914,
+            "after_room_support_iou": 0.9752531483694173
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.13716038477717304,
+            "delta_mse": 0.12374033771824136,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        },
+        "20": {
+          "cases": 487,
+          "primary_method": "typed_before_floorflow_after",
+          "primary_edit": {
+            "delta_iou": 0.9991991840110203,
+            "delta_mse": 6.915920129147678e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9961870085242883,
+            "after_room_support_iou": 0.9752531483694173
+          },
+          "floorflow": {
+            "delta_iou": 0.9989753668365582,
+            "delta_mse": 8.490006360203865e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967966396824914,
+            "after_room_support_iou": 0.9752531483694173
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.13716038477717304,
+            "delta_mse": 0.12374033771824136,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        },
+        "21": {
+          "cases": 487,
+          "primary_method": "typed_before_floorflow_after",
+          "primary_edit": {
+            "delta_iou": 0.9991991840110203,
+            "delta_mse": 6.915920129147678e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9961870085242883,
+            "after_room_support_iou": 0.9752531483694173
+          },
+          "floorflow": {
+            "delta_iou": 0.9989753668365582,
+            "delta_mse": 8.490006360203865e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967966396824914,
+            "after_room_support_iou": 0.9752531483694173
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.13716038477717304,
+            "delta_mse": 0.12374033771824136,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        },
+        "22": {
+          "cases": 487,
+          "primary_method": "typed_before_floorflow_after",
+          "primary_edit": {
+            "delta_iou": 0.9991991840110203,
+            "delta_mse": 6.915920129147678e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9961870085242883,
+            "after_room_support_iou": 0.9752531483694173
+          },
+          "floorflow": {
+            "delta_iou": 0.9989753668365582,
+            "delta_mse": 8.490006360203865e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967966396824914,
+            "after_room_support_iou": 0.9752531483694173
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.13716038477717304,
+            "delta_mse": 0.12374033771824136,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        },
+        "23": {
+          "cases": 487,
+          "primary_method": "typed_before_floorflow_after",
+          "primary_edit": {
+            "delta_iou": 0.9991991840110203,
+            "delta_mse": 6.915920129147678e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9961870085242883,
+            "after_room_support_iou": 0.9752531483694173
+          },
+          "floorflow": {
+            "delta_iou": 0.9989753668365582,
+            "delta_mse": 8.490006360203865e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967966396824914,
+            "after_room_support_iou": 0.9752531483694173
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.13716038477717304,
+            "delta_mse": 0.12374033771824136,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        }
+      },
+      "primary_edit_summary": {
+        "delta_iou": {
+          "mean": 0.9991991840110203,
+          "std": 0.0,
+          "min": 0.9991991840110203,
+          "max": 0.9991991840110203
+        },
+        "delta_mse": {
+          "mean": 6.915920129147678e-05,
+          "std": 0.0,
+          "min": 6.915920129147678e-05,
+          "max": 6.915920129147678e-05
+        },
+        "outside_exact_ratio": {
+          "mean": 1.0,
+          "std": 0.0,
+          "min": 1.0,
+          "max": 1.0
+        },
+        "outside_changed_pixels": {
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        }
+      },
+      "seed_variation": {
+        "unit": "five repeated execution seeds on identical test503 rows",
+        "primary_metric": "delta_iou",
+        "range": [
+          0.9991991840110203,
+          0.9991991840110203
+        ],
+        "standard_deviation": 0.0,
+        "interpretation": "Repeated-seed variation only; not an estimate of floorplan population variance."
+      },
+      "paired_vs_raster2seq_local": {
+        "cases": 487,
+        "mean_delta": 0.8620387992338472,
+        "median_delta": 0.9865951742627346,
+        "rank_biserial": 1.0,
+        "statistic": 97903.0,
+        "p_value": 6.018544312934138e-75
+      }
+    },
+    "room_add": {
+      "per_seed": {
+        "19": {
+          "cases": 495,
+          "primary_method": "typed_before_floorflow_after",
+          "primary_edit": {
+            "delta_iou": 0.9998006091318032,
+            "delta_mse": 3.028145450419591e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9964304695764782,
+            "after_room_support_iou": 0.9918299037941972
+          },
+          "floorflow": {
+            "delta_iou": 0.9995794438409717,
+            "delta_mse": 5.510762010714524e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967156625421665,
+            "after_room_support_iou": 0.9918299037941972
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.16675626231053742,
+            "delta_mse": 0.07635157590948347,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        },
+        "20": {
+          "cases": 495,
+          "primary_method": "typed_before_floorflow_after",
+          "primary_edit": {
+            "delta_iou": 0.9998006091318032,
+            "delta_mse": 3.028145450419591e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9964304695764782,
+            "after_room_support_iou": 0.9918299037941972
+          },
+          "floorflow": {
+            "delta_iou": 0.9995794438409717,
+            "delta_mse": 5.510762010714524e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967156625421665,
+            "after_room_support_iou": 0.9918299037941972
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.16675626231053742,
+            "delta_mse": 0.07635157590948347,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        },
+        "21": {
+          "cases": 495,
+          "primary_method": "typed_before_floorflow_after",
+          "primary_edit": {
+            "delta_iou": 0.9998006091318032,
+            "delta_mse": 3.028145450419591e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9964304695764782,
+            "after_room_support_iou": 0.9918299037941972
+          },
+          "floorflow": {
+            "delta_iou": 0.9995794438409717,
+            "delta_mse": 5.510762010714524e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967156625421665,
+            "after_room_support_iou": 0.9918299037941972
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.16675626231053742,
+            "delta_mse": 0.07635157590948347,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        },
+        "22": {
+          "cases": 495,
+          "primary_method": "typed_before_floorflow_after",
+          "primary_edit": {
+            "delta_iou": 0.9998006091318032,
+            "delta_mse": 3.028145450419591e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9964304695764782,
+            "after_room_support_iou": 0.9918299037941972
+          },
+          "floorflow": {
+            "delta_iou": 0.9995794438409717,
+            "delta_mse": 5.510762010714524e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967156625421665,
+            "after_room_support_iou": 0.9918299037941972
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.16675626231053742,
+            "delta_mse": 0.07635157590948347,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        },
+        "23": {
+          "cases": 495,
+          "primary_method": "typed_before_floorflow_after",
+          "primary_edit": {
+            "delta_iou": 0.9998006091318032,
+            "delta_mse": 3.028145450419591e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9964304695764782,
+            "after_room_support_iou": 0.9918299037941972
+          },
+          "floorflow": {
+            "delta_iou": 0.9995794438409717,
+            "delta_mse": 5.510762010714524e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967156625421665,
+            "after_room_support_iou": 0.9918299037941972
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.16675626231053742,
+            "delta_mse": 0.07635157590948347,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        }
+      },
+      "primary_edit_summary": {
+        "delta_iou": {
+          "mean": 0.9998006091318032,
+          "std": 0.0,
+          "min": 0.9998006091318032,
+          "max": 0.9998006091318032
+        },
+        "delta_mse": {
+          "mean": 3.028145450419591e-05,
+          "std": 0.0,
+          "min": 3.028145450419591e-05,
+          "max": 3.028145450419591e-05
+        },
+        "outside_exact_ratio": {
+          "mean": 1.0,
+          "std": 0.0,
+          "min": 1.0,
+          "max": 1.0
+        },
+        "outside_changed_pixels": {
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        }
+      },
+      "seed_variation": {
+        "unit": "five repeated execution seeds on identical test503 rows",
+        "primary_metric": "delta_iou",
+        "range": [
+          0.9998006091318032,
+          0.9998006091318032
+        ],
+        "standard_deviation": 0.0,
+        "interpretation": "Repeated-seed variation only; not an estimate of floorplan population variance."
+      },
+      "paired_vs_raster2seq_local": {
+        "cases": 495,
+        "mean_delta": 0.8330443468212658,
+        "median_delta": 0.955719557195572,
+        "rank_biserial": 1.0,
+        "statistic": 115440.0,
+        "p_value": 9.319112824043556e-81
+      }
+    },
+    "room_remove": {
+      "per_seed": {
+        "19": {
+          "cases": 500,
+          "primary_method": "typed_before_floorflow_after",
+          "primary_edit": {
+            "delta_iou": 0.9997559952768602,
+            "delta_mse": 1.8663442751858384e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9962322821798237,
+            "after_room_support_iou": 0.8684297277529712
+          },
+          "floorflow": {
+            "delta_iou": 0.9962322097024366,
+            "delta_mse": 0.0005180276873943512,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967304244466881,
+            "after_room_support_iou": 0.8684297277529712
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.17726628103840875,
+            "delta_mse": 0.12230392756292713,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        },
+        "20": {
+          "cases": 500,
+          "primary_method": "typed_before_floorflow_after",
+          "primary_edit": {
+            "delta_iou": 0.9997559952768602,
+            "delta_mse": 1.8663442751858384e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9962322821798237,
+            "after_room_support_iou": 0.8684297277529712
+          },
+          "floorflow": {
+            "delta_iou": 0.9962322097024366,
+            "delta_mse": 0.0005180276873943512,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967304244466881,
+            "after_room_support_iou": 0.8684297277529712
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.17726628103840875,
+            "delta_mse": 0.12230392756292713,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        },
+        "21": {
+          "cases": 500,
+          "primary_method": "typed_before_floorflow_after",
+          "primary_edit": {
+            "delta_iou": 0.9997559952768602,
+            "delta_mse": 1.8663442751858384e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9962322821798237,
+            "after_room_support_iou": 0.8684297277529712
+          },
+          "floorflow": {
+            "delta_iou": 0.9962322097024366,
+            "delta_mse": 0.0005180276873943512,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967304244466881,
+            "after_room_support_iou": 0.8684297277529712
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.17726628103840875,
+            "delta_mse": 0.12230392756292713,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        },
+        "22": {
+          "cases": 500,
+          "primary_method": "typed_before_floorflow_after",
+          "primary_edit": {
+            "delta_iou": 0.9997559952768602,
+            "delta_mse": 1.8663442751858384e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9962322821798237,
+            "after_room_support_iou": 0.8684297277529712
+          },
+          "floorflow": {
+            "delta_iou": 0.9962322097024366,
+            "delta_mse": 0.0005180276873943512,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967304244466881,
+            "after_room_support_iou": 0.8684297277529712
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.17726628103840875,
+            "delta_mse": 0.12230392756292713,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        },
+        "23": {
+          "cases": 500,
+          "primary_method": "typed_before_floorflow_after",
+          "primary_edit": {
+            "delta_iou": 0.9997559952768602,
+            "delta_mse": 1.8663442751858384e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9962322821798237,
+            "after_room_support_iou": 0.8684297277529712
+          },
+          "floorflow": {
+            "delta_iou": 0.9962322097024366,
+            "delta_mse": 0.0005180276873943512,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967304244466881,
+            "after_room_support_iou": 0.8684297277529712
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.17726628103840875,
+            "delta_mse": 0.12230392756292713,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        }
+      },
+      "primary_edit_summary": {
+        "delta_iou": {
+          "mean": 0.9997559952768602,
+          "std": 0.0,
+          "min": 0.9997559952768602,
+          "max": 0.9997559952768602
+        },
+        "delta_mse": {
+          "mean": 1.8663442751858384e-05,
+          "std": 0.0,
+          "min": 1.8663442751858384e-05,
+          "max": 1.8663442751858384e-05
+        },
+        "outside_exact_ratio": {
+          "mean": 1.0,
+          "std": 0.0,
+          "min": 1.0,
+          "max": 1.0
+        },
+        "outside_changed_pixels": {
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        }
+      },
+      "seed_variation": {
+        "unit": "five repeated execution seeds on identical test503 rows",
+        "primary_metric": "delta_iou",
+        "range": [
+          0.9997559952768602,
+          0.9997559952768602
+        ],
+        "standard_deviation": 0.0,
+        "interpretation": "Repeated-seed variation only; not an estimate of floorplan population variance."
+      },
+      "paired_vs_raster2seq_local": {
+        "cases": 500,
+        "mean_delta": 0.8224897142384515,
+        "median_delta": 0.9862532832907003,
+        "rank_biserial": 1.0,
+        "statistic": 96141.0,
+        "p_value": 1.595401766153825e-74
+      }
+    },
+    "opening_delete": {
+      "per_seed": {
+        "19": {
+          "cases": 502,
+          "primary_method": "floorflow",
+          "primary_edit": {
+            "delta_iou": 0.9567032400416569,
+            "delta_mse": 9.582009079892316e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967420799228183,
+            "after_room_support_iou": 0.9935004471249792
+          },
+          "floorflow": {
+            "delta_iou": 0.9567032400416569,
+            "delta_mse": 9.582009079892316e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967420799228183,
+            "after_room_support_iou": 0.9935004471249792
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.18949084680718686,
+            "delta_mse": 0.014699093935328473,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        },
+        "20": {
+          "cases": 502,
+          "primary_method": "floorflow",
+          "primary_edit": {
+            "delta_iou": 0.9567032400416569,
+            "delta_mse": 9.582009079892316e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967420799228183,
+            "after_room_support_iou": 0.9935004471249792
+          },
+          "floorflow": {
+            "delta_iou": 0.9567032400416569,
+            "delta_mse": 9.582009079892316e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967420799228183,
+            "after_room_support_iou": 0.9935004471249792
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.18949084680718686,
+            "delta_mse": 0.014699093935328473,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        },
+        "21": {
+          "cases": 502,
+          "primary_method": "floorflow",
+          "primary_edit": {
+            "delta_iou": 0.9567032400416569,
+            "delta_mse": 9.582009079892316e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967420799228183,
+            "after_room_support_iou": 0.9935004471249792
+          },
+          "floorflow": {
+            "delta_iou": 0.9567032400416569,
+            "delta_mse": 9.582009079892316e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967420799228183,
+            "after_room_support_iou": 0.9935004471249792
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.18949084680718686,
+            "delta_mse": 0.014699093935328473,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        },
+        "22": {
+          "cases": 502,
+          "primary_method": "floorflow",
+          "primary_edit": {
+            "delta_iou": 0.9567032400416569,
+            "delta_mse": 9.582009079892316e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967420799228183,
+            "after_room_support_iou": 0.9935004471249792
+          },
+          "floorflow": {
+            "delta_iou": 0.9567032400416569,
+            "delta_mse": 9.582009079892316e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967420799228183,
+            "after_room_support_iou": 0.9935004471249792
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.18949084680718686,
+            "delta_mse": 0.014699093935328473,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        },
+        "23": {
+          "cases": 502,
+          "primary_method": "floorflow",
+          "primary_edit": {
+            "delta_iou": 0.9567032400416569,
+            "delta_mse": 9.582009079892316e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967420799228183,
+            "after_room_support_iou": 0.9935004471249792
+          },
+          "floorflow": {
+            "delta_iou": 0.9567032400416569,
+            "delta_mse": 9.582009079892316e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967420799228183,
+            "after_room_support_iou": 0.9935004471249792
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.18949084680718686,
+            "delta_mse": 0.014699093935328473,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        }
+      },
+      "primary_edit_summary": {
+        "delta_iou": {
+          "mean": 0.9567032400416569,
+          "std": 0.0,
+          "min": 0.9567032400416569,
+          "max": 0.9567032400416569
+        },
+        "delta_mse": {
+          "mean": 9.582009079892316e-05,
+          "std": 0.0,
+          "min": 9.582009079892316e-05,
+          "max": 9.582009079892316e-05
+        },
+        "outside_exact_ratio": {
+          "mean": 1.0,
+          "std": 0.0,
+          "min": 1.0,
+          "max": 1.0
+        },
+        "outside_changed_pixels": {
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        }
+      },
+      "seed_variation": {
+        "unit": "five repeated execution seeds on identical test503 rows",
+        "primary_metric": "delta_iou",
+        "range": [
+          0.9567032400416569,
+          0.9567032400416569
+        ],
+        "standard_deviation": 0.0,
+        "interpretation": "Repeated-seed variation only; not an estimate of floorplan population variance."
+      },
+      "paired_vs_raster2seq_local": {
+        "cases": 502,
+        "mean_delta": 0.7672123932344699,
+        "median_delta": 0.8754310344827586,
+        "rank_biserial": 0.9977811998079248,
+        "statistic": 120652.0,
+        "p_value": 2.9018213661083105e-82
+      }
+    },
+    "furniture_delete": {
+      "per_seed": {
+        "19": {
+          "cases": 495,
+          "primary_method": "floorflow",
+          "primary_edit": {
+            "delta_iou": 0.9878121218363792,
+            "delta_mse": 8.32390730970979e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967233333879992,
+            "after_room_support_iou": 0.9889989833550474
+          },
+          "floorflow": {
+            "delta_iou": 0.9878121218363792,
+            "delta_mse": 8.32390730970979e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967233333879992,
+            "after_room_support_iou": 0.9889989833550474
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.14536710151679758,
+            "delta_mse": 0.029981939606615483,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        },
+        "20": {
+          "cases": 495,
+          "primary_method": "floorflow",
+          "primary_edit": {
+            "delta_iou": 0.9878121218363792,
+            "delta_mse": 8.32390730970979e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967233333879992,
+            "after_room_support_iou": 0.9889989833550474
+          },
+          "floorflow": {
+            "delta_iou": 0.9878121218363792,
+            "delta_mse": 8.32390730970979e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967233333879992,
+            "after_room_support_iou": 0.9889989833550474
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.14536710151679758,
+            "delta_mse": 0.029981939606615483,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        },
+        "21": {
+          "cases": 495,
+          "primary_method": "floorflow",
+          "primary_edit": {
+            "delta_iou": 0.9878121218363792,
+            "delta_mse": 8.32390730970979e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967233333879992,
+            "after_room_support_iou": 0.9889989833550474
+          },
+          "floorflow": {
+            "delta_iou": 0.9878121218363792,
+            "delta_mse": 8.32390730970979e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967233333879992,
+            "after_room_support_iou": 0.9889989833550474
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.14536710151679758,
+            "delta_mse": 0.029981939606615483,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        },
+        "22": {
+          "cases": 495,
+          "primary_method": "floorflow",
+          "primary_edit": {
+            "delta_iou": 0.9878121218363792,
+            "delta_mse": 8.32390730970979e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967233333879992,
+            "after_room_support_iou": 0.9889989833550474
+          },
+          "floorflow": {
+            "delta_iou": 0.9878121218363792,
+            "delta_mse": 8.32390730970979e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967233333879992,
+            "after_room_support_iou": 0.9889989833550474
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.14536710151679758,
+            "delta_mse": 0.029981939606615483,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        },
+        "23": {
+          "cases": 495,
+          "primary_method": "floorflow",
+          "primary_edit": {
+            "delta_iou": 0.9878121218363792,
+            "delta_mse": 8.32390730970979e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967233333879992,
+            "after_room_support_iou": 0.9889989833550474
+          },
+          "floorflow": {
+            "delta_iou": 0.9878121218363792,
+            "delta_mse": 8.32390730970979e-05,
+            "outside_exact_ratio": 1.0,
+            "outside_changed_pixels": 0.0,
+            "before_room_support_iou": 0.9967233333879992,
+            "after_room_support_iou": 0.9889989833550474
+          },
+          "raster2seq_local": {
+            "delta_iou": 0.14536710151679758,
+            "delta_mse": 0.029981939606615483,
+            "outside_exact_ratio": 1.0
+          },
+          "raster2seq_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json"
+        }
+      },
+      "primary_edit_summary": {
+        "delta_iou": {
+          "mean": 0.9878121218363793,
+          "std": 1.2412670766236366e-16,
+          "min": 0.9878121218363792,
+          "max": 0.9878121218363792
+        },
+        "delta_mse": {
+          "mean": 8.32390730970979e-05,
+          "std": 0.0,
+          "min": 8.32390730970979e-05,
+          "max": 8.32390730970979e-05
+        },
+        "outside_exact_ratio": {
+          "mean": 1.0,
+          "std": 0.0,
+          "min": 1.0,
+          "max": 1.0
+        },
+        "outside_changed_pixels": {
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        }
+      },
+      "seed_variation": {
+        "unit": "five repeated execution seeds on identical test503 rows",
+        "primary_metric": "delta_iou",
+        "range": [
+          0.9878121218363792,
+          0.9878121218363792
+        ],
+        "standard_deviation": 1.2412670766236366e-16,
+        "interpretation": "Repeated-seed variation only; not an estimate of floorplan population variance."
+      },
+      "paired_vs_raster2seq_local": {
+        "cases": 495,
+        "mean_delta": 0.8424450203195817,
+        "median_delta": 0.9030172413793104,
+        "rank_biserial": 1.0,
+        "statistic": 122760.0,
+        "p_value": 3.044212210413595e-83
+      }
+    }
+  },
+  "checks": {
+    "room_type_primary_iou_above_0_608": true,
+    "room_type_primary_outside_exact_one": true,
+    "room_type_primary_beats_matched_raster2seq": true,
+    "room_add_primary_iou_above_0_608": true,
+    "room_add_primary_outside_exact_one": true,
+    "room_add_primary_beats_matched_raster2seq": true,
+    "room_remove_primary_iou_above_0_608": true,
+    "room_remove_primary_outside_exact_one": true,
+    "room_remove_primary_beats_matched_raster2seq": true,
+    "opening_delete_primary_iou_above_0_608": true,
+    "opening_delete_primary_outside_exact_one": true,
+    "opening_delete_primary_beats_matched_raster2seq": true,
+    "furniture_delete_primary_iou_above_0_608": true,
+    "furniture_delete_primary_outside_exact_one": true,
+    "furniture_delete_primary_beats_matched_raster2seq": true
+  },
+  "statistical_unit": {
+    "paired_test": "one mean difference per unique floorplan name",
+    "bootstrap_or_wilcoxon_duplicates_seed_rows": false,
+    "seed_variation": "reported separately"
+  },
+  "sources": {
+    "outputs/reports/residential_edit_hybrid_typedall_seed19_v1.json": "b28d804398c7cbb61a6c1fa9676781f711a9e56cdddffd08d27ee1ade940fe50",
+    "outputs/reports/residential_edit_hybrid_typedall_seed20_v1.json": "bfc91906c6c115ac49817feae29abd1dcb6f5eb31c1585cb88d42ea005795f20",
+    "outputs/reports/residential_edit_hybrid_typedall_seed21_v1.json": "9b942482056839a6bd34e07716fc2b23129a6ba102cbbd4f3ebfd8e98a2c166a",
+    "outputs/reports/residential_edit_hybrid_typedall_seed22_v1.json": "fe41de78b85f2e43ccd0fc0ac3c60cdb3508070538ce3c0f50cd92a93ad65ec8",
+    "outputs/reports/residential_edit_hybrid_typedall_seed23_v1.json": "db913d66a144ff4d4ac3a5ad5fe333c3ddd2f37429886de3d3a7e0d28d29bb30",
+    "outputs/reports/fp_raster2seq_local_redraw_v1.json": "e4ddd567b23287967ffb24a45651f10d368ae53464f2bc05fe5eff73a0c6c98e"
+  },
+  "claim_boundary": "The primary edit uses declared oracle controls. It is a strict-locality editing result, not an identity reconstruction rank. Raster2Seq uses the frozen outside-redraw wrapper; it is not a native editing-aware model."
+}

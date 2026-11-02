@@ -1,0 +1,30 @@
+\begin{thebibliography}{5}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[cub(2019)]{cubicasa}
+Cubicasa5k: A dataset and benchmark for floorplan recognition.
+\newblock In \emph{European Conference on Computer Vision Workshops}, 2019.
+
+\bibitem[gsd(2025)]{gsdiff}
+Gsdiff: Geometry-enhanced structural graph generation.
+\newblock In \emph{Proceedings of the AAAI Conference on Artificial
+  Intelligence}, 2025.
+
+\bibitem[ce2(2026)]{ce2eplan}
+Ce2eplan: End-to-end boundary-conditioned vector floorplan generation.
+\newblock \emph{IEEE Transactions on Visualization and Computer Graphics},
+  2026.
+
+\bibitem[hou(2026)]{housemind}
+Housemind: Unified floorplan understanding, generation, and editing, 2026.
+\newblock Public protocol anchors used only as cross-dataset context.
+
+\bibitem[ras(2026)]{raster2seq}
+Raster2seq: Vector floorplan reconstruction from raster inputs, 2026.
+\newblock Matched reconstruction wrapper in this study.
+
+\end{thebibliography}

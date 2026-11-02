@@ -1,0 +1,122 @@
+{
+  "schema_version": "predicted-operation-evidence-v2",
+  "status": "passed_scoped_release_with_semantic_boundary",
+  "safety": {
+    "prompts": 738,
+    "executed": 438,
+    "abstained": 300,
+    "split_values_in_rows": [
+      "test"
+    ],
+    "exposure": "development-exposed test prompts; not held-out",
+    "outside_pixel_exact_min": 1.0,
+    "outside_room_label_exact_min": 1.0,
+    "validity_min": 1.0,
+    "legacy_summary_fields": {
+      "split": "val191",
+      "test_opened": false,
+      "correction": "Prompt rows contain split=test; row-level values govern."
+    }
+  },
+  "semantic_diagnostics": {
+    "source": "outputs/reports/predicted_operation_success_val191_v1.json",
+    "split": "val191",
+    "population": "supported val191 prompt rows from an older model run",
+    "denominator": "executed prompts in each category",
+    "operations": {
+      "furniture_low_salience": {
+        "prompts": 15,
+        "successful_prompts": 0,
+        "success_rate": 0.0,
+        "changed_prompts": 0,
+        "source_present_prompts": 0,
+        "source_drift_prompts": 0,
+        "failure_reasons": {
+          "family_retained_or_absent": 15
+        }
+      },
+      "opening_pressure": {
+        "prompts": 59,
+        "successful_prompts": 30,
+        "success_rate": 0.5084745762711864,
+        "changed_prompts": 30,
+        "source_present_prompts": 30,
+        "source_drift_prompts": 30,
+        "failure_reasons": {
+          "family_deleted": 30,
+          "family_retained_or_absent": 29
+        }
+      },
+      "room_addition": {
+        "prompts": 100,
+        "successful_prompts": 92,
+        "success_rate": 0.92,
+        "changed_prompts": 96,
+        "source_present_prompts": 68,
+        "source_drift_prompts": 63,
+        "failure_reasons": {
+          "control_request_invalid:control request does not identify distinct room classes": 4,
+          "requested_class_missing": 4,
+          "requested_class_realized": 92
+        }
+      },
+      "room_deletion": {
+        "prompts": 100,
+        "successful_prompts": 20,
+        "success_rate": 0.2,
+        "changed_prompts": 85,
+        "source_present_prompts": 96,
+        "source_drift_prompts": 29,
+        "failure_reasons": {
+          "source_class_removed": 20,
+          "source_class_retained": 80
+        }
+      },
+      "room_type_change": {
+        "prompts": 100,
+        "successful_prompts": 55,
+        "success_rate": 0.55,
+        "changed_prompts": 100,
+        "source_present_prompts": 47,
+        "source_drift_prompts": 47,
+        "failure_reasons": {
+          "requested_class_missing": 45,
+          "requested_class_realized": 55
+        }
+      }
+    },
+    "source_present_note": "Counts are descriptive. The rows do not support a general source-present success-rate estimand for every operation."
+  },
+  "contract_checks": {
+    "object_delete": {
+      "source": "outputs/reports/predicted_edit_object_delete_audit_v1.json",
+      "passed": true,
+      "checks": {
+        "opening_family_deleted_inside_region": true,
+        "opening_room_pixels_preserved": true,
+        "opening_outside_region_exact": true,
+        "furniture_family_deleted_inside_region": true,
+        "furniture_room_pixels_preserved": true,
+        "furniture_outside_region_exact": true
+      },
+      "interpretation": "Execution contract only; not semantic success."
+    },
+    "ghost_state": {
+      "source": "outputs/reports/predicted_edit_ghost_state_audit_v1.json",
+      "passed": true,
+      "checks": {
+        "inactive_instance_id_is_negative": true,
+        "active_instance_ids_are_preserved": true,
+        "inactive_tokens_are_zero": true,
+        "inactive_classes_are_no_object": true,
+        "inactive_adjacency_is_masked": true,
+        "inactive_mask_is_masked": true,
+        "inactive_aux_mask_is_masked": true,
+        "inactive_program_assignment_is_masked": true,
+        "inactive_scheduled_assignment_is_masked": true
+      },
+      "interpretation": "State contract only; not semantic success."
+    }
+  },
+  "boundary": "Safety execution, contract checks, and semantic realization are reported separately. Abstentions and no-ops are never counted as semantic successes."
+}

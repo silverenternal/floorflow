@@ -1,0 +1,28 @@
+{
+  "schema_version": "floorplan-figure-case-manifest-v1",
+  "sampling_rule": {
+    "oracle_positive": "Known valid room-type oracle-control case named in the frozen evidence.",
+    "predicted_failure": "First lexicographic failed supported row with an existing val191 raster, prioritizing room deletion, then room type, opening, and furniture."
+  },
+  "cases": [
+    {
+      "role": "oracle_positive",
+      "operation": "room_type",
+      "name": "high_quality_architectural__1191__Floor-1",
+      "sources": [
+        "outputs/eval/fp_control_gated_local_test503_seed19_v1/room_type/high_quality_architectural__1191__Floor-1.npz",
+        "outputs/cache/typed_edit_controls_v1/room_type/high_quality_architectural__1191__Floor-1.npz",
+        "outputs/cache/fp_edit_detection_v1/room_type/high_quality_architectural__1191__Floor-1.npz"
+      ]
+    },
+    {
+      "role": "predicted_failure",
+      "operation": "room_remove",
+      "category": "room_deletion",
+      "prompt_id": "room_deletion-000",
+      "name": "high_quality_architectural__1052__Floor-1",
+      "failure_reason": "source_class_retained",
+      "source": "outputs/eval/fp_local_edit_room_remove_val191_v1/rasters/high_quality_architectural__1052__Floor-1.npz"
+    }
+  ]
+}

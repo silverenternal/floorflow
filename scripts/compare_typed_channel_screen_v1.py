@@ -52,17 +52,44 @@ def _load_selected_rows(run: Path) -> tuple[dict, dict[str, dict]]:
     return report, rows
 
 
+def _load_rows(path: Path) -> tuple[dict, dict[str, dict]]:
+    rows = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        row = json.loads(line)
+        rows[str(row["case_id"])] = row
+    if not rows:
+        raise ValueError(f"no rows found under {path}")
+    checkpoint = str(next(iter(rows.values())).get("checkpoint", "rowset"))
+    return {"selected_epoch": checkpoint}, rows
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--candidate", type=Path, required=True)
-    parser.add_argument("--control", type=Path, required=True)
+    parser.add_argument("--candidate", type=Path)
+    parser.add_argument("--control", type=Path)
+    parser.add_argument("--candidate-rows", type=Path)
+    parser.add_argument("--control-rows", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--iterations", type=int, default=5000)
     parser.add_argument("--seed", type=int, default=19)
     args = parser.parse_args()
 
-    candidate_report, candidate_rows = _load_selected_rows(args.candidate)
-    control_report, control_rows = _load_selected_rows(args.control)
+    if (args.candidate is None) == (args.candidate_rows is None):
+        parser.error("provide exactly one candidate run or candidate row file")
+    if (args.control is None) == (args.control_rows is None):
+        parser.error("provide exactly one control run or control row file")
+    candidate_report, candidate_rows = (
+        _load_rows(args.candidate_rows)
+        if args.candidate_rows is not None
+        else _load_selected_rows(args.candidate)
+    )
+    control_report, control_rows = (
+        _load_rows(args.control_rows)
+        if args.control_rows is not None
+        else _load_selected_rows(args.control)
+    )
     case_ids = sorted(candidate_rows)
     if case_ids != sorted(control_rows):
         raise ValueError("candidate and control must contain identical cases")
@@ -87,8 +114,8 @@ def main() -> None:
     }
     report = {
         "schema_version": "typed-channel-matched-screen-v1",
-        "candidate": str(args.candidate),
-        "control": str(args.control),
+        "candidate": str(args.candidate_rows or args.candidate),
+        "control": str(args.control_rows or args.control),
         "candidate_selected_epoch": candidate_report["selected_epoch"],
         "control_selected_epoch": control_report["selected_epoch"],
         "cases": len(case_ids),

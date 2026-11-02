@@ -1,0 +1,9 @@
+{
+  "schema_version": "predicted-channel-v6-program-fusion-only",
+  "extends": "predicted_channel_v6_room_identity_adapter_control.json",
+  "status": "isolated_program_fusion_candidate",
+  "model": {
+    "program_room_action_fusion": true
+  },
+  "claim_boundary": "Tests only the gated program action token into room identity. Differentiable route budget and query separation remain disabled."
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": "predicted-channel-v6-area-fidelity-only",
+  "extends": "predicted_channel_v6_room_identity_adapter_control.json",
+  "status": "atomic_area_fidelity_candidate",
+  "loss_policy": {
+    "room_instance_mask_area_weight": 0.2
+  },
+  "screen_status": "rejected_on_matched_val32; area proxy aligned but count, Wall, and GED regressed",
+  "screen_report": "outputs/reports/typed_channel_v6_ownerclass_area_fidelity_screen64_seed19_compare_v1.json",
+  "claim_boundary": "Changes only matched room-mask area supervision against the identity control. Use this arm to isolate the loss before testing it with graph conditioning."
+}

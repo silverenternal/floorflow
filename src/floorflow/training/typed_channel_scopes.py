@@ -103,6 +103,8 @@ def _matches(name: str, scope: str) -> bool:
         if family == "room":
             prefixes += (
                 "room_instance_stage.",
+                "action_graph.projections.program.",
+                "action_graph.gates.program.",
                 "action_graph.route_budget.program.",
                 "action_graph.route_gate.program.",
                 "field.evidence_fusion.2.",

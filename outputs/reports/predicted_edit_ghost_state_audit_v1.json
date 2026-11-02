@@ -1,0 +1,17 @@
+{
+  "schema_version": "predicted-edit-ghost-state-audit-v1",
+  "device": "cpu",
+  "checks": {
+    "inactive_instance_id_is_negative": true,
+    "active_instance_ids_are_preserved": true,
+    "inactive_tokens_are_zero": true,
+    "inactive_classes_are_no_object": true,
+    "inactive_adjacency_is_masked": true,
+    "inactive_mask_is_masked": true,
+    "inactive_aux_mask_is_masked": true,
+    "inactive_program_assignment_is_masked": true,
+    "inactive_scheduled_assignment_is_masked": true
+  },
+  "passed": true,
+  "claim_boundary": "State-contract evidence only; predicted editing metrics remain pending."
+}

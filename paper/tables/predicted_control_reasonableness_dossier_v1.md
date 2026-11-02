@@ -1,57 +1,56 @@
-# Predicted-Control Reasonableness Dossier v1
+# Predicted-Control Reasonableness Dossier v2
 
-Status date: 2026-11-02
+Status date: 2026-11-02. Status: `frozen_scoped_release_with_semantic_boundary`.
 
-This dossier separates target-free operation reliability from
-target-comparative reconstruction fidelity. The predicted-control model is still
-being improved, so these values are a submission candidate baseline, not a
-final held-out result.
+This dossier separates target-free structural reasonableness and execution
+safety from reference-relative fidelity and semantic operation realization.
 
-## Claim
+## Scoped Claim
 
-> Under target-free predicted controls, FloorFlow executes every supported typed
-> operation in the declared validation set, safely abstains from unsupported or
-> ambiguous requests, preserves the outside region exactly, and produces
-> structurally plausible plans. These properties hold despite limited
-> reference-relative room and graph fidelity.
+> With target-free predicted controls, FloorFlow preserves exact outside content,
+> produces valid and structurally plausible plans across five repeated val491
+> seeds, executes every supported typed prompt in the development-exposed audit,
+> and abstains safely on unsupported or ambiguous requests. Raw topology and
+> reference fidelity remain explicit limitations.
 
-This claim does not assert high semantic reconstruction accuracy, free-text
-editing, or a matched HouseMind ranking.
+This is not a fresh held-out result, a free-text editing claim, a matched
+HouseMind ranking, or evidence of high room-instance fidelity.
 
-## Predicted-Control Plausibility
+## Structural Reasonableness
 
-CubiCasa5K val491, five seeds:
+CubiCasa5K val491, 491 target-free cases per seed, five repeated seeds:
 
 | Metric | Five-seed mean | Interpretation |
 |---|---:|---|
-| Raster plausible | 0.98493 | High structural plausibility |
-| Room coverage | 1.00000 | No missing interior partition |
-| Room-face retention | 0.99565 | Explicit rooms survive CAD readout |
-| Validity | 1.00000 | Mandatory legality passes |
-| Functional watertightness | 0.99796 | Closed functional output |
-| Wall continuity | 0.99543 | Connected structural graph |
-| Opening-wall alignment | 0.99353 | Openings remain attached |
-| Furniture-room containment | 1.00000 | Furniture remains room-local |
-| Plan plausibility | 0.98656 | Frozen composite gate passes |
-| Outside-footprint fraction | 0.00000 | No exterior leakage |
-| Room overlap ratio | 0.00000 | No pairwise room overlap |
+| Raster plausible | 0.984929 | Raster agreement with the frozen plausibility contract |
+| Plan plausible | 0.986558 | Composite structure gate |
+| Room coverage | 1.000000 | Interior partition coverage |
+| Room-face retention | 0.995655 | Explicit room survives CAD readout |
+| FP-Eval validity | 1.000000 | Mandatory legality |
+| Raw fpeval watertightness | 0.816701 | Raw single-region protocol boundary |
+| Functional watertightness | 0.997963 | Functional component-aware topology |
+| Wall continuity | 0.995427 | Connected wall structure |
+| Opening-wall alignment | 0.993530 | Openings remain attached to walls |
+| Furniture-room containment | 1.000000 | Furniture remains room-local |
+| Outside-footprint fraction | 0.000000 | No exterior leakage |
+| Room overlap ratio | 0.000000 | No pairwise room overlap |
+| Room macro IoU diagnostic | 0.269701 | Weak reference fidelity; not a gate |
 
-Raw fpeval watertightness is `0.81670` and must be reported separately from
-functional watertightness. The difference is a footprint-component boundary:
+All five seeds pass the frozen reasonableness contract. Repeated seeds demonstrate
+reproducibility, not independent floorplans.
 
-- 401/491 single-component footprints have raw and componentwise watertightness
-  `1.0`;
-- 90 multi-component footprints fail the standard single-region rule;
-- componentwise watertightness for those 90 inputs is `0.9889`.
+## Watertightness Boundary
 
-This is not a redefinition of fpeval. It is a declared diagnostic boundary.
+The raw value `0.816701` is not rounded or relabeled as `1.0`. Of 491 footprints,
+401 are single-component and pass both raw and componentwise checks. The remaining
+90 are multi-component footprints that exceed the standard single-region FP-Eval
+boundary. Their componentwise watertightness is a declared diagnostic, not a
+redefinition of the raw metric.
 
-## Operation Reliability
+## Execution Safety
 
-The latest 738-prompt report was produced from a development exposure of the
-test manifest. Its embedded prompt rows declare `split=test`; a legacy evaluator
-bug wrote `split=val191` and `test_opened=false` into the summary. The metadata
-writer is fixed, but this run cannot serve as the final held-out result.
+The operation audit contains 738 development-exposed test503 prompts. Row-level
+metadata declares `split=test`; legacy summary fields claiming val191 are ignored.
 
 | Evidence | Result |
 |---|---:|
@@ -60,104 +59,75 @@ writer is fixed, but this run cannot serve as the final held-out result.
 | Executed supported prompts | 438 |
 | Unsupported or ambiguous prompts | 300 |
 | Safe abstentions | 300 |
-| Outside pixel exact | 1.00000 |
-| Outside room-label exact | 1.00000 |
-| FP-Eval validity | 1.00000 |
-| Supported-operation execution rate | 1.00000 |
-| Unsupported/ambiguous abstention rate | 1.00000 |
+| Outside pixel exact minimum | 1.000000 |
+| Outside room-label exact minimum | 1.000000 |
+| FP-Eval validity minimum | 1.000000 |
+| Supported execution rate | 1.000000 |
+| Unsupported/ambiguous abstention rate | 1.000000 |
 
-The five supported categories are room-type change, room addition, room
-deletion, opening pressure, and low-salience furniture. The three abstention
-categories are unsupported wall move, ambiguous global scope, and conflicting
-instruction. Every category preserves outside pixel and room-label content
-exactly and reports validity `1.0`.
+The supported categories are room-type change, room addition, room deletion,
+opening pressure, and low-salience furniture. The abstention categories are
+unsupported wall move, ambiguous global scope, and conflicting instruction.
+Execution and abstention are safety/contract outcomes, not semantic success.
 
-This evidence supports safe execution and abstention. It does not establish
-high target-relative semantic fidelity, and it is not an unopened test result.
+Object-delete and ghost-state audits pass deterministic contracts. They verify
+family removal or inactive-state cleanliness and do not count as successful
+semantic edits.
 
-Object-delete execution checks also verify that:
+## Semantic Boundary
 
-- opening deletion removes the opening family and preserves room labels;
-- furniture deletion removes the furniture family and preserves room labels;
-- both operations leave the outside region exactly unchanged.
+An older val191 model provides the only supported-operation semantic diagnostic.
+It is not the selected predicted-control checkpoint and is reported only as a
+boundary:
 
-Inactive count-gated room queries are separately audited to have no ghost
-tokens, classes, masks, instance IDs, or adjacency.
-
-## Relative Refinement Evidence
-
-Across the 438 executed prompts:
-
-| Metric | Paired mean delta | 95% CI | Interpretation |
+| Operation | Successes / prompts | Rate | Failure mode |
 |---|---:|---:|---|
-| Node F1 | +0.077893 | [0.065764, 0.090077] | Graph readout improves |
-| Edge overlap | +0.001353 | [0.000269, 0.002892] | Small positive change |
-| GED | +4.842466 | [3.616381, 6.107420] | Negative diagnostic |
+| Room add | 92 / 100 | 0.9200 | Missing or insufficient requested class |
+| Room type | 55 / 100 | 0.5500 | Requested class does not dominate change |
+| Room remove | 20 / 100 | 0.2000 | Source class retained |
+| Opening delete | 30 / 59 | 0.5085 | Required family deletion or source drift |
+| Furniture delete | 0 / 15 | 0.0000 | Family retained or absent |
 
-The GED regression is retained. Relative graph-readout improvement does not
-imply high absolute graph quality.
+The diagnostic does not satisfy a uniform `0.90` semantic gate. That gate is not
+a submission prerequisite for the scoped claim.
 
-## Operation-Specific Semantic Success
+## Reference Fidelity
 
-The preliminary semantic audit is reported separately from safety. It does not
-pass the proposed `0.90` gate for most operations:
+Predicted-control fidelity remains substantially below oracle-control fidelity.
 
-| Operation | Current val191 success rate |
-|---|---:|
-| room add | 0.92 |
-| room type | 0.55 |
-| room remove | 0.20 |
-| opening delete | 0.5085 |
-| furniture delete | 0.00 |
+| Metric | val491 value | Interpretation |
+|---|---:|---|
+| Room macro IoU | 0.269701 | Weak room-instance identity |
+| Node F1 | 0.660202 | Partial graph topology |
+| Edge overlap | 0.264622 | Weak canonical edges |
+| GED | 11.600815 | High graph distance; lower is better |
 
-These are preliminary stale-model results. They demonstrate why safe execution
-and semantic success must not be merged into one claim.
-
-## Fidelity Boundary
-
-The predicted-control baseline remains far below oracle-control fidelity:
-
-| Metric | Val491 predicted control |
-|---|---:|
-| Room macro IoU | 0.26972 |
-| Room-support IoU | 0.77268 |
-| Instance F1 @0.5 | 0.23065 |
-| Instance type accuracy | 0.58825 |
-| fpeval wall F1 | 0.44194 |
-| fpeval opening F1 | 0.08295 |
-| fpeval Room F1 | 0.36116 |
-| Node F1 | 0.66020 |
-| Edge overlap | 0.26462 |
-| GED | 11.60081 |
-
-The failure is dominated by room-instance identity, count, and type, not by
-invalid output. Predicted and oracle rows are never pooled.
+The failure is dominated by room-instance identity, count, type, and graph
+readout rather than invalid output. Predicted and oracle rows are never pooled.
 
 ## Reviewer-Facing Interpretation
 
 The defensible contribution is:
 
 > FloorFlow decouples edit reliability from reference fidelity. Under imperfect
-> predicted controls, the system knows which typed edits it can execute, applies
-> them locally, preserves legality and outside content, and abstains when the
-> request is unsupported.
+> predicted controls, the system knows which typed requests it can execute,
+> applies them without outside leakage, preserves legality, and abstains on
+> unsupported requests, while target-relative fidelity and semantics remain
+> measurable limitations.
 
-The paper must not state:
+Do not state that predicted reference fidelity is high, that Node/Edge/GED SOTA
+is reached, that abstention is a successful edit, that val191 is held out, or
+that oracle-control metrics measure predicted-control quality.
 
-- that predicted-control reference fidelity is high;
-- that Node/Edge/GED SOTA is reached;
-- that abstention is a successful semantic edit;
-- that val191 is the held-out test;
-- that oracle-control metrics measure predicted-control quality.
+## Source Bindings
 
-## Evidence Sources
-
-- `docs/predicted_control_plausibility_v2.md`
-- `docs/predicted_control_reasonableness_results_v1.md`
-- `docs/predicted_control_fidelity_baseline_v3.md`
-- `configs/predicted_control_reasonableness_contract_v1.json`
+- `docs/floorplan_submission_source_registry_v2.json`
+- `outputs/reports/predicted_operation_evidence_v2.json`
 - `outputs/reports/predicted_control_plausibility_fiveseed_v12.json`
 - `outputs/reports/predicted_control_fidelity_val491_v3.json`
-- `outputs/reports/residential_predicted_edit_test503_final_v1.json`
+- `outputs/reports/predicted_operation_success_val191_v1.json`
 - `outputs/reports/predicted_edit_object_delete_audit_v1.json`
 - `outputs/reports/predicted_edit_ghost_state_audit_v1.json`
+- `configs/floorplan_submission_evidence_freeze_v2.json`
+- `outputs/reports/floorplan_evidence_freeze_audit_v2.json`
+

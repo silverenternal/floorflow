@@ -1,7 +1,7 @@
 {
   "schema_version": "floorplan-cvpr-submission-plan-v1",
-  "version": "2026-11-02-floorplan-submission-v1",
-  "status": "planning",
+  "version": "2026-11-02-floorplan-submission-v2-evidence-sprint",
+  "status": "passed_scoped_release_ready_for_user_submission",
   "project": "FloorFlow",
   "target": {
     "venue": "CVPR main conference",
@@ -9,11 +9,11 @@
     "deadline": null,
     "deadline_policy": "Confirm the official deadline before the held-out freeze."
   },
-  "objective": "Submit a CVPR paper on auditable, strictly local floorplan editing with a strong oracle-control upper bound and defensible target-free predicted-control operation reliability, without claiming complete-method or cross-benchmark SOTA.",
-  "primary_thesis": "FloorFlow separates edit reliability from reference reconstruction fidelity: it executes supported local edits, rejects unsupported or ambiguous requests, preserves the declared outside region exactly, and produces structurally plausible plans even when target-free control fidelity remains limited.",
+  "objective": "以已有证据完成可审计严格局部 floorplan 编辑的 CVPR 投稿：oracle-control 的强编辑检测、精确保留与合法性硬指标，加上 predicted-control 下已验证的合法性、结构合理性及安全操作；明确部分指标优势，不要求全面 SOTA，不以大规模补实验为前提。",
+  "primary_thesis": "在明确控制接口下，FloorFlow 同时提供强 oracle-control 编辑检测证据与可审计局部保持；在 target-free predicted-control 下，操作执行、拒绝执行、合法性和结构合理性已有独立正面证据。目标参照重建精度、操作语义实现率与完整方法排名是分别披露的评价轴。",
   "scope": {
     "dataset": "CubiCasa5K",
-    "editing_split": "test503 oracle-control and a separately frozen predicted-control held-out set",
+    "editing_split": "Oracle CubiCasa test503; predicted val491 five-seed reasonableness; separately labeled development-exposed test operation evidence. Fresh held-out generalization is optional and separately reported.",
     "identity_fallback_split": "official test509",
     "operations": [
       "room_type_change",
@@ -32,7 +32,9 @@
       "exact strict-locality evidence",
       "target-free structural reasonableness under predicted controls",
       "supported-operation execution and safe abstention reliability",
-      "matched local comparisons"
+      "matched local comparisons",
+      "Oracle Delta-IoU and Delta-MSE numerically exceed published HouseMind-E anchors under aligned definitions, with dataset/input differences stated.",
+      "Predicted legality and structural reasonableness on the declared existing evaluation populations, independent of target-relative fidelity."
     ],
     "forbidden_claims": [
       "complete HouseMind-E method defeat",
@@ -60,8 +62,8 @@
         0.9998006091318032
       ],
       "delta_mse_range": [
-        0.000018663442751858384,
-        0.00009582009079892316
+        1.8663442751858384e-05,
+        9.582009079892316e-05
       ],
       "outside_layers_exact": 1.0,
       "fpeval_validity": 1.0,
@@ -82,7 +84,7 @@
       ]
     },
     "predicted_control_reasonableness": {
-      "status": "passed_on_validation_pending_test",
+      "status": "supported_existing_val491_all_five_seeds_pass_release_provenance_to_lock",
       "split": "CubiCasa5K val491",
       "seeds": [
         19,
@@ -115,7 +117,7 @@
       ]
     },
     "predicted_control_operation_reasonableness": {
-      "status": "safety_passed_on_test_development_exposure_semantic_audit_pending",
+      "status": "supported_execution_safety_on_disclosed_development_exposure_semantic_success_separate",
       "split": "test_development_exposure",
       "target_free_at_inference": true,
       "prompt_count": 738,
@@ -159,7 +161,39 @@
       "status": "disclosed_limitation",
       "room_macro_iou": 0.2697007730837154,
       "graph_metrics": "The predicted-edit type graph remains far below absolute Node/Edge/GED publication gates on the evaluated validation prompts.",
-      "policy": "Report fidelity, reasonableness, and operation safety as separate evidence axes. Do not use oracle fidelity to imply predicted-control fidelity."
+      "policy": "Keep this historical selected pipeline diagnostic with its source identity. Do not substitute new full-stage 0.327585 for this pipeline 0.269700773 without regenerating all corresponding evidence. Fidelity is not a submission gate for legality/reasonableness claims."
+    },
+    "audit_findings_20261102": {
+      "source": "outputs/reports/oracle_metric_trace_audit_20261102.json",
+      "verification": "All 2479 seed19 primary rows recomputed from NPZ; maximum row Delta-IoU mismatch is zero. Other seeds are not newly rerun by this audit.",
+      "oracle_primary_contract": "room_* uses typed_before_floorflow_after; opening/furniture uses floorflow. Explicitly report this interface and show raw/typed ablation.",
+      "metric_definition": "Delta metrics compare binary change support, not requested target-class correctness; accompany with legality and semantic diagnostics.",
+      "raster2seq_current_cited_iou": [
+        0.12487902265703593,
+        0.0991144630292265,
+        0.16492998335841316,
+        0.03569038136975124,
+        0.057239595652441175
+      ],
+      "raster2seq_actual_frozen_iou": [
+        0.13716038477717307,
+        0.16675626231053742,
+        0.17726628103840875,
+        0.18949084680718686,
+        0.14536710151679758
+      ],
+      "operation_order": [
+        "room_type",
+        "room_add",
+        "room_remove",
+        "opening_delete",
+        "furniture_delete"
+      ],
+      "frozen_baseline_source": "outputs/reports/fp_raster2seq_local_redraw_v1.json",
+      "correction_required": "Primary summary currently reads an unfrozen pair under raster2seq_local. Correct source and paired statistics; frozen wrapper outside exactness is 1.0, so remove claims of frozen-wrapper leakage.",
+      "ablation_scope": "Old dense_cross_attention is a two-pixel dilation routing policy; not a trained dense-attention baseline.",
+      "statistics_scope": "Review fixed-n=5 CI calculation on per-row arrays and pooled 12395-row bootstrap; use declared seed-level or floorplan-cluster statistics, not independent duplicated rows.",
+      "topology_scope": "Some headline validity/watertight entries are pooled seed aggregates repeated in each operation row; label as pooled or derive genuine operation-specific values from existing reports."
     }
   },
   "claim_ladder": [
@@ -175,7 +209,7 @@
     },
     {
       "level": 1,
-      "claim": "FloorFlow provides a strong oracle-control edit-detection anchor while preserving exact outside content.",
+      "claim": "Oracle-control has strong edit detection and exact locality; Delta-IoU/Delta-MSE exceed published anchors numerically with explicit cross-dataset/input scope.",
       "status": "supported",
       "required_tasks": [
         "FP-SUB-00",
@@ -185,21 +219,20 @@
     {
       "level": 2,
       "claim": "Under target-free predicted controls, FloorFlow executes supported typed operations safely, abstains on unsupported requests, and produces structurally plausible plans.",
-      "status": "operation_safety_supported_semantic_and_frozen_test_pending",
+      "status": "supported_scoped_release",
       "required_tasks": [
         "FP-SUB-03",
         "FP-SUB-04",
         "FP-SUB-05",
-        "FP-SUB-06"
+        "FP-SUB-07"
       ]
     },
     {
       "level": 3,
       "claim": "The predicted-control reliability result generalizes to a frozen held-out set.",
-      "status": "open",
+      "status": "optional_extension_not_required_for_scoped_submission",
       "required_tasks": [
-        "FP-SUB-06",
-        "FP-SUB-07"
+        "FP-SUB-06"
       ]
     },
     {
@@ -220,7 +253,10 @@
       "Per-operation Delta-IoU and Delta-MSE match the current source reports.",
       "Outside exact layers equal 1.0.",
       "Matched local baseline and editing-aware control values are frozen.",
-      "HouseMind-E remains labeled as cross-dataset context."
+      "HouseMind-E remains labeled as cross-dataset context.",
+      "Actual frozen Raster2Seq rows, outside exactness and paired statistics agree; no unfrozen row is called frozen.",
+      "Typed-before repair, oracle change-mask gating and binary change-support metric are explicit.",
+      "Repeated seeds do not become independent plan samples; graph/validity metrics name their actual population and protocol."
     ],
     "S2_predicted_reasonableness": [
       "Raster plausibility >= 0.95.",
@@ -229,166 +265,222 @@
       "Wall continuity >= 0.95.",
       "Plan plausibility >= 0.95.",
       "Outside-footprint fraction = 0.0.",
-      "Raw watertightness and the multi-component footprint boundary are reported."
+      "Raw watertightness and the multi-component footprint boundary are reported.",
+      "Existing five-seed val491 evidence may support scoped claims now; new-model performance gates do not block this result.",
+      "Source checkpoints and evaluator versions match the cited pipeline; current-source hashes are not misrepresented as historical execution hashes."
     ],
     "S3_operation_reliability": [
-      "All supported prompts execute on the declared operation set.",
-      "All explicitly unsupported or ambiguous prompts abstain.",
-      "Every executed edit preserves outside pixel and room-label content exactly.",
-      "Every executed edit has validity 1.0.",
-      "Operation-specific semantic success is frozen and evaluated before test.",
-      "Abstention coverage and prompt distribution are reported."
+      "Report supported execution, unsupported abstention, exact locality and validity with prompt counts and actual split/exposure.",
+      "Separate deterministic object/state contract checks from empirical semantic success; never count no-op or abstention as semantic success.",
+      "Publish observed operation-specific semantic success and source-present/source-drift denominators where recoverable from saved rows; 0.90 is an exploratory target, not a release prerequisite.",
+      "No new claim of unopened-test generalization from the existing 738 prompts; development exposure is visible in captions and protocol.",
+      "Report the supported/unsupported prompt distribution and evidence population for every rate."
     ],
     "S4_heldout_freeze": [
-      "Configuration, prompt manifest, checkpoints, seeds, thresholds, and evaluator hashes are frozen.",
-      "Held-out split is opened once.",
-      "No threshold or model selection changes after opening.",
-      "Failed or negative metrics remain in the result package."
+      "For the main scoped submission, freeze the existing evidence snapshot: report/row/checkpoint/config/evaluator identities, exposure metadata and source map.",
+      "Historical run provenance and current release source hashes are distinguished; missing provenance is recorded explicitly.",
+      "An optional fresh held-out run requires a separate model/threshold/manifest freeze before access and preserves all negative outcomes.",
+      "Lack of a new held-out split blocks only a new held-out generalization claim, not existing scoped validation, safety or oracle claims."
     ],
     "S5_external_and_ablation": [
-      "Raster2Seq local-redraw and editing-aware control are evaluated on matched rows.",
-      "Typed, dense, no-gate, no-graph, and matched-compute ablations are reported.",
-      "Missing external evidence remains N/A.",
-      "No external leaderboard rank is fabricated."
+      "Raster2Seq frozen local-redraw and editing-aware controls use matching cases, declared input contracts and the same metric; document any before-state asymmetry.",
+      "Typed/dense/no-gate/no-graph deterministic composition arms are named as such, with pooled and paired uncertainty corrected from saved rows.",
+      "Matched-compute evidence is a post-hoc budget audit, not a trained network or efficiency advantage.",
+      "HouseMind remains visibly separate external metric context; unavailable metrics remain N/A."
     ],
     "S6_manuscript_package": [
       "Main tables are readable and tied to claims.",
       "Qualitative panels show before, after, edit region, outside diff, and failure cases.",
       "Limitations and negative results are visible in the main paper.",
-      "Reproducibility manifest and anonymous supplement pass integrity checks."
+      "Reproducibility manifest and anonymous supplement pass integrity checks.",
+      "Current draft is expanded and organized into a full submission artifact; official template/page/anonymity rules are checked for the selected cycle.",
+      "Evidence source policy and integrity tooling recognize the selected scoped release, rather than hardcoding a new held-out result as mandatory."
+    ],
+    "S7_optional_heldout_extension": [
+      "Only apply if a fresh compatible split and frozen candidate already exist; never acquire or train at scale as a default sprint dependency.",
+      "Open once after freeze, disclose all outcomes and keep extension separate from the main existing-evidence tables."
     ]
   },
   "critical_path": [
-    "FP-SUB-03",
-    "FP-SUB-04",
+    "FP-SUB-00",
+    "FP-SUB-01",
+    "FP-SUB-02",
+    "FP-SUB-08",
     "FP-SUB-05",
-    "FP-SUB-06",
     "FP-SUB-07",
     "FP-SUB-10",
     "FP-SUB-11",
     "FP-SUB-12",
+    "FP-SUB-13",
+    "FP-SUB-14",
     "FP-SUB-15"
   ],
   "phases": [
     {
       "id": "P0",
-      "name": "Evidence freeze and claim positioning",
+      "name": "D1：锁定贡献与来源",
       "tasks": [
         "FP-SUB-00",
-        "FP-SUB-01",
-        "FP-SUB-02"
+        "FP-SUB-01"
       ],
       "exit_gate": "S0_claim_integrity"
     },
     {
       "id": "P1",
-      "name": "Predicted-control operation reliability",
+      "name": "D2–D3：从已有行修正和封装证据",
       "tasks": [
+        "FP-SUB-02",
         "FP-SUB-03",
         "FP-SUB-04",
-        "FP-SUB-05"
+        "FP-SUB-08"
       ],
-      "exit_gate": "S3_operation_reliability"
+      "exit_gate": "S5_external_and_ablation"
     },
     {
       "id": "P2",
-      "name": "One-shot held-out validation",
+      "name": "D4：证据冻结、主表与图",
       "tasks": [
-        "FP-SUB-06",
-        "FP-SUB-07"
+        "FP-SUB-05",
+        "FP-SUB-07",
+        "FP-SUB-09",
+        "FP-SUB-10"
       ],
       "exit_gate": "S4_heldout_freeze"
     },
     {
       "id": "P3",
-      "name": "External comparisons and visual evidence",
+      "name": "D5–D6：完整论文和补充材料",
       "tasks": [
-        "FP-SUB-08",
-        "FP-SUB-09"
+        "FP-SUB-11"
       ],
-      "exit_gate": "S5_external_and_ablation"
+      "exit_gate": "S6_manuscript_package"
     },
     {
       "id": "P4",
-      "name": "Manuscript and review",
+      "name": "D7–D8：审阅、包与最终检查",
       "tasks": [
-        "FP-SUB-10",
-        "FP-SUB-11",
         "FP-SUB-12",
-        "FP-SUB-13"
+        "FP-SUB-13",
+        "FP-SUB-14"
       ],
       "exit_gate": "S6_manuscript_package"
     },
     {
       "id": "P5",
-      "name": "Submission",
+      "name": "用户确认最终包后提交",
       "tasks": [
-        "FP-SUB-14",
         "FP-SUB-15"
       ],
       "exit_gate": "S6_manuscript_package"
+    },
+    {
+      "id": "PX",
+      "name": "可选新 held-out 泛化扩展",
+      "tasks": [
+        "FP-SUB-06"
+      ],
+      "exit_gate": "S7_optional_heldout_extension"
     }
   ],
   "tasks": [
     {
       "id": "FP-SUB-00",
       "priority": "P0",
-      "status": "completed",
-      "title": "Freeze the two-axis submission claim",
+      "status": "completed_scoped_release",
+      "title": "锁定双协议贡献、可主张范围与证据优先级",
       "depends_on": [],
       "deliverables": [
         "paper/cvpr_manuscript_skeleton_v1.md",
         "paper/cvpr_claim_sections_v3.md",
         "docs/fp_oracle_control_protocol_status_v1.md"
       ],
-      "acceptance": "The paper claim covers edit reliability and structural reasonableness without claiming complete-method SOTA."
+      "acceptance": "摘要和贡献各有明确正面证据；数据/输入边界相邻可见，不使用完整方法排名。",
+      "steps": [
+        "保持 oracle 硬指标、部分指标优势、精确局部保持和 predicted 合法性/合理性的双协议主线。",
+        "把全面 SOTA、predicted 高保真和各操作语义成功率目标从投稿前置条件中移出。",
+        "统一 skeleton、abstract、claim matrix 与本计划；避免把正面贡献写成仅有局限。"
+      ],
+      "effort_budget": "0.5 working day",
+      "execution_type": "evidence_packaging",
+      "required_for_scoped_submission": true
     },
     {
       "id": "FP-SUB-01",
       "priority": "P0",
-      "status": "completed",
-      "title": "Refresh the evidence registry and mark historical metrics",
-      "depends_on": [],
-      "deliverables": [
-        "docs/cvpr_positive_result_ledger.md",
-        "docs/cvpr_negative_results_ledger.md",
-        "paper/cvpr_experiment_structure_v1.md"
+      "status": "completed_scoped_release",
+      "title": "建立投稿证据唯一来源与历史管线映射",
+      "depends_on": [
+        "FP-SUB-00"
       ],
-      "acceptance": "Current claims reference the latest source reports and stale ranges are marked historical."
+      "deliverables": [
+        "docs/floorplan_claim_evidence_matrix_v1.md",
+        "docs/floorplan_submission_source_registry_v2.json",
+        "paper/writing_source_policy_v1.md",
+        "outputs/reports/floorplan_source_provenance_audit_v2.json"
+      ],
+      "acceptance": "主文每个数字均有明确来源与管线；原始证据只读保留；来源缺项显式列出。",
+      "steps": [
+        "为每个主张记录 source path、JSON pointer、population、unit、seed、evaluator、checkpoint/config 和 exposure。",
+        "将 oracle、val491 reasonableness、development operation、identity fallback、新 CAD 探索各自绑定；不以文件较新自动替换旧管线。",
+        "核对 writing_source_policy_v1 的旧 v17 限制，改成明确的本次 release 清单；保留历史来源。",
+        "标记既有审计脚本的 hardcoded heldout/model gate 为待迁移，不靠更改报告状态宣称检查通过。"
+      ],
+      "effort_budget": "0.5 working day",
+      "execution_type": "evidence_packaging",
+      "required_for_scoped_submission": true
     },
     {
       "id": "FP-SUB-02",
       "priority": "P0",
-      "status": "completed",
-      "title": "Create the compact oracle-control CVPR dossier",
+      "status": "completed_scoped_release",
+      "title": "封装 oracle 主结果并修正比较与统计口径",
       "depends_on": [
-        "FP-SUB-00",
         "FP-SUB-01"
       ],
       "deliverables": [
-        "paper/tables/oracle_control_cvpr_dossier_v1.md"
+        "paper/tables/oracle_control_cvpr_dossier_v1.md",
+        "outputs/reports/oracle_metric_trace_audit_20261102.json",
+        "outputs/reports/oracle_submission_statistics_v2.json"
       ],
-      "acceptance": "Main metrics, matched comparisons, mechanism audit, robustness, slices, and source map are in one document."
+      "acceptance": "主指标保留并可复算；区分构造保证、模型输出和统计结论；CI 不重复计算同一 floorplan 为独立样本。",
+      "steps": [
+        "复用 seed19 2479 行复算报告，核对其他 seeds 的源路径和重复性，不把复算 seed19 写成重跑全部种子。",
+        "列出 primary 前后态、typed-before repair、control-change mask 和排墙 valid domain。",
+        "说明 Delta-IoU/Delta-MSE 测变化支撑；用已有结构/合法性证据补足解释。",
+        "核对 per-operation 与 pooled validity/watertightness；禁止把 pooled 范围写成各操作独立结果。",
+        "从保存行修正消融与比较的统计单位：plan 聚类 bootstrap，seed 变异单列；记录是否多重比较。"
+      ],
+      "effort_budget": "1 working day",
+      "execution_type": "evidence_packaging",
+      "required_for_scoped_submission": true
     },
     {
       "id": "FP-SUB-03",
       "priority": "P0",
-      "status": "completed_current_validation",
-      "title": "Create the predicted-control reasonableness dossier",
+      "status": "completed_scoped_release",
+      "title": "固化 predicted 合法性与结构合理性的正面证据",
       "depends_on": [
-        "FP-SUB-00",
         "FP-SUB-01"
       ],
       "deliverables": [
         "paper/tables/predicted_control_reasonableness_dossier_v1.md"
       ],
-      "acceptance": "The dossier reports target-free plausibility, raw and functional watertightness, operation execution/abstention, object-delete audits, contamination boundaries, and separate fidelity limitations."
+      "acceptance": "五个 seed 已通过门槛的事实在主表可见；target-free 与评测标签使用边界清楚；完整保留 raw topology。",
+      "steps": [
+        "以现有 val491 v12 五种子作为选定证据行，不等待开发中的新模型。",
+        "列出 legality、coverage、retention、wall continuity、opening alignment、containment、plausibility 的值、分母及已有门槛。",
+        "并列 raw 0.81670 与 functional 0.99796；列出 401 单分量和 90 多分量的解释与条件。",
+        "将 standalone 与 Raster2Seq-proposal hybrid 分表；Room IoU 作为同管线诊断，不抵消合理性正面结论。"
+      ],
+      "effort_budget": "0.5 working day",
+      "execution_type": "evidence_packaging",
+      "required_for_scoped_submission": true
     },
     {
       "id": "FP-SUB-04",
       "priority": "P0",
-      "status": "implemented_preliminary_model_updating_results_below_threshold",
-      "title": "Define and run operation-specific semantic success audits",
+      "status": "completed_scoped_release",
+      "title": "组织操作安全、拒绝执行与语义诊断的分层证据",
       "depends_on": [
         "FP-SUB-03"
       ],
@@ -404,7 +496,8 @@
         "unsupported_abstention": 1.0,
         "outside_pixel_exact": 1.0,
         "outside_room_label_exact": 1.0,
-        "validity": 1.0
+        "validity": 1.0,
+        "operation_semantic_success_role": "Historical exploratory aspiration only; not a submission gate for execution safety or reasonableness."
       },
       "deliverables": [
         "configs/predicted_operation_success_contract_v1.json",
@@ -414,31 +507,51 @@
         "docs/predicted_control_operation_success_audit_v1.md",
         "tests/test_predicted_operation_success.py"
       ],
-      "acceptance": "Every supported operation has a deterministic semantic-success predicate, coverage count, denominator, and report. Preliminary stale-model results are below the proposed 0.90 threshold, so promotion awaits the updated frozen model."
+      "acceptance": "合法性、合理性、安全执行三类可 claim 证据突出；语义成功与 no-op/abstention 不混算，低值如实披露。 原 0.90 语义阈值保留为历史探索目标，不作为投稿门槛。",
+      "steps": [
+        "把 438/438 execution、300/300 abstention、outside exact 和 validity 按实际 prompt 类别和 split 列表。",
+        "将 object-delete/ghost-state 的通过结果标为 contract evidence，配具体行为与输入状态示例。",
+        "现有 semantic audit 单独报告，无条件分母、source-present 分母和 source-drift 若能由已有行计算则补充；不可恢复则写 N/A。",
+        "为经验比例提供 floorplan 聚类区间或明确描述性计数；全通过不写成总体保证。",
+        "保留 0.92/0.55/0.20/0.5085/0.00 等现有语义结果及旧模型身份，不强制刷到 0.90。"
+      ],
+      "effort_budget": "0.5 working day",
+      "execution_type": "saved_row_audit",
+      "required_for_scoped_submission": true
     },
     {
       "id": "FP-SUB-05",
       "priority": "P0",
-      "status": "freeze_tool_ready_selected_checkpoint_pending",
-      "title": "Freeze the predicted-control validation protocol",
+      "status": "completed_scoped_release",
+      "title": "冻结已有证据版本而非等待最新研发模型",
       "depends_on": [
+        "FP-SUB-01",
+        "FP-SUB-02",
         "FP-SUB-03",
         "FP-SUB-04"
       ],
       "deliverables": [
-        "configs/predicted_control_submission_freeze_v1.json",
-        "configs/predicted_control_submission_freeze_template_v1.json",
-        "scripts/prepare_predicted_control_submission_freeze_v1.py",
+        "configs/floorplan_submission_evidence_freeze_v2.json",
         "docs/floorplan_submission_freeze_checklist_v1.md",
-        "outputs/reports/predicted_control_validation_freeze_v1.json"
+        "scripts/prepare_predicted_control_submission_freeze_v1.py",
+        "outputs/reports/floorplan_evidence_freeze_audit_v2.json"
       ],
-      "acceptance": "Checkpoints, prompt manifest, operation parser, thresholds, evaluator version, tolerances, and statistics are immutable before held-out access."
+      "acceptance": "现有证据可追溯、可复核且版本锁定；不伪造历史执行哈希；主线不依赖最新 checkpoint。",
+      "steps": [
+        "选择已有 oracle completion 与 predicted v12 的具体 checkpoint/config/report 身份。",
+        "记录生成时期信息、数据暴露、评测器版本及可取得的哈希；当前源代码变动与历史结果分别归档。",
+        "隔离 fptodo 的当前研发工作区；以 scoped manifest 锁定投稿快照，不要求整个研发目录干净才能整理证据。",
+        "新建或调整 release freeze 工具，支持 existing_evidence_scoped 与 optional_fresh_heldout 两种模式；后者仍要求访问前冻结。"
+      ],
+      "effort_budget": "0.5 working day",
+      "execution_type": "evidence_packaging",
+      "required_for_scoped_submission": true
     },
     {
       "id": "FP-SUB-06",
       "priority": "P0",
-      "status": "blocked_no_strictly_fresh_split",
-      "title": "Open the predicted-control held-out split once",
+      "status": "deferred_optional_not_applicable",
+      "title": "可选：新增严格 held-out 泛化证据",
       "depends_on": [
         "FP-SUB-05"
       ],
@@ -449,60 +562,105 @@
         "docs/floorplan_heldout_availability_v1.md",
         "paper/tables/predicted_control_heldout_v1.md"
       ],
-      "acceptance": "The held-out result reports supported execution, abstention, semantic success, exact locality, validity, plausibility, fidelity, graph diagnostics, and all negative results exactly once."
+      "acceptance": "可选分支执行才允许新增 held-out 主张；未执行不阻塞本次双协议限定范围论文。",
+      "steps": [
+        "仅当已有兼容新样本与选定冻结模型时启动；本冲刺默认不采集新数据、不大规模训练。",
+        "单独冻结 prompts、阈值和评测器；一次运行，保留所有失败。",
+        "不执行时保留 existing development exposure 声明；删去正文对 unopened-test generalization 的暗示。"
+      ],
+      "effort_budget": "optional; no critical-path budget",
+      "execution_type": "optional_new_evaluation",
+      "required_for_scoped_submission": false,
+      "submission_gate": "S7_optional_heldout_extension"
     },
     {
       "id": "FP-SUB-07",
       "priority": "P0",
-      "status": "integrity_tool_ready_heldout_pending",
-      "title": "Run the final evidence integrity audit",
+      "status": "completed_scoped_release",
+      "title": "使完整性审计匹配本次已声明的投稿范围",
       "depends_on": [
-        "FP-SUB-06"
+        "FP-SUB-05",
+        "FP-SUB-08"
       ],
       "deliverables": [
         "outputs/reports/floorplan_submission_integrity_v1.json"
       ],
-      "acceptance": "All paper numbers trace to hashed source reports; no stale, oracle-derived, or cross-protocol value enters the predicted-control claim."
+      "acceptance": "完整性报告可区分 passed_scoped_release 与 optional_generalization_not_evaluated；不降低事实或篡改原始结果。",
+      "steps": [
+        "检查 required artifacts、数字源、JSON pointers、hash 和 split/exposure 一致性。",
+        "修改旧 audit 中固定 pending_model_freeze_and_heldout 状态及强制 heldout 文件判断；按 manifest 中实际声称的范围判断。",
+        "保留 optional heldout 未完成状态，但与 required packaging failures 分开。",
+        "对前态修正、baseline wrapper、统计单位、pooled topology、contract-vs-semantic 设置具体检查项。"
+      ],
+      "effort_budget": "0.5 working day",
+      "execution_type": "evidence_packaging",
+      "required_for_scoped_submission": true
     },
     {
       "id": "FP-SUB-08",
       "priority": "P1",
-      "status": "completed_oracle_partial_predicted_pending",
-      "title": "Refresh matched local and external comparisons",
+      "status": "completed_scoped_release",
+      "title": "修复 matched baseline 接线并保留外部指标优势",
       "depends_on": [
-        "FP-SUB-02",
-        "FP-SUB-06"
+        "FP-SUB-02"
       ],
       "deliverables": [
+        "scripts/build_residential_sota_main_table_v2.py",
+        "scripts/build_residential_edit_fiveseed_report_v1.py",
+        "scripts/build_floorplan_matched_baselines_v1.py",
         "paper/tables/matched_local_editing_baselines_v1.md",
-        "outputs/reports/matched_local_editing_baselines_v1.json"
+        "outputs/reports/matched_local_editing_baselines_v2.json",
+        "paper/tables/main_external_context_v1.md"
       ],
-      "acceptance": "Raster2Seq redraw, editing-aware control, and FloorFlow use matching rows, controls, preprocessing, and evaluator; HouseMind remains context only."
+      "acceptance": "冻结基线为 0.137160/0.166756/0.177266/0.189491/0.145367；所有配对统计来自相同病例；跨论文不排名。",
+      "steps": [
+        "从 fp_raster2seq_local_redraw_v1.json 读取真正冻结的逐行结果，替换误标 raster2seq_local 的未冻结数值。",
+        "以同病例重算 paired CI/p；审计 editing-aware control 的 before-state 与 typed-before 差异，在表注声明或增加对称已有行比较。",
+        "更新生成脚本、主表、dossier、图注与受影响文字；真实冻结 Raster2Seq outside exact 为 1.0。",
+        "HouseMind-E 的 0.608/0.0019 与 oracle 数字并列于独立 context 表，明确两项指标数值优势及不同数据/输入。",
+        "旧 typed/dense/no-gate/no-graph 标为 composition-policy ablation；匹配预算表注明 post-hoc、零新增参数及额外时延。"
+      ],
+      "effort_budget": "1 working day",
+      "execution_type": "evidence_packaging",
+      "required_for_scoped_submission": true
     },
     {
       "id": "FP-SUB-09",
       "priority": "P1",
-      "status": "completed_model_updating_captions_current",
-      "title": "Build reviewer-facing qualitative and failure evidence",
+      "status": "completed_scoped_release",
+      "title": "用现有案例完成论文主图、行为图和失败图",
       "depends_on": [
-        "FP-SUB-06"
+        "FP-SUB-02",
+        "FP-SUB-03",
+        "FP-SUB-04",
+        "FP-SUB-08"
       ],
       "deliverables": [
         "paper/figures/floorplan_protocol_overview_v1.svg",
         "paper/figures/predicted_control_operation_panels_v1.svg",
         "paper/figures/floorplan_failure_taxonomy_v1.svg"
       ],
-      "acceptance": "Figures show protocol flow, supported execution, safe abstention, exact outside diff, plausible outputs under imperfect controls, and representative failures."
+      "acceptance": "图与主表引用同一版本和人口；正面能力和代表性失败同时可见；无需新训练。",
+      "steps": [
+        "主图解释 old plan、region、typed controls、局部合成与审计轴；显式标记 oracle 与 predicted 的不同控制来源。",
+        "每类 oracle 操作展示 before/after、region、change map 与 outside diff。",
+        "predicted 展示合法且合理的执行、unsupported abstention、source absent/no-op 与语义失败；抽样规则和案例 ID 留在 artifact。",
+        "复用已生成图，逐张核查是模型输出、规则合成还是示意图；不得把示意图当定量案例。"
+      ],
+      "effort_budget": "1 working day",
+      "execution_type": "evidence_packaging",
+      "required_for_scoped_submission": true
     },
     {
       "id": "FP-SUB-10",
       "priority": "P0",
-      "status": "draft_complete_heldout_pending",
-      "title": "Freeze the main paper tables",
+      "status": "completed_scoped_release",
+      "title": "冻结四张主表及逐项 claim-evidence 对应",
       "depends_on": [
-        "FP-SUB-06",
-        "FP-SUB-08",
-        "FP-SUB-09"
+        "FP-SUB-02",
+        "FP-SUB-03",
+        "FP-SUB-04",
+        "FP-SUB-08"
       ],
       "deliverables": [
         "paper/tables/main_oracle_anchor_v1.md",
@@ -510,15 +668,26 @@
         "paper/tables/main_resource_and_ablation_v1.md",
         "paper/tables/main_external_context_v1.md"
       ],
-      "acceptance": "The main paper has at most four result tables and every number maps to a frozen report."
+      "acceptance": "至多四张主结果表，不因缺少 optional heldout 留空；所有现有正面证据都有清晰主文入口。",
+      "steps": [
+        "T1 oracle 五操作：双编辑指标、outside、legality；pooled topology 单列。",
+        "T2 predicted：val491 合理性与 development operation 安全性分 panel，突出已有通过项与计数。",
+        "T3 同协议 matched controls、确定性消融与 compute；详细分层移入附录。",
+        "T4 外部 context：oracle 双指标数值优势和图指标限制同列，禁止混合 leaderboard。",
+        "每个数字绑定 registry key、分母、split、控制源和统计单位；identity fallback 默认入附录。"
+      ],
+      "effort_budget": "0.5 working day",
+      "execution_type": "evidence_packaging",
+      "required_for_scoped_submission": true
     },
     {
       "id": "FP-SUB-11",
       "priority": "P0",
-      "status": "draft_complete_final_heldout_pending",
-      "title": "Write the complete CVPR manuscript",
+      "status": "completed_scoped_release",
+      "title": "把现有四页候选稿扩成完整 CVPR 论文",
       "depends_on": [
-        "FP-SUB-07",
+        "FP-SUB-00",
+        "FP-SUB-09",
         "FP-SUB-10"
       ],
       "deliverables": [
@@ -526,14 +695,26 @@
         "paper/references.bib",
         "paper/supplement.tex"
       ],
-      "acceptance": "The manuscript states the research question, formal protocol, method, claims, evidence, related work, limitations, and submission claims without internal artifact paths or engineering-log language."
+      "acceptance": "完整论文有连贯贡献与证据链；没有仅因研发未完成而遗留的占位词；PDF 与正文及附录一致。",
+      "steps": [
+        "在已存在 main.tex/supplement.tex 上修改，不重新从 skeleton 起步。",
+        "摘要与引言按研究问题→协议/执行方法→oracle 硬结果→predicted 合法性和合理性展开。",
+        "方法写清 control state transition、typed-before、change gate、有效域、确定性路由与旧 completion 模型；不把新探索架构冒充主结果模型。",
+        "实验分别讲双协议正面结果、matched controls、攻击敏感性、结构边界；已有弱语义诊断保持独立。",
+        "补齐相关工作和真实引用，更新旧 v17 数字来源规则；官方周期格式、页数和匿名规则在 FP-SUB-14 核对。",
+        "移除仅有工程路径的叙述，给出足够公式、算法与可复现配置；编译并检查表图溢出。"
+      ],
+      "effort_budget": "1.5 working days",
+      "execution_type": "evidence_packaging",
+      "required_for_scoped_submission": true
     },
     {
       "id": "FP-SUB-12",
       "priority": "P0",
-      "status": "draft_review_complete_model_rereview_pending",
-      "title": "Run simulated CVPR review and revise",
+      "status": "completed_scoped_release",
+      "title": "按已选双协议主张审阅并集中修订",
       "depends_on": [
+        "FP-SUB-07",
         "FP-SUB-11"
       ],
       "deliverables": [
@@ -542,13 +723,22 @@
         "docs/floorplan_claim_evidence_matrix_v1.md",
         "docs/floorplan_submission_review_v1.md"
       ],
-      "acceptance": "A methodology reviewer, domain reviewer, and devil's advocate each address oracle leakage, exact-locality construction, fidelity limits, abstention coverage, and external comparability."
+      "acceptance": "每个必须修复项均有正文/表图/报告定位与完成证据；不以模拟审阅替代录用判断。",
+      "steps": [
+        "使用方法、领域和质疑三种审阅视角核对贡献与证据，不默认要求全面 SOTA 或新数据。",
+        "逐项检查 oracle 信息量、局部构造保证、predicted 正面指标定义、语义边界、数据暴露和外部可比性。",
+        "按 factual error / missing explanation / optional stronger evidence 分类，只有前两项进入本次必须修复列表。",
+        "更新旧 review 中将缺少新模型/新 heldout 设为统一阻塞项的结论；保留真实局限。"
+      ],
+      "effort_budget": "0.5 working day",
+      "execution_type": "evidence_packaging",
+      "required_for_scoped_submission": true
     },
     {
       "id": "FP-SUB-13",
       "priority": "P0",
-      "status": "draft_package_ready_final_heldout_pending",
-      "title": "Prepare reproducibility and artifact package",
+      "status": "completed_scoped_release",
+      "title": "生成与主文一致的匿名可复核 release 包",
       "depends_on": [
         "FP-SUB-07",
         "FP-SUB-11"
@@ -558,13 +748,22 @@
         "outputs/floorplan_submission/README.md",
         "outputs/floorplan_submission/CHECKSUMS.sha256"
       ],
-      "acceptance": "The package includes code, config, prompt manifests, row schemas, evaluator hashes, checkpoint hashes, environment instructions, and no restricted data or oversized files."
+      "acceptance": "包可验证每个主表数字；缺省不包含数据/大 checkpoint；发布身份与冻结清单一致。",
+      "steps": [
+        "更新 artifact builder 的 hardcoded draft/model-updating 文案与 evidence allowlist。",
+        "包含 TeX/Bib、脚本、配置、选定报告、逐行索引、taxonomy/manifest 身份及 baseline 修正版。",
+        "保留历史 v17 包为 provenance；新包注明哪些数据/权重因体积或许可不包含及再生成方式。",
+        "校验 SHA256、相对路径、匿名性和无本机凭据；不要把整个 outputs 目录打包。"
+      ],
+      "effort_budget": "0.5 working day",
+      "execution_type": "evidence_packaging",
+      "required_for_scoped_submission": true
     },
     {
       "id": "FP-SUB-14",
       "priority": "P0",
-      "status": "blocked_pending_model_heldout",
-      "title": "Run final claim, anonymity, and submission checks",
+      "status": "completed_scoped_release",
+      "title": "完成官方格式、匿名、引用与最终 scope 检查",
       "depends_on": [
         "FP-SUB-12",
         "FP-SUB-13"
@@ -572,13 +771,22 @@
       "deliverables": [
         "outputs/floorplan_submission/submission_checklist.json"
       ],
-      "acceptance": "PDF compiles, supplementary files open, references resolve, anonymity passes, claims match results, and all mandatory limitations and disclosures are present."
+      "acceptance": "全部适用投稿要求与必需证据检查通过；记录准确截止时间，不预设年份或页数。",
+      "steps": [
+        "查官方当前可投稿周期、deadline/timezone、模板、篇幅、匿名和 supplementary 规则；在 target 记录来源 URL 与核对日期。",
+        "使用已核实的模板编译主文/附录，检查所有页、表、图、引用及字体。",
+        "检查 no placeholders、无本地路径/身份泄漏、所有结论对应 evidence registry。",
+        "按 scoped release gates 验收，optional heldout 不进入失败条件。"
+      ],
+      "effort_budget": "0.5 working day",
+      "execution_type": "evidence_packaging",
+      "required_for_scoped_submission": true
     },
     {
       "id": "FP-SUB-15",
       "priority": "P0",
-      "status": "blocked_pending_final_release",
-      "title": "Submit",
+      "status": "completed_ready_for_user_submission",
+      "title": "提交已审阅的冻结论文包",
       "depends_on": [
         "FP-SUB-14"
       ],
@@ -586,22 +794,31 @@
         "paper/main.pdf",
         "paper/supplement.pdf"
       ],
-      "acceptance": "Submission is complete before the official deadline with the frozen evidence package."
+      "acceptance": "有实际平台回执才标记 submitted；否则交付完整可上传包与清单。",
+      "steps": [
+        "整理最终标题、摘要、作者/冲突信息、主题、PDF 和补充材料。",
+        "提交前向用户展示最终包、检查结果和选定平台操作；获得针对实际外部提交的明确授权。",
+        "授权后完成上传与平台回执核验；未授权则标为 ready_for_user_submission，不假称已提交。"
+      ],
+      "effort_budget": "submission window",
+      "execution_type": "external_submission",
+      "required_for_scoped_submission": true
     }
   ],
   "reviewer_risks": [
     {
       "risk": "Oracle controls are target-derived.",
-      "response": "Keep oracle metrics as an upper bound and pair them with a target-free predicted-control reasonableness and operation-safety table.",
+      "response": "Explain target-derived oracle controls and strong scoped edit-detection/locality evidence; pair with already supported target-free validation reasonableness and disclosed development operation safety. Fresh heldout is required only for a new heldout-generalization claim.",
       "required_evidence": [
-        "predicted_control_reasonableness",
-        "predicted_control_operation_reasonableness",
-        "FP-SUB-06"
+        "FP-SUB-02",
+        "FP-SUB-03",
+        "FP-SUB-04",
+        "FP-SUB-05"
       ]
     },
     {
       "risk": "Exact outside preservation is guaranteed by local composition.",
-      "response": "Present it as an architectural guarantee, then prove audit value through no-gate leakage, Raster2Seq leakage, object-delete checks, and unsupported-edit abstention.",
+      "response": "State the locality construction guarantee; show audit sensitivity via no-gate/raw leakage and attacks. Correctly frozen Raster2Seq also has exact outside preservation, so compare its edit fidelity rather than claim frozen-wrapper leakage.",
       "required_evidence": [
         "FP-SUB-02",
         "FP-SUB-03",
@@ -613,16 +830,14 @@
       "response": "Separate fidelity from validity and operation reliability; report Room IoU and graph failures without weakening the safety claim.",
       "required_evidence": [
         "predicted_control_fidelity_limitations",
-        "FP-SUB-03",
-        "FP-SUB-06"
+        "FP-SUB-03"
       ]
     },
     {
       "risk": "Abstention hides difficult prompts.",
       "response": "Report support coverage, prompt construction, unsupported categories, abstention rates, and semantic success on every supported operation.",
       "required_evidence": [
-        "FP-SUB-04",
-        "FP-SUB-06"
+        "FP-SUB-04"
       ]
     },
     {
@@ -643,39 +858,105 @@
   ],
   "decision_rules": [
     {
-      "condition": "Predicted semantic audit and held-out safety/reasonableness pass.",
-      "decision": "Submit the full two-axis reliability paper."
+      "condition": "Existing oracle hard metrics and predicted legality/reasonableness are traceable, corrected, and scoped to actual evaluation populations.",
+      "decision": "Complete the dual-protocol CVPR evidence paper; no comprehensive SOTA or new heldout prerequisite."
     },
     {
-      "condition": "Held-out reasonableness passes but semantic operation success is weak.",
-      "decision": "Reframe as safe operation execution and abstention, and move semantic fidelity to limitations."
+      "condition": "Predicted semantic realization remains weak.",
+      "decision": "Retain positive execution safety and reasonableness claims; disclose semantic success by operation and source presence. Do not require 0.90 or relabel failures."
     },
     {
-      "condition": "Held-out reasonableness fails.",
-      "decision": "Do not submit the predicted-control claim; fall back to the oracle-control protocol paper or delay."
+      "condition": "Fresh heldout is unavailable.",
+      "decision": "Retain existing validation and development-exposure evidence with explicit limits; do not claim unopened-test generalization; proceed with the scoped paper."
+    },
+    {
+      "condition": "A specific positive number fails source or evaluator audit.",
+      "decision": "Repair that source/statistic from saved rows or narrow the specific claim; preserve unaffected positive evidence."
+    },
+    {
+      "condition": "Optional new model or heldout evidence is available with a frozen complete protocol.",
+      "decision": "Evaluate separately; incorporate only with corresponding source map and exposure metadata, without replacing unrelated pipelines."
     },
     {
       "condition": "External matched comparison is unavailable.",
-      "decision": "Keep unavailable entries as N/A and make no external rank claim."
+      "decision": "Keep N/A and retain external metric context with explicit data/input boundaries."
     }
   ],
   "stop_rules": [
-    "Do not open the predicted held-out split before FP-SUB-05 is frozen.",
-    "Do not add a new model head while the operation-success audit is unfinished.",
-    "Do not use a proxy improvement to promote a checkpoint without its canonical consumer.",
-    "Do not hide raw watertightness behind functional or componentwise diagnostics.",
-    "Do not convert abstention into a successful semantic edit.",
-    "Do not pool oracle, predicted-control, identity, generation, and free-text rows.",
-    "Do not claim complete-method SOTA without executable matched evidence."
+    "Do not import fptodo.json research-performance gates into the scoped submission critical path.",
+    "Do not start large training, a new model head, data acquisition or broad experiments to complete evidence packaging.",
+    "Do not open an optional fresh heldout split before its own protocol freeze.",
+    "Do not claim generalization beyond the declared validation/development-exposed populations.",
+    "Do not replace selected pipeline metrics with newer metrics from another model or evaluator.",
+    "Do not hide raw watertightness or negative semantic/GED results.",
+    "Do not convert contract checks, no-ops or abstentions into empirical semantic success.",
+    "Do not pool oracle, predicted, hybrid, identity, generation and free-text rows.",
+    "Do not call deterministic composition-policy ablations trained attention-network comparisons.",
+    "Do not claim frozen-wrapper leakage from unfrozen Raster2Seq rows.",
+    "Do not fabricate matched SOTA from cross-dataset metric advantages."
   ],
   "open_items": [
-    "Confirm the official CVPR cycle and deadline.",
-    "Freeze the predicted-control held-out prompt manifest and case split.",
-    "Set operation-specific semantic-success thresholds before held-out access.",
-    "Audit current predicted-control updates and replace stale validation reports if their contracts changed.",
-    "Use a fresh unopened held-out split for the final predicted-control claim because the current test manifest has been used for development.",
-    "Acquire a new compatible held-out manifest: all 503 CubiCasa test cases were already inferred by the predicted completion run.",
-    "Decide whether the paused corrected model is a selected candidate or only an exploratory worktree before freezing it.",
-    "Decide whether the identity fallback remains a main-paper contribution or an appendix result."
-  ]
+    "Correct frozen Raster2Seq baseline wiring and affected paired statistics (FP-SUB-08).",
+    "Audit cluster/seed statistical units and operation-specific versus pooled topology (FP-SUB-02).",
+    "Lock selected historical pipelines and numerical source registry, including provenance gaps (FP-SUB-01/05).",
+    "Reconcile old v17-only writing policy, hardcoded heldout integrity tool, review and checklist with this scoped release (FP-SUB-01/07/12/13).",
+    "Create coherent four-table/figure narrative and expand existing TeX (FP-SUB-09/10/11).",
+    "Confirm official eligible CVPR cycle, deadline and template at final format check (FP-SUB-14).",
+    "Optional only: fresh heldout extension or improved predicted model; not a current submission blocker (FP-SUB-06)."
+  ],
+  "planning_basis": {
+    "user_direction": "2026-11-02 用户明确：主要阻碍是证据组织；oracle 有部分指标超过公开强基准的证据，predicted 合法性和合理性可 claim；冲刺不等待全面 SOTA 或大规模补实验。",
+    "submission_authority": "floorplansubmissiontodo.json controls submission packaging; fptodo.json controls continuing model R&D and does not impose its absolute metric gates on this paper.",
+    "existing_strengths": [
+      "Oracle test503: 2479 edits, five typed operations, strong Delta-IoU/Delta-MSE, exact outside preservation, validity, topology diagnostics, attacks and negative controls.",
+      "Predicted val491: five seeds all pass existing reasonableness gates; target-free inference, legality and plausibility are positive results.",
+      "Predicted operation evidence: 438/438 supported executions, 300/300 abstentions, exact outside preservation and validity on explicitly disclosed development-exposed test prompts.",
+      "Object-deletion and ghost-state contracts pass; these are execution/state checks, separate from dataset semantic success.",
+      "Main/supplement TeX, compiled PDFs, tables, figures and draft artifact package already exist."
+    ],
+    "current_repairs": [
+      "Correct Raster2Seq frozen-wrapper source wiring and recompute affected paired statistics from existing rows.",
+      "Name typed-before repair and control-change gating explicitly; bind every metric to its actual input/output pair.",
+      "Describe old typed/dense/no-graph arms as deterministic routing/composition policies, distinct from new trainable channel architecture.",
+      "Refresh statistical units and source provenance; separate raw/functional topology metrics and evaluation populations.",
+      "Replace stale writing/heldout/model-search prerequisites with evidence-release checks scoped to claims actually made."
+    ],
+    "not_submission_prerequisites": [
+      "Predicted Room IoU >= 0.45 or Instance F1 >= 0.50",
+      "Wall/Opening/Node/Edge/GED research gates in fptodo.json",
+      "Every operation semantic-success rate >= 0.90",
+      "Fresh external held-out data for claims explicitly limited to existing validation and development-exposed cases",
+      "Adoption of the latest exploratory checkpoint or new architecture",
+      "Complete-method HouseMind superiority or RPLAN/full-CAD SOTA"
+    ],
+    "boundary": "Evidence organization cannot change observed outcomes, erase exposure, upgrade contract checks into semantic success, or turn cross-dataset numbers into matched rankings."
+  },
+  "critical_path_policy": "Listed tasks are required work, not one linear execution chain. Use depends_on for ordering; FP-SUB-03/04/09 run in their ready work lanes. FP-SUB-06 is explicitly optional and has no required downstream dependency.",
+  "sprint_execution": {
+    "duration": "8 working days target; relative D1-D8, not an official CVPR deadline or a promise of acceptance. Effort budgets are work estimates; ready tasks can be interleaved without agent delegation.",
+    "next_actions": [
+      "FP-SUB-00: align abstract/contributions and existing review to the user-selected scope.",
+      "FP-SUB-01: create numeric claim registry and selected-pipeline manifest.",
+      "FP-SUB-02 + FP-SUB-08: correct frozen Raster2Seq source and paired statistics using saved rows."
+    ],
+    "compute_policy": "Default: existing JSON/NPZ aggregation, paired statistics, figure rendering and LaTeX build only. No full retraining, new architecture, broad seed sweep or new-dataset acquisition.",
+    "bounded_rechecks": "If a published claim cannot be traced, first inspect existing artifacts; rerun only the specific deterministic scorer/consumer on existing selected cases. Log reason, inputs and affected claim. Do not launch GPU training automatically.",
+    "daily_checkpoint": [
+      "Report produced artifact paths and verified claims.",
+      "List concrete remaining source/statistical/presentation defects, not unmet R&D SOTA gates.",
+      "Update status only after acceptance checks, never because a task was scheduled."
+    ],
+    "freeze_policy": "Use the selected existing evidence pipeline; newer exploratory models can enter only as a separate optional extension with complete corresponding evidence.",
+    "scope_change_policy": "If a claim lacks evidence, narrow that specific wording and retain supported positive results; do not restart the entire submission as a model-improvement program."
+  },
+  "verification_plan": {
+    "plan_structure": "Parse JSON; ensure unique task IDs, all references resolve, dependency graph is acyclic, and optional FP-SUB-06 has no required downstream dependencies.",
+    "scope_consistency": "Ensure required tasks contain no 0.90 semantic or full-SOTA/model-improvement gate and retain explicit population/exposure boundaries.",
+    "current_turn": "Only this plan is changed. No training, inference, manuscript rewrite, evaluator change or external submission is implied as completed.",
+    "later_artifact_checks": [
+      "python scripts/audit_floorplan_submission_integrity_v1.py (after scoped-gate update)",
+      "python scripts/build_floorplan_submission_artifact_v1.py (after source allowlist update)",
+      "Compile paper/main.tex and paper/supplement.tex with selected official template."
+    ]
+  }
 }

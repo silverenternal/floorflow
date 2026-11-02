@@ -152,6 +152,15 @@ The proxy is registered as `RM-02.query-separation`, with minimize direction
 against canonical Instance F1. It remains diagnostic until the standard
 proxy-real consistency contract passes.
 
+Per-case proxy computation is centralized in `per_case_query_separation`.
+Validation slices class, mask, existence, and selection tensors before
+computing each case, preventing batch broadcast or case-index leakage.
+
+The row-to-measurement binding also moved into
+`floorflow.evaluation.atom_measurement_builder`. A synthetic two-checkpoint
+test verifies that `query_separation_proxy` is actually converted into the
+registered `RM-02.query-separation` measurement against Instance F1.
+
 ## Metric Ownership
 
 | Weak canonical metric | Directly affected path |
@@ -175,7 +184,7 @@ The focused contract suite passes:
 The full non-chip/non-NLP regression suite passes:
 
 ```text
-1219 passed, 1 skipped
+1231 passed, 1 skipped
 ```
 
 It verifies non-zero first-step gradients for:
@@ -197,3 +206,33 @@ It verifies non-zero first-step gradients for:
 
 This is architecture and optimization-path evidence, not a validation or SOTA
 result. A matched small-subset screen is still required before any metric claim.
+
+## v342 Follow-up
+
+A fresh-state scan of the area-preserving candidate still reports many exactly
+zero tensors, but they fall into three intentional classes:
+
+- normalization, attention, projection, and route-head biases;
+- explicitly additive zero residual parameters, including
+  `head.typed_channel_residual` and per-stage action `link_residual`;
+- disabled optional branches or hyperparameter-only logits.
+
+No enabled multi-element weight matrix that blocks an upstream trainable trunk
+was found. The residual audits now also cover the area-preserving graph path:
+both mask and class residual weights receive non-zero gradients after active
+query masking and zero-sum centering.
+
+The matched room logs exposed a separate live-path problem: the owner-preserving
+readout was receiving very low absolute mask confidence
+(`room_owner_soft_weight_mean` 0.0457 in control and 0.1436 in graph joint).
+Validation now reports relative query ownership, owner foreground fraction, and
+total gated query mass alongside the existing absolute soft weight. These are
+diagnostics, while relative confidence is enabled only by a separate candidate.
+
+The same audit found a stricter consumer bug. When owner readout selected a
+query, its class probability gather expanded the class-index dimension to one.
+PyTorch therefore truncated the gathered tensor to the first room class and
+broadcast that value across the room-class axis. The owner-preserving logits
+were class-constant even though the selected query had a valid class
+distribution. The gather now carries all room classes, and deterministic tests
+verify both multi-class preservation and the relative-confidence path.

@@ -8,6 +8,7 @@ from floorflow.objectives.room_query_separation import (
     balanced_room_class_weights,
     count_gated_query_separation,
     gated_active_query_presence,
+    per_case_query_separation,
 )
 
 
@@ -94,3 +95,26 @@ def test_query_separation_presence_uses_count_selection_gate() -> None:
     )
     assert positive > 0.0
     assert suppressed == 0.0
+
+
+def test_per_case_query_separation_does_not_cross_batch_boundaries() -> None:
+    classes = torch.tensor(
+        [
+            [[4.0, 0.0], [4.0, 0.0]],
+            [[4.0, 0.0], [4.0, 0.0]],
+        ]
+    )
+    masks = torch.zeros(2, 2, 4, 4)
+    existence = torch.full((2, 2), 8.0)
+    selection = torch.tensor(
+        [[True, True], [True, False]],
+        dtype=torch.float32,
+    )
+    values = per_case_query_separation(
+        classes,
+        masks,
+        existence,
+        selection,
+    )
+    assert values[0] > 0.0
+    assert values[1] == 0.0

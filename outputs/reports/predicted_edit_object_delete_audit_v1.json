@@ -1,0 +1,14 @@
+{
+  "schema_version": "predicted-edit-object-delete-audit-v1",
+  "device": "cpu",
+  "checks": {
+    "opening_family_deleted_inside_region": true,
+    "opening_room_pixels_preserved": true,
+    "opening_outside_region_exact": true,
+    "furniture_family_deleted_inside_region": true,
+    "furniture_room_pixels_preserved": true,
+    "furniture_outside_region_exact": true
+  },
+  "passed": true,
+  "claim_boundary": "Execution-contract evidence only; matched edit metrics remain pending."
+}

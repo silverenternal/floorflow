@@ -82,9 +82,14 @@ def room_owner_readout(
     footprint: torch.Tensor | None = None,
     fallback_logits: torch.Tensor | None = None,
     soft_foreground: bool = False,
+    confidence_mode: str = "absolute",
 ) -> dict[str, torch.Tensor]:
     """Expose query ownership before semantic class mass is collapsed."""
 
+    if confidence_mode not in {"absolute", "relative"}:
+        raise ValueError(
+            "owner confidence mode must be absolute or relative"
+        )
     query_mass = _effective_query_mass(predictions)
     _, owner = query_mass.max(dim=1)
     raw_mask_confidence = predictions["mask_logits"].sigmoid()
@@ -107,8 +112,22 @@ def room_owner_readout(
         1,
         owner[:, None, :, :],
     )[:, 0]
+    owner_probability = query_mass / query_mass.sum(
+        dim=1,
+        keepdim=True,
+    ).clamp_min(1.0e-6)
+    owner_relative_confidence = torch.gather(
+        owner_probability,
+        1,
+        owner[:, None, :, :],
+    )[:, 0]
+    owner_weight = (
+        owner_confidence
+        if confidence_mode == "absolute"
+        else owner_relative_confidence
+    )
     foreground = (
-        owner_confidence >= float(confidence_threshold)
+        owner_weight >= float(confidence_threshold)
     ) & (owner_availability >= 0.5)
     if footprint is not None:
         area = footprint[:, 0] if footprint.ndim == 4 else footprint
@@ -124,6 +143,13 @@ def room_owner_readout(
     class_probability = predictions["class_logits"][
         ..., :num_room_classes
     ].softmax(dim=-1)
+    owner_index = owner[:, None, :, :, None].expand(
+        -1,
+        1,
+        -1,
+        -1,
+        num_room_classes,
+    )
     owner_class = torch.gather(
         class_probability[:, :, None, None, :].expand(
             -1,
@@ -133,13 +159,7 @@ def room_owner_readout(
             -1,
         ),
         1,
-        owner[:, None, :, :, None].expand(
-            -1,
-            1,
-            -1,
-            -1,
-            1,
-        ),
+        owner_index,
     )[:, 0].permute(0, 3, 1, 2)
     fallback = (
         fused_room_mask_logits(predictions, num_room_classes)
@@ -155,12 +175,10 @@ def room_owner_readout(
         )
     owner_logits = owner_class.clamp_min(1.0e-8).log()
     if soft_foreground:
-        owner_weight = (
-            owner_confidence * owner_availability
-        )[:, None]
+        soft_weight = owner_weight * owner_availability
         owner_preserving = (
-            owner_weight * owner_logits
-            + (1.0 - owner_weight) * fallback
+            soft_weight[:, None] * owner_logits
+            + (1.0 - soft_weight[:, None]) * fallback
         )
     else:
         owner_preserving = torch.where(
@@ -174,10 +192,13 @@ def room_owner_readout(
         "owner_confidence": owner_confidence,
         "owner_foreground": foreground,
         "owner_confidence_map": owner_confidence,
+        "owner_relative_confidence": owner_relative_confidence,
+        "owner_mass_sum": query_mass.sum(dim=1),
         "owner_availability": owner_availability,
         "owner_soft_weight": (
-            owner_confidence * owner_availability
+            owner_weight * owner_availability
         ),
+        "owner_confidence_mode": confidence_mode,
         "owner_boundary": boundaries,
         "owner_preserving_logits": owner_preserving,
     }

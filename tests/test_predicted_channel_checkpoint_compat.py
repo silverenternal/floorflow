@@ -9,6 +9,7 @@ from floorflow.data.taxonomy import build_taxonomy
 from floorflow.model.predicted_channel_checkpoint import (
     build_predicted_channel_model,
     load_predicted_channel_state_dict,
+    predicted_channel_model_kwargs,
 )
 
 
@@ -108,3 +109,22 @@ def test_unknown_shape_mismatch_fails_closed() -> None:
     state[name] = torch.zeros(1, 1)
     with pytest.raises(ValueError, match="unsupported checkpoint shape"):
         load_predicted_channel_state_dict(target, state)
+
+
+def test_checkpoint_config_preserves_relative_owner_mode() -> None:
+    taxonomy = build_taxonomy(
+        {
+            "room": Counter({"Bedroom": 2, "Kitchen": 2}),
+            "furniture": Counter(),
+            "door": Counter(),
+            "window": Counter(),
+        },
+        room_min_count=1,
+        furniture_min_count=1,
+    )
+    config = _config()
+    config["owner_preserving_room_readout"] = "relative"
+    kwargs = predicted_channel_model_kwargs(config)
+    assert kwargs["owner_preserving_room_readout"] == "relative"
+    model = build_predicted_channel_model(taxonomy, config)
+    assert model.room_instance_stage.owner_readout_mode == "relative"

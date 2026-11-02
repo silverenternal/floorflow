@@ -18,6 +18,7 @@ def opening_vector_proxy(
     taxonomy: FloorplanTaxonomy,
     *,
     tolerance: float = 4.0,
+    opening_family_probability: np.ndarray | None = None,
 ) -> dict[str, float]:
     """Decode labels into vector openings and return canonical-style matching."""
 
@@ -27,6 +28,7 @@ def opening_vector_proxy(
         predicted,
         taxonomy,
         predicted_plan,
+        family_probability=opening_family_probability,
     )
     target_detections = detections_from_labels(
         target,
@@ -66,6 +68,30 @@ def opening_vector_proxy(
         ),
         "opening_vector_window_to_door_proxy": float(
             metrics["window_to_door"]
+        ),
+        "opening_vector_predicted_doors_proxy": float(
+            metrics["predicted_doors"]
+        ),
+        "opening_vector_predicted_windows_proxy": float(
+            metrics["predicted_windows"]
+        ),
+        "opening_vector_target_doors_proxy": float(
+            metrics["target_doors"]
+        ),
+        "opening_vector_target_windows_proxy": float(
+            metrics["target_windows"]
+        ),
+        "opening_vector_matched_doors_proxy": float(
+            metrics["matched_doors"]
+        ),
+        "opening_vector_matched_windows_proxy": float(
+            metrics["matched_windows"]
+        ),
+        "opening_vector_unmatched_predicted_proxy": float(
+            metrics["unmatched_predicted"]
+        ),
+        "opening_vector_unmatched_target_proxy": float(
+            metrics["unmatched_target"]
         ),
     }
 

@@ -54,6 +54,7 @@ def test_train_component_totals_cover_every_logged_objective() -> None:
         "stage_opening_precision",
         "stage_opening_host",
         "stage_opening_type",
+        "stage_opening_family",
         "stage_furniture",
         "routing",
         "furniture_query",

@@ -113,9 +113,7 @@ def main() -> None:
     config = model_config(args)
     model = PredictedChannelModel(taxonomy, **config).to(device)
     init_report = (
-        load_typed_channel_initialization(model, args.init_checkpoint)
-        if args.init_checkpoint is not None
-        else None
+        load_typed_channel_initialization(model, args.init_checkpoint) if args.init_checkpoint is not None else None
     )
     scope_report = configure_typed_channel_scope(model, args.train_scope)
     if args.feature_cache_root is not None and args.train_scope in {
@@ -141,9 +139,7 @@ def main() -> None:
     seed_everything(args.seed)
     optimizer = make_typed_channel_optimizer_from_args(model, args)
     teacher_index = (
-        ProposalTeacherIndex(
-            args.teacher_proposal_root / "train" / "manifest.json"
-        )
+        ProposalTeacherIndex(args.teacher_proposal_root / "train" / "manifest.json")
         if args.use_teacher_room_proposals
         else None
     )
@@ -154,15 +150,9 @@ def main() -> None:
     )
     scaler = torch.amp.GradScaler(
         device.type,
-        enabled=(
-            args.amp
-            and args.amp_dtype == "float16"
-            and device.type == "cuda"
-        ),
+        enabled=(args.amp and args.amp_dtype == "float16" and device.type == "cuda"),
     )
-    autocast_dtype = (
-        torch.bfloat16 if args.amp_dtype == "bfloat16" else torch.float16
-    )
+    autocast_dtype = torch.bfloat16 if args.amp_dtype == "bfloat16" else torch.float16
     positive = torch.from_numpy(
         load_positive_weights(
             args.cache_root,
@@ -277,6 +267,17 @@ def main() -> None:
                     wall_precision_weight=args.wall_precision_weight,
                     opening_precision_weight=args.opening_precision_weight,
                     opening_host_weight=args.opening_host_weight,
+                    opening_family_weight=args.opening_family_weight,
+                    opening_class_weights=(
+                        class_weights[
+                            torch.tensor(
+                                taxonomy.opening_ids,
+                                device=device,
+                            )
+                        ]
+                        if args.opening_type_class_balance
+                        else None
+                    ),
                     return_loss_terms=balancer is not None,
                 )
                 (
@@ -286,25 +287,25 @@ def main() -> None:
                 ) = stage_result
                 components.update(stage_components)
                 loss = loss + args.stage_family_weight * stage_loss
-                routing_loss, routing_components = (
-                    typed_routing_regularization(model, output)
-                )
+                routing_loss, routing_components = typed_routing_regularization(model, output)
                 components.update(routing_components)
                 loss = loss + args.routing_regularization_weight * routing_loss
-                if (
-                    args.enable_instance_room_decoder
-                    and args.instance_room_weight > 0.0
-                ):
+                if args.enable_instance_room_decoder and args.instance_room_weight > 0.0:
                     teacher = None
                     if teacher_index is not None:
                         teacher = teacher_index.load(
-                            names, image_size=256,
+                            names,
+                            image_size=256,
                             max_proposals=args.teacher_max_proposals,
                             device=device,
                         )
                     instance_result = instance_room_losses(
-                        output, target, footprint, taxonomy,
-                        max_rooms=args.room_instance_queries, teacher=teacher,
+                        output,
+                        target,
+                        footprint,
+                        taxonomy,
+                        max_rooms=args.room_instance_queries,
+                        teacher=teacher,
                         program=controls["program"],
                         **typed_channel_instance_loss_kwargs(
                             args,
@@ -321,23 +322,17 @@ def main() -> None:
                     loss = (
                         loss
                         + args.instance_room_weight * instance_room_loss
-                        + args.instance_room_partition_weight
-                        * partition_loss
+                        + args.instance_room_partition_weight * partition_loss
                     )
                 components["furniture_query_loss"] = query_loss.detach()
-                if (
-                    args.enable_furniture_queries
-                    and args.furniture_query_weight > 0.0
-                ):
+                if args.enable_furniture_queries and args.furniture_query_weight > 0.0:
                     classes, masks, valid = object_instance_targets(
                         target,
                         taxonomy.furniture_ids,
                         max_instances=args.furniture_max_queries,
                     )
                     query_prediction = {
-                        "class_logits": output[
-                            "furniture_query_class_logits"
-                        ],
+                        "class_logits": output["furniture_query_class_logits"],
                         "mask_logits": torch.nn.functional.interpolate(
                             output["furniture_query_mask_logits"],
                             size=target.shape[-2:],
@@ -352,47 +347,30 @@ def main() -> None:
                         valid,
                         boundary_weight=2.0,
                         mask_pos_weight=args.furniture_query_mask_pos_weight,
-                        unmatched_mask_weight=(
-                            args.furniture_query_unmatched_mask_weight
-                        ),
-                        mask_tversky_weight=(
-                            args.furniture_query_tversky_weight
-                        ),
+                        unmatched_mask_weight=(args.furniture_query_unmatched_mask_weight),
+                        mask_tversky_weight=(args.furniture_query_tversky_weight),
                     )
                     components.update(query_components)
                     components["furniture_query_loss"] = query_loss.detach()
                     loss = loss + args.furniture_query_weight * query_loss
-                    if (
-                        args.furniture_room_assignment
-                        and args.furniture_room_assignment_weight > 0.0
-                    ):
-                        assignment_loss, assignment_components = (
-                            furniture_room_assignment_loss(
-                                output,
-                                classes,
-                                masks,
-                                valid,
-                                target,
-                                taxonomy,
-                            )
+                    if args.furniture_room_assignment and args.furniture_room_assignment_weight > 0.0:
+                        assignment_loss, assignment_components = furniture_room_assignment_loss(
+                            output,
+                            classes,
+                            masks,
+                            valid,
+                            target,
+                            taxonomy,
                         )
                         components.update(assignment_components)
-                        components[
-                            "furniture_room_assignment_loss"
-                        ] = assignment_loss.detach()
-                        loss = (
-                            loss
-                            + args.furniture_room_assignment_weight
-                            * assignment_loss
-                        )
+                        components["furniture_room_assignment_loss"] = assignment_loss.detach()
+                        loss = loss + args.furniture_room_assignment_weight * assignment_loss
                     if args.furniture_containment_weight > 0.0:
                         containment_loss = furniture_containment_loss(
                             output["furniture_query_mask_logits"],
                             torch.isin(target, room_ids),
                         )
-                        components[
-                            "furniture_query_containment"
-                        ] = containment_loss.detach()
+                        components["furniture_query_containment"] = containment_loss.detach()
                         loss = loss + args.furniture_containment_weight * containment_loss
                 zero_component = query_loss.detach() * 0.0
                 for name in (
@@ -403,9 +381,15 @@ def main() -> None:
                     "furniture_query_containment",
                     "furniture_room_assignment_loss",
                     "furniture_room_assignment_accuracy",
-                    "instance_room_class", "instance_room_mask", "instance_room_mask_centroid",
-                    "instance_room_unmatched", "instance_room_tversky",
-                    "instance_room_reference_anchor", "instance_room_partition", "instance_room_centroid_error",
+                    "instance_room_class",
+                    "instance_room_mask",
+                    "instance_room_mask_centroid",
+                    "instance_room_unmatched",
+                    "instance_room_tversky",
+                    "instance_room_reference_anchor",
+                    "instance_room_partition",
+                    "instance_room_centroid_error",
+                    "instance_room_area",
                 ):
                     components.setdefault(name, zero_component)
                 if balancer is not None:
@@ -417,11 +401,7 @@ def main() -> None:
                         "family_iou": components["family_iou_term"],
                         "routing": routing_loss,
                         "furniture_query": query_loss,
-                        "instance_room": (
-                            raw_loss_terms[0]["instance_room"]
-                            if raw_loss_terms
-                            else instance_room_loss
-                        ),
+                        "instance_room": (raw_loss_terms[0]["instance_room"] if raw_loss_terms else instance_room_loss),
                         "instance_partition": partition_loss,
                         "furniture_assignment": assignment_loss,
                         "furniture_containment": containment_loss,
@@ -430,11 +410,7 @@ def main() -> None:
                         terms.update(stage_loss_terms[0])
                     if raw_loss_terms:
                         terms.update(
-                            {
-                                name: value
-                                for name, value in raw_loss_terms[0].items()
-                                if name != "instance_room"
-                            }
+                            {name: value for name, value in raw_loss_terms[0].items() if name != "instance_room"}
                         )
                     balancer.maybe_update(
                         terms,
@@ -528,18 +504,11 @@ def main() -> None:
         "train_scope": scope_report,
         "initialization": init_report,
         "best_selection_score": best_score,
-        "selected_epoch": int(
-            max(history, key=lambda row: row["selection_score"])["epoch"]
-        ),
+        "selected_epoch": int(max(history, key=lambda row: row["selection_score"])["epoch"]),
         "best_furniture_f1": best_furniture_score,
-        "selected_furniture_epoch": int(
-            max(history, key=lambda row: row["furniture_f1"])["epoch"]
-        ),
+        "selected_furniture_epoch": int(max(history, key=lambda row: row["furniture_f1"])["epoch"]),
         "config": {
-            **{
-                key: str(value) if isinstance(value, Path) else value
-                for key, value in vars(args).items()
-            },
+            **{key: str(value) if isinstance(value, Path) else value for key, value in vars(args).items()},
             **config,
         },
         "history": history,
@@ -549,6 +518,7 @@ def main() -> None:
         json.dumps(report, indent=2) + "\n",
         encoding="utf-8",
     )
+
 
 if __name__ == "__main__":
     main()

@@ -2,9 +2,13 @@
 
 from __future__ import annotations
 
+import numpy as np
 import torch
 
 from floorflow.data.taxonomy import FloorplanTaxonomy
+from floorflow.geometry.opening_readout import (
+    consolidate_opening_components,
+)
 from floorflow.heads.dynamic_object_instance import render_object_queries
 from floorflow.inference.canonical_layer_composition import (
     canonical_union_labels,
@@ -40,16 +44,8 @@ def selection_score(
         if name not in metrics:
             continue
         value = float(metrics[name])
-        progress = (
-            value / target
-            if higher_is_better
-            else 1.0 - value / target
-        )
-        weight = (
-            max(0.0, float(furniture_weight))
-            if name == "furniture_f1"
-            else 1.0
-        )
+        progress = value / target if higher_is_better else 1.0 - value / target
+        weight = max(0.0, float(furniture_weight)) if name == "furniture_f1" else 1.0
         if weight == 0.0:
             continue
         weighted += weight * min(1.25, max(-1.25, progress))
@@ -67,11 +63,7 @@ def family_metrics(
     *,
     visible_labels: torch.Tensor | None = None,
 ) -> dict[str, float]:
-    visible = (
-        prediction.visible_labels()
-        if visible_labels is None
-        else visible_labels
-    )
+    visible = prediction.visible_labels() if visible_labels is None else visible_labels
     groups = {
         "room_f1": (
             torch.isin(
@@ -122,9 +114,14 @@ def family_metrics(
         recall = true_positive / max(1, int(expected.sum()))
         metrics[f"{family}_precision"] = precision
         metrics[f"{family}_recall"] = recall
-        metrics[key] = 2.0 * precision * recall / max(
-            1.0e-8,
-            precision + recall,
+        metrics[key] = (
+            2.0
+            * precision
+            * recall
+            / max(
+                1.0e-8,
+                precision + recall,
+            )
         )
     return metrics
 
@@ -140,6 +137,7 @@ def compose_stage_labels(
     furniture_threshold: float = 0.5,
     furniture_query_threshold: float | None = None,
     canonical_boundary_width: int = 7,
+    opening_family_probability: torch.Tensor | None = None,
 ) -> tuple[LayeredFloorplan, torch.Tensor]:
     """Compose non-overlapping CAD layers from first-class stage outputs."""
 
@@ -152,11 +150,7 @@ def compose_stage_labels(
         furniture_threshold=furniture_threshold,
     )
     if "furniture_query_class_logits" in output:
-        query_threshold = (
-            furniture_threshold
-            if furniture_query_threshold is None
-            else float(furniture_query_threshold)
-        )
+        query_threshold = furniture_threshold if furniture_query_threshold is None else float(furniture_query_threshold)
         rendered.furniture = render_object_queries(
             output["furniture_query_class_logits"],
             output["furniture_query_mask_logits"],
@@ -166,6 +160,24 @@ def compose_stage_labels(
             mask_threshold=query_threshold,
             active_queries=output.get("furniture_query_active"),
         )
+    if opening_family_probability is not None:
+        family = opening_family_probability.float()
+        if family.shape[-2:] != target_size:
+            family = torch.nn.functional.interpolate(
+                family,
+                size=target_size,
+                mode="bilinear",
+                align_corners=False,
+            )
+        for index in range(rendered.opening.shape[0]):
+            consolidated = consolidate_opening_components(
+                rendered.opening[index].detach().cpu().numpy(),
+                taxonomy,
+                family[index].detach().cpu().numpy(),
+            )
+            rendered.opening[index] = torch.from_numpy(
+                np.asarray(consolidated, dtype=np.int64)
+            ).to(rendered.opening.device)
     visible = canonical_union_labels(
         rendered,
         taxonomy,
@@ -192,6 +204,7 @@ def empty_train_component_totals(
         "stage_opening_precision": 0.0,
         "stage_opening_host": 0.0,
         "stage_opening_type": 0.0,
+        "stage_opening_family": 0.0,
         "stage_furniture": 0.0,
         "routing": 0.0,
         "furniture_query": 0.0,
@@ -214,6 +227,7 @@ def empty_train_component_totals(
         "instance_room_centroid_error": 0.0,
         "instance_room_reference_anchor": 0.0,
         "instance_room_mask_centroid": 0.0,
+        "instance_room_area": 0.0,
         "instance_room_query_separation": 0.0,
         "instance_room_partition": 0.0,
         "room_query_set_total": 0.0,
@@ -248,10 +262,7 @@ def empty_train_component_totals(
     }
     if device is None:
         return values
-    return {
-        key: torch.zeros((), device=device, dtype=torch.float32)
-        for key in values
-    }
+    return {key: torch.zeros((), device=device, dtype=torch.float32) for key in values}
 
 
 def accumulate_train_component_totals(
@@ -285,11 +296,12 @@ def train_component_values(components: dict[str, object]) -> dict[str, object]:
         "stage_wall": components["stage_wall_loss"],
         "stage_wall_precision": components["stage_wall_precision_loss"],
         "stage_opening": components["stage_opening_loss"],
-        "stage_opening_precision": components[
-            "stage_opening_precision_loss"
-        ],
+        "stage_opening_precision": components["stage_opening_precision_loss"],
         "stage_opening_host": components["stage_opening_host_loss"],
         "stage_opening_type": components["stage_opening_type_loss"],
+        "stage_opening_family": components[
+            "stage_opening_family_loss"
+        ],
         "stage_furniture": components["stage_furniture_loss"],
         "routing": components["routing_regularization_loss"],
         "furniture_query": components["furniture_query_loss"],
@@ -299,9 +311,7 @@ def train_component_values(components: dict[str, object]) -> dict[str, object]:
         "furniture_query_tversky": components["room_mask_tversky_loss"],
         "furniture_query_containment": components["furniture_query_containment"],
         "furniture_room_assignment": components["furniture_room_assignment_loss"],
-        "furniture_room_assignment_accuracy": components[
-            "furniture_room_assignment_accuracy"
-        ],
+        "furniture_room_assignment_accuracy": components["furniture_room_assignment_accuracy"],
         "instance_room_class": components["instance_room_class"],
         "instance_room_mask": components["instance_room_mask"],
         "instance_room_unmatched": components.get(
@@ -342,6 +352,10 @@ def train_component_values(components: dict[str, object]) -> dict[str, object]:
         ),
         "instance_room_mask_centroid": components.get(
             "instance_room_mask_centroid",
+            0.0,
+        ),
+        "instance_room_area": components.get(
+            "instance_room_area",
             0.0,
         ),
         "instance_room_query_separation": components.get(
@@ -458,16 +472,11 @@ def materialize_train_component_totals(
 
     keys = sorted(totals)
     values = [
-        value.detach().float().reshape(())
-        if torch.is_tensor(value)
-        else torch.tensor(float(value))
+        value.detach().float().reshape(()) if torch.is_tensor(value) else torch.tensor(float(value))
         for value in (totals[key] for key in keys)
     ]
     host = torch.stack(values).cpu().tolist() if values else []
-    return {
-        key: float(value) / max(1, int(samples))
-        for key, value in zip(keys, host, strict=True)
-    }
+    return {key: float(value) / max(1, int(samples)) for key, value in zip(keys, host, strict=True)}
 
 
 __all__ = [

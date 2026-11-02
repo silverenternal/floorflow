@@ -97,7 +97,7 @@ def build_predicted_optional_stages(
     room_query_set_layers: int,
     room_query_set_routing_attention: bool,
     query_count_gate: bool,
-    owner_preserving_room_readout: bool,
+    owner_preserving_room_readout: bool | str,
     room_instance_adaptive_query: bool,
     room_instance_adaptive_query_residual_scale: float,
     room_instance_mask_aware_adjacency: bool,
@@ -106,7 +106,8 @@ def build_predicted_optional_stages(
     relational_adjacency_hidden: int,
     room_instance_count_aware_graph: bool,
     count_aware_second_graph: bool,
-    full_resolution_mask_refinement: bool,
+    area_preserving_mask_residual: bool | str = False,
+    full_resolution_mask_refinement: bool = False,
 ) -> tuple[CadFurnitureStage | None, RoomInstanceIdentityStage | None]:
     furniture = (
         CadFurnitureStage(
@@ -158,6 +159,7 @@ def build_predicted_optional_stages(
             relational_adjacency_hidden=relational_adjacency_hidden,
             count_aware_room_graph=room_instance_count_aware_graph,
             count_aware_second_graph=count_aware_second_graph,
+            area_preserving_mask_residual=area_preserving_mask_residual,
             full_resolution_mask_refinement=(
                 full_resolution_mask_refinement
             ),
@@ -185,6 +187,8 @@ def _room_class_prior(taxonomy: FloorplanTaxonomy) -> tuple[float, ...]:
 def opening_stage_condition(
     wall_probability: torch.Tensor,
     room_probability: torch.Tensor,
+    opening_center_probability: torch.Tensor | None = None,
+    opening_interval_width: torch.Tensor | None = None,
 ) -> torch.Tensor:
     """Build the backward-compatible opening stage condition."""
 
@@ -198,10 +202,32 @@ def opening_stage_condition(
             [owner_top_two, torch.zeros_like(owner_top_two)],
             dim=1,
         )
+    center_wall = wall_probability
+    width_wall = wall_probability
+    if opening_center_probability is not None:
+        if opening_center_probability.ndim == 3:
+            opening_center_probability = opening_center_probability[:, None]
+        center = F.interpolate(
+            opening_center_probability.float(),
+            size=wall_probability.shape[-2:],
+            mode="bilinear",
+            align_corners=False,
+        ).clamp(0.0, 1.0)
+        center_wall = wall_probability * (0.5 + 0.5 * center)
+    if opening_interval_width is not None:
+        if opening_interval_width.ndim == 3:
+            opening_interval_width = opening_interval_width[:, None]
+        width = F.interpolate(
+            opening_interval_width.float(),
+            size=wall_probability.shape[-2:],
+            mode="bilinear",
+            align_corners=False,
+        ).clamp(0.0, 1.0)
+        width_wall = wall_probability * (0.5 + 0.5 * width)
     return torch.cat(
         [
-            wall_probability,
-            F.max_pool2d(wall_probability, 5, stride=1, padding=2),
+            center_wall,
+            F.max_pool2d(width_wall, 5, stride=1, padding=2),
             1.0 - owner_top_two[:, :1],
             owner_top_two[:, 1:2],
         ],

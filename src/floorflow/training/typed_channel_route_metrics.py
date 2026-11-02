@@ -84,6 +84,18 @@ def typed_channel_route_metrics(
             "mask_residual",
             output.get(f"room_graph_{pass_name}_mask_residual"),
         )
+        scalar(
+            f"room_graph_{pass_name}",
+            "owner_swap_fraction",
+            output.get(f"room_graph_{pass_name}_owner_swap_fraction"),
+        )
+        scalar(
+            f"room_graph_{pass_name}",
+            "owner_swap_support_fraction",
+            output.get(
+                f"room_graph_{pass_name}_owner_swap_support_fraction"
+            ),
+        )
     scalar(
         "room_graph",
         "query_presence_mean",
@@ -93,6 +105,21 @@ def typed_channel_route_metrics(
         "room_owner",
         "soft_weight_mean",
         output.get("room_owner_soft_weight_mean"),
+    )
+    scalar(
+        "room_owner",
+        "relative_confidence_mean",
+        output.get("room_owner_relative_confidence_mean"),
+    )
+    scalar(
+        "room_owner",
+        "foreground_fraction",
+        output.get("room_owner_foreground_fraction"),
+    )
+    scalar(
+        "room_owner",
+        "mass_sum_mean",
+        output.get("room_owner_mass_sum_mean"),
     )
     scalar(
         "room_query",
@@ -179,6 +206,8 @@ def typed_channel_module_gradient_metrics(
     field = getattr(model, "field", None)
     route_budget = getattr(action_graph, "route_budget", {})
     route_gate = getattr(action_graph, "route_gate", {})
+    projections = getattr(action_graph, "projections", {})
+    action_gates = getattr(action_graph, "gates", {})
     modules = {
         "room_mask_features": getattr(decoder, "mask_features", None),
         "room_mask_head": getattr(decoder, "mask_head", None),
@@ -230,6 +259,8 @@ def typed_channel_module_gradient_metrics(
         ),
         "action_program_route_budget": module_item(route_budget, "program"),
         "action_program_route_gate": module_item(route_gate, "program"),
+        "action_program_projection": module_item(projections, "program"),
+        "action_program_gate": module_item(action_gates, "program"),
     }
     names = []
     values = []

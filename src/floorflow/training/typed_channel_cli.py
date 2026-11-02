@@ -34,10 +34,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--init-checkpoint", type=Path, default=None)
     parser.add_argument("--save-epoch-checkpoints", action="store_true")
     parser.add_argument(
+        "--evaluate-deterministic-wall-source",
+        action="store_true",
+    )
+    parser.add_argument(
         "--room-checkpoint",
         type=Path,
-        default=ROOT
-        / "outputs/train/raster_instance_control_384_promotion256_10ep_v1/best.pt",
+        default=ROOT / "outputs/train/raster_instance_control_384_promotion256_10ep_v1/best.pt",
     )
     parser.add_argument(
         "--structure-checkpoint",
@@ -83,6 +86,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--wall-precision-weight", type=float, default=0.0)
     parser.add_argument("--opening-precision-weight", type=float, default=0.0)
     parser.add_argument("--opening-host-weight", type=float, default=0.0)
+    parser.add_argument("--opening-family-weight", type=float, default=0.0)
+    parser.add_argument(
+        "--opening-type-class-balance",
+        action="store_true",
+    )
     parser.add_argument(
         "--routing-regularization-weight",
         type=float,
@@ -367,9 +375,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--room-instance-query-separation-class-agnostic", action="store_true")
     parser.add_argument("--room-instance-reference-anchor-weight", type=float, default=0.2)
     parser.add_argument("--room-instance-mask-centroid-weight", type=float, default=0.5)
-    parser.add_argument(
-        "--room-reference-learning-rate-multiplier", type=float, default=10.0
-    )
+    parser.add_argument("--room-instance-mask-area-weight", type=float, default=0.0)
+    parser.add_argument("--room-reference-learning-rate-multiplier", type=float, default=10.0)
     parser.add_argument(
         "--program-instance-assignment-weight",
         type=float,
@@ -470,44 +477,24 @@ def model_config(args: argparse.Namespace) -> dict:
         "room_instance_hidden": args.room_instance_hidden,
         "room_instance_queries": args.room_instance_queries,
         "room_instance_layers": args.room_instance_layers,
-        "enable_program_instance_router": (
-            args.enable_program_instance_router
-        ),
+        "enable_program_instance_router": (args.enable_program_instance_router),
         "enable_room_adjacency": args.enable_room_adjacency,
         "enable_room_query_set": args.enable_room_query_set,
         "room_query_set_hidden": args.room_query_set_hidden,
         "room_query_set_pool": args.room_query_set_pool,
         "room_query_set_layers": args.room_query_set_layers,
-        "room_query_set_routing_attention": (
-            args.room_query_set_routing_attention
-        ),
+        "room_query_set_routing_attention": (args.room_query_set_routing_attention),
         "query_count_gate": args.query_count_gate,
-        "owner_preserving_room_readout": (
-            args.owner_preserving_room_readout
-        ),
-        "room_instance_adaptive_query": (
-            args.room_instance_adaptive_query
-        ),
-        "room_instance_adaptive_query_residual_scale": (
-            args.room_instance_adaptive_query_residual_scale
-        ),
-        "room_instance_mask_aware_adjacency": (
-            args.room_instance_mask_aware_adjacency
-        ),
-        "room_instance_relational_adjacency": (
-            args.room_instance_relational_adjacency
-        ),
-        "room_instance_class_count_prior": (
-            args.room_instance_class_count_prior
-        ),
+        "owner_preserving_room_readout": (args.owner_preserving_room_readout),
+        "room_instance_adaptive_query": (args.room_instance_adaptive_query),
+        "room_instance_adaptive_query_residual_scale": (args.room_instance_adaptive_query_residual_scale),
+        "room_instance_mask_aware_adjacency": (args.room_instance_mask_aware_adjacency),
+        "room_instance_relational_adjacency": (args.room_instance_relational_adjacency),
+        "room_instance_class_count_prior": (args.room_instance_class_count_prior),
         "relational_adjacency_hidden": args.relational_adjacency_hidden,
-        "room_instance_count_aware_graph": (
-            args.room_instance_count_aware_graph
-        ),
+        "room_instance_count_aware_graph": (args.room_instance_count_aware_graph),
         "count_aware_second_graph": args.count_aware_second_graph,
-        "full_resolution_mask_refinement": (
-            args.full_resolution_mask_refinement
-        ),
+        "full_resolution_mask_refinement": (args.full_resolution_mask_refinement),
         "typed_opening_host_gate": args.typed_opening_host_gate,
         "refresh_validation_tokens": args.refresh_validation_tokens,
         "control_evidence_context": args.control_evidence_context,
@@ -555,11 +542,7 @@ def apply_model_config(args: argparse.Namespace) -> None:
             setattr(args, name, value)
     loss_policy = payload.get("loss_policy", {})
     weights = loss_policy.get("weights", {})
-    for name, value in {
-        key: value
-        for key, value in loss_policy.items()
-        if key != "weights"
-    }.items():
+    for name, value in {key: value for key, value in loss_policy.items() if key != "weights"}.items():
         if hasattr(args, name):
             setattr(args, name, value)
     for name, value in weights.items():
@@ -570,10 +553,7 @@ def apply_model_config(args: argparse.Namespace) -> None:
             continue
         if hasattr(args, name):
             path_value = (
-                Path(value)
-                if name.endswith(("_path", "_root", "_checkpoint"))
-                and value is not None
-                else value
+                Path(value) if name.endswith(("_path", "_root", "_checkpoint")) and value is not None else value
             )
             setattr(args, name, path_value)
 

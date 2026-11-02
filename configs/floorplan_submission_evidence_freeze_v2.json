@@ -1,0 +1,383 @@
+{
+  "schema_version": "floorplan-submission-evidence-freeze-v2",
+  "mode": "existing_evidence_scoped",
+  "status": "frozen_scoped_release",
+  "created_at": "2026-11-02T13:36:49.671148+00:00",
+  "source_commit_at_freeze": "0977a22d971c2bcd8ad4df73c00a8f80348bc918",
+  "worktree_dirty_at_freeze": true,
+  "clean_worktree_required": false,
+  "clean_worktree_policy": "The repository contains unrelated active research changes. Freeze the scoped evidence and release files by identity rather than misrepresenting the whole worktree as clean.",
+  "scope": {
+    "dataset": "CubiCasa5K",
+    "oracle_split": "test503 development evaluation",
+    "predicted_split": "val491 five-seed target-free validation",
+    "operation_split": "test503 development-exposed prompts, not held-out",
+    "semantic_split": "val191 diagnostic rows from an older model",
+    "generalization": "optional_fresh_heldout_not_evaluated"
+  },
+  "registry": {
+    "path": "docs/floorplan_submission_source_registry_v2.json",
+    "exists": true,
+    "bytes": 8941870,
+    "sha256": "56952b2d613a12198bc279f041a283aa9e0fbbcbf0263d660acb00c3bf0cc189",
+    "mtime_utc": "2026-11-02T13:34:46.062122+00:00"
+  },
+  "source_files": {
+    "edit": {
+      "path": "outputs/reports/residential_edit_test503_v1.json",
+      "exists": true,
+      "bytes": 34703,
+      "sha256": "c9569af55c4a6d4460359d4d931b06486e2faac122ff4e40450e839851aceccf",
+      "mtime_utc": "2026-11-02T12:58:49.673626+00:00"
+    },
+    "edit_seed19": {
+      "path": "outputs/reports/residential_edit_hybrid_typedall_seed19_v1.json",
+      "exists": true,
+      "bytes": 7288801,
+      "sha256": "b28d804398c7cbb61a6c1fa9676781f711a9e56cdddffd08d27ee1ade940fe50",
+      "mtime_utc": "2026-10-28T05:40:31.648399+00:00"
+    },
+    "trace": {
+      "path": "outputs/reports/oracle_metric_trace_audit_20261102.json",
+      "exists": true,
+      "bytes": 1465,
+      "sha256": "2b3d4026475cd2ea30275f842d31ff004bb9bb04fe655375043ef841e503ee49",
+      "mtime_utc": "2026-11-02T12:27:37.555645+00:00"
+    },
+    "raster": {
+      "path": "outputs/reports/fp_raster2seq_local_redraw_v1.json",
+      "exists": true,
+      "bytes": 491254,
+      "sha256": "e4ddd567b23287967ffb24a45651f10d368ae53464f2bc05fe5eff73a0c6c98e",
+      "mtime_utc": "2026-10-27T07:58:30.279389+00:00"
+    },
+    "vector": {
+      "path": "outputs/reports/residential_edit_vector_protocol_raw_v1.json",
+      "exists": true,
+      "bytes": 1187940,
+      "sha256": "0ea33d895e114f87c4544ea6ce22647c61a4021250921dcad23f032fd913af46",
+      "mtime_utc": "2026-10-28T06:09:02.653257+00:00"
+    },
+    "hard_gate": {
+      "path": "outputs/reports/fp_control_gated_hard_gate_v1.json",
+      "exists": true,
+      "bytes": 526478,
+      "sha256": "e7412cf6d705a7474f167bb6aca9f7466319afdf6c529ae17e52346bd67037a6",
+      "mtime_utc": "2026-10-27T08:01:27.023937+00:00"
+    },
+    "fevp": {
+      "path": "outputs/reports/fevp_fiveseed_stability_v2.json",
+      "exists": true,
+      "bytes": 9711,
+      "sha256": "c11f2306209550cff425bf4821c5f6020da1b336d86b8ef6a565785cd81e19e6",
+      "mtime_utc": "2026-10-27T18:06:49.433531+00:00"
+    },
+    "mechanism": {
+      "path": "outputs/reports/fevp_mechanism_pareto_v3.json",
+      "exists": true,
+      "bytes": 8014809,
+      "sha256": "9113d637d46a05ddc880d3391b17610d26d9acc9b9da5e1d71a1f5831b6249b8",
+      "mtime_utc": "2026-10-27T17:31:11.083824+00:00"
+    },
+    "budget": {
+      "path": "outputs/reports/fevp_budget_matched_control_v2.json",
+      "exists": true,
+      "bytes": 3666,
+      "sha256": "4fd0c6387f290c59ba4bb4f052465b6764280d58abc8e639ff066ed1f12fbae2",
+      "mtime_utc": "2026-10-27T18:07:13.495928+00:00"
+    },
+    "attacks": {
+      "path": "outputs/reports/fevp_attack_supplement_v1.json",
+      "exists": true,
+      "bytes": 4650,
+      "sha256": "48216c3e147813476a5828a911520cb0c969accb363914dd16554ffecd34cf80",
+      "mtime_utc": "2026-10-27T18:07:43.707547+00:00"
+    },
+    "editing_aware": {
+      "path": "outputs/reports/residential_editing_aware_baseline_v1.json",
+      "exists": true,
+      "bytes": 2167113,
+      "sha256": "1659e56fc3904213db5aacaf847295b4c4d7ff10239f09b7e4d198c8e699ad81",
+      "mtime_utc": "2026-10-28T08:34:09.456846+00:00"
+    },
+    "matched": {
+      "path": "outputs/reports/matched_local_editing_baselines_v2.json",
+      "exists": true,
+      "bytes": 9199,
+      "sha256": "c8264678d841c56c72d8fba6f71c09c560dba427a0b5ce5d57d5fd779b6fe14f",
+      "mtime_utc": "2026-11-02T12:59:01.481954+00:00"
+    },
+    "plausibility": {
+      "path": "outputs/reports/predicted_control_plausibility_fiveseed_v12.json",
+      "exists": true,
+      "bytes": 9930,
+      "sha256": "dd13ef8503552121115643360488fc5fe94b63dbad4c5c41cfe8d924be1d0dee",
+      "mtime_utc": "2026-10-29T15:16:21.967786+00:00"
+    },
+    "plausibility_seed19": {
+      "path": "outputs/reports/predicted_control_plausibility_val491_final_v12.json",
+      "exists": true,
+      "bytes": 1305796,
+      "sha256": "52b08755139d23e526b4dd5e58807e3cdebac5173762427f8aeba5e9a5b82fd9",
+      "mtime_utc": "2026-10-29T14:24:22.439275+00:00"
+    },
+    "fidelity": {
+      "path": "outputs/reports/predicted_control_fidelity_val491_v3.json",
+      "exists": true,
+      "bytes": 2171025,
+      "sha256": "2d98de71fe01f4877013cdc924d97cf3dc6d5ef8950b295851624e9b72f6760b",
+      "mtime_utc": "2026-10-29T15:33:58.100903+00:00"
+    },
+    "safety": {
+      "path": "outputs/reports/residential_instruction_robustness_test503_final_v1.json",
+      "exists": true,
+      "bytes": 1089824,
+      "sha256": "6da1e766c2ad984bde7188605ccba5f110becedaf6031803309cab4ee0e06438",
+      "mtime_utc": "2026-10-29T05:50:51.423738+00:00"
+    },
+    "semantic": {
+      "path": "outputs/reports/predicted_operation_success_val191_v1.json",
+      "exists": true,
+      "bytes": 939599,
+      "sha256": "6262bfb8d7fad80459886ffb2acddbf43871a882369d5f6f854cc3f757c5241a",
+      "mtime_utc": "2026-11-02T08:53:59.365609+00:00"
+    },
+    "object_delete": {
+      "path": "outputs/reports/predicted_edit_object_delete_audit_v1.json",
+      "exists": true,
+      "bytes": 489,
+      "sha256": "a8b546a4bf286c86c34800d83ad56ec25c79531ca891a1e502fc1e30035e6d08",
+      "mtime_utc": "2026-11-02T00:37:02.350750+00:00"
+    },
+    "ghost_state": {
+      "path": "outputs/reports/predicted_edit_ghost_state_audit_v1.json",
+      "exists": true,
+      "bytes": 611,
+      "sha256": "1f0e6bd6396d843928b1902848061e2551a5b460f2499735826840304fa9c882",
+      "mtime_utc": "2026-11-02T00:28:37.347921+00:00"
+    },
+    "identity": {
+      "path": "outputs/reports/residential_identity_test509_v4_summary.json",
+      "exists": true,
+      "bytes": 4505,
+      "sha256": "96c07652c5950efa3f8e8ac3a6a56a525da4ddef4db912a15536ca44c87c3e94",
+      "mtime_utc": "2026-10-28T12:24:35.046373+00:00"
+    },
+    "external": {
+      "path": "outputs/reports/external_baseline_protocol_audit_v2.json",
+      "exists": true,
+      "bytes": 2406,
+      "sha256": "31c9d3a7f593665c3dd89bfa477958a80ad67e10be86186c9eb8c860ee11d6d6",
+      "mtime_utc": "2026-10-27T18:08:58.251194+00:00"
+    },
+    "ce2eplan": {
+      "path": "outputs/reports/ce2eplan_tvcg_anchor_v2.json",
+      "exists": true,
+      "bytes": 2888,
+      "sha256": "054c41ba24f1f687ae335167e0889b971bd8e815a91c238b4aaf2f0833ce1c3d",
+      "mtime_utc": "2026-10-28T16:48:54.464888+00:00"
+    },
+    "housemind_status": {
+      "path": "outputs/reports/fp_housemind_reproduction_status_v1.json",
+      "exists": true,
+      "bytes": 2620,
+      "sha256": "a30115b355c04c0e53403648c4d78ff2b3ecde979fc207377647b44353c9eec9",
+      "mtime_utc": "2026-10-27T05:39:51.176270+00:00"
+    },
+    "cvpr_evidence": {
+      "path": "outputs/reports/fp_cvpr_evidence_v12.json",
+      "exists": true,
+      "bytes": 61486890,
+      "sha256": "b2de97099f845e9953c600e8611d8493000a6f97324982bbf5cd7f194c490027",
+      "mtime_utc": "2026-10-27T18:28:06.390971+00:00"
+    },
+    "oracle_statistics": {
+      "path": "outputs/reports/oracle_submission_statistics_v2.json",
+      "exists": true,
+      "bytes": 11803,
+      "sha256": "459c700f9e7bb54decd2cdc9bcb51bfb8f169c7cca50e4fa0cad0d2f78001e3f",
+      "mtime_utc": "2026-11-02T13:34:45.804219+00:00"
+    },
+    "operation_evidence": {
+      "path": "outputs/reports/predicted_operation_evidence_v2.json",
+      "exists": true,
+      "bytes": 4201,
+      "sha256": "ada46bec708d357b9275756f887be2f6323392b5749d5d5a786cf5d9ffab17e0",
+      "mtime_utc": "2026-11-02T13:34:45.805120+00:00"
+    }
+  },
+  "checkpoints": {
+    "outputs/train/raster_room_control_native_full_v1/best.pt": {
+      "path": "outputs/train/raster_room_control_native_full_v1/best.pt",
+      "exists": true,
+      "bytes": 49626673,
+      "sha256": "6d9d496b81de547a07c77e2a31d1cd65e91cf555e79bb3a7b78bfead76eb0832",
+      "mtime_utc": "2026-10-29T10:41:35.436803+00:00"
+    },
+    "outputs/train/raster_structure_bridge_full_v1/best.pt": {
+      "path": "outputs/train/raster_structure_bridge_full_v1/best.pt",
+      "exists": true,
+      "bytes": 3135697,
+      "sha256": "d8a7c0abbfcc05a260d28ff595cfac04ef5905ea1e48c59038fb6abbb0abb42d",
+      "mtime_utc": "2026-10-29T12:53:26.053017+00:00"
+    },
+    "outputs/train/raster_structure_bridge_full_seed20_v1/best.pt": {
+      "path": "outputs/train/raster_structure_bridge_full_seed20_v1/best.pt",
+      "exists": true,
+      "bytes": 3135697,
+      "sha256": "97e92140f1b7c134c89c2e40437f48a02063fee272a984ba57ecf03e16cef78e",
+      "mtime_utc": "2026-10-29T14:33:22.966770+00:00"
+    },
+    "outputs/train/raster_structure_bridge_full_seed21_v1/best.pt": {
+      "path": "outputs/train/raster_structure_bridge_full_seed21_v1/best.pt",
+      "exists": true,
+      "bytes": 3135697,
+      "sha256": "1cdd6bcb8e45274aa02c83aa8393044db51d5fd50cb3f38d3b9b07250e7472c2",
+      "mtime_utc": "2026-10-29T14:41:58.094026+00:00"
+    },
+    "outputs/train/raster_structure_bridge_full_seed22_v1/best.pt": {
+      "path": "outputs/train/raster_structure_bridge_full_seed22_v1/best.pt",
+      "exists": true,
+      "bytes": 3135697,
+      "sha256": "1dd8468f48198523dd2a14816dfde1bd48e7af4ba7a4ee35b2048930d4b6b26c",
+      "mtime_utc": "2026-10-29T14:50:35.542665+00:00"
+    },
+    "outputs/train/raster_structure_bridge_full_seed23_v1/best.pt": {
+      "path": "outputs/train/raster_structure_bridge_full_seed23_v1/best.pt",
+      "exists": true,
+      "bytes": 3135697,
+      "sha256": "91b3bde332496c36e9599317d08d87e1415829e07c7a8196d00a8f2d0d6470db",
+      "mtime_utc": "2026-10-29T14:59:16.300765+00:00"
+    }
+  },
+  "evaluators": {
+    "src/floorflow/evaluation/fevp_metric_contracts.py": {
+      "path": "src/floorflow/evaluation/fevp_metric_contracts.py",
+      "exists": true,
+      "bytes": 18751,
+      "sha256": "99a36b395c2b8e3adc0a98294fe5b0654a9b214068200385e1f436dc5757f9ee",
+      "mtime_utc": "2026-10-29T13:41:11.476212+00:00"
+    },
+    "src/floorflow/evaluation/predicted_edit_graph_metrics.py": {
+      "path": "src/floorflow/evaluation/predicted_edit_graph_metrics.py",
+      "exists": true,
+      "bytes": 3247,
+      "sha256": "17d72e0ef12a70b461fffdb8035f635c51b629d8ce2d37f082e5952b5dab3bf8",
+      "mtime_utc": "2026-11-02T01:31:54.705733+00:00"
+    },
+    "src/floorflow/evaluation/structural_legality.py": {
+      "path": "src/floorflow/evaluation/structural_legality.py",
+      "exists": true,
+      "bytes": 7140,
+      "sha256": "aa788997a3433fe08a6eefbb724329a9d8799f2ae20b5f5af01483fceba32de5",
+      "mtime_utc": "2026-10-27T08:54:21.760320+00:00"
+    },
+    "src/floorflow/evaluation/predicted_operation_success.py": {
+      "path": "src/floorflow/evaluation/predicted_operation_success.py",
+      "exists": true,
+      "bytes": 6903,
+      "sha256": "496521ab2b8ea9bca398e97d0d2f0a8c8e5c718f60fc45513b6bcc48564d2967",
+      "mtime_utc": "2026-11-02T08:50:02.656272+00:00"
+    },
+    "configs/fevp_metric_contract_v2.json": {
+      "path": "configs/fevp_metric_contract_v2.json",
+      "exists": true,
+      "bytes": 6553,
+      "sha256": "0fd546de836bf5aa30e87f8b48d5eafa841c7eca65c10a9b7639287022ba75ab",
+      "mtime_utc": "2026-10-27T16:32:25.811411+00:00"
+    },
+    "configs/housemind_style_ged_deterministic_v2.json": {
+      "path": "configs/housemind_style_ged_deterministic_v2.json",
+      "exists": true,
+      "bytes": 1154,
+      "sha256": "b123ffa24d7cba81629929302734e49fe3dd8abc974fc1ee4045a3843487ebd8",
+      "mtime_utc": "2026-11-01T14:54:08.085035+00:00"
+    },
+    "configs/predicted_control_reasonableness_contract_v1.json": {
+      "path": "configs/predicted_control_reasonableness_contract_v1.json",
+      "exists": true,
+      "bytes": 9780,
+      "sha256": "b332904d1d15630102f3313655f4517bf294ce0eea0b05a175f3a0d32ab2fffd",
+      "mtime_utc": "2026-10-29T16:40:16.888285+00:00"
+    },
+    "configs/residential_predicted_edit_v1.json": {
+      "path": "configs/residential_predicted_edit_v1.json",
+      "exists": true,
+      "bytes": 1376,
+      "sha256": "6a6cfe221ed73f00f4372c8fc1458f32a42ec6b195c7114f92ae757992cd0c61",
+      "mtime_utc": "2026-10-29T04:14:00.231472+00:00"
+    }
+  },
+  "release_sources": {
+    "scripts/build_floorplan_submission_evidence_v2.py": {
+      "path": "scripts/build_floorplan_submission_evidence_v2.py",
+      "exists": true,
+      "bytes": 41029,
+      "sha256": "9caa7d5bd0bcdd977f576ecd589ad08f0f0981d9d1cf33e3ee08c4efa1a03cae",
+      "mtime_utc": "2026-11-02T13:34:23.283600+00:00"
+    },
+    "scripts/build_floorplan_submission_tables_v2.py": {
+      "path": "scripts/build_floorplan_submission_tables_v2.py",
+      "exists": true,
+      "bytes": 21956,
+      "sha256": "34d2fe0cd20b498b9eed57688b8e67e02f226e872e6eb631220f426389c42e63",
+      "mtime_utc": "2026-11-02T13:31:59.320251+00:00"
+    },
+    "scripts/build_floorplan_submission_figures_v1.py": {
+      "path": "scripts/build_floorplan_submission_figures_v1.py",
+      "exists": true,
+      "bytes": 18276,
+      "sha256": "bac0ebb40c50ba7199f3a85bd752a46a84e2b626a8bf9ea0c7cc6a3337a85c5f",
+      "mtime_utc": "2026-11-02T13:23:05.294935+00:00"
+    },
+    "scripts/audit_floorplan_evidence_freeze_v2.py": {
+      "path": "scripts/audit_floorplan_evidence_freeze_v2.py",
+      "exists": true,
+      "bytes": 7280,
+      "sha256": "385c4c792792efbd67b179d52837820d292974be23a82767d4fd02a2ec730154",
+      "mtime_utc": "2026-11-02T13:06:59.261889+00:00"
+    },
+    "scripts/audit_floorplan_submission_integrity_v1.py": {
+      "path": "scripts/audit_floorplan_submission_integrity_v1.py",
+      "exists": true,
+      "bytes": 18676,
+      "sha256": "0cc99003269efadfa3ffd4c0a855d6f5028ca9bf8462cbdd5a2f56ac4b33efad",
+      "mtime_utc": "2026-11-02T13:31:59.320251+00:00"
+    }
+  },
+  "thresholds": {
+    "reasonableness_contract": null,
+    "operation_contract": {
+      "path": "configs/predicted_operation_success_contract_v1.json",
+      "exists": true,
+      "bytes": 3142,
+      "sha256": "288e1498c8148ab92fc7716d23f930432a9165ebd7ae983c31c8de93ae8e825a",
+      "mtime_utc": "2026-11-02T08:49:58.235166+00:00"
+    },
+    "semantic_0_90": "historical exploratory target only; not a release prerequisite",
+    "scoped_release_uses_observed_counts": true
+  },
+  "statistical_policy": {
+    "oracle_unit": "floorplan cluster; repeated seeds retained separately",
+    "predicted_unit": "491 validation cases inside each repeated execution seed",
+    "operation_unit": "prompt; safety and semantic realization reported separately",
+    "pooling": "oracle, predicted, identity, and external rows are never pooled"
+  },
+  "historical_execution_hashes": {
+    "available": false,
+    "limitation": "The saved reports do not embed a verifiable single execution manifest for every seed. Checkpoint, config, report, evaluator, and current release-source hashes are frozen here; they are not presented as historical execution hashes."
+  },
+  "heldout": {
+    "status": "optional_generalization_not_evaluated",
+    "blocks_scoped_submission": false,
+    "requires_pre_access_freeze_if_used": true
+  },
+  "freeze_policy": [
+    "Do not replace scoped rows with newer developmental model outputs.",
+    "Do not convert abstentions, no-ops, or contract checks into semantic success.",
+    "Do not describe the development-exposed test prompts as held-out.",
+    "Preserve raw and functional watertightness as separate metrics.",
+    "Freeze prompts, thresholds, and evaluator identity before any optional held-out access."
+  ],
+  "missing_optional_inputs": []
+}

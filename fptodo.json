@@ -1,15 +1,17 @@
 {
   "project": "FloorFlow",
-  "version": "2026-11-02-sota-v334-query-separation-proxy-contract",
-  "status": "query_separation_proxy_registered_against_instance_f1_measurement_pending",
-  "scope": "residential_cubicasa_rplan_only",
-  "objective": "Close the weak predicted-control metrics atom by atom, prove every cheap proxy against its canonical consumer, then complete matched CubiCasa, RPLAN, editing, and external comparisons needed for a defensible CVPR SOTA submission without beginning the paper.",
+  "version": "2026-11-02-sota-v342-area-fidelity-loss",
+  "status": "source5_wall_export_complete_opening_family_consumer_positive_small_holdout",
+  "scope": "residential CubiCasa5K and RPLAN only",
+  "objective": "Close predicted-control metric gaps through architecture audits and targeted repairs, then complete matched multi-seed residential, RPLAN, and editing evidence needed for a defensible CVPR submission. Do not write the paper.",
   "policy": {
     "gpu": "cuda:0",
-    "current_round_gpu": "cuda0_wall_portfolio_screen_completed_no_full_promotion",
-    "gap_decomposition": "Bind every weak metric to an independently weighted objective and parameter owner, audit first-step gradient reach, then test typed cross-attention aggregation through the full CAD consumer.",
-    "architecture_first": "Engineering repair, loss-to-metric binding, and consumer audits precede any new GPU capacity run.",
+    "architecture_first": true,
+    "experiment_rule": "Use logs, tensor contracts, gradient reach, parameter ownership, and consumer audits to identify a defect before paying for another GPU screen.",
+    "small_subset_rule": "Mechanism screens use train64/val32 seed19 and are candidates, never paper results.",
+    "promotion_rule": "Only full-data, multi-seed, matched, frozen-evaluator results can support SOTA or significance claims.",
     "max_python_file_lines": 599,
+    "human_study": "excluded",
     "do_not_touch": [
       "src/floorflow/chip_flow/**",
       "chipstodo.json",
@@ -17,1036 +19,304 @@
       "nlptodo.json",
       "FloorSet"
     ],
-    "human_study": "excluded",
     "reuse_before_build": [
-      "src/floorflow/evaluation",
-      "src/floorflow/model",
       "src/floorflow/heads",
+      "src/floorflow/model",
+      "src/floorflow/objectives",
       "src/floorflow/training",
-      "src/floorflow/inference",
-      "third_party/peft",
-      "third_party/LoRA",
-      "third_party/AdaptFormer",
-      "third_party/SSF"
-    ],
-    "atom_definition": "One atom is the smallest parameterized semantic head, prediction channel, router, decoder, graph transition, verifier, or revision state with its own stable output contract. Shared primitive layers inherit the metric ledger of their nearest semantic consumer; they are not counted as separate atoms unless they can be toggled and evaluated independently.",
-    "task_execution_rules": [
-      "Engineering repair and metric-binding repair precede new model capacity.",
-      "Use same-case, same-seed proxy and canonical rows.",
-      "A proxy cannot be promoted if it plateaus while the canonical metric moves.",
-      "Run a small mechanism screen before full-data training; record it as a candidate, not a paper result.",
-      "Only full-data, multi-seed, frozen-evaluator results may support a SOTA claim.",
-      "Validation chooses models; test503 and RPLAN test remain closed until the freeze task.",
-      "Every metric needs a definition, implementation, tolerance, and deterministic failure case."
+      "src/floorflow/evaluation",
+      "src/floorflow/inference"
     ]
   },
   "evidence_ledgers": {
     "positive": "docs/cvpr_positive_result_ledger.md",
     "negative": "docs/cvpr_negative_results_ledger.md",
-    "rule": "These files retain outcomes and lessons; completed task bodies do not remain in fptodo.json.",
-    "package_audits": {
-      "v17": {
-        "report": "outputs/reports/cvpr_risk_closure_audit_v1.json",
-        "status": "internally_consistent_and_deterministic_historical_hash_drift",
-        "expected_sha256": "3c0738f7-c3df historical fragment",
-        "observed_sha256": "9fc00ce4586c1d82a01cc7b5fdcab4f804e31595cc21434a03301cbca8a9a02d",
-        "manifest_files": 15887,
-        "archive_files": 15887,
-        "independent_rebuild_sha256": "9fc00ce4586c1d82a01cc7b5fdcab4f804e31595cc21434a03301cbca8a9a02d",
-        "expected_hash_confirmed": false
-      },
-      "v18": {
-        "report": "outputs/reports/cvpr_vector_package_audit_v1.json",
-        "status": "current_authority_complete",
-        "archive_sha256": "907e4b42d94a58b6ddd335941b3bd1745fecb72304278b7d3fa95bf82b8b2403",
-        "independent_rebuild_sha256": "907e4b42d94a58b6ddd335941b3bd1745fecb72304278b7d3fa95bf82b8b2403",
-        "artifact_count": 509,
-        "manifest_files": 15979,
-        "archive_files": 15979,
-        "deterministic": true,
-        "current_authority": true
-      }
-    }
+    "zero_paths": "docs/predicted_control_zero_path_audit_v1.md",
+    "room_scale": "docs/predicted_control_room_scale_audit_v1.md",
+    "rule": "Completed task bodies are removed from this file; durable outcomes and lessons remain in these ledgers."
   },
-  "external_availability_audit": {
-    "report": "outputs/reports/external_availability_current_v1.json",
-    "checked_at_utc": "2026-11-02T01:39:37.113043+00:00",
-    "house_mind": {
-      "project_page_reachable": true,
-      "code_soon_label": true,
-      "runnable_demo_label": true,
-      "weights_link_present": true,
-      "public_github_repository_count": 0,
-      "complete_inference_available": false
-    },
-    "ce2eplan": {
-      "repository_present": true,
-      "pushed_at": "2026-03-16T15:46:26Z",
-      "license_spdx": null,
-      "generation_only": true
-    },
-    "claim_rule": "No complete HouseMind defeat or CE2EPlan editing/full-CAD ranking is enabled without executable matched inference."
-  },
-  "architecture_hardening": {
-    "doc": "docs/predicted_control_architecture_hardening_v1.md",
-    "gap_audit": "docs/predicted_control_gap_architecture_audit_v3.md",
-    "metric_bound_audit": "docs/predicted_control_metric_bound_architecture_v294.md",
-    "status": "zero_weight_reference_and_canonical_source_repairs_complete_matched_measurements_pending",
-    "weak_metric_audit": "docs/predicted_control_sota_weak_metric_audit_v4.md",
-    "zero_path_audit": "docs/predicted_control_zero_path_audit_v1.md",
-    "candidate_config": "configs/predicted_channel_source_router_v5_relational_edge.json",
-    "candidate_control_config": "configs/predicted_channel_source_router_v5_control.json",
-    "adapter_control_config": "configs/predicted_channel_v6_room_graph_adapter_control.json",
-    "identity_control_config": "configs/predicted_channel_v6_room_identity_adapter_control.json",
-    "identity_candidate_config": "configs/predicted_channel_v6_room_identity_adapter_joint.json",
-    "adapter_candidate_configs": [
-      "configs/predicted_channel_v6_room_graph_adapter_relational.json",
-      "configs/predicted_channel_v6_room_graph_adapter_prior.json",
-      "configs/predicted_channel_v6_room_graph_adapter_joint.json"
-    ],
-    "candidate_parameter_count": 6946647,
-    "candidate_report": "outputs/reports/predicted_control_parameter_allocation_v5_relational_cpu.json",
-    "candidate_contract_reports": [
-      "outputs/train/typed_dynamic_balance_cpu_smoke_v4/report.json",
-      "outputs/train/typed_channel_v5_relational_cpu_contract_smoke_v1/report.json",
-      "outputs/train/typed_channel_v5_relational_cpu_contract_smoke_v2/report.json",
-      "outputs/train/typed_channel_v6_room_graph_adapter_cpu_contract_v12/report.json",
-      "outputs/train/typed_channel_v6_room_identity_adapter_cpu_gradient_v3/report.json",
-      "docs/predicted_control_zero_path_audit_v1.md"
-    ],
-    "prior_candidate_config": "configs/predicted_channel_source_router_v4_dynamic_contact.json",
-    "prior_candidate_report": "outputs/reports/predicted_room_dynamic_contact_audit_v1.json",
-    "matched_screen": {
-      "status": "partial_candidate_stopped_by_user_bundle_rejected",
-      "discarded_config_control_run": "outputs/train/typed_channel_v5_control_screen256_seed19_v1",
-      "discarded_rng_control_run": "outputs/train/typed_channel_v5_control_screen256_seed19_v2",
-      "control_run": "outputs/train/typed_channel_v5_control_screen256_seed19_v3",
-      "candidate_run": "outputs/train/typed_channel_v5_joint_screen256_seed19_v1",
-      "train_cases": 256,
-      "validation_cases": 64,
-      "epochs": 8,
-      "batch_size": 4,
-      "seed": 19,
-      "candidate_epochs_completed": 7,
-      "control_epochs_completed": 8,
-      "both_selected_epoch": 0,
-      "comparison_report": "outputs/reports/typed_channel_v5_partial_screen256_compare_v1.json",
-      "joint_minus_control": {
-        "room_macro_iou": 0.00035338355542578666,
-        "instance_f1": 0.0010946830700722361,
-        "instance_count_abs_error": 0.140625,
-        "wall_f1": -0.0030938959850644685,
-        "opening_f1": -0.0009513913751981577,
-        "furniture_f1": 0.005701674809197622,
-        "node_f1": 0.0005728235580209282,
-        "edge_overlap": -0.007579438479279638,
-        "ged": -0.15625
-      },
-      "decision": "Do not promote the full-model v5 bundle. Wall F1 has a significant regression, Room/Instance/Node/Edge/GED intervals cross zero, and full-model updates reduce identity/count quality after epoch 0. Next code arm is adapter-only training from the matched control epoch-0 checkpoint.",
-      "claim_boundary": "single-seed mechanism screen; not a paper result"
-    },
-    "graph_adapter_screen": {
-      "status": "control_stopped_after_six_epochs_dead_graph_output_fixed_candidate_not_run",
-      "control_run": "outputs/train/typed_channel_v6_control_graph_adapter_screen256_seed19_v2",
-      "candidate_run": "outputs/train/typed_channel_v6_joint_graph_adapter_screen256_seed19_v1",
-      "discarded_batch_one_control": "outputs/train/typed_channel_v6_control_graph_adapter_screen256_seed19_v1",
-      "train_cases": 256,
-      "validation_cases": 64,
-      "epochs": 8,
-      "batch_size": 4,
-      "seed": 19,
-      "completed_epochs": 6,
-      "selected_epoch": 5,
-      "selected_metrics": {
-        "selection_score": 0.40311990495814365,
-        "room_macro_iou": 0.3095519439321001,
-        "room_precision": 0.7711194821995077,
-        "room_recall": 1.0,
-        "instance_f1": 0.2100299752013819,
-        "instance_type_accuracy": 0.6583333333333332,
-        "instance_count_abs_error": 4.484375,
-        "wall_f1": 0.4520476973481674,
-        "opening_f1": 0.18877201803594007,
-        "node_f1": 0.7219569029880079,
-        "edge_overlap": 0.34141254460033127,
-        "ged": 7.5625
-      },
-      "decision": "The completed control is a dead-output control: legacy loading restored zero graph-to-mask/class residual heads. Warm-start is now applied only to the count-aware second-graph candidate. The candidate screen must be rerun; the prior graph-only result is not a rejection of the graph mechanism.",
-      "claim_boundary": "single-seed graph-only adapter mechanism screen; not a paper result"
-    },
-    "wall_budget_report": "outputs/reports/cad_wall_budget_path_audit_v1.json",
-    "fixed": [
-      "hard channel-memory masks replaced by recoverable soft additive biases",
-      "room-query decoder restored to native feature resolution",
-      "room-to-structure handoff includes owner uncertainty, second owner, and margin",
-      "CAD stage tokens retain spatial peaks through mean+max pooling",
-      "opening conditioning includes wall proximity and room-owner uncertainty",
-      "ordered CAD action graph starts from raw-stage identity",
-      "action graph runs a non-dead causal route and refreshes downstream stage tokens",
-      "typed source routing and routing-diversity objective are active",
-      "room adjacency conditions query features, classes, and masks",
-      "query existence uses duplicate-safe one-to-one assignment",
-      "final room fusion requires both count selection and query presence",
-      "canonical type-node and type-edge spaces receive direct supervision",
-      "query-space type losses are disabled after a matched negative screen",
-      "dense final-room-probability type-node and type-edge losses are available",
-      "room query ownership reaches the final room logits",
-      "dense graph loss now consumes final owner-preserving room logits",
-      "owner confidence uses the same presence/selection mass as owner assignment",
-      "training owner foreground uses confidence-weighted blending instead of the inference threshold",
-      "owner mask confidence is separated from query availability",
-      "dense type-edge contact uses the canonical 2 px adjacency tolerance",
-      "opening candidate identity no longer relies on dataclass equality",
-      "opening widths are bounded by their host wall length",
-      "wall candidates are evidence-ranked before max-wall truncation",
-      "wall candidate cache fingerprints bind the evidence-ranked generator contract",
-      "batched opening attachment rejects mismatched host wall identities",
-      "routed openings reject zero-length host walls",
-      "final opening projection clamps width to the destination host interval",
-      "predicted edit state respects query-count selection",
-      "strict vector projection supports room/wall/opening count changes",
-      "predicted edit state validates query and stage tensor shapes",
-      "strict wall edit-region intersection samples every wall pixel",
-      "outside-change auditing supports CUDA differences",
-      "typed edit family inference unions before and after labels",
-      "furniture budget selects top target-free query scores",
-      "furniture room-class assignments resolve to concrete room instances",
-      "RPLAN complex boundary/room rings are resampled instead of truncated",
-      "RPLAN openings require a retained host wall to be valid",
-      "RPLAN verifier target keys bind all structural geometry",
-      "RPLAN collate rejects inconsistent grammar vocabularies and key presence",
-      "class-count targets support noncontiguous teacher-valid slots",
-      "canonical Node/Edge/GED are logged every validation epoch",
-      "typed-channel training defaults to the current v3 predicted-control source",
-      "training scalars accumulate on cuda:0 and synchronize once per epoch",
-      "CUDA batches use pinned non-blocking transfers",
-      "all logged trainer objectives have stable accumulator keys",
-      "furniture stage consumes updated room logits and conditioned features",
-      "predicted outputs adapt to TypedFloorplanState for editing",
-      "room-stage preservation no longer discards typed-channel room logits",
-      "room-stage candidates reach the room decoder through bounded prototype context",
-      "the background channel query contributes spatial logits and training gradients",
-      "dense type-edge contact is area-normalized and no longer saturates negative edges",
-      "instance decoding and action refresh fail closed without the ordered action graph",
-      "opening foreground, family logits, and product are preserved as separate controls",
-      "opening-host query extraction consumes independent foreground",
-      "geometry junction is always bound into the typed action graph",
-      "frozen-feature and wall-candidate cache contracts invalidate pre-fix controls",
-      "room-count initialization starts near the observed five-to-nine room regime",
-      "predicted query class counts are tied to the class-count distribution",
-      "room-query attention uses recoverable soft penalties in spatial and token layouts",
-      "geometry and structure junction probabilities fuse into one typed control",
-      "room graph messages are weighted by endpoint query presence before normalization",
-      "routed openings use final selected-wall local indices with fail-closed host identity",
-      "typed junction incident walls use final local wall indices",
-      "room class logits consume mask-region pooled dense prototype evidence through the existing fusion scale",
-      "all-channel residuals use spatial reliability with a gentle non-hard floor",
-      "validation route diagnostics transfer one stacked scalar vector per call",
-      "validation reports reliability, mask-class evidence, room-stage delta, and adjacency probability",
-      "dense furniture controls drive query budget and mask-region class evidence without entering attention memory",
-      "predicted edit state masks tokens/classes/adjacency for every rejected query slot",
-      "strict vector projection tests the full opening interval along its host wall",
-      "RPLAN room count, masks, adjacency, and token targets share one deterministic retained room set",
-      "RPLAN quality arbitration falls back to one top candidate for a positive budget",
-      "RPLAN entrance host uses the long rectangle axis and parallel boundary priority",
-      "full RPLAN train and validation tensor targets pass the reusable contract auditor",
-      "all RPLAN configs cover their tensor limits before model construction",
-      "RPLAN token targets pass train/val length and entity contracts",
-      "train-only OOV vocabulary closure preserves base token IDs",
-      "dense and closed-vocabulary token RPLAN configs pass CPU forward/backward smokes",
-      "RPLAN canonical token roundtrip passes full validation within fixed-point half-step",
-      "CAD action-layer contract v3 verifies stage order, independent layers, host routing, bounded repair, and finite tensors",
-      "real predicted-control smoke keeps room-stage, count, graph, action, furniture, mask evidence, and edit-ghost gradients live",
-      "adaptive room-query references receive a first-step image-conditioned gradient through a bounded sampled-feature path",
-      "mask-contact adjacency injects the canonical 2 px room contact geometry into the adjacency logits",
-      "query-count gating can suppress rejected slots before graph-message aggregation",
-      "the unified opening stage has an identity-initialized learnable wall/junction/boundary host log-gate",
-      "the furniture stage refreshes action tokens before the final validation stage in the v4 candidate",
-      "wall global and exterior/interior budget heads receive first-step image-conditioned gradients and produce sample-dependent values",
-      "furniture active-query budget controls hard/soft rendering and vector readout with one shared active mask",
-      "predicted edit state assigns inactive room queries negative instance IDs and masks every query-indexed tensor",
-      "learned revision admission gate controls typed edit graph family and region expansion with fail-closed fallback",
-      "revision gate receives direct nonempty-region supervision and a live gate-head gradient",
-      "predicted opening/furniture delete operations execute their target families instead of returning unchanged labels",
-      "canonical predicted-edit evaluator applies object deletes to full visible labels while room edits remain on the room partition",
-      "room edit projection preserves the full multilabel edited partition instead of collapsing changed pixels to one mode class",
-      "paired edit gates allow ceiling non-regression only when matched-node coverage is sufficient",
-      "predicted-edit reports include GED decomposition, absolute Node/GED gates, and matched-node coverage",
-      "pre-edit vs post-edit paired diagnostics isolate edit-induced Node/Edge/GED changes from base-model target error",
-      "room-add and room-type projection write one dominant target room class instead of all GT/pred semantic differences",
-      "room-add projection keeps only the largest connected target component",
-      "room-add and room-type use operation-specific projection: connected target for add, direct edited labels for type",
-      "predicted edit gates use the HouseMind-style unique room-type graph; instance graphs remain readout diagnostics",
-      "checkpoint selection uses equal-weight gate-normalized progress across room, instance, wall, opening, furniture, and graph atoms while retaining negative sub-gate progress",
-      "RPLAN checkpoint selection consumes room quality, contract validity, token legality, generation completion, and consumer validity/watertight regressions"
-      ,
-      "RPLAN selection also retains wall/opening losses and room-adjacency BCE as first-class gate progress",
-      "dynamic balancing exposes stage wall/opening/type/furniture and query presence/count/class-count/cardinality as independent terms",
-      "dynamic balancing uses the same effective outer room-instance coefficients as the non-dynamic loss",
-      "constant zero objectives no longer crash the first gradient-balancing update",
-      "class-cardinality consistency is a bounded relative L1 distance instead of an unnormalized class-sum penalty",
-      "query class-count heads initialize a sparse room budget from taxonomy provenance",
-      "room adjacency optionally consumes symmetric query-pair, 2 px mask-contact, and count-selected presence features",
-      "canonical dense type node and edge objectives are independently registered",
-      "optional relational-head construction restores global RNG so shared module initialization is matched",
-      "dense type-node and type-edge objectives support soft Dice over their canonical sparse spaces",
-      "class-count sparse priors are non-persistent buffers reapplied after checkpoint loading",
-      "dynamic gradient balancing supports a softened fractional exponent instead of an immediate full inverse-norm rescale",
-      "adapter-preserving configs freeze shared channels and train the room/graph path at a lower learning rate",
-      "room_graph_adapter scope isolates adjacency, graph conditioning, query-set, count, and bounded fusion scalars from the room decoder",
-      "adjacency, type-node, and type-edge objectives share count-selected query presence instead of non-gated raw existence",
-      "target adjacency supervision keeps a presence-weight floor and removes the arbitrary Hungarian IoU cutoff so early graph learning cannot vanish",
-      "count-selected second graph pass reuses the existing adjacency/conditioner to refine final room classes and masks without adding parameters",
-      "second-graph checkpoints re-warm-start graph-to-mask/class residual heads after loading, preventing old zero heads from killing the full graph gradient path",
-      "graph BCE and Dice normalize per case before batch averaging, matching canonical Node/Edge evaluation and preventing large plans from dominating",
-      "wall/opening/furniture focal loss normalizes per case before batch averaging",
-      "opening-type cross entropy normalizes per case before batch averaging",
-      "wall precision receives a separately balanced false-positive-sensitive Tversky objective",
-      "opening precision and wall-affinity host support receive separately balanced footprint-aware objectives",
-      "family validation records wall/opening/furniture precision and recall alongside F1"
-    ],
-    "tests": "1219 non-chip/non-NLP tests passed with 1 skip; all touched floorplan files have Ruff passing and remain below 600 lines. Shared room identity matching, primary-objective loss anchoring, authoritative count/presence fusion in partition loss, count-gated class-agnostic query separation with a target-free validation proxy, presence-derived and directly supervised cardinality, selection ranking, unmatched-mask hygiene, room-mask recall direction, matched-mask centroid localization, reference-anchor supervision with a scoped optimizer, unreachable route-head removal, zero-weight/consumer repairs, dynamic adapter residual activation, opening-vector failure decomposition, and optional full-resolution mask diagnostics are implemented. The authoritative metrics remain unchanged until a matched room screen and full-val remeasurement complete. No SOTA claim is made.",
-    "runtime_audit": "docs/typed_channel_gpu_runtime_v1.md",
-    "assignment_benchmark": "outputs/reports/typed_channel_assignment_microbench_v1.json",
-    "next_code_gates": [
-      "Run the matched room_adapter control/candidate pair only after asserting nonzero first-step gradients for field evidence fusion, room program class fusion, action program budget/gate, and query-set route budget/gate.",
-      "Require query-set presence, count, class-count, and program-token cold starts to remain non-zero and consumer-visible in every newly initialized candidate.",
-      "Verify adapter-only room training preserves Wall/Opening/Furniture priors while improving Room/Instance/Node/Edge/GED.",
-      "Use dense graph Dice only if it changes canonical Edge/GED direction while preserving Node precision and Room quality.",
-      "Run v5 control, relational-pair-only, sparse-prior-only, rare-class-only, and joint arms on the same cases and seed.",
-      "Require the joint arm to improve Instance F1, Node F1, Edge overlap, and GED without lowering Room IoU, validity, watertightness, or outside-footprint exactness; only then decompose the bundle.",
-      "Inspect the per-term gradient norm and touched-parameter counts at every balancing update before interpreting any score.",
-      "Measure projected opening hosts and typed junctions through the final selected-wall consumer.",
-      "Measure the repaired query and canonical graph path on matched predicted-control cases.",
-      "Run the room-adapter control/joint screen; do not use the frozen-decoder graph adapter to judge query-mask or instance quality.",
-      "Require shared-match disagreement, count-selection coverage, program assignment, and touched-program-router gradients to be logged before interpreting the room score.",
-      "Keep legal wall evidence as a fixed prior with bounded graph corrections."
-    ]
-  },
-  "metric_gap_audit": {
-    "report": "outputs/reports/predicted_control_metric_gap_audit_v1.json",
-    "builder": "scripts/analyze_predicted_control_metric_gaps_v1.py",
-    "sota_blocker_map": "outputs/reports/predicted_sota_blocker_map_v1.json",
-    "sota_blocker_doc": "docs/predicted_control_sota_blocker_map_v1.md",
-    "sota_blocker_builder": "scripts/build_predicted_sota_blocker_map_v1.py",
-    "scope": "predicted_control_full491_gedfixed_v2",
-    "loss_routing_repair": {
-      "status": "cpu_gradient_contract_passed_score_pending",
-      "unscaled_cardinality_observed": 352.8041076660156,
-      "ce_observed_same_smoke": 1.617526650428772,
-      "dense_edge_loss_relative_spread": 0.010273119110137037,
-      "control_selected_epoch": 0,
-      "control_instance_f1_drop_after_selection": 0.0393309571526064,
-      "control_count_mae_increase_after_selection": 3.3125,
-      "screen_diagnostics": "outputs/reports/typed_channel_v5_screen_diagnostics_v1.json",
-      "decision": "Expose each stage/query/graph term, add overlap-aware graph losses, preserve count-gated supervision, and train room adapters from the epoch0 structural prior instead of full unfreezing."
-    },
-    "gaps": {
-      "opening_f1": 0.262978,
-      "instance_f1": 0.218241,
-      "edge_overlap": 0.138175,
-      "room_iou": 0.122415,
-      "wall_f1": 0.092595,
-      "node_f1": 0.092571,
-      "ged": 1.682281
-    },
-    "evidence": [
-      "room support IoU 0.774 is high while semantic Room IoU is 0.328; identity/count/type are the direct room bottleneck",
-      "node F1 0.727 exceeds edge overlap 0.362; 75 cases have Node F1 >= 0.8 with edge overlap < 0.5",
-      "room IoU correlates 0.687 with edge overlap; edge overlap correlates -0.533 with GED",
-      "Wall and opening F1 correlation is -0.0015, so they require independent layer contracts",
-      "13+ room cases fall to Room IoU 0.248 and GED 14.82, defining the primary tail"
-    ],
-    "targeted_priorities": [
-      "Room identity/count/type before more encoder width",
-      "typed adjacency/edge consistency before more node heads",
-      "wall precision candidate selection after recall is already higher",
-      "opening host geometry as the largest absolute gate gap"
-    ],
-    "module_metric_map": {
-      "room_iou_and_instance_f1": "Image-conditioned room-query references target small-footprint and high-count rooms while the query-set count gate keeps only selected instances.",
-      "node_f1": "Stage-room prototype evidence, mask-region class evidence, class-count cardinality, and one-to-one query existence jointly own semantic identity.",
-      "edge_overlap": "Mask-contact adjacency injects the same 2 px geometric relation used by canonical type-edge evaluation instead of relying on query-embedding cosine alone.",
-      "ged": "Preserving spatial query references and contact-aware graph messages should reduce edge insertion/deletion without changing the fixed evaluator.",
-      "opening_f1": "The unified opening stage now receives a learnable wall/junction/boundary host log-gate while the center-width verifier continues to own candidate interval geometry; no cross-metric gain is claimed.",
-      "wall_f1": "Wall remains a precision-oriented candidate/portfolio consumer and is not pooled with opening or room graph mechanisms."
-    },
-    "parameter_allocation_report": "outputs/reports/predicted_control_parameter_allocation_v2.json",
-    "parameter_allocation_report_v5": "outputs/reports/predicted_control_parameter_allocation_v5_relational_cpu.json",
-    "parameter_allocation_builder": "scripts/audit_promoted_parameter_allocation_v1.py",
-    "parameter_allocation": {
-      "total": 6805899,
-      "typed_head_share": 0.2515,
-      "room_instance_share": 0.1731,
-      "wall_stage_share": 0.1172,
-      "opening_stage_share": 0.1172,
-      "furniture_stage_share": 0.0792,
-      "room_query_set_share": 0.0683,
-      "room_graph_share": 0.0113,
-      "decision": "Do not uniformly add width; wall/opening stages are already balanced. Prioritize graph consumer and readout semantics."
-    },
-    "checkpoint_selection_audit": {
-      "report": "outputs/reports/gate_balanced_checkpoint_selection_audit_v1.json",
-      "selector": "src/floorflow/training/typed_channel_eval.py",
-      "reports_checked": 42,
-      "historical_epoch_changes": 13,
-      "new_candidates_available": 0,
-      "new_candidates_unrecoverable": 13,
-      "decision": "The old selector was not gate-optimal for 13 historical histories. New training must use the gate-balanced selector; historical reports and selected checkpoints are not rewritten.",
-      "examples": {
-        "typed_channel_attention_screen256_v1": "New selector chooses epoch4 instead of epoch5 because Count MAE moves from 3.03125 to 2.78125, crossing from failed to passed gate despite a small Room IoU tradeoff.",
-        "typed_channel_attention_highres_screen256_v1": "New selector chooses epoch2 instead of epoch4 because both fail Count similarly, while epoch2 has higher Room IoU and type accuracy."
-      }
-    }
-  },
-  "parallel_gap_program": {
-    "principle": "Each gap owns a checkpoint, proxy, holdout, and stop rule; only gated lanes enter the typed cross-attention aggregator.",
-    "lanes": [
-      {
-        "id": "GAP-OPEN-CENTER",
-        "artifact": "center heatmap and center-specific candidate verifier",
-        "proxy": "center recall and geometry-matched openings",
-        "consumer": "oracle-host opening F1 then predicted-wall opening F1",
-        "status": "hgb_promoted_gpu_fast_screen_only"
-      },
-      {
-        "id": "GAP-OPEN-WIDTH-FAMILY",
-        "artifact": "width map and door/window family head",
-        "proxy": "geometry width ratio and family consistency",
-        "consumer": "vector opening F1",
-        "status": "width_partial_family_held"
-      },
-      {
-        "id": "GAP-WALL-HOST",
-        "artifact": "wall reconciliation, junction continuity, host graph",
-        "proxy": "wall precision/recall and opening host retention",
-        "consumer": "Wall F1, Opening F1, Node/Edge/GED",
-        "status": "gap002_wall_promoted_absolute_gate_open"
-      },
-      {
-        "id": "GAP-GRAPH-ROOM",
-      "artifact": "room identity, sparse class prior, owner graph, relational typed adjacency",
-      "proxy": "atomic query and dense type-node/type-edge objectives plus canonical graph",
-        "consumer": "Node F1, edge overlap, GED",
-      "status": "v5_relational_edge_cpu_contract_passed_matched_screen_pending"
-      },
-      {
-        "id": "GAP-FUSION",
-        "artifact": "typed cross-attention gap gates",
-        "proxy": "per-gap head gains retained after aggregation",
-        "consumer": "joint full-stage non-regression",
-      "status": "atomic_loss_scale_repaired_cross_attention_promotion_pending"
-      }
-    ],
-    "parallel_schedule": [
-      "GPU0: one heavy full-val consumer replay at a time.",
-      "CPU: multiple bounded strata, ranker-threshold, and artifact audits in parallel.",
-      "Never run two full-val consumers concurrently; their CPU geometry evaluators contend.",
-      "Freeze a lane checkpoint before launching the next GPU lane."
-    ],
-    "join_rule": "Aggregate only lanes whose holdout CI and absolute gate pass; compose wall and opening through layer-specific host contracts because a shared geometry parameter changes both layers.",
-    "dashboard": "outputs/reports/floorflow_gap_dashboard_v1.json",
-    "builder": "scripts/build_floorflow_gap_dashboard_v1.py"
-  },
-  "model_stacking_program": {
-    "status": "planned_after_lane_freezes",
-    "goal": "Test whether serial layer composition, parallel experts, and typed routing improve the current per-layer best without confusing gains with extra budget.",
-    "current_evidence": {
-      "opening_only_f1": 0.337977,
-      "wall_only_f1": 0.500706,
-      "shared_gap_fraction_opening_interaction": -0.002371,
-      "interpretation": "Wall and opening need layer-specific composition; do not globally share the geometry parameter."
-    },
-    "serial_layer01": {
-      "status": "layerwise_evidence_retained_flat_geometry_rejected",
-      "report": "outputs/reports/predicted_control_stack_serial_layer01_v1.json",
-      "wall_f1": 0.500706,
-      "opening_f1": 0.337977,
-      "flat_opening_f1": 0.335606,
-      "flat_opening_delta": -0.002371
-    },
-    "serial_stacks": [
-      {
-        "id": "STACK-SERIAL-LAYER-01",
-        "order": "room -> wall gap .02 -> opening host .04 -> typed host reprojection",
-        "purpose": "Preserve wall and opening lane gains in one layered CAD output."
-      },
-      {
-        "id": "STACK-SERIAL-TWOPASS-01",
-        "order": "base wall -> center opening -> opening-conditioned wall continuity -> final host graph",
-        "purpose": "Test whether opening evidence repairs wall over-segmentation without another global merge."
-      },
-      {
-        "id": "STACK-SERIAL-RESIDUAL-01",
-        "order": "frozen base -> bounded wall residual -> bounded opening residual -> trust gate",
-        "purpose": "Keep rollback and prevent each refiner from rewriting the full plan."
-      }
-    ],
-    "parallel_stacks": [
-      {
-        "id": "STACK-PAR-WALL-01",
-        "experts": [
-          "full-stage wall plan",
-          "wall gap .02 plan",
-          "host-only precision specialist"
-        ],
-        "router": "typed wall continuity, junction, opening-alignment, and over-segmentation signals",
-        "target": "Wall F1 >= 0.58 with precision >= 0.52 and recall >= 0.65"
-      },
-      {
-        "id": "STACK-PAR-OPEN-01",
-        "experts": [
-          "multiscale segmentation detector",
-          "center-width detector"
-        ],
-        "router": "candidate-level presence/type verifier",
-        "target": "Opening F1 >= 0.35 with predicted-wall host retention"
-      },
-      {
-        "id": "STACK-PAR-ROOM-GRAPH-01",
-        "experts": [
-          "dense room control",
-          "query room identity",
-          "owner-cell graph"
-        ],
-        "router": "room count, type, owner, and adjacency confidence",
-        "target": "Room IoU/F1 and Node/Edge/GED non-regression"
-      }
-    ],
-    "experiment_protocol": [
-      "Freeze all lane checkpoints before stacking.",
-      "Use matched val128 for serial/parallel screens and val[128:288] as disjoint holdout.",
-      "Compare against equal-parameter, equal-NFE, and equal-wall/opening-candidate controls.",
-      "Log per-layer metrics and interaction deltas, not only the final aggregate.",
-      "Run one full-val491 confirmation only after a holdout stack passes every non-regression gate."
-    ],
-    "promotion_gates": {
-      "wall": "Wall F1 >= 0.58, precision >= 0.52, recall >= 0.65, continuity >= 0.99",
-      "opening": "Opening F1 >= 0.35, wall alignment >= 0.8",
-      "room_graph": "No regression in Room IoU, Room F1, Node F1, edge overlap, or deterministic GED",
-      "safety": "validity 1.0, conditional watertightness >= 0.99, outside-footprint 0.0"
-    },
-    "priority_order": [
-      "STACK-SERIAL-LAYER-01",
-      "STACK-PAR-WALL-01",
-      "STACK-PAR-OPEN-01",
-      "STACK-SERIAL-TWOPASS-01",
-      "STACK-PAR-ROOM-GRAPH-01",
-      "STACK-SERIAL-RESIDUAL-01"
-    ],
-    "forbidden": [
-      "stacking_gain_from_untracked_parameters",
-      "stacking_gain_from_more_nfe_or_candidates_without_controls",
-      "selecting_best_seed_or_best_case",
-      "breaking_preaggregation_rollback"
-    ]
-  },
-  "evaluator_corrections": {
-    "status": "frozen",
-    "ged": "housemind-style-deterministic-v2",
-    "reason": "Legacy wall-clock pruning changed GED for identical graph structure.",
-    "contract": "configs/housemind_style_ged_deterministic_v2.json",
+  "authoritative_predicted_control": {
     "report": "outputs/reports/predicted_control_full_stage_val491_gedfixed_v2.json",
-    "exact_cases": 244,
-    "deterministic_bounded_cases": 247,
-    "rule": "Do not compare legacy timed GED with this evaluator; expose exact and fallback_reason at case level."
-  },
-  "fallback_evidence": {
-    "identity_protocol": {
-      "status": "passed",
-      "checkpoint": "outputs/external_baselines/raster2seq/checkpoint_blends_v2/ema_alpha_0.75.pth",
-      "checkpoint_sha256": "5c738ba5cda8842856a945aba67e60e8b373a8f5c86047af0c1c23c19e362311",
-      "test_cases": 509,
-      "room_iou": 0.6250510684632508,
-      "paired_room_iou_ci95": [0.0007785020888685827, 0.002793553959115025],
-      "wilcoxon_p_greater": 0.0002799302462537662,
-      "room_f1": 0.8989483324496967,
-      "report": "outputs/reports/residential_identity_test509_v4_summary.json",
-      "boundary": "Same CubiCasa identity protocol only; not an identity ranking against FloorFlow and not RPLAN/full-CAD SOTA."
+    "blocker_map": "outputs/reports/predicted_sota_blocker_map_v1.json",
+    "cases": 491,
+    "metrics": {
+      "room_iou": {
+        "value": 0.327585,
+        "gate": 0.45,
+        "gap": 0.122415
+      },
+      "instance_f1": {
+        "value": 0.281759,
+        "gate": 0.50,
+        "gap": 0.218241
+      },
+      "wall_f1": {
+        "value": 0.487405,
+        "gate": 0.58,
+        "gap": 0.092595
+      },
+      "opening_f1": {
+        "value": 0.087022,
+        "gate": 0.35,
+        "gap": 0.262978
+      },
+      "node_f1": {
+        "value": 0.727429,
+        "gate": 0.82,
+        "gap": 0.092571
+      },
+      "edge_overlap": {
+        "value": 0.361825,
+        "gate": 0.50,
+        "gap": 0.138175
+      },
+      "ged": {
+        "value": 7.682281,
+        "gate_max": 6.0,
+        "gap": 1.682281
+      }
     },
-    "editing_protocol": {
-      "status": "passed_protocol_gate",
-      "report": "outputs/reports/residential_sota_main_results_v5.json",
-      "claim_gate": "outputs/reports/residential_sota_claim_gate_v5.json",
-      "seeds": [19, 20, 21, 22, 23],
-      "boundary": "FEVP/HouseMind-style metric evidence only; does not claim a direct HouseMind benchmark defeat."
-    },
-    "external_protocol_contract": {
-      "status": "complete",
-      "manifest": "outputs/reports/matched_external_comparison_manifest_v1.json",
-      "coverage": "outputs/reports/external_protocol_coverage_matrix_v1.json",
-      "builder": "scripts/build_external_protocol_contract_v1.py",
-      "boundary": "Tracks remain separate; not_reported is not a zero or failure."
+    "diagnostics": {
+      "room_support_iou": 0.774252,
+      "instance_type_accuracy": 0.673841,
+      "instance_count_mae": 2.496945,
+      "wall_precision": 0.409074,
+      "wall_recall": 0.675861,
+      "interpretation": "Room foreground support is much stronger than room identity, count, and semantic assignment. Node quality exceeds edge quality, so graph endpoint identity is not the only blocker."
     }
   },
-  "claim_ladder": [
+  "current_architecture_state": {
+    "room_query_decoder": {
+      "shared_class_mask_huangarian": true,
+      "count_selection_gate": "authoritative",
+      "owner_preserving_readout": true,
+      "adaptive_spatial_references": true,
+      "area_regression": "matched area was diagnostic-only before v342"
+    },
+    "room_graph": {
+      "mask_contact_adjacency": true,
+      "relational_pair_head": true,
+      "presence_weighted_messages": true,
+      "second_count_aware_pass": true,
+      "area_preserving_residual": "candidate",
+      "class_residual": "zero-sum across active queries in area-preserving mode",
+      "last_bundle_screen": "rejected: relational+prior+second graph increased GED and reduced Instance F1"
+    },
+    "objective_binding": {
+      "single_instance_kwargs_source": "src/floorflow/training/typed_channel_instance_loss_kwargs.py",
+      "dynamic_balancer": "src/floorflow/training/typed_channel_loss_balance.py",
+      "atomic_area_loss": "implemented in v342",
+      "query_separation": "implemented but rejected as a standalone quality lever"
+    },
+    "zero_path_status": {
+      "report": "docs/predicted_control_zero_path_audit_v1.md",
+      "remaining_zero_tensors": "standard zero biases, zero residual parameters, or disabled optional branches; no known enabled upstream trunk is blocked",
+      "requirement": "Every new optional module needs first-step gradient and output-consumer tests before a screen."
+    }
+  },
+  "claim_boundaries": {
+    "oracle_control": "Strong consistency evidence is valid only under the stated oracle-control protocol.",
+    "predicted_control": "No predicted-control SOTA claim while any absolute gate above is unmet.",
+    "house_mind": "No complete-method defeat claim without executable matched inference.",
+    "ce2eplan": "Generation-only anchor; never present it as an editing baseline.",
+    "raster2seq": "Matched reconstruction anchor only; never rank different evaluation splits as identity editing.",
+    "watertight_guard": "Report repair and introduced failures separately; do not claim a net gain without matched evidence."
+  },
+  "tasks": [
     {
-      "level": 0,
-      "claim": "feasible residential CAD reconstruction under predicted controls",
-      "status": "in_progress",
-      "required_tasks": [
-        "SOTA-ROOM-01",
-        "SOTA-WALL-01",
-        "SOTA-OPEN-01",
-        "SOTA-FURN-01",
-        "SOTA-GRAPH-01"
+      "id": "P0-ROOM-SCALE",
+      "status": "area_loss_training_rejected_canonical_regressions",
+      "title": "Bind room-mask scale to predicted-control Room IoU and Instance F1",
+      "owner_atoms": [
+        "RM-01",
+        "RM-02"
+      ],
+      "evidence": [
+        "Control matched area is 0.003650 versus target 0.027531 at epoch 0.",
+        "Graph joint flips to 0.045550 versus target 0.027531.",
+        "Semantic Room IoU is 0.327585 while room support IoU is 0.774252."
+      ],
+      "implemented": [
+        "bounded symmetric matched-area loss",
+        "room_instance_mask_area_weight plumbing",
+        "independent room_area dynamic-balance term",
+        "area-preserving graph residual",
+        "area-fidelity-only candidate config",
+        "area-fidelity plus area-preserving graph candidate config"
+      ],
+      "contract_evidence": "1249 passed, 1 skipped on the complete non-chip/non-NLP suite; touched-file Ruff and the 599-line guard pass. This is architecture evidence, not a metric result.",
+      "area_preserve_same_weight": "Enabling only the zero-mass graph residual on the same checkpoint and 32 cases preserves Room support but changes Instance F1 -0.034771, count MAE +3.21875, Wall F1 -0.007898, Edge overlap -0.021128, and GED +0.5625. Rejected as an inference override. Source: outputs/reports/area_preserving_graph_same_weight_val32_seed19_compare_v1.json.",
+      "area_loss_screen": "Matched corrected-code train64/val32 seed19 A/B selected epoch0 for both arms. Area loss lowers its proxy 0.69535 to 0.33751 and moves predicted area 0.00398 to 0.02701 near target 0.02696, but Room IoU delta is +4.32e-5 with crossing CI, Instance F1 -0.002574, count MAE +0.28125, Wall F1 -0.001021, and GED +0.28125. Rejected. Source: outputs/reports/typed_channel_v6_ownerclass_area_fidelity_screen64_seed19_compare_v1.json.",
+      "next": [
+        "Run one matched train64/val32 seed19 A/B after the remaining room audit creates a coherent candidate.",
+        "Require lower absolute predicted-target area error before reading IoU.",
+        "Promote to 256/64 only if Room or Instance improves without count, Node, Edge, or GED regression."
+      ],
+      "files": [
+        "src/floorflow/heads/room_mask_area.py",
+        "src/floorflow/heads/room_mask_losses.py",
+        "configs/predicted_channel_v6_area_fidelity_only.json",
+        "configs/predicted_channel_v6_area_fidelity.json"
+      ],
+      "pass_gate": "Room IoU >= 0.45 and Instance F1 >= 0.50 on full validation with matched multi-seed intervals."
+    },
+    {
+      "id": "P0-ROOM-OWNER",
+  "status": "class_consumer_fixed_relative_zero_shot_rejected_training_candidate",
+      "title": "Turn query ownership from a weak soft blend into a reliable identity mechanism",
+      "owner_atoms": [
+        "RM-01",
+        "RM-02",
+        "RM-03"
+      ],
+      "known_issue": "room_owner_soft_weight_mean is only 0.0457 in control and 0.1436 in graph joint, so query-specific classes are often blended away.",
+      "critical_repair": "The selected-query class gather expanded its class index to one, so owner-preserving logits were truncated to class zero and broadcast as a class-constant map. The gather now retains the complete room-class distribution.",
+      "relative_candidate": "owner_preserving_room_readout accepts historical true/false values and a new relative mode. Relative mode uses query ownership mass rather than absolute mask sigmoid, and is isolated in configs/predicted_channel_v6_owner_relative_only.json.",
+  "runtime_evidence": "cuda:0 live contract passes on a real checkpoint with all owner class channels live, full room shape [1,24,128,128], finite outputs, and config-matched four-stage refresh. On this case absolute owner soft weight is 0.0246, relative ownership mean is 0.3956, and strict absolute owner foreground is only 0.0070. Source: outputs/reports/owner_class_consumer_live_contract_cuda0_v1.json.",
+  "relative_zero_shot": "Same checkpoint on 32 matched cases: relative owner raises foreground 0.02616 to 0.25094, Room IoU +0.000318 with crossing CI, Instance F1 -0.017020, count MAE +1.46875, Wall F1 -0.003601 with CI excluding zero, and GED +0.15625. Rejected as a drop-in inference replacement. Source: outputs/reports/owner_same_weight_val32_seed19_compare_v1.json.",
+  "contract_evidence": "1249 passed, 1 skipped on the complete non-chip/non-NLP suite; touched-file Ruff and the 599-line guard pass.",
+      "implemented_diagnostics": "Validation now logs owner soft weight, relative query ownership, foreground fraction, and total gated query mass without changing readout behavior.",
+      "next": [
+    "Keep the corrected absolute owner readout as the current inference contract.",
+    "Only train the relative owner candidate if its model-side calibration objective changes, not merely its inference gate.",
+    "Track owner specificity and fallback fraction on every validation case.",
+        "Verify query embeddings, adaptive references, owner logits, and class evidence receive non-zero gradients from the full objective."
+      ],
+      "pass_gate": "Owner specialization rises while background/footprint precision and semantic room IoU do not regress."
+    },
+    {
+      "id": "P0-GRAPH-EDGE",
+      "status": "safe_graph_inference_modes_rejected_current_free_graph_retained",
+      "title": "Close the Node-to-Edge/GED gap without perturbing room scale",
+      "owner_atoms": [
+        "GR-01",
+        "RM-04"
+      ],
+      "known_issue": "Node F1 0.727429 but Edge overlap 0.361825; 75 cases have Node F1 >= 0.8 with Edge < 0.5.",
+      "same_weight_result": "Area-preserving graph residual is not a valid drop-in replacement: Instance F1, count, Wall, Edge, and GED regress significantly. Preserving area is necessary but insufficient for correct owner reassignment.",
+      "owner_swap": "A real cuda:0 case changes owner on 56.98% of supported pixels, with support covering 28.22% of the image. Diagnostics now log owner-swap fraction and support for both graph passes.",
+      "inference_mode_matrix": "Same-weight constraining does not help: area-preserving, owner-margin, class-only, and full bypass all regress Instance/count/Wall. Full bypass changes Instance F1 -0.026571, count MAE +1.78125, and Wall F1 -0.005914, so the current free graph has positive contribution and remains the control.",
+      "next": [
+        "Keep the current free graph for inference; train any safe graph mode from the matched control.",
+        "Bound adjacent-query owner swaps and test preservation of per-query mask mass.",
+        "Verify graph class residual does not damage type identity in non-area-preserving controls.",
+        "Audit mask-contact tolerance against the canonical type-edge evaluator.",
+        "Use the isolated source-router/room-graph arms before composing another bundle."
+      ],
+      "pass_gate": "Edge overlap >= 0.50 and GED <= 6.0 with Node F1 non-regression."
+    },
+    {
+      "id": "P0-WALL",
+      "status": "source5_two_seed_full491_main_path_parity_and_export_complete",
+      "title": "Raise wall precision without sacrificing recall or junction continuity",
+      "owner_atoms": [
+        "ST-01",
+        "WJ-01"
+      ],
+      "known_issue": "Wall recall is much higher than precision.",
+      "scorer_screen": "Corrected room-control layer + skeleton_portfolio, train64/val32 seed19: selected threshold -1.0 gives Wall 0.265413 versus control 0.327244 at epoch0 and 0.249652 at epoch1. Opening also falls; validity/watertight remain 1.0. Rejected. Source: outputs/train/cad_wall_candidate_finalstage_ownercontrol_screen64_seed19_v1/report.json.",
+      "source5_screen": "Deterministic source 5/k5_s010 beats boundary control on val32 and val128. Val128: Wall F1 0.316293 -> 0.411984, paired +0.095691 with CI [0.076433,0.115111], 107/128 improved, p=7.31e-15; eligible wall +0.078058 with CI [0.060030,0.097146]. Room is exactly unchanged; Opening changes on one case. Sources: outputs/reports/cad_wall_finalstage_source_audit_val32_seed19_v1.json and outputs/reports/cad_wall_finalstage_source_audit_val128_seed19_v1.json.",
+      "source5_full491": "Full val491 confirms Wall F1 0.304243 -> 0.396355, paired +0.092113 with CI [0.082877,0.101295], 410/491 improved, p=2.04e-55; eligible wall +0.069326 with CI [0.060550,0.078329]. Room is exactly unchanged; Opening changes on 3/491 cases. Source: outputs/reports/cad_wall_finalstage_source_audit_val491_seed19_v1.json.",
+      "source5_seed23": "Full val491 seed23 reproduces Wall F1 0.305152 -> 0.398851, paired +0.093699 with CI [0.084891,0.102604], 418/491 improved, p=5.88e-58; eligible wall +0.071597 with CI [0.063021,0.080470]. Room is exactly unchanged; Opening changes on 4/491 cases. Source: outputs/reports/cad_wall_finalstage_source_audit_val491_seed23_v1.json.",
+    "shared_helper": "src/floorflow/inference/final_stage_wall_source.py now owns deterministic final-stage canonical labels, k5_s010 skeleton policy, and source-5 wall segments. The training portfolio consumes the same helper.",
+    "main_validation": "The evaluate_deterministic_wall_source flag composes source-5 plans from the exact canonical CandidateBatch and exports per-case wall_source5_* fields. Full val491 main-path Wall is 0.396355, precision 0.404456, recall 0.425762, junction 0.400846, continuity 0.825602, with unchanged Opening/Room and validity/watertightness 1.0. It matches the dedicated source audit exactly. Source: outputs/eval/wall_source5_main_validation_val491_seed19_v2.report.json.",
+    "main_validation_seed23": "Seed23 main path reports Wall 0.398851, precision 0.407707, recall 0.426105, junction 0.405936, continuity 0.833069, unchanged Opening/Room, and validity/watertightness 1.0. Source: outputs/eval/wall_source5_main_validation_val491_seed23_v1.report.json.",
+      "next": [
+      "Freeze the source-5 Wall candidate and move to the next blocker.",
+        "Repair scorer ranking only after the deterministic path is frozen.",
+        "Keep wall portfolio selection isolated from opening and room graph changes.",
+        "Report precision/recall/F1 with per-case intervals before composition."
+      ],
+      "pass_gate": "Wall F1 >= 0.58 with no junction or opening-host regression."
+    },
+    {
+    "id": "P0-OPENING",
+    "status": "family_component_consumer_fixed_full_validation_pending",
+      "title": "Make vector opening geometry consume the same evidence as pixel openings",
+      "owner_atoms": [
+        "OP-01",
+        "CAD-01"
+      ],
+      "known_issue": "Opening pixel F1 is 0.2049 while vector F1 on the same cases is 0.0.",
+    "family_collapse": "Val32 predicted 12.875 doors and 0.031 windows versus target 7.125/5.5625. Learned family was used only for foreground; subtype posteriors remained door-collapsed.",
+    "component_fix": "Vector readout now chooses one door/window family per connected opening component from the learned family map, preserving the stage decoder's foreground. Predicted windows rise to 7.219, matched windows to 0.219 (p=0.0196), and pixel Opening F1 improves +0.000889 with CI excluding zero. Vector F1 doubles but its 32-case CI crosses zero. Source: outputs/reports/opening_family_component_readout_val32_seed19_compare_v1.json.",
+    "raster_vector_parity": "compose_stage_labels now applies the same connected-component family consolidation to the raster opening layer before canonical union composition. OpeningHostRouter route budget/gate, host bias, and interval trunks also use non-zero residual cold starts with first-step gradient contracts.",
+    "geometry_controls": "Opening center peak and interval width maps now survive CadStageRuntime, typed feature caching, and opening_stage_condition. They gate the wall-condition channels without changing the condition width or checkpoint tensor shapes. The cache contract is v3.",
+    "training_candidate": "A direct door/window family loss and optional subtype class balance are implemented and isolated in configs/predicted_channel_v6_opening_family.json with train_scope=opening_adapter.",
+      "next": [
+      "Run the family-component readout and family-loss candidate on full val491.",
+        "Audit family, host wall, interval, center, and width logits through the selected-vector consumer.",
+        "Use the existing center-width decoder; do not add a second opening head.",
+        "Require component-wise diagnostics before another aggregate screen."
+      ],
+      "pass_gate": "Opening F1 >= 0.35 with valid host-wall intervals and family consistency."
+    },
+    {
+      "id": "P1-CAD-LAYERS",
+      "status": "contract_live_metric_alignment_pending",
+      "title": "Align model stages and channels with editable CAD drawing layers",
+      "owner_atoms": [
+        "CAD-01",
+        "ED-01"
+      ],
+      "mapping": [
+        "program -> room program",
+        "envelope -> outline",
+        "room -> room polygons",
+        "wall -> wall centerlines",
+        "junction -> wall connectivity",
+        "opening -> hosted door/window intervals",
+        "furniture -> room-local furniture instances",
+        "validation -> topology and locality audit"
+      ],
+      "next": [
+        "Verify each stage has a parameterized producer, canonical consumer, and independent metric.",
+        "Remove or disable stages whose outputs have no canonical consumer.",
+        "Exercise the ordered action graph on predicted editing states."
       ]
     },
     {
-      "level": 1,
-      "claim": "matched CubiCasa reconstruction competitiveness",
-      "status": "stage_input_and_trainer_wiring_repaired_screen_pending",
-      "required_tasks": [
-        "SOTA-FREEZE-CUBICASA-01"
-      ]
+      "id": "P1-RPLAN",
+      "status": "matched_training_pending",
+      "title": "Complete a matched residential RPLAN generation track",
+      "next": [
+        "Use the single source of truth for RPLAN grammar, target keys, collation, and verifier checks.",
+        "Train with gate-balanced checkpoint selection.",
+        "Open the RPLAN test split once after validation and baseline tables freeze."
+      ],
+      "pass_gate": "Matched RPLAN metrics beat the pre-registered residential baseline with confidence intervals."
     },
     {
-      "level": 2,
-      "claim": "matched RPLAN generation competitiveness",
-      "status": "typed_state_adapter_ready_predicted_edit_execution_pending",
-      "required_tasks": [
-        "SOTA-RPLAN-01",
-        "SOTA-FREEZE-RPLAN-01"
-      ]
+      "id": "P1-PREDICTED-EDIT",
+      "status": "oracle_anchor_passed_predicted_gate_open",
+      "title": "Carry strict-locality evidence into predicted-control editing",
+      "next": [
+        "Audit editing state construction from predicted rooms, walls, and openings.",
+        "Keep oracle-control and predicted-control tables separate.",
+        "Require outside exact, locality violation rate, validity, and graph metrics on the same cases."
+      ],
+      "pass_gate": "Predicted-control editing passes strict locality and topology gates without target leakage."
     },
     {
-      "level": 3,
-      "claim": "predicted-control and free-text editing competitiveness",
-      "status": "open",
-      "required_tasks": [
-        "SOTA-EDIT-01",
-        "SOTA-FREEZE-EDIT-01"
-      ]
-    },
-    {
-      "level": 4,
-      "claim": "SOTA over complete HouseMind-E, RPLAN methods, or complete CAD generation",
-      "status": "blocked_until_matched_evidence",
-      "note": "No such wording is allowed until executable matched comparisons and the freeze tasks pass."
+      "id": "P0-EVIDENCE-FREEZE",
+      "status": "open_after_model_gates",
+      "title": "Freeze a single CVPR evidence package",
+      "next": [
+        "Run required full-data seeds on cuda:0 with frozen evaluator hashes.",
+        "Recompute blocker map from the selected checkpoints, not intermediate files.",
+        "Build one package with file-to-number provenance and deterministic checksums.",
+        "Audit narrative boundaries against HouseMind, Raster2Seq, and CE2EPlan."
+      ],
+      "pass_gate": "Every reported number resolves to the final package; all hard gates pass and no claim exceeds executable evidence."
     }
   ],
-  "metric_protocol": {
-    "canonical_priority": [
-      "validity",
-      "conditional_watertightness",
-      "outside_footprint_fraction",
-      "room_macro_iou",
-      "instance_f1",
-      "count_mae",
-      "type_accuracy",
-      "fpeval_wall_f1",
-      "junction_f1",
-      "fpeval_opening_f1",
-      "furniture_vector_f1",
-      "node_f1",
-      "edge_overlap",
-      "ged"
-    ],
-    "proxy_real_contract": {
-      "id": "PROXY-REAL-V1",
-      "same_cases": true,
-      "same_seeds": true,
-      "target_free_proxy": true,
-      "checkpoint_snapshots_per_seed_min": 6,
-      "spearman_rho_min": 0.8,
-      "pearson_rho_secondary_min": 0.7,
-      "top_checkpoint_decision_agreement_min": 0.9,
-      "paired_sign_agreement_min": 0.8,
-      "false_pass_rate_max": 0.05,
-      "false_fail_rate_max": 0.1,
-      "sensitivity_required": true,
-      "flat_proxy_rejection": true,
-      "report": "outputs/reports/atom_proxy_real_consistency_v1.json"
-    },
-    "tolerances": {
-      "canonical_grid": 256,
-      "room_match_min_iou": 0.5,
-      "room_polygon_hausdorff_px": 0.5,
-      "room_overlap_area_px2": 4.0,
-      "edge_contact_px": 2.0,
-      "edge_snap_px": 1.5,
-      "wall_junction_cluster_px": 2.0,
-      "opening_center_px": 1.0,
-      "hole_min_area_px": 0.25,
-      "changed_pixel_epsilon": 0.0,
-      "outside_pixel_tolerance": 0.0,
-      "float_report_decimals": 6
-    },
-    "statistics": {
-      "unit": "case",
-      "bootstrap_iterations": 10000,
-      "confidence": 0.95,
-      "paired_test": "two_sided_wilcoxon_signed_rank",
-      "effect_size": "paired_rank_biserial_and_cliffs_delta",
-      "multiplicity": "holm",
-      "multi_seed_fields": [
-        "mean",
-        "sd",
-        "ci_low",
-        "ci_high",
-        "best",
-        "worst",
-        "improved_seeds"
-      ],
-      "ged_exact_case_intersection_required": true
-    },
-    "canonical_evaluators": {
-      "image_and_vector": "src/floorflow/evaluation/sota_protocol.py",
-      "room": "src/floorflow/evaluation/room_metric_suite.py",
-      "wall": "src/floorflow/evaluation/wall_metrics.py",
-      "junction": "src/floorflow/evaluation/wall_junction.py",
-      "opening": "src/floorflow/geometry/opening_readout.py",
-      "furniture": "src/floorflow/evaluation/furniture_vector_metrics.py",
-      "graph": "src/floorflow/evaluation/housemind_structure.py",
-      "ged": "src/floorflow/evaluation/housemind_structure.py",
-      "ged_contract": "configs/housemind_style_ged_deterministic_v2.json",
-      "instance_graph": "src/floorflow/evaluation/room_graph_matching.py",
-      "feasibility": "src/floorflow/evaluation/fevp_metric_contracts.py"
-    },
-    "reference_contracts": [
-      "configs/fevp_metric_contract_v2.json",
-      "configs/sota_benchmark_protocol_v2.json",
-      "configs/housemind_style_ged_deterministic_v2.json"
-    ],
-    "adversarial_suite": [
-      {
-        "attack": "move_one_untouched_room_polygon_1px",
-        "expected_fail_metrics": [
-          "outside_room_polygon_exact",
-          "outside_room_level_exact"
-        ]
-      },
-      {
-        "attack": "change_one_untouched_room_label",
-        "expected_fail_metrics": [
-          "outside_room_label_exact",
-          "node_f1"
-        ]
-      },
-      {
-        "attack": "delete_one_adjacency_edge",
-        "expected_fail_metrics": [
-          "outside_edge_exact",
-          "edge_overlap"
-        ]
-      },
-      {
-        "attack": "inject_one_tiny_hole",
-        "expected_fail_metrics": [
-          "conditional_watertightness",
-          "hole_count"
-        ]
-      },
-      {
-        "attack": "overlap_two_rooms",
-        "expected_fail_metrics": [
-          "validity",
-          "no_room_overlap"
-        ]
-      },
-      {
-        "attack": "remove_one_wall_segment",
-        "expected_fail_metrics": [
-          "fpeval_wall_f1",
-          "wall_continuity"
-        ]
-      },
-      {
-        "attack": "shift_one_opening_center_1px",
-        "expected_fail_metrics": [
-          "fpeval_opening_f1",
-          "opening_center_error"
-        ]
-      },
-      {
-        "attack": "reassign_one_furniture_to_wrong_room",
-        "expected_fail_metrics": [
-          "furniture_room_attachment",
-          "furniture_vector_f1"
-        ]
-      }
-    ]
-  },
-  "baseline_ledger": {
-    "room_iou": {
-    "current": 0.327585,
-      "direction": "maximize",
-      "next_gate": 0.45,
-      "final_target": 0.55,
-      "owner_atoms": [
-        "RM-01",
-        "RM-02",
-        "RM-04"
-      ],
-    "evidence": "outputs/reports/predicted_control_full_stage_val491_v1.json"
-    },
-    "instance_f1": {
-    "current": 0.281759,
-      "direction": "maximize",
-      "next_gate": 0.5,
-      "final_target": 0.65,
-      "owner_atoms": [
-        "RM-01",
-        "RM-02",
-        "RM-04"
-      ],
-    "evidence": "outputs/reports/predicted_control_full_stage_val491_v1.json"
-    },
-    "count_mae": {
-    "current": 2.496945,
-      "direction": "minimize",
-      "next_gate": 2.8,
-      "final_target": 1.8,
-      "owner_atoms": [
-        "RM-02",
-        "RM-03"
-      ]
-    },
-    "type_accuracy": {
-    "current": 0.673841,
-      "direction": "maximize",
-      "next_gate": 0.75,
-      "final_target": 0.85,
-      "owner_atoms": [
-        "RM-02",
-        "RM-03"
-      ]
-    },
-    "wall_f1": {
-      "current": 0.51188,
-      "direction": "maximize",
-      "next_gate": 0.58,
-      "final_target": 0.66,
-      "owner_atoms": [
-        "ST-01",
-        "WJ-01"
-      ],
-      "evidence": "docs/wall_junction_readout_v101.md"
-    },
-    "wall_precision": {
-      "current": 0.38915,
-      "direction": "maximize",
-      "next_gate": 0.52,
-      "final_target": 0.62,
-      "owner_atoms": [
-        "ST-01",
-        "WJ-01"
-      ]
-    },
-    "wall_recall": {
-      "current": 0.697,
-      "direction": "maximize",
-      "next_gate": 0.65,
-      "final_target": 0.72,
-      "owner_atoms": [
-        "ST-01",
-        "WJ-01"
-      ],
-      "note": "Preserve recall while raising precision."
-    },
-    "junction_f1": {
-      "current": null,
-      "direction": "maximize",
-      "next_gate": 0.65,
-      "final_target": 0.8,
-      "owner_atoms": [
-        "WJ-01"
-      ],
-      "note": "Not yet first-class in the main predicted-control ledger."
-    },
-    "opening_f1": {
-      "current": 0.267,
-      "direction": "maximize",
-      "next_gate": 0.35,
-      "final_target": 0.75,
-      "owner_atoms": [
-        "OP-01"
-      ],
-      "evidence": "docs/opening_consumer_promotion_v1.md"
-    },
-    "node_f1": {
-    "current": 0.727429,
-      "direction": "maximize",
-      "next_gate": 0.82,
-      "final_target": 0.9,
-      "owner_atoms": [
-        "RM-04",
-        "GR-01"
-      ]
-    },
-    "edge_overlap": {
-    "current": 0.361825,
-      "direction": "maximize",
-      "next_gate": 0.5,
-      "final_target": 0.65,
-      "owner_atoms": [
-        "RM-04",
-        "GR-01"
-      ]
-    },
-    "ged": {
-    "current": 9.142566,
-      "direction": "minimize",
-      "next_gate": 6.0,
-      "final_target": 3.5,
-      "owner_atoms": [
-        "RM-04",
-        "GR-01"
-      ],
-      "evaluator": "src/floorflow/evaluation/housemind_structure.py:housemind_style_ged"
-    },
-    "furniture_vector_f1": {
-      "current": 0.19577,
-      "direction": "maximize",
-      "next_gate": 0.4,
-      "final_target": 0.7,
-      "owner_atoms": [
-        "FU-01"
-      ],
-      "evidence": "docs/predicted_control_cad_action_layer_map_v2.md"
-    },
-    "furniture_type_accuracy": {
-      "current": 0.15376,
-      "direction": "maximize",
-      "next_gate": 0.3,
-      "final_target": 0.6,
-      "owner_atoms": [
-        "FU-01"
-      ]
-    },
-    "furniture_room_attachment": {
-      "current": 0.48088,
-      "direction": "maximize",
-      "next_gate": 0.65,
-      "final_target": 0.9,
-      "owner_atoms": [
-        "FU-01"
-      ]
-    },
-    "furniture_containment": {
-      "current": 1.0,
-      "direction": "maximize",
-      "next_gate": 0.98,
-      "final_target": 0.995,
-      "owner_atoms": [
-        "FU-01"
-      ]
-    },
-    "validity": {
-      "current": 1.0,
-      "direction": "maximize",
-      "next_gate": 1.0,
-      "final_target": 1.0,
-      "owner_atoms": [
-        "RP-01",
-        "OUT-01"
-      ]
-    },
-    "functional_watertightness": {
-    "current": 0.997963,
-      "direction": "maximize",
-      "next_gate": 0.99,
-      "final_target": 0.995,
-      "owner_atoms": [
-        "ST-01",
-        "WJ-01",
-        "RP-01"
-      ]
-    },
-    "wall_continuity": {
-    "current": 0.993069,
-      "direction": "maximize",
-      "next_gate": 0.99,
-      "final_target": 0.995,
-      "owner_atoms": [
-        "ST-01",
-        "WJ-01"
-      ]
-    },
-    "outside_footprint_fraction": {
-      "current": 0.0,
-      "direction": "minimize",
-      "next_gate": 0.0,
-      "final_target": 0.0,
-      "owner_atoms": [
-        "RP-01",
-        "OUT-01"
-      ]
-    }
-  },
-  "model_dataflow": [
-    {
-      "order": 0,
-      "stage": "predicted_control_field",
-      "atoms": [
-        "PF-01"
-      ]
-    },
-    {
-      "order": 1,
-      "stage": "source_and_channel_routing",
-      "atoms": [
-        "PF-02",
-        "PF-03"
-      ]
-    },
-    {
-      "order": 2,
-      "stage": "cad_action_state",
-      "atoms": [
-        "CAD-01"
-      ]
-    },
-    {
-      "order": 3,
-      "stage": "room_instance_and_program",
-      "atoms": [
-        "RM-01",
-        "RM-02",
-        "RM-03"
-      ]
-    },
-    {
-      "order": 4,
-      "stage": "room_owner_readout",
-      "atoms": [
-        "RM-04"
-      ]
-    },
-    {
-      "order": 5,
-      "stage": "cad_layer_heads",
-      "atoms": [
-        "ST-01",
-        "WJ-01",
-        "OP-01",
-        "FU-01"
-      ]
-    },
-    {
-      "order": 6,
-      "stage": "canonical_graph_readout",
-      "atoms": [
-        "GR-01"
-      ]
-    },
-    {
-      "order": 7,
-      "stage": "validation_repair_output",
-      "atoms": [
-        "RP-01",
-        "OUT-01"
-      ]
-    },
-    {
-      "order": 8,
-      "stage": "editing_and_generation_interfaces",
-      "atoms": [
-        "ED-01",
-        "GEN-01",
-        "FT-01"
-      ]
-    }
+  "global_stop_rules": [
+    "Do not promote an arm when its cheap proxy improves while the canonical consumer regresses.",
+    "Do not add capacity before the corresponding output has a live consumer and first-step gradient.",
+    "Do not stack independent frontier arms without a matched composition screen.",
+    "Do not open test503 or the RPLAN test split for mechanism selection.",
+    "Do not claim SOTA from oracle controls, small subsets, single seeds, or relative-only gains.",
+    "Do not modify chips, FloorSet, or NLP files."
   ],
   "atoms": {
     "PF-01": {
@@ -1854,1508 +1124,146 @@
       "next_gate": "Free-text results remain blocked until predicted-control editing is stable."
     }
   },
-  "tasks": [
-    {
-      "id": "SOTA-METRIC-01",
-      "status": "in_progress_room_passed_descriptor_proxies_failed",
-      "priority": "P0",
-      "title": "Bind every atom to a target-free proxy and canonical evaluator",
-      "atoms": [
-        "PF-01",
-        "PF-02",
-        "PF-03",
-        "RM-01",
-        "RM-02",
-        "RM-03",
-        "RM-04",
-        "CAD-01",
-        "ST-01",
-        "WJ-01",
-        "OP-01",
-        "FU-01",
-        "GR-01",
-        "RP-01",
-        "ED-01",
-        "OUT-01",
-        "GEN-01",
-        "FT-01"
-      ],
-      "implementation_sequence": [
-        "Audit existing evaluators and map duplicate metrics to one canonical source.",
-        "Create a compact atom-proxy registry and runner; reuse cad_metric_suite, room_metric_suite, wall_metrics, opening_readout, furniture_vector_metrics, housemind_structure, and fevp_metric_contracts.",
-        "Log per-atom proxy and canonical rows at six or more checkpoint snapshots for the same cases and seeds.",
-        "Compute Spearman, Pearson, top-checkpoint agreement, paired sign agreement, false-pass rate, and deterministic attack sensitivity.",
-        "Split proxy and canonical outputs when they are not interval-compatible; no mixing of room-type and instance graph scopes."
-      ],
-      "controls": [
-        "frozen checkpoint",
-        "same case manifest",
-        "same seed",
-        "target-free inference",
-        "evaluator version hash"
-      ],
-      "pass_gate": "PROXY-REAL-V1 passes for every promoted atom and every canonical metric has a nonzero sensitivity test.",
-      "stop_rule": "An atom with a flat proxy, target leakage, or inconsistent canonical decision is removed from ranking until redesigned.",
-      "current_results": {
-        "registry_atoms": 18,
-        "bound_atoms": 18,
-        "evaluated_atoms": [
-          "RM-01",
-          "RM-02",
-          "RM-03",
-          "ST-01",
-          "OP-01",
-          "FU-01",
-          "GR-01"
-        ],
-        "passed_atoms": ["RM-01", "RM-02", "RM-03"],
-        "seeds": [23, 2905],
-        "snapshots_per_seed": 8,
-        "validation_cases": 64,
-        "RM-01": "fast_room_macro_iou passes every check across two seeds with Spearman/Pearson 1.0 and top agreement 1.0.",
-        "RM-02": "dense_predicted_count_abs_error passes every check across two seeds with Spearman/Pearson 1.0, top agreement 1.0, and zero false pass/fail.",
-        "RM-03": "fast_instance_type_accuracy passes every check across two seeds with Spearman/Pearson 1.0 and zero false pass/fail.",
-    "cross_seed_case_contract": "The v2 report now requires identical case sets across every seed and checkpoint; all 15 measured rows pass this identity guard.",
-        "ST-01": "Raster F1 and wall length/endpoint/count descriptors all fail; best Spearman is 0.524 with wall-count error.",
-        "OP-01": "Raster F1 and opening center/width/count descriptors all fail; best Spearman is 0.232.",
-        "FU-01": "Raster F1 and furniture attachment/validity/count descriptors all fail; best Spearman is 0.421.",
-        "GR-01": "Room-IoU ranks edge overlap strongly (Spearman 0.931) but fails paired-sign and false-pass gates; node and GED proxies also fail.",
-        "rejected_proxies": "thresholded query-mask IoU, count ECE, and program assignment accuracy remain diagnostics only.",
-    "engineering": "CPU-resident frozen features, unsafe autocast BCE, count-PMF construction, cross-seed case leakage, and feature-cache fail-open behavior are repaired; validation route diagnostics now use one stacked host transfer and cover reliability, mask-class evidence, room-stage delta, and adjacency probability; atom-proxy consistency v2 retains the same three room passes.",
-    "checkpoint_selection": "Selection now uses equal-weight gate-normalized progress across room, instance, wall, opening, furniture, node, edge, count, and GED. Negative sub-gate progress is retained. Re-ranking 42 historical reports changes 13 best epochs, so those historical selections are not automatically authoritative under the new policy."
-      },
-      "remaining": [
-        "Bind PF-01 through RM-04 and the 11 downstream atoms to six-snapshot reports with canonical evaluator hashes.",
-        "Add deterministic attack sensitivity verdicts for every binding.",
-        "Expose wall/opening/furniture candidate scores inside the model and train against selected-vector outcomes; current post-hoc descriptors are insufficient."
-      ],
-      "artifacts": [
-        "outputs/reports/atom_proxy_real_consistency_v1.json",
-    "outputs/reports/atom_proxy_real_consistency_v2.json",
-        "outputs/reports/atom_metric_registry_v1.json",
-        "outputs/reports/atom_proxy_measurements_roomadapter128_twoseed_v1.json",
-        "outputs/reports/atom_proxy_measurements_cad_descriptors_screen16_v2.json",
-    "scripts/audit_gate_balanced_checkpoint_selection_v1.py",
-    "outputs/reports/gate_balanced_checkpoint_selection_audit_v1.json",
-        "outputs/eval/atom_proxy_structure_screen16_v1",
-        "outputs/eval/atom_proxy_structure_screen16_v2",
-        "outputs/train/atom_proxy_roomadapter_screen128_cuda0_v3/atom_proxy_rows.jsonl",
-        "outputs/train/atom_proxy_roomadapter_screen128_cuda0_seed23_v1/atom_proxy_rows.jsonl",
-        "docs/atom_metric_research_v1.md",
-        "tests/test_atom_proxy_consistency.py"
-      ]
-    },
-    {
-      "id": "SOTA-PRED-01",
-      "status": "loss_routing_and_runtime_diagnostics_bound_matched_warmstart_measurement_pending",
-      "priority": "P1",
-      "title": "Deploy typed source routing and causal CAD stage refresh",
-      "atoms": [
-        "PF-01",
-        "PF-02",
-        "PF-03",
-        "CAD-01"
-      ],
-      "hypothesis": "Weak family metrics are caused by source-routing collapse and a single undifferentiated decoder path, not by insufficient dense encoder capacity.",
-      "current_results": {
-        "deployment_audit": "The strongest evaluated structure checkpoint is legacy: 774261 parameters, no typed junctions, room boundary, centerline, or MIta route. Evaluation previously reconstructed this legacy class directly and could not consume typed checkpoints.",
-        "loader_repair": "predicted-control fidelity, plausibility, and raster materialization now load JointControlRepair from checkpoint config on cuda:0.",
-        "typed_source_router": "Four control sources are routed independently for rooms, walls, openings, and furniture at every spatial location; per-family train scopes are exposed, and the promoted config is 6805899 parameters including a 32673-parameter spatial source router.",
-        "action_to_channel_query": "CAD action tokens are now projected into the channel-query evidence context before residual prediction, closing the controls-to-action-to-query interface without a feedback loop.",
-        "stage_query_consumption": "CAD stage readout now builds on the current combined channel-query residual instead of the raw prior, restoring gradients from stage heads to family adapters and query residuals.",
-        "query_room_adjacency": "The query room stage now emits a symmetric [B,Q,Q] room adjacency matrix, propagates adjacency messages into query features, room classes, and spatial masks, trains against differentiable mask contact, and contributes to model selection.",
-        "causal_stage_refresh": "Rooms, walls, and predicted openings are rebound into CadActionGraph before downstream stages. Nonzero 0.01 context and route residual scales remove the previous zero-gradient causal bottleneck.",
-        "routing_objective": "Typed routing regularization consumes source entropy, family-source usage diversity, channel-source entropy, CAD-stage MIta entropy, room-query MIta entropy/attention/expert fraction, and LoRA rank budgets.",
-        "dynamic_loss_coverage": "Dynamic gradient balancing now exposes stage wall/opening/type/furniture, query presence/count/class-count/cardinality, and dense type-node/type-edge as independent terms with effective weights matching the non-dynamic path.",
-        "zero_term_balancer_repair": "Constant zero objectives now return zero gradient norm instead of calling autograd.grad and crashing the first balancing update.",
-        "gradient_diagnostics": "Each balancing update records per-term gradient norms, touched-parameter counts, and the update step.",
-        "cpu_dynamic_smoke": "Two optimizer steps with a one-step balancing interval produce finite loss, update all active atomic terms, normalize cardinality from 352.8 to about 1.18, and expose per-term parameter reach.",
-        "v5_cpu_smoke": "The relational-edge model completes real-case forward/backward/validation; dense type-edge and type-node objectives reach about 3.5M parameter elements, with all optional output tensors finite.",
-        "full_model_screen_negative": "The matched 256/64 seed19 bundle selected epoch0 for both arms. Joint minus control is Room +0.000353 with a crossing CI, Wall -0.003094 with CI [-0.003977,-0.002244], Edge -0.007579 with a crossing CI, and GED -0.15625 with a crossing CI. Full-model updates also worsened identity/count after epoch0.",
-        "training_default_alignment": "Trainer defaults now exactly match the promoted source-router model config, including furniture max queries 32 and all room/graph/furniture channel widths; a parity test prevents future config drift.",
-        "gpu_determinism": "Typed action pooling and channel-grid pooling now use deterministic avg/max pooling; partition-consistent owner bias reshapes level tokens to 4D before masking.",
-        "dtype_contract": "predicted_control_prior now builds float32 priors from real float16 control caches; the all-channel model completes on real 24/38/52/28 fields.",
-        "full_shape_smoke": "cuda0 real-field smoke passes: logits [1,65,64,64], room adjacency [1,32,32], 60761-parameter graph conditioner, three causal action refreshes.",
-        "live_room_consumers": "Preserving the room stage now retains typed-channel room logits. The room-stage candidate enters the query decoder through bounded prototype context, so both paths remain trainable without direct stage replacement.",
-        "background_query": "The all-channel background query now contributes spatial logits instead of being replaced by a global scalar.",
-        "graph_contact_gradient": "Dense type-edge contact is area-normalized; false positive edges remain gradient-bearing instead of saturating positive.",
-        "consumer_contracts": "Instance room decoding and action-token refresh now reject configurations without the ordered CAD action graph.",
-        "junction_consumer": "Geometry junction is always exported into controls instead of being discarded behind the historical use_junction_stage flag.",
-        "opening_control_contract": "Independent opening foreground, family logits, and product maps survive the stage runtime and frozen-feature cache as separate controls.",
-        "query_attention": "Room-query decoder attention now uses finite additive penalties for spatial and partition-owner layouts instead of irreversible booleans.",
-        "room_cardinality": "Count initialization starts near eight rooms, and a differentiable class-cardinality term aligns query type mass with the class-count distribution.",
-        "presence_weighted_room_graph": "Room graph messages multiply pair adjacency by endpoint query presence before row normalization.",
-        "junction_fusion": "Geometry and structure junction probabilities fuse into one typed control consumed by wall, opening, and action-graph paths.",
-        "final_wall_identity": "Routed opening hosts and typed junction incidence now use the composed plan's local selected-wall indices.",
-        "mask_region_class_evidence": "Room classes now consume dense prototype logits pooled inside each predicted mask through the existing fusion scale.",
-        "reliability_weighted_residual": "Spatial all-channel reliability now weights every shared residual with a 0.75 floor; uncertain residuals are reduced by at most 25%.",
-        "live_path_diagnostics": "Validation now records reliability, mask-class evidence norm, room-stage candidate delta, and adjacency probability through one stacked host transfer.",
-        "cad_action_contract": "The CPU CAD action-layer auditor passes stage order, room-before-wall, junction consumption, independent layers, opening host routing, furniture query decoding, bounded graph edits, validation repair, and finite tensors.",
-        "live_contract": "The real-case v3 checkpoint smoke passes every checked gradient and output contract. Its old room-stage candidate delta remains zero until matched retraining, so this is a path repair, not a metric gain.",
-        "dynamic_query_candidate": "The v4 candidate exposes AdaptiveQueryReferenceRefiner inside the predicted-control room stage. A bounded sampled-feature residual makes its reference head live on the first optimizer step without changing v3 checkpoints.",
-        "mask_contact_candidate": "The v4 adjacency head adds differentiable 2 px mask-contact logits to query-similarity logits, closing the geometric gap between Node identity and canonical Edge/GED.",
-        "count_aware_graph": "The v4 candidate runs a draft query-set selection before graph conditioning, so rejected or duplicate query slots cannot contribute adjacency messages; the refined query-set pass still owns the final count and class prior.",
-        "opening_host_gate": "The v4 candidate adds an identity-initialized one-parameter log-gate on unified opening logits. Its support multiplies predicted wall probability by junction and room-boundary evidence, preserving v3 outputs at initialization while creating a direct host gradient.",
-        "validation_refresh": "The candidate now performs a fourth action-graph refresh after furniture, so the validation stage consumes final room/wall/opening/furniture tokens instead of stale furniture inputs.",
-        "candidate_audit": "On one real v3 control case, all finite, reference-head, contact-scale, mask-contact, count-aware graph-presence, typed-opening-host, post-furniture validation-refresh, contact-context, and adaptive-context checks pass. Candidate size is 6880597 versus 6805899 for v3.",
-        "validation": "1219 residential tests pass with 1 skip; all touched files pass project-pinned Ruff and every Python file remains below 600 lines."
-      },
-      "implementation_sequence": [
-        "Train the promoted source-router config on the fixed 512/64 train/calibration screen with the 64-case disjoint holdout.",
-        "Require non-collapsed source entropy and non-uniform family-source usage before reading metric gains.",
-        "Run the static-field, global-source-attention, spatial-router, and causal-action-refresh controls under equal parameters and matched updates.",
-        "Promote only if at least two families improve on holdout and Room/Node/Edge/GED/safety remain non-regressing.",
-        "Extend the winning network to the 1024/128 confirmation split before any test opening."
-      ],
-      "controls": [
-        "static channel queries",
-        "dense source attention",
-        "parameter-matched random adapter",
-        "same field feature cache"
-      ],
-      "pass_gate": "At least two channel families improve on calibration and disjoint holdout; all hard gates and the downstream graph remain non-regressing.",
-      "stop_rule": "Stop any arm whose proxy rises while family canonical metrics fall.",
-      "artifacts": [
-        "src/floorflow/heads/typed_source_spatial_router.py",
-        "src/floorflow/model/predicted_field_encoder.py",
-        "src/floorflow/model/predicted_channel_model.py",
-        "src/floorflow/model/predicted_action_context.py",
-        "src/floorflow/heads/room_adjacency.py",
-        "src/floorflow/objectives/room_adjacency.py",
-        "src/floorflow/model/predicted_channel_checkpoint.py",
-        "src/floorflow/model/cad_action_graph.py",
-        "src/floorflow/model/predicted_control_prior.py",
-        "src/floorflow/heads/joint_control_loading.py",
-        "src/floorflow/training/typed_channel_cli.py",
-        "src/floorflow/training/typed_channel_scopes.py",
-        "src/floorflow/objectives/routing_regularization.py",
-        "src/floorflow/objectives/gradient_balancer.py",
-        "src/floorflow/training/typed_channel_loss_balance.py",
-        "configs/predicted_channel_source_router_v3.json",
-        "configs/predicted_channel_source_router_v4_dynamic_contact.json",
-        "configs/predicted_channel_source_router_v5_relational_edge.json",
-        "configs/predicted_channel_source_router_v5_control.json",
-        "docs/predicted_control_metric_bound_architecture_v294.md",
-        "outputs/train/typed_dynamic_balance_cpu_smoke_v4/report.json",
-        "outputs/train/typed_channel_v5_relational_cpu_contract_smoke_v1/report.json",
-        "outputs/train/typed_channel_v5_relational_cpu_contract_smoke_v2/report.json",
-        "outputs/train/typed_channel_v6_room_graph_adapter_cpu_contract_v12/report.json",
-        "src/floorflow/objectives/per_case_binary.py",
-        "tests/test_per_case_binary.py",
-        "scripts/audit_predicted_room_dynamic_contact_v1.py",
-        "scripts/audit_predicted_control_live_contract_v1.py",
-        "outputs/reports/predicted_room_dynamic_contact_audit_v1.json",
-        "outputs/reports/predicted_control_live_contract_smoke_v2.json",
-        "outputs/reports/cad_action_layer_contract_audit_v3.json",
-        "scripts/evaluate_predicted_control_fidelity_v3.py",
-        "docs/predicted_control_architecture_hardening_v1.md",
-        "tests/test_predicted_field_stage_routing.py",
-        "tests/test_typed_channel_attention.py",
-        "tests/test_typed_channel_scopes.py",
-        "tests/test_cad_action_layer_contract.py",
-        "tests/test_routing_regularization.py",
-        "tests/test_room_adjacency.py"
-      ]
-    },
-    {
-      "id": "SOTA-ROOM-01",
-      "status": "zero_weight_paths_repaired_furniture_conditioning_live_matched_screen_pending",
-      "priority": "P0",
-      "title": "Close room identity, owner, count, and type bottlenecks",
-      "atoms": [
-        "RM-01",
-        "RM-02",
-        "RM-03",
-        "RM-04"
-      ],
-      "weak_metrics": [
-        "room_iou",
-        "instance_f1",
-        "count_mae",
-        "type_accuracy",
-        "node_f1",
-        "edge_overlap",
-        "ged"
-      ],
-      "current_results": {
-        "cases": 491,
-        "room_iou": 0.327585,
-        "instance_f1": 0.281759,
-        "count_mae": 2.496945,
-        "type_accuracy": 0.673841,
-        "root_cause_audit": "docs/predicted_control_sota_weak_metric_audit_v4.md",
-        "shared_query_match": "Main room class/mask loss, query presence, and program assignment now share one class-plus-mask Hungarian assignment. The old mask-only assignment conflict is logged as room_query_mask_only_assignment_disagreement.",
-        "program_identity_contract": "Program router class order now matches the main room-class head, and program assignment reuses the shared room identity match.",
-        "selection_resynchronization": "Count selection and query presence are recomputed after class-count-prior and second-graph class updates instead of consuming stale slots.",
-        "loss_reference_repair": "Dynamic balancing now anchors on the primary objective for the active scope. The old CE anchor suppressed instance_room to about 0.24 and partition to about 0.21 while auxiliary family terms reached 2.0.",
-        "program_gradient_repair": "room_graph_adapter and room_adapter now train the program router. The prior program term reached only one element with gradient norm near 5e-8; the repaired two-step CPU contract reaches 1,100,691 elements with norm 1.56896.",
-        "room_identity_cpu_contract": "outputs/train/typed_channel_v6_room_identity_adapter_cpu_gradient_v3/report.json verifies the room_adapter joint configuration, shared matching, count resynchronization, primary instance_room loss reference, support assignment, and live program-router gradient. This is a contract check, not a metric result.",
-        "room_identity_control_screen": "The complete 256/64 seed19 room_adapter control selected epoch1 at Room IoU 0.311228, Instance F1 0.206919, count MAE 4.90625, Node F1 0.708879, Edge overlap 0.333529, and GED 7.59375. Later epochs degrade. Source: outputs/train/typed_channel_v6_room_identity_control_screen256_seed19_v1/report.json.",
-        "room_identity_joint_partial": "The joint screen was stopped after two epochs on user direction and is not a complete matched result. Partial epoch1 values are Room IoU 0.310641, Instance F1 0.203329, count MAE 4.625, Node F1 0.702718, Edge overlap 0.322483, and GED 7.625. No checkpoint is promoted. Source: outputs/train/typed_channel_v6_room_identity_joint_screen256_seed19_v1/train.jsonl.",
-        "authoritative_count_gate": "Count-selected slots are now the single consumer gate for room fusion, owner availability, and final graph presence. Query existence is a fallback only when selection is absent, removing the prior double presence gate.",
-        "presence_count_consumer": "A bounded Poisson-binomial prior derived from query presence now contributes to count logits through a learned scale. The two-step CPU contract reports nonzero count gradient and case-dependent count selection.",
-        "selection_objectives": "Query-set training now includes soft selection alignment and pairwise positive-versus-background presence ranking. On the two-case CPU contract both terms have nonzero gradient and selected recall is logged directly.",
-        "presence_count_regression": "A direct differentiable cardinality objective now supervises sum(query presence) toward GT room count, complementing the Poisson-binomial count path. It is normalized by query count to remain stable under the 32-slot contract.",
-        "query_unmatched_mask": "Unmatched room queries now receive explicit empty-mask supervision with default weight 0.2 instead of remaining unconstrained.",
-        "latest_cpu_gate_contract": "The two-case CPU contract reports 4.5 valid targets, 4.5 shared matches, count gate availability 1.0, mask-only matching disagreement 0.9, selected-target recall 0.79045, selected-background rate 0.18839, nonzero count/ranking/alignment/cardinality-loss gradients, and nonzero unmatched-mask loss. Source: outputs/train/typed_channel_v6_room_identity_query_gate_diagnostic_v12/report.json.",
-        "mask_geometry_audit": "Matched query-mask Dice is 0.13949, IoU 0.07888, predicted area 0.04473, target area 0.06264, and unmatched predicted area 0.00955. The core loss is matched mask geometry, not unmatched-query flooding. Source: outputs/train/typed_channel_v6_room_identity_query_gate_diagnostic_v13/report.json.",
-        "mask_warmstart_rejected": "The retained mask output head has std 0.00341 versus class-head std 0.1134. Scaling only its magnitude to std 0.02 collapsed matched Dice to 0.00406, IoU to 0.00185, and area to 0.00058. Automatic warm-start was removed; the next mask change must alter spatial representation or supervision direction, not scale alone. Source: outputs/train/typed_channel_v6_room_identity_query_gate_diagnostic_v14/report.json.",
-        "full_resolution_mask_residual_rejected": "A candidate reused the existing prototype projection and mask embedding to inject native-resolution room-control evidence. On the matched CPU contract it lowered matched Dice 0.13949 to 0.12483, IoU 0.07888 to 0.07013, and predicted area 0.04473 to 0.03725. The optional implementation is disabled in the matched candidate. Source: outputs/train/typed_channel_v6_fullres_mask_cpu_contract_v3/report.json.",
-        "mask_recall_direction": "Room masks now use independent positive weight 2.0 and Tversky weight 0.2. On the same two-case CPU contract, matched Dice improves 0.13949 to 0.14236, IoU 0.07888 to 0.08063, and predicted area 0.04473 to 0.04647. Source: outputs/train/typed_channel_v6_mask_direction_contract_v1/report.json.",
-        "module_gradient_balance": "After the mask-direction update, mask-head gradient norm is 0.56868 while the learned query-embedding gradient norm is only 0.000657. The mask output can move, but query-level spatial specialization is still weakly driven; this is the next mask-decoder audit target.",
-        "mask_centroid_error": "Matched mask centroid error is 0.23222 in normalized coordinates while predicted and target areas differ by less than two percentage points. The query masks can emit roughly the right area in the wrong location.",
-        "prototype_anchor_rejected": "Dense room-control saliency is nearly uniform over occupied floor area. Using local saliency centroids moves adaptive references by only 0.00240, so this is not a viable instance-anchor source. Source: outputs/train/typed_channel_v6_prototype_anchor_contract_v1/report.json.",
-        "reference_anchor_supervision": "Matched target-mask centroids now supervise the mean adaptive reference anchor during training. The two-step CPU contract reports anchor loss 0.06611, reference-head gradient 0.01060, reference-context gradient 0.06891, and unchanged centroid error after two steps. Inference remains target-free. Source: outputs/train/typed_channel_v6_reference_anchor_contract_v4/report.json.",
-        "mask_centroid_localization": "Matched masks now receive direct centroid-distance supervision in addition to reference-anchor supervision. The two-case contract reports centroid loss 0.23222, live mask-head gradient, and effectively unchanged centroid error after two steps. Source: outputs/train/typed_channel_v6_mask_centroid_contract_v1/report.json.",
-        "reference_optimizer_group": "Adaptive-reference and query-position parameters now use a separate optimizer group with a configurable LR multiplier (default 10x). A matched 4-case contract gives centroid error 0.186762 versus control 0.186762, Dice 0.124605 versus 0.124933, and IoU 0.068929 versus 0.069120. The wiring is live but not sufficient as a short-budget lever. Sources: outputs/train/typed_channel_v6_reference_anchor_lr_contract_v1/report.json and outputs/train/typed_channel_v6_reference_anchor_control_v1/report.json.",
-        "unreachable_route_zero_audit": "The retained action graph contained route-budget and route-gate heads for the envelope stage even though envelope has no predecessors and its route branch can never execute. Those modules are no longer constructed; route modules exist only for stages with predecessor evidence.",
-        "zero_path_audit": "The retained checkpoint has two active multi-element all-zero matrices: field.evidence_fusion.2.weight and action_graph.route_budget.program.2.weight. The field bottleneck is now trained by room_adapter; single-predecessor CAD budgets use 0.5 + 0.5*sigmoid(logit) under the opt-in differentiable_route_budget flag; the soft budget scales route attention; and program_room_action_fusion routes the gated program token into room class/mask conditioning. Both flags default false for historical inference and are enabled in the identity candidate. Source: docs/predicted_control_zero_path_audit_v1.md.",
-        "query_set_cold_start": "RoomQuerySetHead presence/count/class-count final projections now use std 0.001 instead of exact zero, RoomMaskClassFusion program_gate starts at 0.001, the room mask output head starts at std 0.001, and adaptive-reference offset/context heads start at std 0.001. This keeps initialization near the prior while allowing set attention, global summaries, MIta routes, program cross-attention, reference localization, and query spatial localization to receive first-step gradients. Invalid room-memory tokens are zeroed as attention values; activating the mask path exposed and closed the prior soft-floor leak.",
-        "dynamic_adapter_cold_start": "Dynamic channel-query hyper output, spatial conv-adapter up projection, LoRA query/key-value/output up projections, and channel-family query deltas now use std 0.001 residual initialization instead of exact zero. The contract checks nonzero upstream gradients into the dynamic hyper, spatial down projection, LoRA down projection, and family source gate, closing the prior one-step dead branches.",
-        "stage_refiner_cold_start": "Dynamic stage-refiner output convolution, spatial gate, token gate, and route-budget output now use small non-zero residual initialization instead of exact zero. Wall-stage contracts verify non-zero first-step gradients into the stage output, gate trunk, token gate, route output, and route-budget trunk.",
-        "furniture_conditioning_cold_start": "Furniture stage-film, room-fusion, room-conditioned semantic query/room/gate projections, room-furniture prior, and shared class-fusion adapter now start as small non-zero residuals. Contracts verify nonzero first-step gradients for program conditioning, room descriptors, room fusion, semantic query/room projections, and semantic gate.",
-        "residual_projection_cold_start": "Field evidence fusion, action route budget/gate, program background, room structure adapter, query-set route budget/gate and global query, source attention gate, cross-attention gate, and reliability output now start as small non-zero residual projections. Contracts verify nonzero first-step gradients into their upstream trunks rather than only their output layers.",
-        "fresh_zero_scan": "After removing redundant bias/shift/residual names from the fresh candidate scan, 19 multi-element zero parameters remain: attention in_proj_bias tensors and program_router.class_bias. These are standard zero biases, not blocked upstream trunks. Remaining zero-only outputs previously associated with field/action/query/dynamic adapters/stage/furniture paths are now small non-zero or explicitly trained residual parameters.",
-        "query_separation_binding": "The existing active-query overlap loss was mathematically available but never exposed by predicted-control instance_room_losses, so it always used weight zero. room_instance_query_separation_weight now flows from configuration to room_mask_loss, is logged as instance_room_query_separation, and is enabled at 0.1 only in the identity candidate. The contract verifies a positive separation loss and live query-mask gradient.",
-        "query_separation_end_to_end": "Parsed candidate configuration now maps through one typed_channel_instance_loss_kwargs helper into instance_room_losses, eliminating duplicated trainer argument assembly. Separation consumes the authoritative query count-selection gate instead of class-logit presence alone, and the identity candidate enables class-agnostic duplicate suppression so different-class queries covering the same room are penalized. Contracts cover config-to-kwargs, count-gate masking, positive separation loss, and mask-gradient reach.",
-        "partition_fusion_alignment": "room_mask_partition_loss now uses the same sigmoid_existence fusion as the final room readout whenever query_existence_logits is present, instead of the fallback sigmoid path. A deterministic contract verifies that suppressing one query's existence substantially changes the partition loss. Count-selected training retains the same authoritative selection mask.",
-        "query_separation_atomic_balance": "Query separation is now a raw `query_separation` atomic loss rather than being buried inside `instance_room`. The base instance term excludes it, the configured weight is applied once, and the dynamic balancer assigns it its own scale derived from instance_room_weight times the candidate separation weight. This enables attribution without double counting.",
-        "opening_host_evidence_live": "The typed opening host gate now starts at 1e-3 rather than exact zero. Wall/junction/boundary support therefore receives a first-step gradient, while an explicit zero scale remains an exact identity contract. The live-path test verifies nonzero wall-evidence gradient.",
-        "query_separation_validation_proxy": "Validation now records a target-free query_separation_proxy using the same count-selected gate as training. The proxy is zero when fewer than two queries are selected and positive for overlapping active queries, allowing direct comparison between training separation, duplicate identity disagreement, and canonical Room/Instance metrics.",
-        "query_separation_proxy_contract": "RM-02 now registers query_separation_proxy as a minimize-direction proxy for canonical Instance F1. The atom registry contains 36 policy pairs and remains complete; the proxy must pass Spearman/Pearson, top-checkpoint agreement, paired-sign, and false-pass checks before any promotion.",
-        "zero_path_contract": "Focused contracts assert nonzero first-step gradients for field evidence fusion, room structure adapter, count-gated active-query separation, room query embeddings through the mask path, adaptive reference head/context, dynamic query hyper, spatial adapter down, source-attention gate, cross-attention gate, reliability head, LoRA down, family source gate, stage-refiner output/gate/token/route trunks, program background, room program class fusion, action program route budget/gate including hidden layers, and room query-set route budget including its hidden layer, plus invariance to invalid room-memory values. This is architecture evidence, not a metric result.",
-        "identity_adapter_contract": "A matched room_adapter control/candidate pair unfreezes the room decoder and keeps the frozen-decoder graph screen from being misread as query-mask evidence.",
-        "pagefloor_replacement_rejected": "val128 Room IoU 0.230381 versus current 0.372760",
-    "report": "outputs/reports/predicted_control_full_stage_val491_gedfixed_v2.json",
-    "query_residual_initialization": "RoomInstanceIdentityStage residual scale changed from 0 to 0.1, so query masks/classes affect dense room output and receive gradients from step one.",
-        "query_set_count_gate": "RoomQuerySetHead now produces query presence, room-count, class-count, and soft/candidate selection masks; train uses soft selection, validation uses candidate selection, and count/class-count losses are active.",
-        "one_to_one_presence": "Query existence now uses the same exact one-to-one assignment as mask and adjacency supervision, preventing several queries from being trained as the same room.",
-        "presence_aware_fusion": "Final query fusion multiplies selected slots by query presence, so top-k count selection cannot admit a weak duplicate at full mask mass.",
-        "class_count_prior": "Predicted per-class counts now calibrate foreground room class logits through a bounded learned prior, so the class-count head has a live downstream consumer.",
-        "full_shape_smoke": "cuda0 real field emits count logits [1,33], count selection [1,32], and a 465014-parameter room query-set head.",
-        "live_room_stage": "Room-stage candidates now condition the query decoder through the existing bounded residual scale.",
-        "typed_room_consumer": "The typed-channel room residual is retained under preserve_room_stage instead of being replaced by the control prior.",
-        "spatial_background": "The previously dead background query now contributes to final room/background boundaries.",
-        "count_initialization": "The query-set count head starts with a weak center-8 distribution instead of a uniform 0-to-32 expectation.",
-        "cardinality_consistency": "A bounded relative-L1 objective aligns query-level type counts with the independently supervised class-count head; the previous unnormalized smoke reached 352.8 while CE was 1.62.",
-        "class_count_initialization": "The class-count head allocates an initial eight-room budget from taxonomy source frequencies, making rare classes sparse instead of starting near a 16-room expectation for every class.",
-        "rare_room_weighting": "Query class and partition cross-entropy use bounded inverse-square-root taxonomy frequencies, normalized to mean one, without deriving weights from the current batch.",
-        "cpu_prior_smoke": "The v5 real-case contract constructs the sparse taxonomy prior and completes finite forward/backward/validation; this is an initialization/consumer check, not a quality result.",
-        "full_model_screen_result": "At the selected matched epoch, count MAE worsens by 0.140625 with a crossing interval, Instance F1 changes by +0.001095 with a crossing interval, and Room IoU changes by +0.000353 with a crossing interval. The bundle is not promoted.",
-        "soft_query_attention": "Room decoder masks now produce finite additive attention penalties rather than irreversible booleans.",
-        "presence_weighted_graph": "Room graph conditioner now suppresses absent query slots before owner/class/mask message propagation.",
-        "mask_region_class_evidence": "Foreground room class logits now receive mask-pooled dense prototype evidence through the previously dead fusion scale.",
-        "metric_target": "Room IoU and instance F1; no improvement claim until the interaction window is measured."
-      },
-      "implementation_sequence": [
-        "Run the matched room control/candidate after the zero-path contract passes; reject an arm if any promoted program/query route loses first-step gradient.",
-        "Audit the low query-embedding gradient against mask-head, adaptive-reference, and prototype-memory gradients before changing mask width or decoder depth.",
-        "Inspect authoritative-gate, presence-count fusion, selection-alignment, and presence-ranking contracts before any new GPU run.",
-        "Run a fresh matched control/joint only after the repaired diagnostics report shared matches, gate availability, selected recall, and selected background rate.",
-        "Inspect room_query_mask_only_assignment_disagreement, query-mask Dice, count-selection coverage, program assignment, and program-router gradient reach before reading metric deltas.",
-        "Confirm every positive room mechanism on a disjoint holdout before full-val491.",
-        "Run sparse-prior-only against v4 control before combining it with the relational edge head.",
-        "Reproduce query-mask, owner, and assignment proxies from the five-seed room checkpoint before adding a loss.",
-        "Repair the full-resolution skip and owner readout so room identity reaches wall and graph consumers.",
-        "Evaluate query-count and program-routing consumers with identity-preserving targets, not target-order slots.",
-        "Run a 256/64 mechanism screen, then a two-seed 1024 promotion only if all four room metrics improve.",
-        "Use the winning room stage unchanged for wall, opening, graph, and furniture consumers."
-      ],
-      "required_gates": {
-        "room_iou": 0.45,
-        "instance_f1": 0.5,
-        "count_mae_max": 2.8,
-        "type_accuracy": 0.75,
-        "validity": 1.0,
-        "outside_footprint_fraction": 0.0
-      },
-      "forbidden": [
-        "post_hoc_merge_or_relabel",
-        "count_only_selection",
-        "unconnected_query_residual",
-        "duplicate_query_presence_target"
-      ],
-      "artifacts": [
-        "docs/predicted_control_sota_weak_metric_audit_v4.md",
-        "configs/predicted_channel_v6_room_identity_adapter_control.json",
-        "configs/predicted_channel_v6_room_identity_adapter_joint.json",
-        "outputs/train/typed_channel_v6_room_identity_adapter_cpu_gradient_v3/report.json",
-        "outputs/train/typed_channel_v6_room_identity_control_screen256_seed19_v1/report.json",
-        "outputs/train/typed_channel_v6_room_identity_joint_screen256_seed19_v1/train.jsonl",
-        "outputs/train/typed_channel_v6_room_identity_query_gate_diagnostic_v9/report.json",
-        "outputs/train/typed_channel_v6_room_identity_query_gate_diagnostic_v12/report.json",
-        "outputs/train/typed_channel_v6_room_identity_query_gate_diagnostic_v13/report.json",
-        "outputs/train/typed_channel_v6_room_identity_query_gate_diagnostic_v14/report.json",
-        "outputs/train/typed_channel_v6_fullres_mask_cpu_contract_v3/report.json",
-        "outputs/train/typed_channel_v6_mask_direction_contract_v1/report.json",
-        "outputs/train/typed_channel_v6_prototype_anchor_contract_v1/report.json",
-        "outputs/train/typed_channel_v6_reference_anchor_contract_v4/report.json",
-        "outputs/train/typed_channel_v6_mask_centroid_contract_v1/report.json",
-        "outputs/train/typed_channel_v6_reference_anchor_lr_contract_v1/report.json",
-        "outputs/train/typed_channel_v6_reference_anchor_control_v1/report.json",
-        "src/floorflow/objectives/room_query_matching.py",
-        "src/floorflow/training/typed_channel_query_metrics.py",
-        "outputs/reports/room_atom_proxy_screen_v4.json",
-      "outputs/reports/room_owner_consumer_promotion_v4.json",
-      "outputs/reports/predicted_control_full_stage_val491_gedfixed_v2.json",
-      "outputs/reports/predicted_room_current_val128_v1.json",
-    "outputs/reports/predicted_room_pagefloor_val128_v1.json",
-    "src/floorflow/heads/room_mask_decoder.py",
-    "tests/test_room_mask_class_evidence.py"
-      ]
-    },
-    {
-      "id": "SOTA-WALL-01",
-      "status": "final_stage_k5_candidate_source_repaired_matched_scorer_remeasurement_pending",
-      "current_results": {
-        "full_stage_source_repair": {
-          "defect": "The high-value k5_s010 proposal source was reconstructed from the structure host mask, while canonical evaluation reads final-stage visible CAD labels; isolated host-derived source plans were therefore not representative of the full-stage readout.",
-          "repair": "Candidate source 5 now comes from final-stage cad_layers passed through the shared canonical union composition (seam, wall-band openings, exterior boundary), then extracted with k5_s010. Typed validation uses the same composition for graph, vector-opening, layer-proxy, and wall/opening/furniture family metrics. Sources 2-4 retain the host/room candidate controls.",
-          "cache_contract": "cad-wall-candidate-v9-final-stage-skeleton-portfolio",
-          "test": "A deterministic test gives host and final-stage walls disjoint spatial supports and verifies source 5 survives candidate assembly.",
-          "status": "implemented_pending_matched_scorer_screen"
-        },
-        "gap_fraction_002": {
-          "wall_f1": 0.500706,
-          "wall_delta": 0.013300,
-          "paired_ci95": [0.011968, 0.014594],
-          "wilcoxon_p_greater": 4.91503542725646e-54,
-          "precision_delta": 0.018362,
-          "recall_delta": -0.003393,
-          "continuity": 0.991698,
-          "room_iou_delta": 0.0,
-          "room_f1_delta": 0.0,
-          "node_delta": 0.0,
-          "edge_delta": 0.0,
-          "ged_delta": 0.0,
-          "decision": "promote_relative_keep_absolute_gate_open"
-        },
-        "gap_fraction_plateau": {
-          "gap_001_wall_f1": 0.524077,
-          "gap_0015_wall_f1": 0.524077,
-          "gap_002_wall_f1": 0.523933,
-          "gap001_vs_gap002_ci95": [0.0, 0.000351],
-          "decision": "no_material_gain_keep_gap002"
-        },
-        "near_duplicate_wall_prune": {
-          "wall_delta": 0.0,
-          "decision": "no_op_on_current_reconciled_walls"
-        },
-        "raster_skeleton_policy_screen": {
-          "scope": "matched val128 diagnostic only",
-          "control_k3_s006_wall_f1": 0.523933,
-          "k5_s006_wall_f1": 0.531671,
-          "k7_s006_wall_f1": 0.531340,
-          "k5_s010_wall_f1": 0.567422,
-          "k5_s010_wall_precision": 0.529699,
-          "k5_s010_wall_recall": 0.659460,
-          "k5_s010_opening_f1": 0.079955,
-          "non_wall_metrics": "Room/Node/Edge/GED/validity/watertight unchanged on the matched screen",
-          "decision": "promote_as_candidate_only_after_disjoint_holdout"
-        },
-        "skeleton_portfolio_candidates": {
-          "implementation": "Candidate cache now supports one boundary-control stream and a separate room/footprint plus k3-s006/k5-s006/k5-s010 skeleton proposal portfolio.",
-          "control_isolation": "Boundary-only control endpoints remain separate from portfolio candidates, preventing train/eval oracle leakage.",
-          "cache_contract": "cad-wall-candidate-v6-skeleton-portfolio",
-          "status": "implemented_pending_scorer_training",
-          "decision": "next wall scorer run should consume the portfolio rather than the exhausted host-only ceiling"
-        },
-    "source_aware_skeleton_portfolio": {
-          "implementation": "Candidate batches preserve proposal-source IDs for room, footprint, host, and three skeleton scales; the wall scorer embeds source IDs before graph/pair scoring.",
-          "control_isolation": "Candidate and boundary-control source tensors are stored separately in the cache.",
-          "config": "configs/cad_wall_candidate_portfolio_v2.json",
-          "status": "implemented_pending_matched_scorer_screen",
-          "metric_target": "Wall precision/F1 without recall, junction, continuity, Room/Node/Edge/GED, or safety regression"
-        },
-    "portfolio_runtime_screen": {
-      "source2_repair": "predicted_host_skeleton source 2 was declared in the config but omitted by build_candidate_batch; it now enters the proposal portfolio and has a deterministic test.",
-      "checkpoint_compatibility": "Old typed checkpoints now use explicit identity-preserving migration for evidence-fusion input growth, opening-condition channel growth, action update scale, and scalar shape changes.",
-      "legacy_output_drift": "The retained old checkpoint loads with no missing/unexpected keys, but a same-case probe still differs from the historical v3 cache in field features/tokens/endpoints. Old-checkpoint outputs are therefore not merged with historical absolute metrics; each screen is internally matched under the current code.",
-      "matched_128_result": {
-        "control_wall_f1": 0.205634,
-        "portfolio_safe_wall_f1": 0.304269,
-        "wall_delta": 0.098635,
-        "wall_ci95": [0.085546, 0.111819],
-        "wall_precision": 0.289362,
-        "wall_recall": 0.394178,
-        "junction_f1": 0.345649,
-        "wall_continuity": 0.752636,
-        "opening_delta": 0.0,
-        "room_delta": 0.0,
-        "publication_gate_passed": false
-      },
-      "source_only_result": "The learned selector outperforms each isolated proposal source, but source-specific plans are far below the direct k5_s010 readout: source2 Wall F1 0.103164, source3 0.0, source4 0.053657, source5 0.046664.",
-      "diagnosis": "The cache's host_mask-derived skeleton candidates are not the same geometric source as the full-stage k5_s010 wall plan that reached Wall F1 0.567422. Training the selector cannot recover geometry absent from its proposal set.",
-      "decision": "do_not_promote_to_full_source_plan"
-    },
-    "junction_consumer": {
-      "implementation": "Geometry and structure junction probabilities are fused into one typed control, always exported to the action graph, and used for wall support and opening-host conditioning.",
-      "cache_contract": "Wall-candidate caches advance from v7 to v8 because the same checkpoint can now emit different graph tokens.",
-      "identity_contract": "Incident-wall rows in composed candidate plans now reference final local wall order.",
-      "status": "implemented_pending_matched_junction_screen"
-    },
-    "wall_budget_dead_path_repair": {
-      "defect": "Global and phase budget heads initialized both hidden and output projections to zero, so only biases received gradients and budgets were effectively sample-independent.",
-      "repair": "Hidden projections are Xavier-initialized and final projections receive tiny non-zero initialization while retaining the previous budget biases.",
-      "evidence": "Both layers of the global, exterior, and interior budget heads receive nonzero first-step gradients; independent samples produce different budgets.",
-      "report": "outputs/reports/cad_wall_budget_path_audit_v1.json",
-      "status": "implemented_pending_matched_portfolio_training"
-    },
-        "combined_opening_interaction": {
-          "opening_f1": 0.335606,
-          "opening_delta_vs_opening_only": -0.002371,
-          "opening_ci95": [-0.003950, -0.000946],
-          "wall_f1": 0.500706,
-          "decision": "keep_wall_and_opening_layer_checkpoints_separate"
-        },
-        "ip_wall_reconcile": {
-          "milp_wall_f1": 0.454883,
-          "milp_wall_delta": -0.056302,
-          "milp_recall_delta": -0.127358,
-          "no_milp_wall_delta": 0.0,
-          "no_milp_room_f1_delta": -0.047546,
-          "decision": "negative_no_promotion"
-        },
-        "wall_parallel_upper_bound": {
-          "wall_gap002_f1": 0.523933,
-          "host_only_f1": 0.398918,
-          "oracle_f1": 0.532448,
-          "decision": "router_cannot_reach_gate"
-        },
-        "owner_cell_wall_expert": {
-          "support_025_f1": 0.177446,
-          "support_050_f1": 0.196924,
-          "support_075_f1": 0.231404,
-          "support_090_f1": 0.245112,
-          "support_090_precision": 0.159543,
-          "decision": "negative_close_owner_cell_wall_route"
-        },
-        "budget": "predicted_control_train512_val256",
-        "saved_config_limit_train": 1024,
-        "effective_unique_train_cases": 512,
-        "seeds": [23, 2905],
-        "validation_cases": 256,
-        "best_epoch_both_seeds": 1,
-        "early_stopped_both_seeds": true,
-        "bounded_score_residual": true,
-        "frozen_candidate_cache": "memory_and_disk",
-        "seed2905_wall_delta": 0.015223,
-        "seed2905_wall_ci95": [0.011592, 0.018743],
-        "seed23_wall_delta": 0.016443,
-        "seed23_wall_ci95": [0.012687, 0.020070],
-        "seed2905_eligible_wall_delta": 0.014853,
-        "seed23_eligible_wall_delta": 0.015903,
-        "plain_screen512_seed19": {
-          "cases": 128,
-          "wall_f1": 0.354265,
-          "wall_delta": 0.015372,
-          "wall_ci95": [0.010222, 0.020273],
-          "wall_precision": 0.365302,
-          "wall_precision_delta": 0.044921,
-          "wall_recall": 0.381335,
-          "wall_recall_delta": -0.017696,
-          "junction_f1": 0.403868,
-          "junction_delta": 0.027037,
-          "wall_continuity": 0.742161,
-          "wall_continuity_delta": 0.052320,
-          "opening_delta": 0.0,
-          "room_delta": 0.0,
-          "publication_gate_passed": false
-        },
-        "encoded_score_screen": "rejected; best Wall F1 0.33584 versus 0.33889 control and opening 0.08610 versus 0.09896",
-        "full_seed19_plain": {
-          "cases": 491,
-          "wall_f1": 0.337548,
-          "wall_delta": 0.008837,
-          "wall_ci95": [0.005856, 0.011854],
-          "wall_precision_delta": 0.043832,
-          "wall_recall_delta": -0.020831,
-          "junction_delta": 0.023303,
-          "wall_continuity_delta": 0.037075,
-          "opening_delta": 0.0,
-          "room_delta": 0.0,
-          "publication_gate_passed": false
-        },
-        "full_seed19_interpretation": "The relative mechanism generalizes on val491 with positive paired CIs, but the absolute wall, recall, junction, and continuity gates remain far below target; no SOTA promotion.",
-        "full_seed23_plain": {
-          "cases": 491,
-          "wall_f1": 0.338957,
-          "wall_delta": 0.010246,
-          "wall_ci95": [0.007150, 0.013280],
-          "wall_precision_delta": 0.047663,
-          "wall_recall_delta": -0.021018,
-          "junction_delta": 0.025635,
-          "wall_continuity_delta": 0.041148,
-          "opening_delta": 0.0,
-          "room_delta": 0.0,
-          "publication_gate_passed": false
-        },
-        "seed_consistency": "Both full seeds improve Wall F1, precision, junction, and continuity with positive CIs while preserving opening and room outputs, but both fail every absolute wall-structure gate.",
-        "runtime_host_union_screen": "rejected; matched 512/128 raw Wall F1 0.30338 versus boundary-only control 0.33889",
-        "host_only_reranker_screen": {
-          "cases": 128,
-          "control_wall_f1": 0.398918,
-          "wall_f1": 0.413557,
-          "wall_delta": 0.014639,
-          "wall_ci95": [0.010592, 0.018578],
-          "wall_precision": 0.550407,
-          "wall_precision_delta": 0.058101,
-          "wall_recall": 0.351939,
-          "wall_recall_delta": -0.007698,
-          "junction_delta": 0.027026,
-          "wall_continuity_delta": 0.075793,
-          "opening_delta": 0.0,
-          "room_delta": 0.0,
-          "publication_gate_passed": false
-        },
-        "host_only_interpretation": "Precision clears 0.52 with positive paired F1/precision/junction/continuity gains, but the host-only candidate ceiling has recall 0.352 and continuity 0.889, so it must be merged with the higher-recall full-stage wall set rather than promoted alone.",
-        "portfolio_upper_bound": {
-          "cases": 128,
-          "stage_wall_f1": 0.511185,
-          "host_candidate_wall_f1": 0.413557,
-          "oracle_wall_f1": 0.524463,
-          "oracle_gain_over_stage": 0.013278,
-          "oracle_precision": 0.470489,
-          "oracle_recall": 0.657517,
-          "decision": "new_candidates_required"
-        },
-        "candidate_control_separation": "CandidateBatch stores separate boundary-only control endpoints/valid/evidence; scorer candidates and control cannot drift in scope",
-        "opening_delta_both_seeds": 0.0,
-        "room_delta": 0.0,
-        "validity": 1.0,
-        "watertightness": 1.0,
-        "source_audit": "The incompatible v2 source is rejected. The seeded v3 source uses contour_cfm_guided, the v1 checkpoint/flow contract, and a 10%-or-one-point target-fidelity equivalence gate; val491 passes while the v1-to-v2 negative control fails.",
-        "v3_materialization": "complete; train5122 batch4 and val491 batch8, both seed19 and target-free",
-        "v3_full_parity": "pass; train reference512 is a complete subset of candidate5122, val491 match, manifest counts self-consistent, per-file SHA exact, shape/dtype exact, and all five target-fidelity equivalence checks pass",
-        "seed_reproducibility": "16/16 val cases reproduce byte-identically (SHA-256) with checkpoint/batch/seed held fixed",
-        "v3_negative_control": "v1-to-v2 val491 fails manifest parity and wall/opening/furniture/program fidelity equivalence",
-        "cache_binding": "candidate-cache fingerprints now include the layer checkpoint SHA-256 and train/val control-manifest SHA-256 values; regenerated controls cannot reuse stale candidates",
-        "candidate_budget_order": "Candidates and source IDs are stably sorted by layer evidence before max-wall truncation, preventing proposal-source order from dropping strong candidates.",
-        "decision": "retain_full_candidate_and_repair_absolute_structure"
-      },
-      "current_blocker": "The candidate cache now includes source 5 from the final-stage visible wall plan with the k5_s010 policy, and the cache contract advances to v9. The code-side source mismatch is closed; a matched cache materialization and scorer screen are still required to determine whether Wall F1, precision, recall, junction, continuity, and opening-host consumers improve.",
-      "priority": "P0",
-      "title": "Raise wall precision and promote typed junctions",
-      "atoms": [
-        "ST-01",
-        "WJ-01",
-        "CAD-01"
-      ],
-      "weak_metrics": [
-        "wall_f1",
-        "wall_precision",
-        "wall_recall",
-        "junction_f1",
-        "wall_continuity",
-        "conditional_watertightness"
-      ],
-      "implementation_sequence": [
-        "Attribute wall false positives to owner seams, duplicated exterior walls, free interior segments, and fragmented junctions.",
-        "Repair the room-owner-to-wall interface before adding wall capacity.",
-        "Join typed junction injection to the final selected wall set and train under a matched layer contract.",
-        "Run candidate-scorer and junction-head ablations independently, then jointly.",
-        "Preserve recall and continuity while raising precision."
-      ],
-      "required_gates": {
-        "wall_f1": 0.58,
-        "wall_precision": 0.52,
-        "wall_recall_min": 0.65,
-        "junction_f1": 0.65,
-        "wall_continuity_min": 0.99,
-        "conditional_watertightness_min": 0.99
-      },
-      "forbidden": [
-        "tail_threshold_trim_as_default",
-        "unconsumed_junction_probability",
-        "precision_gain_by_deleting_walls"
-      ],
-      "artifacts": [
-        "outputs/reports/wall_owner_interface_review_v4.json",
-        "outputs/reports/wall_junction_consumer_promotion_v4.json",
-        "outputs/reports/cad_wall_candidate_atom_screen128_eval64_v5.json",
-        "outputs/reports/cad_wall_candidate_atom_screen128_seed23_eval64_v1.json",
-        "outputs/reports/cad_wall_candidate_bounded_promotion1024_seed2905_eval256_v1.json",
-        "outputs/reports/cad_wall_candidate_bounded_promotion1024_seed23_eval256_v1.json",
-        "outputs/train/cad_wall_candidate_bounded_promotion1024_cuda0_seed2905_v1/report.json",
-        "outputs/train/cad_wall_candidate_bounded_promotion1024_cuda0_seed23_v1/report.json",
-        "outputs/control_contracts/model_predicted_full_v2/train/manifest.json",
-        "outputs/control_contracts/model_predicted_full_v2/val/manifest.json",
-        "outputs/train/cad_wall_candidate_predicted_v2_full5122_cuda0_seed19_v1/report.json",
-        "outputs/control_contracts/model_predicted_full_v3/train/manifest.json",
-        "outputs/control_contracts/model_predicted_full_v3/val/manifest.json",
-        "outputs/reports/predicted_control_source_parity_v1_v3_full.json",
-        "outputs/reports/predicted_control_source_parity_v1_v3_val.json",
-        "outputs/reports/predicted_control_source_seed_repro16_v1.json",
-        "outputs/reports/predicted_control_source_parity_v1_v2_negative_control.json",
-        "outputs/reports/cad_wall_candidate_plain_screen512_seed19_val128_v3.json",
-        "outputs/train/cad_wall_candidate_plain_screen512_seed19_v1/report.json",
-        "outputs/train/cad_wall_candidate_encoded_screen512_seed19_v1/report.json",
-        "outputs/train/cad_wall_candidate_hostonly_screen512_seed19_v1/report.json",
-        "outputs/reports/cad_wall_candidate_hostonly_screen512_seed19_val128_v1.json",
-        "outputs/reports/cad_wall_candidate_hostonly_portfolio_upper_bound_val128_v1.json",
-        "outputs/reports/predicted_control_full_stage_val491_v1.json",
-        "outputs/train/cad_wall_candidate_v3_plain_full5122_seed19_v1/report.json",
-        "outputs/reports/cad_wall_candidate_v3_plain_full5122_seed19_val491_v1.json",
-        "outputs/train/cad_wall_candidate_v3_plain_full5122_seed23_v1/report.json",
-        "outputs/reports/cad_wall_candidate_v3_plain_full5122_seed23_val491_v1.json",
-        "outputs/reports/cad_wall_candidate_v3_cache_audit_full_v1.json",
-        "outputs/reports/predicted_control_ipwall_candidate_val128_v1.json",
-        "outputs/reports/predicted_control_ipwall_nomilp_val128_v1.json",
-        "outputs/reports/predicted_control_ipwall_val128_paired_v1.json",
-        "outputs/reports/predicted_control_ipwall_nomilp_val128_paired_v1.json",
-        "outputs/reports/predicted_control_wallgap002_val128_v1.json",
-        "outputs/reports/predicted_control_wallgap002_val128_paired_v1.json",
-        "outputs/reports/predicted_control_wallgap002_val491_v1.json",
-        "outputs/reports/predicted_control_wallgap002_val491_paired_v1.json",
-        "outputs/reports/wall_parallel_upper_bound_val128_v1.json",
-        "outputs/reports/predicted_control_ownercell_val128_v1.json",
-        "outputs/reports/predicted_control_ownercell_val128_paired_v1.json",
-        "outputs/reports/predicted_control_ownercell_s050_val128_v1.json",
-        "outputs/reports/predicted_control_ownercell_s075_val128_v1.json",
-        "outputs/reports/predicted_control_ownercell_s090_val128_v1.json",
-        "outputs/reports/predicted_control_walldedup_default_val128_v1.json",
-        "outputs/reports/predicted_control_walldedup_default_val128_paired_v1.json",
-        "outputs/reports/predicted_control_wallgap001_val128_v1.json",
-        "outputs/reports/predicted_control_wallgap0015_val128_v1.json",
-        "outputs/reports/predicted_control_wallgap001_vs002_val128_paired_v1.json",
-        "outputs/reports/predicted_control_wallskeleton_k3_s006_val128_v1.json",
-        "outputs/reports/predicted_control_wallskeleton_k5_s006_val128_v1.json",
-        "outputs/reports/predicted_control_wallskeleton_k7_s006_val128_v1.json",
-        "outputs/reports/predicted_control_wallskeleton_k5_s010_val128_v1.json",
-        "src/floorflow/geometry/wall_graph_readout.py",
-        "src/floorflow/training/cad_wall_candidate_training.py",
-    "src/floorflow/inference/canonical_layer_composition.py",
-    "src/floorflow/heads/cad_wall_candidate_scorer.py",
-    "scripts/audit_cad_wall_budget_paths_v1.py",
-    "outputs/reports/cad_wall_budget_path_audit_v1.json",
-        "configs/cad_wall_candidate_portfolio_v2.json",
-        "src/floorflow/training/cad_wall_candidate_epoch_cache.py",
-        "scripts/train_cad_wall_candidate_scorer_v1.py",
-        "tests/test_cad_wall_candidates.py",
-        "tests/test_wall_graph_readout.py",
-        "src/floorflow/geometry/wall_deduplication.py",
-        "tests/test_wall_deduplication.py",
-        "docs/wall_gap002_analysis_v1.md",
-        "scripts/materialize_cad_wall_candidate_cache_v1.py",
-        "scripts/audit_cad_wall_candidate_cache_v1.py",
-        "src/floorflow/evaluation/control_source_parity.py",
-        "scripts/audit_control_source_parity_v1.py",
-        "scripts/audit_control_source_reproducibility_v1.py",
-        "tests/test_control_source_parity.py",
-        "src/floorflow/model/predicted_channel_checkpoint.py",
-        "tests/test_predicted_channel_checkpoint_compat.py",
-        "outputs/train/cad_wall_candidate_skeleton_portfolio_screen512_seed19_v8/report.json",
-        "outputs/reports/cad_wall_candidate_skeleton_portfolio_screen512_seed19_val128_v8b.json",
-        "outputs/reports/cad_wall_candidate_current_boundary_migration_probe_v8.json"
-      ]
-    },
-    {
-      "id": "SOTA-OPEN-01",
-      "status": "vector_opening_proxy_bound_to_selection_matched_training_pending_absolute_gate_open",
-      "current_blocker": "The center-width representation raises oracle-host opening F1 to 0.380565 and full consumer F1 to 0.337977. Pixel-to-vector opening mismatch is now exposed and the vector F1 proxy is included in validation selection; matched training must prove the selector no longer chooses checkpoints with pixel-only gains.",
-      "current_results": {
-        "vector_selection_binding": "opening_vector_f1_proxy is now emitted by validation and included in typed-channel GATE_TARGETS; the one-case contract reports pixel F1 0.2049 versus vector F1 0.0, confirming the gate is sensitive to the intended consumer.",
-        "vector_failure_decomposition": "The opening vector proxy now reports predicted/target component counts, geometry-matched count, family-consistent rate, center error, width ratio, and door-to-window/window-to-door substitutions. A deterministic attack verifies that same-location door/window mismatch yields geometry_matched 1 with family_consistent 0, separating topology/host failure from family failure.",
-        "cases": 491,
-        "fallback_opening_f1": 0.087022,
-        "multiscale_opening_f1": 0.266386,
-        "mean_delta": 0.179364,
-        "paired_ci95": [0.164654, 0.193436],
-        "rank_biserial_difference": 0.896969,
-        "cliffs_delta_difference": 0.763747,
-        "wilcoxon_p_greater": 1.3098631083470415e-63,
-        "improved_cases": 421,
-        "worsened_cases": 46,
-        "validity": 1.0,
-        "functional_watertightness": 0.997963,
-        "wall_delta": 0.0,
-        "room_delta": 0.0,
-        "node_delta": 0.0,
-        "edge_delta": 0.0,
-        "ged_delta": 0.0,
-        "outside_footprint_delta": 0.0,
-    "host_width_contract": "Center-width outputs are clamped to the selected host-wall length in wall and image decode paths.",
-    "query_map_contract": "Runtime preserves independent foreground, family logits, and their product. Opening-host query extraction consumes foreground and family separately instead of applying family confidence twice.",
-    "query_map_cache": "Frozen-feature cache schema v2 serializes opening product, independent foreground, family logits, and junction probability so cached training cannot revert to product-only controls.",
-    "final_wall_projection": "A shared inference adapter maps routed global hosts into final selected-wall order, fails closed for active unselected hosts, and handles plans with no selected walls.",
-        "candidate_identity_contract": "Equal opening detections now retain distinct rank and interval-gap features via object identity.",
-        "host_interval_legality": "Zero-length routed hosts are rejected, and final wall projection clamps every opening to a positive host-bounded width.",
-    "typed_opening_host_gate_v4": {
-      "implementation": "Unified opening logits receive an identity-initialized learnable log prior derived from predicted wall, junction, and room-boundary support.",
-      "parameters": 1,
-      "status": "implemented_gradient_live_pending_matched_screen",
-      "report": "outputs/reports/predicted_room_dynamic_contact_audit_v1.json"
-    },
-        "publication_gate_passed": false,
-        "candidate_ranker_full_consumer": {
-          "opening_f1": 0.282302,
-          "delta_vs_multiscale": 0.015916,
-          "paired_ci95": [0.008116, 0.023715],
-          "wilcoxon_p_greater": 0.000025660807556576868,
-          "rank_biserial_difference": 0.233653,
-          "cliffs_delta_difference": 0.118126,
-          "non_object_metrics": "unchanged_on_491_cases"
-        },
-        "candidate_ranker_oracle_holdout": {
-          "cases": 192,
-          "baseline_vector_f1": 0.304204,
-          "candidate_vector_f1": 0.316145,
-          "paired_delta": 0.011942,
-          "paired_ci95": [0.006454, 0.017521],
-          "precision_delta": 0.047191,
-          "recall_delta": -0.008459,
-          "geometry_retention": 0.980556
-        },
-        "center_width_gap_model": {
-          "oracle_f1": 0.380565,
-          "oracle_precision": 0.315683,
-          "oracle_recall": 0.505308,
-          "geometry_matched": 8.627291,
-          "family_consistent": 7.588595,
-          "full_consumer_f1": 0.337977,
-          "delta_vs_previous_consumer": 0.055675,
-          "paired_ci95": [0.033259, 0.078565],
-          "wilcoxon_p_greater": 0.000003145312201284882,
-          "non_opening_metrics": "unchanged_on_491_cases",
-          "report": "outputs/reports/predicted_control_centerwidth_ranker_nms20_val491_paired_v1.json"
-        },
-        "typed_host_conditioning_v2": {
-          "implementation": "Opening logits and family logits are jointly gated by predicted wall, junction, and room-boundary evidence through small-initialized 1x1 host heads.",
-          "parameters": 48,
-          "full_shape_smoke": "cuda0 typed bridge passes; opening host and type-host gradients are nonzero, MIta route gradient is nonzero, and route entropy is 0.9950.",
-          "status": "implemented_gradient_live_pending_matched_training",
-          "decision": "test as the next opening-host arm before another candidate verifier"
-        },
-        "host_feature_ranker_v3": {
-          "implementation": "Opt-in candidate features append predicted-wall continuity, visibility gap, thickness, endpoint margin, same-wall coverage, collinear fragmentation, and parallel-wall evidence.",
-          "compatibility": "The promoted 21-feature v2 ranker contract remains unchanged; v3 is a separate 30-feature contract.",
-          "persistence": "HGB loader and torch feature-count loader both accept and reconstruct the v3 contract.",
-          "config": "configs/opening_candidate_ranker_v3.json",
-          "status": "implemented_pending_matched_ranker_screen",
-          "metric_target": "Opening precision/F1 with recall non-inferiority under predicted-wall hosts"
-        },
-        "spatial_gap_mita_router": {
-          "implementation": "Center-width gap tokens now optionally cross-attend through MIta to a 16x16 spatial evidence memory; self-token fusion remains the backward-compatible control.",
-          "gradient_status": "focused cuda0 test confirms nonzero spatial-gap MIta Q projection gradients and finite route/attention entropy",
-          "config": "configs/opening_center_width_spatial_gap_v1.json",
-          "status": "implemented_pending_gap_fusion_screen",
-          "decision": "run after typed host conditioning under the same opening consumer contract"
-        },
-        "gap_fusion_partial": {
-          "trainable_parameters": 65761,
-          "epochs": 4,
-          "initial_raw_vector_f1": 0.158657,
-          "selected_raw_vector_f1": 0.155614,
-          "decision": "negative_no_promotion"
-        },
-        "predicted_host_ranker": {
-          "train_cases": 96,
-          "calibration_cases": 32,
-          "holdout_cases": 63,
-          "baseline_f1": 0.179994,
-          "candidate_f1": 0.175530,
-          "paired_delta": -0.004464,
-          "paired_ci95": [-0.022233, 0.012859],
-          "decision": "negative_no_promotion"
-        },
-      "gpu_torch_ranker": {
-        "holdout_f1": 0.362750,
-        "oracle_full_f1": 0.351191,
-        "consumer_full_f1": 0.290494,
-        "model_format": "torch_mlp_cuda",
-        "decision": "fast_screen_only_no_final_promotion"
-      },
-      "predicted_host_gpu_torch_ranker": {
-        "holdout_f1": 0.164260,
-        "paired_delta": -0.015734,
-        "paired_ci95": [-0.036087, 0.005144],
-        "decision": "negative_no_promotion"
-      },
-        "combined_interaction": {
-          "opening_f1": 0.335606,
-          "opening_delta": -0.002371,
-          "wall_f1": 0.500706,
-          "wall_delta": 0.013300,
-          "decision": "requires_layer_specific_composition"
-        },
-        "detector_holdout_fiveseed_vector_f1": 0.309701,
-        "detector_holdout_fiveseed_pixel_f1": 0.385536,
-        "current_stage_vector_proxy": {
-          "pixel_opening_f1": 0.2048857368006304,
-          "vector_opening_f1": 0.0,
-          "vector_precision": 0.0,
-          "vector_recall": 0.0,
-          "report": "outputs/train/typed_channel_v6_control_cpu_opening_vector_proxy_v2/report.json"
-        },
-        "report": "outputs/reports/predicted_control_centerwidth_ranker_nms20_val491_paired_v1.json"
-      },
-      "priority": "P1",
-      "title": "Close the opening host and interval gap",
-      "atoms": [
-        "OP-01",
-        "ST-01",
-        "CAD-01"
-      ],
-      "weak_metrics": [
-        "opening_f1",
-        "opening_precision",
-        "opening_recall",
-        "opening_host_accuracy",
-        "opening_wall_alignment"
-      ],
-      "implementation_sequence": [
-        "Make the raster-to-vector opening proxy a validation gate before optimizing more pixel F1.",
-        "Train the host/interval consumer on final stage opening maps instead of relying on post-hoc vectorization.",
-        "Repair predicted wall continuity, wall splitting, and host coverage before adding another verifier.",
-        "Join opening candidates to wall candidates with a typed host graph rather than nearest-wall geometry alone.",
-        "Keep host identity from the decoded raster plan; do not remap through explicit-plan wall ordering.",
-        "Retest gap fusion only with joint-head training or a larger fusion-only budget; current partial scope is negative.",
-        "Use the GPU ranker for fast screens; retain HGB for final consumer claims until predicted-host GPU distillation passes.",
-        "Run one final full val491 opening confirmation only after the wall/host atom passes.",
-        "Keep Wall, Room, Node, Edge, GED, validity, watertightness, and outside-footprint as hard non-regression gates."
-      ],
-      "required_gates": {
-        "opening_f1": 0.35,
-        "opening_vector_f1": 0.35,
-        "opening_wall_alignment_min": 0.8,
-        "validity": 1.0,
-        "conditional_watertightness_min": 0.99
-      },
-      "forbidden": [
-        "off_wall_openings_for_f1",
-        "axis_aligned_component_width_as_canonical",
-        "stale_readout_blend"
-      ],
-      "artifacts": [
-        "src/floorflow/inference/opening_center_width_decoder.py",
-        "src/floorflow/inference/opening_candidate_batch.py",
-        "configs/opening_center_width_ranker_v1.json",
-        "docs/opening_center_width_gap_v1.md",
-        "src/floorflow/training/opening_head_scopes.py",
-        "scripts/train_opening_interval_decoder_v1.py",
-        "tests/test_opening_head_scopes.py",
-        "outputs/train/opening_interval_centerwidth_promotion1024_seed19_v1/report.json",
-        "outputs/train/opening_centerwidth_candidate_ranker_v1/report.json",
-        "outputs/reports/opening_centerwidth_ranker_nms20_val491_oraclehost_v1.json",
-        "outputs/reports/predicted_control_centerwidth_ranker_nms20_val491_paired_v1.json",
-        "outputs/reports/predicted_control_combined_wallopen_val491_v1.json",
-        "outputs/reports/predicted_control_wallgap_interaction_val491_paired_v1.json",
-        "outputs/reports/predicted_control_stack_serial_layer01_v1.json",
-        "outputs/train/opening_centerwidth_gapfusion_partial_seed19_v1/report.json",
-        "outputs/train/opening_centerwidth_predictedhost_ranker_v1/report.json",
-        "src/floorflow/inference/opening_candidate_ranker.py",
-        "configs/opening_candidate_ranker_v3.json",
-        "src/floorflow/training/opening_candidate_ranker_cli.py",
-        "tests/test_opening_candidate_ranker.py",
-        "src/floorflow/inference/opening_candidate_torch.py",
-        "tests/test_opening_candidate_torch.py",
-        "outputs/train/opening_centerwidth_torch_ranker_v2/report.json",
-        "outputs/train/opening_centerwidth_torch_ranker_v2/ranker.pt",
-        "outputs/train/opening_centerwidth_predictedhost_torch_ranker_v1/report.json",
-        "outputs/reports/opening_centerwidth_torch_ranker_v2_val491_oraclehost_v1.json",
-        "outputs/reports/predicted_control_stack_serial_torch_val491_v1.json",
-        "scripts/train_opening_candidate_ranker_v1.py",
-        "tests/test_opening_candidate_ranker.py",
-        "configs/opening_candidate_ranker_v2.json",
-        "docs/opening_candidate_ranker_v2.md",
-        "outputs/train/opening_candidate_ranker_v2/report.json",
-        "outputs/train/opening_candidate_ranker_v2/ranker.joblib",
-        "outputs/reports/opening_multiscale_candidate_ranker_v2_val491_oraclehost_v1.json",
-        "outputs/reports/predicted_control_opening_ranker_val491_paired_v1.json",
-        "src/floorflow/heads/opening_detection.py",
-        "src/floorflow/evaluation/opening_vector_proxy.py",
-        "tests/test_opening_vector_proxy.py",
-        "outputs/train/typed_channel_v6_control_cpu_opening_vector_proxy_v2/report.json",
-        "scripts/train_opening_interval_decoder_v1.py",
-        "src/floorflow/inference/opening_heatmap_decoder.py",
-        "configs/opening_center_width_spatial_gap_v1.json",
-        "src/floorflow/heads/coarse_structure_refiner.py",
-        "src/floorflow/heads/joint_control_repair.py",
-        "tests/test_coarse_structure_refiner.py",
-        "tests/test_opening_heatmap_decoder.py",
-        "outputs/reports/opening_interval_multiscale_promotion_fiveseed_v1.json",
-        "outputs/reports/predicted_control_multiscale_opening_val491_gedfixed_v2.json",
-        "outputs/reports/predicted_control_multiscale_opening_val491_gedfixed_v2_paired.json",
-        "scripts/compare_predicted_stage_reports_v1.py",
-        "outputs/reports/opening_atom_proxy_screen_v3.json",
-    "outputs/reports/opening_host_consumer_promotion_v3.json",
-    "src/floorflow/training/opening_host_training.py",
-    "src/floorflow/heads/opening_host_router.py",
-    "scripts/train_opening_host_router_v1.py",
-    "tests/test_opening_host_training.py",
-    "tests/test_opening_host_router.py",
-    "outputs/train/opening_host_router_learned_interval_screen512_seed19_v4/report.json",
-    "outputs/reports/opening_host_router_learned_interval_screen512_seed19_val128_v6.json",
-    "outputs/train/opening_host_router_no_route_screen512_seed19_v4/report.json",
-    "outputs/reports/opening_host_router_no_route_screen512_seed19_val128_v4.json",
-    "outputs/reports/opening_interval_decoder_val128_oraclehost_v1.json",
-    "outputs/reports/opening_interval_decoder_val128_oraclehost_t010_v1.json",
-    "outputs/reports/opening_interval_decoder_val128_oraclehost_t050_v1.json",
-    "outputs/train/opening_interval_boundaryctx_promotion1024_seed19_v1/report.json",
-    "outputs/train/opening_interval_plain_screen512_seed19_v1/report.json",
-    "outputs/reports/opening_interval_boundaryctx_promotion1024_holdout107_seed19_v1.json",
-    "outputs/reports/opening_interval_boundaryctx_vs_old1024_holdout107_paired_v1.json",
-    "outputs/train/opening_interval_boundaryctx_promotion1024_seed20_v1/report.json",
-    "outputs/train/opening_interval_boundaryctx_promotion1024_seed21_v1/report.json",
-    "outputs/reports/opening_interval_boundaryctx_promotion1024_holdout107_seed20_v1.json",
-    "outputs/reports/opening_interval_boundaryctx_promotion1024_holdout107_seed21_v1.json",
-    "outputs/reports/opening_interval_boundaryctx_vs_old1024_holdout107_seed20_paired_v1.json",
-    "outputs/reports/opening_interval_boundaryctx_vs_old1024_holdout107_seed21_paired_v1.json",
-    "scripts/compare_opening_checkpoint_reports_v1.py",
-        "outputs/reports/predicted_control_centerline_val128_v1.json",
-        "outputs/reports/predicted_control_opening256_val128_v1.json",
-    "scripts/evaluate_opening_host_router_v1.py",
-    "src/floorflow/inference/opening_host_projection.py",
-    "configs/predicted_channel_source_router_v4_dynamic_contact.json",
-    "outputs/reports/predicted_room_dynamic_contact_audit_v1.json",
-    "tests/test_opening_host_projection.py"
-      ]
-    },
-    {
-      "id": "SOTA-FURN-01",
-      "status": "active_query_budget_consumer_repaired_screen_pending",
-      "current_blocker": "Raster furniture F1 is anti-correlated with room-legal vector F1; assignment and containment must drive the proxy.",
-      "priority": "P1",
-      "title": "Build room-local furniture geometry and semantics",
-      "atoms": [
-        "FU-01",
-        "RM-04"
-      ],
-      "current_results": {
-        "room_consumer": "CadFurnitureStage now receives the updated room-stage logits instead of stale raw controls.",
-        "feature_consumer": "Room descriptors are pooled from program/action-conditioned features rather than unconditioned backbone features.",
-        "detach_contract": "Detached furniture training also detaches current room logits so query-only ablations cannot leak gradients into room/wall backbones.",
-        "trainer_wiring": "Furniture queries and room assignment are enabled by default in the typed trainer, matching the promoted config.",
-        "full_shape_smoke": "cuda0 real field emits furniture masks [1,32,64,64], classes [1,32,28], and room assignment [1,32,25] in the joint CAD forward.",
-        "budget_contract": "Dynamic query budgets now select top target-free class/mask/assignment scores instead of arbitrary prefix slots.",
-        "instance_contract": "Vector legality resolves a predicted room class to the best overlapping concrete room instance before clipping and attachment scoring.",
-        "dense_density_consumer": "Dense furniture probabilities now enter class-concentration budget adjustment and mask-region class evidence; they do not enter query attention memory.",
-    "active_budget_consumer": "Hard and soft canonical query rendering now mask inactive query slots before max projection. Training evaluation, the checkpoint bridge, and the diagnostic evaluator all pass the active mask.",
-    "vector_consumer_parity": "The CAD vector readout consumes the same active mask; query_budget is retained only as a compatibility fallback. Active-mask and budget disagreement fails closed.",
-    "consumer_audit": "A deterministic two-query audit verifies that the higher-scoring inactive query cannot appear in raster or vector output while the active query remains; sources: outputs/reports/furniture_query_budget_consumer_audit_v1.json.",
-        "backward_compatibility": "Furniture stages without a dense furniture control keep the previous path.",
-        "claim_boundary": "No furniture F1/type/attachment/containment improvement is claimed before matched furniture screening."
-      },
-      "weak_metrics": [
-        "furniture_vector_f1",
-        "furniture_type_accuracy",
-        "furniture_room_attachment",
-        "furniture_containment"
-      ],
-      "implementation_sequence": [
-        "Use room-local primitive supervision and predicted room-owner maps as first-class inputs.",
-        "Repair assignment before increasing query count or mask capacity.",
-        "Evaluate geometry, type, attachment, and containment jointly on a small screen.",
-        "Add semantics only after geometry and attachment pass their atom proxies.",
-        "Promote furniture only if opening and room metrics do not regress."
-      ],
-      "required_gates": {
-        "furniture_vector_f1": 0.4,
-        "furniture_type_accuracy": 0.3,
-        "furniture_room_attachment": 0.65,
-        "furniture_containment_min": 0.98,
-        "outside_footprint_fraction": 0.0
-      },
-      "forbidden": [
-        "diffuse_mask_scaling",
-        "unassigned_query_vectorization",
-        "furniture_gain_by_opening_regression"
-      ],
-      "artifacts": [
-        "src/floorflow/model/cad_furniture_stage.py",
-        "src/floorflow/model/predicted_furniture_runtime.py",
-        "tests/test_cad_action_layer_contract.py",
-        "tests/test_typed_channel_attention.py",
-        "outputs/reports/furniture_atom_proxy_screen_v3.json",
-    "outputs/reports/furniture_room_local_promotion_v3.json",
-    "scripts/audit_furniture_query_budget_consumer_v1.py",
-    "outputs/reports/furniture_query_budget_consumer_audit_v1.json",
-    "src/floorflow/heads/dynamic_object_instance.py",
-    "src/floorflow/model/cad_furniture_stage.py",
-    "tests/test_dynamic_object_instance.py"
-      ]
-    },
-    {
-      "id": "SOTA-GRAPH-01",
-      "status": "dead_graph_output_control_fixed_warmstart_candidate_screen_pending",
-    "current_blocker": "The prior graph-only control had dead room-output residuals: both graph output heads restored to zero, so Room precision/recall could not change. Warm-started graph residual heads now produce nonzero first/second-pass class and mask residuals; the matched warm-start candidate screen is pending.",
-      "priority": "P0",
-      "title": "Convert room-owner quality into Node, Edge, and fixed-evaluator GED",
-      "atoms": [
-        "RM-04",
-        "GR-01",
-        "OUT-01"
-      ],
-      "current_results": {
-        "adjacency_contract": "RoomInstanceIdentityStage emits symmetric query adjacency, conditions query features/classes/masks, and trains against target-mask room edges mapped to query slots.",
-        "target_supervision": "Training uses one-to-one Hungarian IoU matching between query masks and GT rooms, then gathers GT mask-contact adjacency into unique query slots; duplicate-query self edges cannot be taught as room edges. Inference remains target-free.",
-        "reuse": "VectorPrimitiveHead and the query room stage share heads/room_adjacency.py.",
-        "consumer_path": "controls -> action graph -> room queries -> adjacency head -> graph conditioner -> classes/masks -> adjacency consistency loss",
-        "full_shape_smoke": "cuda0 real field emits room adjacency [1,32,32], conditioned room outputs, and the 65-channel CAD output.",
-        "consumer_wiring": "The typed trainer enables the instance room decoder and adjacency head by default; validation and selection consume the adjacency proxy.",
-        "evaluated_graph_identity": "HouseMind-style Node/Edge/GED metrics are unique room-type graph metrics; they are tracked separately from instance F1.",
-        "type_node_supervision": "A differentiable fuzzy-OR projection from query presence and class probabilities now supervises the unique room-type node set.",
-        "type_edge_supervision": "Query adjacency and class probabilities are projected into room-type edge probabilities and supervised directly, closing the query-instance versus type-edge mismatch.",
-        "matched_query_type_result": "Across the first three matched v3 epochs, query-space type losses improved only the internal adjacency proxy and did not improve final quality. Defaults are now zero.",
-        "dense_consumer_bridge": "Dense final room probabilities now support opt-in type-node and type-edge losses through --dense-type-node-weight and --dense-type-adjacency-weight.",
-        "dense_preowner_result": "The first dense bridge supervised pre-owner probability. In matched 128/32 seed19 training, final Node/Edge/GED were unchanged and selection did not consistently beat control; the bridge now consumes final owner-preserving room logits.",
-        "soft_owner_gradient_fix": "Early soft count-selection confidence was below the hard owner threshold, causing dense fallback and zero path from dense graph losses into query parameters. Training now uses confidence-weighted owner blending; inference remains hard-gated.",
-        "owner_consumer": "Owner-preserving query readout now supplies final room logits; it is independently ablatable.",
-        "canonical_validation": "Node F1, Edge overlap, precision/recall, and deterministic GED are logged every validation epoch and enter checkpoint selection.",
-        "atomic_controls": "Room-instance adjacency, canonical type adjacency, type-node, and query-set losses have independent trainer weights.",
-        "dense_contact_repair": "Dense type-edge contact is normalized by room area and BCE is applied directly to contact probability. The previous exponential saturation and final clamp removed negative-edge gradients.",
-        "false_edge_attack": "A three-room deterministic attack confirms that adding an absent 0-to-2 contact increases the canonical type-edge loss.",
-        "presence_weighted_messages": "Query adjacency conditioning weights each edge by both endpoint presence probabilities before normalization, preventing inactive slots from diluting active room messages.",
-        "geometric_contact_candidate": "RoomAdjacencyHead can now consume differentiable mask contact with the canonical 2 px tolerance and a learnable bounded scale; v3 remains disabled for strict checkpoint compatibility.",
-        "count_aware_graph_candidate": "A draft query-count selection gates graph endpoints before adjacency messages; the second query-set pass remains the final count/type consumer.",
-        "relational_pair_candidate": "The adjacency head now adds a symmetric learned residual over query pairs, absolute/multiplicative differences, 2 px mask contact, and count-selected endpoint presence.",
-        "parameter_targeting": "Room-graph parameters increase from 77,145 to 143,196 while total candidate parameters are 6,946,647; no uniform backbone widening is used.",
-        "candidate_gradient_contract": "The real v5 CPU contract produces finite dense type-edge/type-node losses and first-step gradients touching about 3.5M parameter elements; dynamic balancing reduces the initial room-adjacency gradient scale from 1.0 to 0.1 after observing its dominant norm.",
-        "matched_screen_result": "The relational bundle changes Edge overlap by -0.007579 with CI [-0.022703,0.005131] and GED by -0.15625 with CI [-0.453125,0.15625]. No canonical graph gain is established.",
-        "loss_stagnation": "Dense type-edge BCE remains approximately 1.002-1.010 throughout seven matched epochs while the target edge mean is about 0.0175 and Edge overlap remains near 0.30-0.35. Sparse positive edges are not being optimized strongly enough by BCE alone.",
-        "repair": "Added soft Dice overlap terms for dense type-node and type-edge, with zero-default backward compatibility and independent configuration.",
-        "graph_output_dead_start": "The graph-only control screen kept Room support precision/recall exactly constant. The legacy checkpoint restored zero graph-to-mask/class output heads after load. Candidate loading now re-warm-starts these heads only when the count-aware second graph pass is enabled.",
-        "warm_start_contract": "The v12 CPU contract exposes first/second graph residual norms (class about 0.57, mask about 60) and produces a nonconstant final room partition, confirming the graph-to-output path is live.",
-        "candidate_live_audit": "On one real case, contact scale, mask geometry, adaptive references, adjacency context, and count-aware graph presence all pass.",
-        "claim_boundary": "No Node/Edge/GED improvement is claimed before paired canonical graph evaluation."
-      },
-      "weak_metrics": [
-        "node_f1",
-        "edge_overlap",
-        "ged"
-      ],
-      "implementation_sequence": [
-        "Preserve the epoch-0 structural prior by training room and graph adapters before unfreezing shared channel/stage parameters.",
-        "Verify dense graph Dice gradients and canonical Edge/GED direction before another GPU screen.",
-        "Run v5 control, relational-pair-only, sparse-prior-only, rare-class-only, and joint arms with identical cases, seed, evaluator, and optimizer updates.",
-        "Confirm the canonical graph source: room instances and owner boundaries, not wall segments.",
-        "Audit owner boundary contact, node count, edge count, and type confusion before changing graph losses.",
-        "Measure canonical type-node/type-edge losses against the final rendered Node/Edge/GED metrics.",
-        "Freeze one GED evaluator and exact-case intersection rule.",
-        "Run paired graph improvements against room-only and wall-only readouts.",
-        "Retain the type-node/type-edge loss only if rendered Node/Edge/GED improve without Room or safety regression."
-      ],
-      "required_gates": {
-        "node_f1": 0.82,
-        "edge_overlap": 0.5,
-        "ged_max": 6.0,
-        "graph_evaluator_fixed": true
-      },
-      "forbidden": [
-        "soft_ged_as_substitute_for_room_identity",
-        "wall_segment_graph_as_room_graph",
-        "mixed_type_and_instance_graph_pooling",
-        "promoting_query_space_type_loss_after_proxy_only_gain"
-      ],
-      "artifacts": [
-        "src/floorflow/heads/room_adjacency.py",
-        "configs/predicted_channel_source_router_v4_dynamic_contact.json",
-        "configs/predicted_channel_source_router_v5_relational_edge.json",
-        "configs/predicted_channel_source_router_v5_control.json",
-        "configs/predicted_channel_v5_room_adapter_control.json",
-        "configs/predicted_channel_v5_room_adapter_relational.json",
-        "configs/predicted_channel_v5_room_adapter_prior.json",
-        "configs/predicted_channel_v5_room_adapter_joint.json",
-        "configs/predicted_channel_v6_room_graph_adapter_control.json",
-        "configs/predicted_channel_v6_room_graph_adapter_relational.json",
-        "configs/predicted_channel_v6_room_graph_adapter_prior.json",
-        "configs/predicted_channel_v6_room_graph_adapter_joint.json",
-        "outputs/reports/predicted_room_dynamic_contact_audit_v1.json",
-        "outputs/reports/typed_channel_v5_partial_screen256_compare_v1.json",
-        "outputs/reports/typed_channel_v5_screen_diagnostics_v1.json",
-        "scripts/analyze_typed_channel_screen_diagnostics_v1.py",
-        "outputs/reports/predicted_control_parameter_allocation_v5_relational_cpu.json",
-        "src/floorflow/objectives/room_adjacency.py",
-        "tests/test_room_adjacency.py",
-        "tests/test_room_query_set_head.py",
-        "docs/predicted_control_metric_bound_architecture_v294.md",
-        "docs/predicted_control_weak_metric_rebuttal_v2.md",
-        "outputs/reports/room_graph_atom_proxy_screen_v4.json",
-    "outputs/reports/room_graph_paired_promotion_v4.json",
-    "outputs/reports/fp_room_graph_canonical_matching_screen64_v2.json",
-    "outputs/reports/fp_room_graph_canonical_rows_screen64_v2.json",
-    "outputs/reports/fp_room_graph_canonical_strata_screen64_v2.json",
-    "src/floorflow/evaluation/room_graph_matching.py",
-    "tests/test_room_graph_matching.py"
-      ]
-    },
-    {
-      "id": "SOTA-EDIT-01",
-      "status": "oracle_control_anchor_passed_predicted_control_gates_fail",
-      "current_blocker": "Under the unified HouseMind-style type graph, executed categories reach Node 0.43-0.62, Edge 0.08-0.12, and GED 7.8-21. Absolute gates Node >=0.82, Edge >=0.5, and GED <=6 fail. Edit effect is Node -0.005628, Edge -0.001071, and GED unchanged.",
-      "priority": "P1",
-      "title": "Make predicted-control editing the next deployable evidence track",
-      "atoms": [
-        "ED-01",
-        "RP-01",
-        "OUT-01",
-        "FT-01"
-      ],
-      "current_results": {
-        "oracle_control_edit_delta_anchor": "CubiCasa test503, five operations and five repeated seeds: Delta-IoU 0.956703-0.999801 and Delta-MSE 0.000019-0.000096. These numerically exceed the published HouseMind-E anchors 0.608 and 0.0019 under aligned metric definitions; datasets and input contracts differ.",
-        "oracle_control_locality_anchor": "Exact outside pixel, room, polygon, wall, opening, and unaffected-edge preservation is 1.0. FP-Eval validity is 1.0, conditional watertightness is 0.9579-0.9675, and independent FEVP five-check validity is 0.9124-0.9569.",
-        "oracle_control_claim_boundary": "The oracle-control result is a protocol-level and strict-locality anchor, not a deployable predicted-control metric, a HouseMind RPLAN leaderboard rank, or complete-method SOTA.",
-        "state_bridge": "PredictedChannelModel now exposes room identity tokens, existence, classes, adjacency, and ordered CAD stage tokens.",
-        "adapter": "predicted_control_typed_state maps those outputs into the shared TypedFloorplanState without using target labels.",
-        "count_gate_contract": "Editable room existence now masks query slots rejected by the count gate.",
-        "delete_add_contract": "Strict-local vector projection no longer requires equal pre/post room, wall, or opening counts.",
-        "shape_contract": "Predicted edit-state tensors are validated before alignment or graph use.",
-        "family_contract": "Typed edit graphs infer changed families from before and after labels, including family-conversion edits.",
-        "ghost_query_contract": "Rejected count-gated queries now have zero tokens, negative existence/foreground classes, no-object class, and saturated adjacency rows/columns.",
-    "ghost_instance_contract": "Rejected queries now receive instance ID -1 and mask query-mask/aux-mask/program-assignment tensors in the same active-mask transaction.",
-    "ghost_state_audit": "A deterministic active/inactive query audit passes instance ID, token, class, adjacency, mask, aux-mask, program-assignment, and scheduled-assignment checks; source: outputs/reports/predicted_edit_ghost_state_audit_v1.json.",
-    "revision_gate_consumer": "consume_learned_revision now reads revision_gate. Admitted revisions contribute learned families/regions; low-gate revisions fall back to the declared edit region and infer families only from actual changed labels.",
-    "revision_gate_supervision": "Revision loss now supervises gate admission from nonempty target regions and reports a dedicated gate loss; the gate head receives a nonzero first-step gradient.",
-    "revision_gate_audit": "A deterministic audit verifies high-gate learned-family expansion, low-gate fallback, preserved anchors, reported gate loss, and live gate-head gradients; source: outputs/reports/revision_gate_consumer_audit_v1.json.",
-    "object_delete_execution": "Opening and furniture delete operations now remove the requested family inside the declared edit region. The previous no-op behavior was rejected.",
-    "object_delete_audit": "Deterministic checks confirm opening/furniture family removal, room-pixel preservation, and exact outside-region equality for both deletion operations; source: outputs/reports/predicted_edit_object_delete_audit_v1.json.",
-    "canonical_evaluator_integration": "For object deletes, the evaluator now projects on full visible labels; room edits continue on the room partition. All 25 executed smoke prompts report outside pixel/room exact 1.0 and validity 1.0.",
-    "object_delete_smoke": "The 40-prompt proof-of-execution smoke improves Node F1 by +0.070973 with CI [0.041930, 0.120634], leaves Edge overlap exactly flat, and changes GED by -2.08 with a zero-crossing CI [-5.214, 1.924]. Overall gate failed.",
-    "multilabel_projection": "Room add/type/control edits now preserve the full edited partition instead of collapsing changed pixels to one mode class.",
-    "multilabel_smoke": "The same 40-prompt CPU smoke improves Node F1 by +0.072166 with CI [0.041717, 0.119674], leaves Edge overlap flat, and changes GED by -0.64 with CI [-4.855, 4.082]. GED improves in 8 and worsens in 16 cases; the overall gate still fails.",
-    "paired_gate_correction": "Edge overlap previously required a positive delta even when baseline was already 1.0, making the gate mathematically impossible. Edge now permits non-regression at ceiling; GED gains a strict paired-improvement gate.",
-    "purity_readout_screen": "The target-free tiled_purity_050 graph readout leaves every executed Node/Edge/GED value unchanged but degrades abstention from exact 0 GED to 1.0. It is rejected; direct_tiled remains the control.",
-    "absolute_graph_gates": "The evaluator now reports per-category GED node/edge decomposition, matched-node coverage, absolute Node F1 >=0.82, and mean GED <=6.0.",
-    "ged_diagnostic": "Room addition is dominated by 14.2 node deletions per case; furniture deletion is dominated by 4.6 substitutions and 12.2 edge insertions. Matched coverage is 0.04-0.15, so the apparent Edge ceiling is non-informative.",
-    "edit_effect_isolation": "Paired pre-edit vs post-edit graph diagnostics are now separate from target-absolute and graph-readout comparisons.",
-    "edit_effect_smoke": "Across 25 executed cases, Node F1 changes by -0.010645 with CI [-0.030412, 0], edge overlap is unchanged, and GED rises by +3.2 with CI [0.396, 8.142]. By operation, room addition contributes +15.4 GED and two Node regressions; room type contributes -0.2 GED with a crossing CI.",
-    "dominant_room_target": "Room add/type now writes only the dominant changed room class instead of every edited-label difference.",
-    "dominant_target_smoke": "Room-addition Node F1 rises 0.03844->0.07619, GED falls 27.2->24.6, and average node deletion falls 14.2->6.8. Overall edit effect improves but remains negative: Node -0.003095, GED +2.8 with CI [0.119, 7.784].",
-    "connected_room_target": "Room-add/type now retain only the largest connected component of the dominant target class.",
-    "connected_target_smoke": "Room-addition GED falls 24.6->12.8 and node deletion 6.8->1.8. Graph-readout GED improves by -3.36 with CI [-6.121, -0.037], while edit effect improves to Node -0.002694 and GED +0.48 with CI [0.12, 1.041].",
-    "operation_specific_projection": "room_add uses dominant connected-target insertion; room_type uses direct edited-label conversion; room_remove keeps neighbor-mode merge.",
-    "operation_split_smoke": "Room-type GED returns 16.6->16.0. Aggregate edit GED falls +0.48->+0.36 with CI [-0.04, 0.961], and graph-readout GED improves by -3.48 with CI [-6.124, -0.158].",
-    "type_graph_protocol": "Canonical Node/Edge/GED now come from housemind_style_metrics; instance wall/direct graph readouts are retained as instance_* diagnostics and never pooled with type metrics.",
-    "type_graph_smoke": "Executed type-node F1 spans 0.4256-0.6223, type-edge overlap 0.0806-0.1210, and type GED 7.8-21.0. Edit-induced type effect is Node -0.005628, Edge -0.001071, GED 0.0; absolute and edit-quality gates still fail.",
-    "room_remove_component_screen": "Applying connected-target selection to room removal leaves GED at 17.0, lowers room-deletion Node F1 0.0667->0.0571, worsens aggregate edit Node, and removes the significant graph-readout GED gain. Rejected; original neighbor-mode merge is restored.",
-        "opening_interval_contract": "Strict vector projection samples the full opening width along its nearest host wall; an interval crossing the edit region is owned by the edited plan even when its center is outside.",
-      "next_consumer": "Repair room-addition node ownership and adjacency supervision first; it is the dominant edit-induced regression, while opening/furniture deletes leave room graphs unchanged.",
-        "claim_boundary": "No deployable predicted-control editing metric is claimed until edit execution and locality verification run."
-      },
-      "weak_metrics": [
-        "delta_iou",
-        "delta_mse",
-        "outside_pixel_exact",
-        "outside_room_label_exact",
-        "outside_room_polygon_exact",
-        "outside_edge_exact",
-        "locality_violation_rate",
-        "instruction_success"
-      ],
-      "implementation_sequence": [
-        "Keep oracle-control locality evidence separate from deployable predicted-region rows.",
-        "Map predicted edit region to operation family and typed CAD state.",
-        "Run control-gate and watertight-guard independent and joint ablations.",
-        "Add deterministic leakage pressure tests and per-operation failure taxonomy.",
-        "Only after predicted-control locality is stable, test free-text grounding and complete HouseMind matched comparison."
-      ],
-      "required_gates": {
-        "outside_pixel_exact": 1.0,
-        "outside_room_label_exact": 1.0,
-        "validity": 1.0,
-        "conditional_watertightness_min": 0.95,
-        "delta_iou_min": 0.9
-      },
-      "forbidden": [
-        "oracle_region_reported_as_deployable",
-        "free_text_sota_before_predicted_edit",
-        "cross_protocol_delta_comparison"
-      ],
-      "artifacts": [
-        "src/floorflow/inference/predicted_control_state.py",
-    "scripts/audit_predicted_edit_ghost_state_v1.py",
-    "outputs/reports/predicted_edit_ghost_state_audit_v1.json",
-    "scripts/audit_revision_gate_consumer_v1.py",
-    "outputs/reports/revision_gate_consumer_audit_v1.json",
-    "scripts/audit_predicted_edit_object_deletes_v1.py",
-    "outputs/reports/predicted_edit_object_delete_audit_v1.json",
-    "outputs/reports/residential_predicted_edit_objectdeletefix_smoke5_v1.json",
-    "outputs/reports/residential_instruction_robustness_objectdeletefix_smoke5_v1.json",
-    "outputs/reports/residential_predicted_edit_multilabel_smoke5_v2.json",
-    "outputs/reports/residential_instruction_robustness_multilabel_smoke5_v2.json",
-    "outputs/reports/residential_predicted_edit_multilabel_gatefix_smoke5_v3.json",
-    "outputs/reports/residential_instruction_robustness_multilabel_gatefix_smoke5_v3.json",
-    "outputs/reports/residential_predicted_edit_purityreadout_smoke5_v4.json",
-    "outputs/reports/residential_instruction_robustness_purityreadout_smoke5_v4.json",
-    "outputs/reports/residential_predicted_edit_geddiag_smoke5_v5.json",
-    "outputs/reports/residential_instruction_robustness_geddiag_smoke5_v5.json",
-    "outputs/reports/residential_predicted_edit_absgate_smoke5_v6.json",
-    "outputs/reports/residential_instruction_robustness_absgate_smoke5_v6.json",
-    "outputs/reports/residential_predicted_edit_effect_smoke5_v7.json",
-    "outputs/reports/residential_instruction_robustness_effect_smoke5_v7.json",
-    "outputs/reports/residential_predicted_edit_dominant_target_smoke5_v8.json",
-    "outputs/reports/residential_instruction_robustness_dominant_target_smoke5_v8.json",
-    "outputs/reports/residential_predicted_edit_roomcomponent_smoke5_v9.json",
-    "outputs/reports/residential_instruction_robustness_roomcomponent_smoke5_v9.json",
-    "outputs/reports/residential_predicted_edit_roomremovecomponent_smoke5_v10.json",
-    "outputs/reports/residential_instruction_robustness_roomremovecomponent_smoke5_v10.json",
-    "outputs/reports/residential_predicted_edit_roomexecsplit_smoke5_v11.json",
-    "outputs/reports/residential_instruction_robustness_roomexecsplit_smoke5_v11.json",
-    "src/floorflow/evaluation/predicted_edit_graph_metrics.py",
-    "outputs/reports/residential_predicted_edit_typegraph_smoke5_v12.json",
-    "outputs/reports/residential_instruction_robustness_typegraph_smoke5_v12.json",
-    "src/floorflow/inference/strict_local_projection.py",
-        "src/floorflow/representation/typed_floorplan_state.py",
-    "tests/test_strict_local_projection.py",
-        "tests/test_predicted_control_state.py",
-        "outputs/reports/predicted_edit_atom_proxy_screen_v3.json",
-        "outputs/reports/predicted_edit_safety_ablation_v3.json"
-      ]
-    },
-    {
-      "id": "SOTA-RPLAN-01",
-      "status": "gate_balanced_selection_cpu_contract_passed_matched_training_pending",
-      "priority": "P1",
-      "title": "Run a matched residential RPLAN generation track",
-      "current_results": {
-        "geometry_contract": "Complex boundary and room rings are deterministically resampled to fixed tensor limits rather than truncated.",
-        "identity_contract": "Zero-area boundaries and duplicate source room ids are rejected before adjacency construction.",
-        "opening_contract": "An RPLAN opening is valid only when its host wall survives tensor limits.",
-        "verifier_contract": "Verifier target keys bind token targets, room identity, adjacency, polygons, walls, openings, junctions, and boundary geometry.",
-        "collate_contract": "Collation rejects mixed key presence and grammar vocabulary widths.",
-        "attention_contract": "Partition-consistent room queries now use recoverable soft owner penalties in both spatial and flattened token layouts; the RPLAN partition-owner gradient test passes.",
-        "room_limit_contract": "Room count, masks, polygons, adjacency, and token targets use one deterministic largest-room subset capped by max_rooms; source_room_count remains auditable.",
-        "quality_fallback": "A positive predicted room count retains at least the highest-scoring quality candidate when all quality scores fall below threshold; score and budget shapes fail closed.",
-        "data_room_distribution": "Local RPLAN train/val contain 56053/12018 rows with room counts 4-8, so max_rooms=12 does not truncate current data.",
-        "entrance_host_contract": "Entrance tangents use the long covariance axis and host-boundary selection prioritizes parallel alignment; 3919/5000 sampled validation entrances change host edge versus the previous short-axis policy.",
-        "full_target_contract": "All 56053/56053 train and 12018/12018 validation targets pass the reusable room, adjacency, polygon, wall/opening host, junction, and boundary contract audit.",
-        "capacity_contract": "Training fails before model construction when identity-query, wall, opening, polygon, or boundary capacity is smaller than tensor targets; all 18 RPLAN configs pass.",
-        "token_contract": "All train/val token targets fit 512 tokens and preserve entity counts. Train-only closure adds 67 structural tokens without reindexing and reduces full-val OOV to 12/2325128 (5.16e-6); it remains a separate candidate until the token model is retrained.",
-        "cpu_integration": "Dense SOTA and closed-vocabulary token configs both complete one-case CPU forward/backward/report smokes. Closed-vocabulary targets report zero OOV, zero train grammar violations, and exact token roundtrip; smoke checkpoints are deleted.",
-        "canonical_roundtrip": "All 12018/12018 validation plans preserve structural counts and re-encode exactly; max quantization error 0.022727 is within the 0.03125 half-step."
-    ,
-    "selection_contract": "RPLAN checkpoint selection averages normalized progress for room IoU, instance F1, type accuracy, count MAE, wall/opening losses, room-adjacency BCE, contract validity, token legality, generation completion, and consumer validity/watertight regressions.",
-    "selection_cpu_smoke": "One-case closed-vocabulary RPLAN CPU training/validation emits selection_score -0.1113326 after wall/opening/adjacency are included; status is contract_smoke and test remains closed."
-      },
-      "atoms": [
-        "GEN-01",
-        "OUT-01",
-        "GR-01"
-      ],
-      "weak_metrics": [
-        "fid",
-        "mse",
-        "node_f1",
-        "edge_overlap",
-        "ged",
-        "validity",
-        "conditional_watertightness"
-      ],
-      "implementation_sequence": [
-        "Audit the RPLAN boundary/program contract and token grammar before training.",
-        "Use the existing generated-plan readout and canonical evaluator.",
-        "Reproduce released CE2EPlan numbers only under their declared protocol; otherwise mark them unavailable.",
-        "Select only on the validation split and freeze seeds before test.",
-        "Run the one-shot test only in SOTA-FREEZE-RPLAN-01."
-      ],
-      "required_gates": {
-        "validity": 1.0,
-        "conditional_watertightness_min": 0.95,
-        "node_f1": 0.82,
-        "edge_overlap": 0.5,
-        "ged_max": 6.0
-      },
-      "forbidden": [
-        "rplan_sota_without_executable_matched_baseline",
-        "test_driven_model_selection",
-        "cubicasa_rplan_cross_dataset_pooling"
-      ],
-      "artifacts": [
-        "outputs/reports/rplan_protocol_audit_v1.json",
-    "outputs/reports/rplan_validation_frontier_v1.json",
-    "src/floorflow/data/rplan_room_limits.py",
-    "src/floorflow/data/rplan_model_limits.py",
-    "src/floorflow/inference/rplan_query_quality_arbitration.py",
-    "src/floorflow/evaluation/rplan_target_contract.py",
-    "src/floorflow/evaluation/rplan_token_contract.py",
-    "src/floorflow/evaluation/rplan_token_roundtrip.py",
-    "src/floorflow/objectives/token_vocabulary_closure.py",
-    "scripts/audit_rplan_target_contract_v1.py",
-    "scripts/audit_rplan_token_targets_v1.py",
-    "scripts/audit_rplan_token_roundtrip_v1.py",
-    "scripts/close_rplan_token_vocabulary_v1.py",
-    "tests/test_rplan_adapter_contract.py",
-    "tests/test_rplan_query_quality_arbitration.py",
-    "tests/test_rplan_target_contract.py",
-    "tests/test_rplan_token_contract.py",
-    "tests/test_rplan_token_roundtrip.py",
-    "tests/test_token_vocabulary_closure.py",
-    "outputs/reports/rplan_target_contract_fulltrain_v1.json",
-    "outputs/reports/rplan_target_contract_fullval_v1.json",
-    "outputs/reports/rplan_token_contract_train_v1.json",
-    "outputs/reports/rplan_token_contract_val_closed_v1.json",
-    "outputs/reports/rplan_token_roundtrip_val_v1.json",
-    "outputs/token_vocabulary/rplan_fulltrain_closed_v1/manifest.json",
-    "outputs/train/rplan_sota_cpu_contract_smoke_v1/report.json",
-    "outputs/train/rplan_token_closure_cpu_contract_smoke_v1/report.json",
-    "configs/rplan_generation_sota_closed_vocab_v1.json",
-    "outputs/train/rplan_closed_vocab_config_cpu_smoke_v1/report.json"
-    ,
-    "src/floorflow/training/rplan_selection.py",
-    "tests/test_rplan_selection.py",
-    "outputs/train/rplan_gatebalanced_cpu_smoke_v1/report.json",
-    "outputs/train/rplan_gatebalanced_cpu_smoke_v2/report.json"
-      ]
-    },
-    {
-      "id": "SOTA-FREEZE-CUBICASA-01",
-      "status": "open",
-      "priority": "P0",
-      "title": "Freeze and open CubiCasa test503 once",
-      "atoms": [
-        "all_promoted_residential_atoms"
-      ],
-      "preconditions": [
-        "SOTA-METRIC-01 passed",
-        "SOTA-ROOM-01 passed",
-        "SOTA-WALL-01 passed",
-        "SOTA-OPEN-01 passed",
-        "SOTA-FURN-01 passed",
-        "SOTA-GRAPH-01 passed",
-        "checkpoint and evaluator hashes recorded"
-      ],
-      "outputs": [
-        "five_seed_test503",
-        "paired_bootstrap",
-        "wilcoxon_and_rank_biserial",
-        "failure_taxonomy",
-        "protocol_coverage"
-      ],
-      "pass_gate": "All hard floors pass and the predeclared primary metrics beat matched executable baselines with paired confidence intervals excluding zero."
-    },
-    {
-      "id": "SOTA-FREEZE-RPLAN-01",
-      "status": "open",
-      "priority": "P1",
-      "title": "Freeze and open the RPLAN test split once",
-      "atoms": [
-        "GEN-01",
-        "OUT-01",
-        "GR-01"
-      ],
-      "preconditions": [
-        "SOTA-RPLAN-01 passed",
-        "same evaluator as validation",
-        "one checkpoint per seed selected on validation",
-        "generation-only track declared"
-      ],
-      "outputs": [
-        "fid",
-        "mse",
-        "node_f1",
-        "edge_overlap",
-        "ged",
-        "validity",
-        "conditional_watertightness",
-        "paired_statistics"
-      ]
-    },
-    {
-      "id": "SOTA-FREEZE-EDIT-01",
-      "status": "open",
-      "priority": "P1",
-      "title": "Freeze deployable editing and optional free-text evidence",
-      "atoms": [
-        "ED-01",
-        "RP-01",
-        "OUT-01",
-        "FT-01"
-      ],
-      "preconditions": [
-        "predicted-control edit passed",
-        "free-text parser proxies pass",
-        "case split and prompt source frozen",
-        "outside-exact evaluator attacked successfully"
-      ],
-      "outputs": [
-        "delta_iou",
-        "delta_mse",
-        "outside_exact_by_layer",
-        "instruction_success",
-        "failure_taxonomy",
-        "matched_protocol_comparison"
-      ]
-    }
-  ],
-  "experiment_ladder": {
-    "diagnostic": {
-      "gpu": false,
-      "purpose": "evaluator, target-leak, schema, atom-proxy, per-term gradient-norm, and touched-parameter audit",
-      "cases": "cached rows or 32/64 smoke"
-    },
-    "mechanism_screen": {
-      "train_cases": 256,
-      "calibration_cases": 64,
-      "disjoint_holdout_cases": 64,
-      "epochs": 8,
-      "rule": "Record as candidate only; do not enter paper tables."
-    },
-    "promotion": {
-      "train_cases": 1024,
-      "calibration_cases": 256,
-      "disjoint_holdout_cases": 128,
-      "seeds_min": 2,
-      "rule": "Promote only after primary and downstream non-regression gates pass."
-    },
-    "confirmation": {
-      "train_cases": 5122,
-      "calibration_cases": 384,
-      "disjoint_holdout_cases": 107,
-      "seeds": [
-        19,
-        23,
-        29,
-        31,
-        37
-      ],
-      "rule": "Promotion and confirmation use the five-seed statistics contract before test503."
-    }
-  },
-  "sota_gates": {
-    "G0_metric_integrity": [
-      "PROXY-REAL-V1 passes per active atom",
-      "Every canonical metric has a deterministic attack",
-      "No target-derived proxy input",
-      "Evaluator hash and tolerance contract frozen"
+  "metric_protocol": {
+    "canonical_priority": [
+      "validity",
+      "conditional_watertightness",
+      "outside_footprint_fraction",
+      "room_macro_iou",
+      "instance_f1",
+      "count_mae",
+      "type_accuracy",
+      "fpeval_wall_f1",
+      "junction_f1",
+      "fpeval_opening_f1",
+      "furniture_vector_f1",
+      "node_f1",
+      "edge_overlap",
+      "ged"
     ],
-    "G1_residential_quality": [
-      "room_iou >= 0.45 and instance_f1 >= 0.50",
-      "count_mae <= 2.8 and type_accuracy >= 0.75",
-      "wall_f1 >= 0.58 and opening_f1 >= 0.35",
-      "furniture_vector_f1 >= 0.40 and attachment >= 0.65"
+    "proxy_real_contract": {
+      "id": "PROXY-REAL-V1",
+      "same_cases": true,
+      "same_seeds": true,
+      "target_free_proxy": true,
+      "checkpoint_snapshots_per_seed_min": 6,
+      "spearman_rho_min": 0.8,
+      "pearson_rho_secondary_min": 0.7,
+      "top_checkpoint_decision_agreement_min": 0.9,
+      "paired_sign_agreement_min": 0.8,
+      "false_pass_rate_max": 0.05,
+      "false_fail_rate_max": 0.1,
+      "sensitivity_required": true,
+      "flat_proxy_rejection": true,
+      "report": "outputs/reports/atom_proxy_real_consistency_v1.json"
+    },
+    "tolerances": {
+      "canonical_grid": 256,
+      "room_match_min_iou": 0.5,
+      "room_polygon_hausdorff_px": 0.5,
+      "room_overlap_area_px2": 4.0,
+      "edge_contact_px": 2.0,
+      "edge_snap_px": 1.5,
+      "wall_junction_cluster_px": 2.0,
+      "opening_center_px": 1.0,
+      "hole_min_area_px": 0.25,
+      "changed_pixel_epsilon": 0.0,
+      "outside_pixel_tolerance": 0.0,
+      "float_report_decimals": 6
+    },
+    "statistics": {
+      "unit": "case",
+      "bootstrap_iterations": 10000,
+      "confidence": 0.95,
+      "paired_test": "two_sided_wilcoxon_signed_rank",
+      "effect_size": "paired_rank_biserial_and_cliffs_delta",
+      "multiplicity": "holm",
+      "multi_seed_fields": [
+        "mean",
+        "sd",
+        "ci_low",
+        "ci_high",
+        "best",
+        "worst",
+        "improved_seeds"
+      ],
+      "ged_exact_case_intersection_required": true
+    },
+    "canonical_evaluators": {
+      "image_and_vector": "src/floorflow/evaluation/sota_protocol.py",
+      "room": "src/floorflow/evaluation/room_metric_suite.py",
+      "wall": "src/floorflow/evaluation/wall_metrics.py",
+      "junction": "src/floorflow/evaluation/wall_junction.py",
+      "opening": "src/floorflow/geometry/opening_readout.py",
+      "furniture": "src/floorflow/evaluation/furniture_vector_metrics.py",
+      "graph": "src/floorflow/evaluation/housemind_structure.py",
+      "ged": "src/floorflow/evaluation/housemind_structure.py",
+      "ged_contract": "configs/housemind_style_ged_deterministic_v2.json",
+      "instance_graph": "src/floorflow/evaluation/room_graph_matching.py",
+      "feasibility": "src/floorflow/evaluation/fevp_metric_contracts.py"
+    },
+    "reference_contracts": [
+      "configs/fevp_metric_contract_v2.json",
+      "configs/sota_benchmark_protocol_v2.json",
+      "configs/housemind_style_ged_deterministic_v2.json"
     ],
-    "G2_structural_legality": [
-      "validity = 1.0",
-      "conditional_watertightness >= 0.99",
-      "wall_continuity >= 0.99",
-      "outside_footprint_fraction = 0.0"
-    ],
-    "G3_graph_consistency": [
-      "node_f1 >= 0.82",
-      "edge_overlap >= 0.50",
-      "ged <= 6.0 on the fixed evaluator",
-      "exact GED cases compared only on intersection"
-    ],
-    "G4_external_comparability": [
-      "same track, split, case unit, preprocessing, output schema, evaluator, and post-processing",
-      "executable baseline or explicit unavailable label",
-      "validation-only selection"
-    ],
-    "G5_editing_safety": [
-      "outside_pixel_exact = 1.0",
-      "outside_room_label_exact = 1.0",
-      "validity = 1.0",
-      "conditional_watertightness >= 0.95",
-      "predicted edit region separated from oracle controls"
-    ],
-    "claim_rule": "A positive branch enters the CVPR main result only after G0-G5 for its declared track and the corresponding freeze task."
-  },
-  "global_stop_rules": [
-    "No new head is added while its upstream atom has an unresolved metric failure.",
-    "No SOTA wording follows from a proxy-only gain.",
-    "No weak metric improves by silently degrading a safety metric.",
-    "No external comparison uses a result outside the executable matched contract.",
-    "No test split is opened before the one-shot freeze task.",
-    "Any route that fails the small mechanism screen is closed with a negative-ledger entry."
-  ]
+    "adversarial_suite": [
+      {
+        "attack": "move_one_untouched_room_polygon_1px",
+        "expected_fail_metrics": [
+          "outside_room_polygon_exact",
+          "outside_room_level_exact"
+        ]
+      },
+      {
+        "attack": "change_one_untouched_room_label",
+        "expected_fail_metrics": [
+          "outside_room_label_exact",
+          "node_f1"
+        ]
+      },
+      {
+        "attack": "delete_one_adjacency_edge",
+        "expected_fail_metrics": [
+          "outside_edge_exact",
+          "edge_overlap"
+        ]
+      },
+      {
+        "attack": "inject_one_tiny_hole",
+        "expected_fail_metrics": [
+          "conditional_watertightness",
+          "hole_count"
+        ]
+      },
+      {
+        "attack": "overlap_two_rooms",
+        "expected_fail_metrics": [
+          "validity",
+          "no_room_overlap"
+        ]
+      },
+      {
+        "attack": "remove_one_wall_segment",
+        "expected_fail_metrics": [
+          "fpeval_wall_f1",
+          "wall_continuity"
+        ]
+      },
+      {
+        "attack": "shift_one_opening_center_1px",
+        "expected_fail_metrics": [
+          "fpeval_opening_f1",
+          "opening_center_error"
+        ]
+      },
+      {
+        "attack": "reassign_one_furniture_to_wrong_room",
+        "expected_fail_metrics": [
+          "furniture_room_attachment",
+          "furniture_vector_f1"
+        ]
+      }
+    ]
+  }
 }

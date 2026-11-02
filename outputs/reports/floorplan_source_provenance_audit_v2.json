@@ -1,0 +1,27 @@
+{
+  "schema_version": "floorplan-source-provenance-audit-v2",
+  "status": "passed",
+  "scope": "selected scoped-release evidence only",
+  "checks": {
+    "all_source_files_exist": true,
+    "all_json_pointers_resolve": true,
+    "all_entries_record_population": true,
+    "all_entries_record_unit": true,
+    "all_entries_record_seeds": true,
+    "all_entries_record_evaluator": true,
+    "all_entries_record_checkpoint_config": true,
+    "all_entries_record_exposure": true,
+    "all_entries_record_deployability": true,
+    "provenance_gaps_are_explicit": true,
+    "original_evidence_retained": true
+  },
+  "entry_count": 135,
+  "errors": [],
+  "warnings": [],
+  "provenance_gaps": [
+    "The selected predicted-control report does not embed a single execution hash for every checkpoint; file hashes and checkpoint paths are frozen in the release configuration instead.",
+    "The operation semantic audit uses an older predicted model and is retained only as a diagnostic boundary.",
+    "Fresh held-out generalization is not evaluated and is excluded from the scoped claims.",
+    "HouseMind-E anchors are published external context; the official inference serialization is unavailable and no matched ranking is claimed."
+  ]
+}

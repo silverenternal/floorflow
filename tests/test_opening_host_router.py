@@ -93,8 +93,8 @@ def test_geometry_prior_routes_to_nearest_segment() -> None:
         opening_widths=torch.tensor([[0.2]]),
     )
     assert output["host_index"].item() == 1
-    assert output["center_fraction"].item() == pytest.approx(0.5, abs=1.0e-6)
-    assert output["width_fraction"].item() == pytest.approx(0.2, abs=1.0e-6)
+    assert output["center_fraction"].item() == pytest.approx(0.5, abs=1.0e-3)
+    assert output["width_fraction"].item() == pytest.approx(0.2, abs=1.0e-3)
 
 
 def test_opening_router_hybrid_mita_is_dynamic_and_trainable() -> None:
@@ -122,6 +122,44 @@ def test_opening_router_hybrid_mita_is_dynamic_and_trainable() -> None:
     metrics = opening_route_metrics(output)
     assert metrics["route_budget"] > 0.0
     assert 0.0 <= metrics["route_entropy"] <= 1.0
+
+
+def test_opening_router_cold_start_reaches_host_and_interval_trunks() -> None:
+    router = OpeningHostRouter(
+        16,
+        num_types=2,
+        route_attention=True,
+        route_router_count=4,
+        route_top_k=2,
+    )
+    output = router(
+        torch.randn(1, 3, 16),
+        torch.randn(1, 2, 16),
+        torch.tensor(
+            [[
+                [[0.0, 0.0], [1.0, 0.0]],
+                [[0.0, 0.5], [1.0, 0.5]],
+                [[0.5, 0.0], [0.5, 1.0]],
+            ]]
+        ),
+        opening_centers=torch.tensor([[[0.5, 0.1], [0.8, 0.5]]]),
+        opening_widths=torch.tensor([[0.2, 0.3]]),
+        wall_mask=torch.ones(1, 3, dtype=torch.bool),
+        opening_mask=torch.ones(1, 2, dtype=torch.bool),
+    )
+    loss, _components = opening_host_router_loss(
+        output,
+        target_hosts=torch.tensor([[0, 1]]),
+        target_center_fraction=torch.tensor([[0.3, 0.7]]),
+        target_width_fraction=torch.tensor([[0.2, 0.3]]),
+        target_types=torch.tensor([[0, 1]]),
+        matched_mask=torch.ones(1, 2, dtype=torch.bool),
+    )
+    loss.backward()
+    assert torch.count_nonzero(router.host_bias.weight.grad) > 0
+    assert torch.count_nonzero(router.interval[0].weight.grad) > 0
+    assert torch.count_nonzero(router.route_budget[0].weight.grad) > 0
+    assert torch.count_nonzero(router.route_gate[0].weight.grad) > 0
 
 
 def test_routed_rows_are_a_typed_cad_consumer() -> None:

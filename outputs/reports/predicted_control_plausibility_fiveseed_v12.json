@@ -1,0 +1,293 @@
+{
+  "schema_version": "predicted-control-plausibility-fiveseed-v1",
+  "scope": "Frozen configuration, all validation cases, no test access",
+  "configuration": {
+    "room_readout": "explicit_partition_polygons",
+    "wall_readout": "union radius 0 with exterior composition",
+    "gap_reconcile_fraction": 0.04,
+    "room_checkpoint": "outputs/train/raster_room_control_native_full_v1/best.pt",
+    "structure_checkpoints": [
+      "outputs/train/raster_structure_bridge_full_v1/best.pt",
+      "outputs/train/raster_structure_bridge_full_seed20_v1/best.pt",
+      "outputs/train/raster_structure_bridge_full_seed21_v1/best.pt",
+      "outputs/train/raster_structure_bridge_full_seed22_v1/best.pt",
+      "outputs/train/raster_structure_bridge_full_seed23_v1/best.pt"
+    ]
+  },
+  "validation_cases_per_seed": 491,
+  "test_opened": false,
+  "target_used_at_inference": false,
+  "ci_method": "student-t interval, two-sided 95%, n=5",
+  "seeds": {
+    "19": {
+      "report": "/home/hugo/codes/planB/outputs/reports/predicted_control_plausibility_val491_final_v12.json",
+      "metrics": {
+        "room_macro_iou_diagnostic": 0.2697224103984704,
+        "room_coverage": 1.0,
+        "raster_plausible": 0.9857433808553971,
+        "wall_area_fraction": 0.09385931627838584,
+        "componentwise_wall_closure": 0.9973616825301498,
+        "opening_wall_alignment": 0.9950674245708351,
+        "furniture_room_containment": 1.0,
+        "outside_footprint_fraction": 0.0,
+        "room_face_retention": 0.9956546660185849,
+        "validity": 1.0,
+        "watertight": 0.8167006109979633,
+        "functional_watertight": 0.9979633401221996,
+        "room_overlap_ratio": 0.0,
+        "wall_continuity_rate": 0.9954669907369929,
+        "plan_plausible": 0.9877800407331976
+      }
+    },
+    "20": {
+      "report": "/home/hugo/codes/planB/outputs/reports/predicted_control_plausibility_seed20_v12.json",
+      "metrics": {
+        "room_macro_iou_diagnostic": 0.2696579566467734,
+        "room_coverage": 1.0,
+        "raster_plausible": 0.9837067209775967,
+        "wall_area_fraction": 0.08823843675628731,
+        "componentwise_wall_closure": 0.9973639539021301,
+        "opening_wall_alignment": 0.9911258634029136,
+        "furniture_room_containment": 1.0,
+        "outside_footprint_fraction": 0.0,
+        "room_face_retention": 0.9956546660185849,
+        "validity": 1.0,
+        "watertight": 0.8167006109979633,
+        "functional_watertight": 0.9979633401221996,
+        "room_overlap_ratio": 0.0,
+        "wall_continuity_rate": 0.9953004135835068,
+        "plan_plausible": 0.9857433808553971
+      }
+    },
+    "21": {
+      "report": "/home/hugo/codes/planB/outputs/reports/predicted_control_plausibility_seed21_v12.json",
+      "metrics": {
+        "room_macro_iou_diagnostic": 0.2696020535664059,
+        "room_coverage": 1.0,
+        "raster_plausible": 0.9837067209775967,
+        "wall_area_fraction": 0.09130858541791766,
+        "componentwise_wall_closure": 0.9973723975900537,
+        "opening_wall_alignment": 0.9923366267258581,
+        "furniture_room_containment": 1.0,
+        "outside_footprint_fraction": 0.0,
+        "room_face_retention": 0.9956546660185849,
+        "validity": 1.0,
+        "watertight": 0.8167006109979633,
+        "functional_watertight": 0.9979633401221996,
+        "room_overlap_ratio": 0.0,
+        "wall_continuity_rate": 0.9955110572827748,
+        "plan_plausible": 0.9877800407331976
+      }
+    },
+    "22": {
+      "report": "/home/hugo/codes/planB/outputs/reports/predicted_control_plausibility_seed22_v12.json",
+      "metrics": {
+        "room_macro_iou_diagnostic": 0.26978030825211174,
+        "room_coverage": 1.0,
+        "raster_plausible": 0.9857433808553971,
+        "wall_area_fraction": 0.09492058817689121,
+        "componentwise_wall_closure": 0.997357623156129,
+        "opening_wall_alignment": 0.9949465205369552,
+        "furniture_room_containment": 1.0,
+        "outside_footprint_fraction": 0.0,
+        "room_face_retention": 0.9956546660185849,
+        "validity": 1.0,
+        "watertight": 0.8167006109979633,
+        "functional_watertight": 0.9979633401221996,
+        "room_overlap_ratio": 0.0,
+        "wall_continuity_rate": 0.9954239736372508,
+        "plan_plausible": 0.9857433808553971
+      }
+    },
+    "23": {
+      "report": "/home/hugo/codes/planB/outputs/reports/predicted_control_plausibility_seed23_v12.json",
+      "metrics": {
+        "room_macro_iou_diagnostic": 0.2697411365548154,
+        "room_coverage": 1.0,
+        "raster_plausible": 0.9857433808553971,
+        "wall_area_fraction": 0.09181128284171451,
+        "componentwise_wall_closure": 0.9973584144409526,
+        "opening_wall_alignment": 0.9941756250417437,
+        "furniture_room_containment": 1.0,
+        "outside_footprint_fraction": 0.0,
+        "room_face_retention": 0.9956546660185849,
+        "validity": 1.0,
+        "watertight": 0.8167006109979633,
+        "functional_watertight": 0.9979633401221996,
+        "room_overlap_ratio": 0.0,
+        "wall_continuity_rate": 0.9954346533807633,
+        "plan_plausible": 0.9857433808553971
+      }
+    }
+  },
+  "summary": {
+    "room_macro_iou_diagnostic": {
+      "mean": 0.2697007730837154,
+      "standard_deviation": 7.071424285658001e-05,
+      "minimum": 0.2696020535664059,
+      "maximum": 0.26978030825211174,
+      "range": 0.00017825468570586978,
+      "ci95_low": 0.2696129697542001,
+      "ci95_high": 0.2697885764132306
+    },
+    "room_coverage": {
+      "mean": 1.0,
+      "standard_deviation": 0.0,
+      "minimum": 1.0,
+      "maximum": 1.0,
+      "range": 0.0,
+      "ci95_low": 1.0,
+      "ci95_high": 1.0
+    },
+    "raster_plausible": {
+      "mean": 0.984928716904277,
+      "standard_deviation": 0.001115524557037016,
+      "minimum": 0.9837067209775967,
+      "maximum": 0.9857433808553971,
+      "range": 0.0020366598778004397,
+      "ci95_low": 0.9835436102226919,
+      "ci95_high": 0.9863138235858621
+    },
+    "wall_area_fraction": {
+      "mean": 0.09202764189423931,
+      "standard_deviation": 0.002580992942506787,
+      "minimum": 0.08823843675628731,
+      "maximum": 0.09492058817689121,
+      "range": 0.006682151420603896,
+      "ci95_low": 0.08882291587791064,
+      "ci95_high": 0.095232367910568
+    },
+    "componentwise_wall_closure": {
+      "mean": 0.9973628143238831,
+      "standard_deviation": 5.931394831435227e-06,
+      "minimum": 0.997357623156129,
+      "maximum": 0.9973723975900537,
+      "range": 1.4774433924724661e-05,
+      "ci95_low": 0.9973554495244618,
+      "ci95_high": 0.9973701791233044
+    },
+    "opening_wall_alignment": {
+      "mean": 0.9935304120556612,
+      "standard_deviation": 0.0017314046419805132,
+      "minimum": 0.9911258634029136,
+      "maximum": 0.9950674245708351,
+      "range": 0.003941561167921437,
+      "ci95_low": 0.9913805892453911,
+      "ci95_high": 0.9956802348659313
+    },
+    "furniture_room_containment": {
+      "mean": 1.0,
+      "standard_deviation": 0.0,
+      "minimum": 1.0,
+      "maximum": 1.0,
+      "range": 0.0,
+      "ci95_low": 1.0,
+      "ci95_high": 1.0
+    },
+    "outside_footprint_fraction": {
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0,
+      "range": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    "room_face_retention": {
+      "mean": 0.9956546660185849,
+      "standard_deviation": 0.0,
+      "minimum": 0.9956546660185849,
+      "maximum": 0.9956546660185849,
+      "range": 0.0,
+      "ci95_low": 0.9956546660185849,
+      "ci95_high": 0.9956546660185849
+    },
+    "validity": {
+      "mean": 1.0,
+      "standard_deviation": 0.0,
+      "minimum": 1.0,
+      "maximum": 1.0,
+      "range": 0.0,
+      "ci95_low": 1.0,
+      "ci95_high": 1.0
+    },
+    "watertight": {
+      "mean": 0.8167006109979633,
+      "standard_deviation": 0.0,
+      "minimum": 0.8167006109979633,
+      "maximum": 0.8167006109979633,
+      "range": 0.0,
+      "ci95_low": 0.8167006109979633,
+      "ci95_high": 0.8167006109979633
+    },
+    "functional_watertight": {
+      "mean": 0.9979633401221996,
+      "standard_deviation": 0.0,
+      "minimum": 0.9979633401221996,
+      "maximum": 0.9979633401221996,
+      "range": 0.0,
+      "ci95_low": 0.9979633401221996,
+      "ci95_high": 0.9979633401221996
+    },
+    "room_overlap_ratio": {
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0,
+      "range": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    "wall_continuity_rate": {
+      "mean": 0.9954274177242576,
+      "standard_deviation": 7.866998683441663e-05,
+      "minimum": 0.9953004135835068,
+      "maximum": 0.9955110572827748,
+      "range": 0.0002106436992679317,
+      "ci95_low": 0.9953297360338661,
+      "ci95_high": 0.9955250994146491
+    },
+    "plan_plausible": {
+      "mean": 0.9865580448065174,
+      "standard_deviation": 0.001115524557037016,
+      "minimum": 0.9857433808553971,
+      "maximum": 0.9877800407331976,
+      "range": 0.0020366598778004397,
+      "ci95_low": 0.9851729381249323,
+      "ci95_high": 0.9879431514881025
+    }
+  },
+  "gate_by_seed": {
+    "19": {
+      "raster_plausibility": true,
+      "cad_identity": true,
+      "functional_topology": true,
+      "plan_plausibility": true
+    },
+    "20": {
+      "raster_plausibility": true,
+      "cad_identity": true,
+      "functional_topology": true,
+      "plan_plausibility": true
+    },
+    "21": {
+      "raster_plausibility": true,
+      "cad_identity": true,
+      "functional_topology": true,
+      "plan_plausibility": true
+    },
+    "22": {
+      "raster_plausibility": true,
+      "cad_identity": true,
+      "functional_topology": true,
+      "plan_plausibility": true
+    },
+    "23": {
+      "raster_plausibility": true,
+      "cad_identity": true,
+      "functional_topology": true,
+      "plan_plausibility": true
+    }
+  },
+  "all_seeds_pass": true
+}

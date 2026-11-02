@@ -18,6 +18,8 @@ htmlcov/
 
 # Local data mounts and generated artifacts
 .data/
+# Generated outputs stay local. Small frozen submission evidence JSON files are
+# added explicitly by path so multi-gigabyte caches and checkpoints stay out.
 outputs/
 checkpoints/
 wandb/
@@ -39,6 +41,10 @@ logs/
 *.tar.*
 *.tgz
 *.aux
+*.blg
+*.brf
+*.bcf
+*.run.xml
 *.fdb_latexmk
 *.fls
 *.out

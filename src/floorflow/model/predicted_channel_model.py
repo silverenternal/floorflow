@@ -75,7 +75,7 @@ class PredictedChannelModel(nn.Module):
         room_query_set_layers: int = 2,
         room_query_set_routing_attention: bool = True,
         query_count_gate: bool = True,
-        owner_preserving_room_readout: bool = True,
+        owner_preserving_room_readout: bool | str = True,
         room_instance_adaptive_query: bool = False,
         room_instance_adaptive_query_residual_scale: float = 0.0,
         room_instance_mask_aware_adjacency: bool = False,
@@ -84,6 +84,7 @@ class PredictedChannelModel(nn.Module):
         relational_adjacency_hidden: int = 128,
         room_instance_count_aware_graph: bool = False,
         count_aware_second_graph: bool = False,
+        area_preserving_mask_residual: bool | str = False,
         full_resolution_mask_refinement: bool = False,
         typed_opening_host_gate: bool = False,
         control_evidence_context: bool = False,
@@ -304,6 +305,7 @@ class PredictedChannelModel(nn.Module):
                 relational_adjacency_hidden=relational_adjacency_hidden,
                 room_instance_count_aware_graph=room_instance_count_aware_graph,
                 count_aware_second_graph=count_aware_second_graph,
+                area_preserving_mask_residual=area_preserving_mask_residual,
                 full_resolution_mask_refinement=full_resolution_mask_refinement,
             )
         )
@@ -502,6 +504,7 @@ class PredictedChannelModel(nn.Module):
             opening_condition = opening_stage_condition(
                 wall_probability,
                 room_probability,
+                controls.get("opening_center_probability"), controls.get("opening_interval_width"),
             )
             opening_stage_logits = apply_stage(
                 "openings",

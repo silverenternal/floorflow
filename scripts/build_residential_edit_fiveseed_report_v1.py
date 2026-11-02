@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 
@@ -27,6 +28,7 @@ METRICS = (
     "outside_exact_ratio",
     "outside_changed_pixels",
 )
+FROZEN_RASTER2SEQ = ROOT / "outputs/reports/fp_raster2seq_local_redraw_v1.json"
 
 
 def report_path(seed: int) -> Path:
@@ -35,6 +37,27 @@ def report_path(seed: int) -> Path:
         / "outputs/reports"
         / f"residential_edit_hybrid_typedall_seed{seed}_v1.json"
     )
+
+
+def sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def frozen_raster2seq_rows(report: dict) -> dict[str, dict[str, dict]]:
+    rows = {}
+    for operation in OPERATIONS:
+        operation_rows = report["operations"][operation]["rows"]
+        if len(operation_rows) != int(report["operations"][operation]["cases"]):
+            raise ValueError(f"frozen Raster2Seq case count mismatch: {operation}")
+        by_name = {str(row["name"]): row for row in operation_rows}
+        if len(by_name) != len(operation_rows):
+            raise ValueError(f"duplicate frozen Raster2Seq names: {operation}")
+        rows[operation] = by_name
+    return rows
 
 
 def paired_test(rows: list[dict], left: str, right: str) -> dict:
@@ -73,6 +96,8 @@ def main() -> None:
         seed: json.loads(report_path(seed).read_text(encoding="utf-8"))
         for seed in SEEDS
     }
+    raster_report = json.loads(FROZEN_RASTER2SEQ.read_text(encoding="utf-8"))
+    frozen_rows = frozen_raster2seq_rows(raster_report)
     operations = {}
     checks = {}
     for operation in OPERATIONS:
@@ -86,19 +111,51 @@ def main() -> None:
                 else "floorflow"
             )
             typed = operation_report["methods"][primary_name]
+            frozen = frozen_rows[operation]
+            row_names = {str(row["name"]) for row in operation_report["rows"]}
+            if row_names != set(frozen):
+                missing = len(row_names - set(frozen))
+                extra = len(set(frozen) - row_names)
+                raise ValueError(
+                    f"{operation} seed {seed} frozen Raster2Seq mismatch: "
+                    f"{missing} missing, {extra} extra"
+                )
+            frozen_metrics = {
+                "delta_iou": float(
+                    np.mean([frozen[name]["delta_iou"] for name in row_names])
+                ),
+                "delta_mse": float(
+                    np.mean([frozen[name]["delta_mse"] for name in row_names])
+                ),
+                "outside_exact_ratio": float(
+                    np.mean(
+                        [
+                            frozen[name]["outside_exact_ratio"]
+                            for name in row_names
+                        ]
+                    )
+                ),
+            }
             per_seed[str(seed)] = {
                 "cases": operation_report["cases"],
                 "primary_method": primary_name,
                 "primary_edit": typed,
                 "floorflow": operation_report["methods"]["floorflow"],
-                "raster2seq_local": operation_report["methods"]["raster2seq_local"],
+                "raster2seq_local": frozen_metrics,
+                "raster2seq_source": str(FROZEN_RASTER2SEQ.relative_to(ROOT)),
             }
             pooled_rows.extend(
                 {
                     "name": row["name"],
                     "primary_edit": row[primary_name],
                     "floorflow": row["floorflow"],
-                    "raster2seq_local": row["raster2seq_local"],
+                    "raster2seq_local": {
+                        "delta_iou": float(frozen[str(row["name"])]["delta_iou"]),
+                        "delta_mse": float(frozen[str(row["name"])]["delta_mse"]),
+                        "outside_exact_ratio": float(
+                            frozen[str(row["name"])]["outside_exact_ratio"]
+                        ),
+                    },
                 }
                 for row in operation_report["rows"]
             )
@@ -119,6 +176,19 @@ def main() -> None:
         operations[operation] = {
             "per_seed": per_seed,
             "primary_edit_summary": metric_summary,
+            "seed_variation": {
+                "unit": "five repeated execution seeds on identical test503 rows",
+                "primary_metric": "delta_iou",
+                "range": [
+                    metric_summary["delta_iou"]["min"],
+                    metric_summary["delta_iou"]["max"],
+                ],
+                "standard_deviation": metric_summary["delta_iou"]["std"],
+                "interpretation": (
+                    "Repeated-seed variation only; not an estimate of "
+                    "floorplan population variance."
+                ),
+            },
             "paired_vs_raster2seq_local": paired_test(
                 pooled_rows,
                 "primary_edit",
@@ -144,9 +214,23 @@ def main() -> None:
         "seeds": list(SEEDS),
         "operations": operations,
         "checks": checks,
+        "statistical_unit": {
+            "paired_test": "one mean difference per unique floorplan name",
+            "bootstrap_or_wilcoxon_duplicates_seed_rows": False,
+            "seed_variation": "reported separately",
+        },
+        "sources": {
+            str(report_path(seed).relative_to(ROOT)): sha256(report_path(seed))
+            for seed in SEEDS
+        }
+        | {
+            str(FROZEN_RASTER2SEQ.relative_to(ROOT)): sha256(FROZEN_RASTER2SEQ)
+        },
         "claim_boundary": (
             "The primary edit uses declared oracle controls. It is a "
-            "strict-locality editing result, not an identity reconstruction rank."
+            "strict-locality editing result, not an identity reconstruction rank. "
+            "Raster2Seq uses the frozen outside-redraw wrapper; it is not a "
+            "native editing-aware model."
         ),
     }
     output = ROOT / "outputs/reports/residential_edit_test503_v1.json"

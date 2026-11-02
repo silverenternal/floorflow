@@ -1,260 +1,339 @@
-\documentclass[10pt,twocolumn]{article}
-\usepackage[margin=0.7in]{geometry}
-\usepackage{graphicx}
-\usepackage{booktabs}
-\usepackage{amsmath}
-\usepackage{hyperref}
+% CVPR 2027 review submission
+\documentclass[10pt,twocolumn,letterpaper]{article}
+\usepackage[review]{cvpr}
+\def\confName{CVPR}
+\def\confYear{2027}
+\definecolor{cvprblue}{rgb}{0.21,0.49,0.74}
+\usepackage[pagebackref,breaklinks,colorlinks,allcolors=cvprblue]{hyperref}
 \usepackage{microtype}
-\usepackage{times}
 
 \title{Reliable Strictly Local Floorplan Editing\\under Imperfect Controls}
-\author{Anonymous Submission}
+\author{Anonymous CVPR submission}
 \date{}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-Floorplan editors often report edit accuracy without showing whether unrelated
-geometry remains unchanged. We study a complementary requirement: reliable local
-execution under an explicit control interface. A request consists of an old CAD
-state, a declared edit region, and a typed control change. The output may change
-only inside the declared region and must remain structurally legal. We evaluate
-FloorFlow in two regimes. Under declared oracle controls, five operations reach
-Delta-IoU 0.9567--0.9998 and Delta-MSE 0.000019--0.000096, while preserving
-outside pixel, room, polygon, wall, opening, and edge content exactly. Under
-target-free predicted controls, the model produces structurally plausible plans,
-executes every supported validation prompt, and abstains from unsupported or
-ambiguous requests. We separate these safety properties from
-target-comparative fidelity: predicted Room macro IoU remains 0.2697 and
-operation-specific semantic success is mixed. The results position strict
-locality and safe operation execution as measurable requirements distinct from
-reconstruction accuracy.
+Floorplan editors often report edit accuracy without establishing that unrelated
+architecture remains unchanged. We study a complementary requirement: reliable
+local execution under an explicit control interface. A request consists of an
+old CAD state, a declared edit region, and a typed control change. The output may
+change only inside the declared region and must remain structurally legal. We
+evaluate this contract in two regimes. Under target-derived oracle controls,
+FloorFlow reaches Delta-IoU 0.956703--0.999801 and Delta-MSE
+0.000019--0.000096 across five operations while preserving outside pixel, room,
+polygon, wall, opening, and unaffected-edge content exactly. Under target-free
+predicted controls, it preserves the same outside contract, produces structurally
+plausible plans over five repeated validation seeds, and abstains from every
+unsupported or ambiguous request in a development-exposed prompt audit. We keep
+these safety properties separate from reference fidelity: predicted Room macro
+IoU is 0.269701, raw watertightness is 0.816701, and an older-model semantic
+diagnostic ranges from 0.00 to 0.92. The contribution is a scoped, auditable
+editing result and a reproducible boundary between locality, legality, and
+semantic realization, not a claim of complete benchmark superiority.
 \end{abstract}
 
 \section{Introduction}
-Local editing is more than generating a plausible replacement image.
-An edit must realize a requested operation while leaving unrelated architecture
-unchanged. Existing floorplan editors emphasize final layout quality or
-instruction following, but do not routinely expose a mechanical locality
-contract. This makes it difficult to distinguish a semantic edit from a global
-regeneration that happens to preserve the target.
+A floorplan edit is not merely a plausible new drawing. It is a controlled
+transition from an existing plan: the requested operation must be realized, the
+unaffected architecture must remain untouched, and the result must remain legal.
+These requirements are usually conflated in end-to-end metrics. A global
+regeneration can score well on an image or vector comparison while silently
+moving walls outside the requested region. Conversely, a perfectly local change
+can preserve geometry while failing to perform the requested semantic operation.
 
-We formulate editing as a control-state transition. The pre-edit drawing and its
-control state are valid inputs, as they are in an engineering workflow. A typed
-operation changes the control source; the model must realize that change in the
-current plan without modifying the outside region. Unsupported or ambiguous
-requests are not forced through the generator and instead produce a safe
-abstention.
+We treat locality, topology legality, edit support, and semantic realization as
+separate measurement axes. The input is an old plan, its control state, a
+declared edit region, and a typed operation. FloorFlow composes a control change
+only inside the declared domain, restores the outside layers exactly, and audits
+the resulting topology. Unsupported wall movement, ambiguous global scope, and
+conflicting instructions are routed to abstention rather than forced through the
+generator.
 
-Our contribution is a two-axis evaluation rather than a claim of complete-method
-SOTA:
+The evaluation deliberately separates two evidence regimes. Oracle controls use
+target-derived after-edit controls and establish an editing upper bound; they are
+not deployable. Predicted controls are target-free at inference and expose the
+real operating point, including weak reference fidelity and mixed semantic
+success. A matched reconstruction wrapper, an outside-frozen editing-aware
+control, deterministic composition-policy arms, and protocol attacks test whether
+the observed locality and edit support can be explained by freezing alone.
+
+Our contributions are:
 \begin{itemize}
-\item a strict locality and typed-operation contract;
-\item an oracle-control upper bound for edit fidelity;
-\item target-free structural reasonableness under imperfect controls;
-\item an operation-success audit that separates safe execution from requested
-semantic realization;
-\item matched local controls and deterministic sensitivity tests.
+\item a strictly local typed-edit protocol with an explicit outside domain and
+zero-tolerance preservation audit;
+\item a scoped oracle-control anchor over 2,479 edits, five operations, and five
+repeated execution seeds;
+\item a target-free reliability audit that separates execution safety,
+structural plausibility, raw topology, and reference fidelity;
+\item matched controls and a deterministic composition ablation showing where the
+measured gain comes from and where it does not;
+\item a reproducible evidence release whose numerical claims are bound to a
+source registry, frozen file identities, and case-level figure provenance.
 \end{itemize}
+
+The paper does not claim complete HouseMind or RPLAN superiority, full-CAD SOTA,
+deployable free-text editing, or fresh held-out generalization. Those boundaries
+are part of the result.
 
 \section{Related Work}
 HouseMind unifies floorplan understanding, generation, and editing with discrete
-room-instance tokens~\cite{housemind}. Its public edit table reports edit and
-graph metrics but does not expose strict outside preservation or attack-tested
-locality. Raster2Seq reconstructs vector plans from raster inputs and serves here
-as a matched reconstruction wrapper, not an editing-aware
-model~\cite{raster2seq}. CE2EPlan addresses boundary-conditioned vector
+room-instance representations and reports edit and graph metrics on an RPLAN
+natural-language protocol~\cite{housemind}. We use its published Delta-IoU and
+Delta-MSE values only as cross-dataset context. The public table does not expose
+strict outside preservation, locality violations, negative controls, or attack
+sensitivity, so it cannot certify the contract studied here.
+
+Raster2Seq reconstructs vector plans from raster inputs~\cite{raster2seq}. We use
+an outside-frozen raster-to-vector redraw as a matched reconstruction wrapper.
+This is a strong diagnostic against the concern that a locality wrapper alone
+produces the reported result, but it is not a native editing model and we do not
+attribute editing awareness to it. CE2EPlan studies boundary-conditioned vector
 generation~\cite{ce2eplan}; generation evidence is not interpreted as editing
 evidence.
 
-Floorplan datasets and metrics supply the geometric substrate. CubiCasa5K
-provides heterogeneous annotated floorplans~\cite{cubicasa}. GSDiff informs
-typed graph evaluation~\cite{gsdiff}. We report aligned, canonical-instance, and
-typed graph protocols separately and never pool their values.
+Floorplan recognition and vectorization provide the geometric substrate.
+CubiCasa5K supplies heterogeneous annotated plans~\cite{cubicasa}, while graph
+representations such as GSDiff inform structured evaluation~\cite{gsdiff}. We do
+not pool aligned, canonical-instance, and typed graph protocols, and we report
+graph values as diagnostics rather than a ranking.
 
-\section{Protocol}
+\section{Problem and Protocol}
 \subsection{Control Transition}
-Let $x_0$ be the old visible plan and $c_0$ its predicted control state. A
-request consists of a normalized or control-grid edit region $R$ and a typed
-operation $a$. The edited control is $c_1=T_a(c_0)$. The model outputs
-$x_1=f(x_0,c_1,R)$.
-
-The old control source is part of the request. This mirrors CAD editing, where a
-new constraint is applied relative to an existing drawing and its prior
-controls. Successful operation behavior therefore requires two separate checks:
-whether the request is supported and whether the current plan realizes the
-requested change.
+Let $x_0$ be the old visible plan and $c_0$ its control state. A request contains
+a normalized or control-grid edit region $R$ and a typed operation $a$. The
+edited control is $c_1=T_a(c_0)$, and the model outputs
+\begin{equation}
+x_1=f(x_0,c_1,R).
+\end{equation}
+The old control state is an allowed input because engineering edits are applied
+relative to an existing drawing and its constraints. The contract therefore asks
+two separate questions: is the request supported, and does the output realize the
+requested change without changing the rest of the plan?
 
 \subsection{Strict Outside Domain}
 The valid outside domain is
 \begin{equation}
 O = P \land \neg R \land \neg D_1(W_0 \lor W_1),
 \end{equation}
-where $P$ is the footprint, $W_0,W_1$ are pre/post wall support, and $D_1$ is
-one-pixel dilation. Pixel, room-label, polygon, wall, opening, and unaffected-edge
-content outside $R$ is compared with zero tolerance.
+where $P$ is the footprint, $W_0,W_1$ are pre- and post-edit wall support, and
+$D_1$ is one-pixel dilation. Pixel, room-label, room-mask, polygon, wall, opening,
+and unaffected-edge content outside $O$ is compared exactly. A change there is a
+contract failure, not a small quality loss. The changed-control mask is an anchor
+for the requested edit and cannot expand the allowed domain.
 
-\subsection{Typed Operations and Abstention}
-Supported operations are room-type change, room addition, room removal, opening
-deletion, and furniture deletion. Unsupported wall movement, ambiguous global
-scope, and conflicting instructions trigger abstention. Abstention returns the
-pre-edit plan and is never counted as a semantic success.
+\subsection{Operations and Abstention}
+The supported operations are room-type change, room addition, room removal,
+opening deletion, and furniture deletion. Unsupported wall movement, ambiguous
+global scope, and conflicting instructions trigger safe abstention. Abstention
+returns the pre-edit plan and is never counted as a semantic edit.
+
+\section{FloorFlow}
+\subsection{Typed Control Routing}
+FloorFlow represents rooms, walls, openings, furniture, and support regions as
+typed control families. A typed router selects the family and spatial support
+affected by the request. The routing policy used in the main evidence is
+deterministic and adds no learned parameters over the matched no-graph arm. It is
+therefore evaluated as a composition policy, not as a separately trained network.
+
+\subsection{Local Composition}
+The old plan, the predicted post-edit completion, and the edit support are
+composed through a control-change gate. The gate admits the requested delta only
+inside the declared region, then restores outside layers exactly. This operation
+is intentionally conservative: it can preserve an unsupported local change when
+the semantic execution is weak, but it cannot hide an outside violation behind a
+small average error.
+
+\subsection{Verification}
+FP-Eval checks mandatory validity and conditional watertightness. FEVP checks the
+five-layer outside contract and protocol attacks. Structural diagnostics report
+wall continuity, opening alignment, furniture containment, outside-footprint
+leakage, room overlap, and graph readouts. Raw watertightness and functional or
+componentwise watertightness are always reported separately.
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=\textwidth]{figures/floorplan_protocol_overview_v1.pdf}
-\caption{The editing contract. The old CAD state and typed control request enter
-the executor. Supported requests receive a local edit, while unsupported or
-ambiguous requests abstain. Accepted outputs are checked for exact outside
-preservation, topology validity, and structural plausibility.}
+\includegraphics[width=0.96\textwidth]{figures/floorplan_protocol_overview_v1.pdf}
+\caption{Strict local editing as a typed control transition. Supported requests
+are executed and audited; unsupported or ambiguous requests return a safe
+abstention. The outside contract is checked independently of edit fidelity.}
 \label{fig:protocol}
 \end{figure*}
 
-\section{Method}
-FloorFlow composes a typed local delta with the cached pre-edit plan.
-Room operations modify the room partition; object deletions remove the requested
-family. The resulting candidate is repaired to a legal partition and rendered
-with explicit room, wall, opening, and furniture layers.
+\section{Experimental Design}
+\subsection{Populations and Exposure}
+Oracle-control results use CubiCasa5K test503 with 2,479 eligible edits across
+five operations and five repeated execution seeds. The primary local-delta path
+is deterministic on fixed rows; repeated seeds verify reproducibility rather than
+create independent floorplans.
 
-The operation audit derives the requested source and target room classes from
-the signed control-logit change. Room type and addition require the target class
-to account for at least half of changed pixels and contain at least four output
-pixels. Room removal requires the source class to be removed or merged. Object
-deletion requires the requested family to be absent after the local edit.
+Predicted structural reasonableness uses val491 with 491 target-free cases per
+seed and five repeated seeds. The operation audit contains 738 prompts from a
+development-exposed test manifest. Its row metadata declares \texttt{split=test};
+legacy summary fields claiming val191 are ignored. A separate semantic diagnostic
+uses an older val191 model and is never pooled with the selected release model or
+with oracle rows.
 
-\section{Experiments}
-\subsection{Data and Evaluation}
-We use CubiCasa5K. Oracle-control editing uses test503 with five typed operations
-and five repeated seeds. Predicted-control plausibility uses val491 with five
-seeds and target-free generation. Predicted operation auditing uses validation
-outputs; the predicted model and operation thresholds are not frozen, so these
-numbers are preliminary. The test manifest used during development is not
-presented as a held-out result.
+Fresh held-out generalization is marked
+\texttt{optional\_generalization\_not\_evaluated}. A new held-out claim would
+require a separate pre-access freeze, one execution, and retention of every
+negative result. It is not a prerequisite for the scoped claims in this paper.
 
-We report edit fidelity, exact outside preservation, FP-Eval validity, the
-independent FEVP five-check validity, raw and functional watertightness, graph
-diagnostics, structural plausibility, and operation-specific success. These
-metrics answer different questions and are not collapsed into one score.
+\subsection{Statistical Units}
+Delta-IoU intervals resample floorplans with replacement and average all edit
+instances inside a sampled floorplan. Repeated seed rows are not treated as
+independent plans. Paired baselines use one difference per unique floorplan and
+Holm adjustment across five operations. The seed19 trace audit recomputes all
+2,479 oracle rows with zero IoU error; other seeds remain reported reproducibility
+checks.
 
-\subsection{Oracle-Control Fidelity}
-Table~\ref{tab:oracle} reports the declared-control upper bound. All five
-operations numerically exceed the published HouseMind-E Delta-IoU and Delta-MSE
-anchors. The datasets and inputs differ, so this is protocol context rather than
-a leaderboard rank.
+\subsection{Matched Controls}
+The reconstruction wrapper applies Raster2Seq inside an outside-frozen local
+redraw. The editing-aware control consumes the same declared pre/post controls but
+recomputes its own paired FloorFlow row. Deterministic composition arms remove
+typed routing, dense cross-attention, edit gating, or the structural graph while
+keeping the measured rows fixed. The budget audit is post hoc and does not support
+an efficiency claim.
 
-\begin{table*}[t]
-\centering
-\caption{Oracle-control editing on CubiCasa test503. Outside exact covers pixel,
-room, polygon, wall, opening, and unaffected-edge content.}
-\label{tab:oracle}
-\begin{tabular}{lrrrrr}
-\toprule
-Operation & N & Delta-IoU & Delta-MSE & Outside exact & FP-Eval \\
-\midrule
-Room type & 487 & 0.999199 & 0.000069 & 1.000000 & 1.000000 \\
-Room add & 495 & 0.999801 & 0.000030 & 1.000000 & 1.000000 \\
-Room remove & 500 & 0.999756 & 0.000019 & 1.000000 & 1.000000 \\
-Opening delete & 502 & 0.956703 & 0.000096 & 1.000000 & 1.000000 \\
-Furniture delete & 495 & 0.987812 & 0.000083 & 1.000000 & 1.000000 \\
-\bottomrule
-\end{tabular}
-\end{table*}
+\section{Results}
+\subsection{Oracle-Control Editing Anchor}
+Table~\ref{tab:oracle} reports the scoped oracle anchor. Room type, room addition,
+and room removal exceed 0.999 Delta-IoU, while opening deletion and furniture
+deletion reach 0.956703 and 0.987812. Outside exactness and FP-Eval validity are
+1.0 for every operation. Pooled conditional watertightness is
+0.957875--0.967491, and independent FEVP five-check validity ranges from 0.9124
+to 0.9569.
 
-\subsection{Predicted-Control Reliability}
-Predicted-control outputs are structurally plausible despite low
-target-comparative fidelity. Over val491, raster plausibility is 0.9849, plan
-plausibility 0.9866, functional watertightness 0.9980, and wall continuity
-0.9954. Room macro IoU is only 0.2697. Raw fpeval watertightness is 0.8167; the
-gap is concentrated in multi-component footprints, while all 401
-single-component footprints reach raw watertightness 1.0.
+These values measure binary change support. They do not prove requested-class
+correctness: a visually large change can have high Delta-IoU while realizing the
+wrong class. That boundary is why the paper reports semantic diagnostics
+separately rather than interpreting the oracle metric as deployable accuracy.
 
-The latest development exposure contains 738 prompts: all 438 supported prompts
-execute, all 300 unsupported or ambiguous prompts abstain, and every category
-preserves outside content exactly with validity 1.0. Because these rows used the
-test manifest during development, they are not held-out evidence.
+\input{tables/main_oracle_anchor_v1}
+
+\input{tables/main_resource_and_ablation_v1}
+
+\subsection{Target-Free Predicted Reliability}
+Table~\ref{tab:predicted} separates structural plausibility from safety and
+semantics. Across val491, raster plausibility is 0.984929, plan plausibility
+0.986558, FP-Eval validity 1.0, functional watertightness 0.997963, and wall
+continuity 0.995427. Room-face retention is 0.995655. Outside-footprint leakage
+and room overlap are zero.
+
+Raw watertightness is 0.816701, not 1.0. Of 491 footprints, 401 are
+single-component and pass both raw and componentwise checks; 90 are
+multi-component and exceed the standard single-region FP-Eval boundary. The
+component-aware diagnostic does not redefine the raw metric. Predicted Room macro
+IoU is only 0.269701, confirming that structural reasonableness is not reference
+fidelity.
+
+All 438 supported development-exposed prompts execute, all 300 unsupported or
+ambiguous prompts abstain, and every row preserves outside pixel and room-label
+content exactly with validity 1.0. This is a safety result. The older val191
+semantic diagnostic remains mixed: room addition 92/100, room type 55/100, room
+removal 20/100, opening deletion 30/59, and furniture deletion 0/15. Object-delete
+and ghost-state contracts are separate execution checks and are not semantic
+successes.
+
+\input{tables/main_predicted_reliability_v1}
+
+\subsection{Matched Controls and Composition}
+The outside-frozen Raster2Seq wrapper reaches Delta-IoU 0.137160--0.189491 across
+the five operations, while the editing-aware control reaches
+0.731151--0.998508. FloorFlow's paired gains over the redraw wrapper range from
+0.767212 to 0.862039. Gains over the editing-aware control range from 0.001340 for
+room removal to 0.245343 for furniture deletion. The small room-addition and
+room-removal gains are retained rather than rounded into a uniform improvement.
+
+Typed routing leads the deterministic composition arms in Delta-IoU, Node F1,
+Edge F1, and GED. At matched observable routing budget it adds 0.048656 Delta-IoU
+and changes GED by -0.061396 with zero added learned parameters. It is slower:
+3.1925 ms versus 0.2666 ms mean routing time. All 26 deterministic attacks are
+sensitive with observed false-pass and false-fail rates of zero.
+
+\subsection{External Context}
+Table~\ref{tab:external} is intentionally not a leaderboard. The published
+HouseMind-E Delta-IoU and Delta-MSE anchors are 0.608 and 0.0019, numerically
+below the oracle-control pair, but the datasets, inputs, and evaluation units
+differ. HouseMind-E graph metrics remain substantially stronger than the current
+typed diagnostic. Predicted node F1 is 0.660202, edge overlap 0.264622, and GED
+11.600815. We report this as a fidelity limitation, not a hidden zero.
+
+\input{tables/main_external_context_v1}
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=\textwidth]{figures/predicted_control_operation_panels_v1.pdf}
-\caption{Safety, structural plausibility, and semantic operation realization are
-separate axes. The current model satisfies the safety contract and produces
-plausible plans, while semantic realization remains mixed. This is a preliminary
-validation audit, not a held-out result.}
-\label{fig:predicted}
+\includegraphics[width=\textwidth]{figures/floorplan_qualitative_cases_v1.pdf}
+\caption{Case-level audit. Top: oracle room-type control with before/after
+controls, changed support, prediction, and reference. Bottom: a target-free
+predicted failure retained without reclassification. Oracle controls are
+target-derived; the predicted case is not held out.}
+\label{fig:qualitative}
 \end{figure*}
 
-\subsection{Operation Realization}
-Table~\ref{tab:operation} reports preliminary validation semantic success. Safe
-execution alone is insufficient: room addition reaches 0.92, room type 0.55,
-room removal 0.20, opening deletion 0.51, and furniture deletion 0.00. These
-rates are retained as a boundary and will be recomputed after model freeze.
+\section{Discussion}
+The results support a distinction between edit reliability and reference
+fidelity. Oracle controls show that the composition and restoration path can
+support large local changes while leaving the outside domain exact. Predicted
+controls show that the same path preserves the safety contract and produces
+geometrically plausible plans even when room identity and graph fidelity are weak.
+This is useful for an interactive system because unsafe edits and unsupported
+requests can be separated from semantic quality rather than averaged into one
+number.
 
-\begin{table}[t]
-\centering
-\caption{Preliminary semantic operation success. Denominator is the number of
-supported prompts. Safety and semantic success are separate claims.}
-\label{tab:operation}
-\begin{tabular}{lrr}
-\toprule
-Operation & Success & Denominator \\
-\midrule
-Room add & 0.92 & 100 \\
-Room type & 0.55 & 100 \\
-Room remove & 0.20 & 100 \\
-Opening delete & 0.5085 & 59 \\
-Furniture delete & 0.00 & 15 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsection{Mechanism and Robustness}
-Typed routing improves aggregate Delta-IoU over dense, no-gate, and no-graph
-arms while retaining exact outside room preservation. At matched observable
-compute with no added learned parameters, typed routing raises Delta-IoU by
-0.0487 and lowers GED by 0.0614. The strict arm has five-layer outside exactness
-1.0 and violation rate 0.0 over 12,395 rows and 7,345 single-room controls.
-Twenty-six deterministic attacks are all sensitive with zero observed false
-passes or false failures.
+The evidence also exposes the cost of that conservatism. Semantic realization is
+uneven, predicted Room macro IoU is low, and the raw watertightness boundary is
+visible for multi-component footprints. A system that appears reliable by
+preserving the input too aggressively is not sufficient if it fails to realize
+the requested operation. We therefore report execution and abstention as safety
+outcomes, not as semantic success.
 
 \section{Limitations}
-Oracle controls are target-derived and non-deployable. Predicted reconstruction
-and graph fidelity remain weak. Semantic operation success is mixed, and the
-current development run is not held-out evidence. The model, thresholds, and
-evaluator must be frozen before a fresh one-shot evaluation. The paper does not
-claim complete HouseMind superiority, RPLAN SOTA, full-CAD SOTA, or free-text
-editing.
+Oracle controls are target-derived and non-deployable. Predicted results come
+from an existing validation and development-exposed test exposure, not a fresh
+held-out run. Five repeated seeds are not independent plans. Raster2Seq is a
+reconstruction wrapper, not a native editing baseline. The editing-aware control
+is intentionally weak. Raw and functional watertightness answer different
+questions. HouseMind-E is cross-dataset context and the official serialization is
+unavailable.
+
+The paper does not claim complete-method SOTA, RPLAN or full-CAD leadership,
+deployable free-text control, high predicted room identity, or uniform semantic
+success. Move-wall, resize, and free-form global recomposition remain outside the
+supported operation set.
 
 \section*{Data and Ethics}
-The study uses CubiCasa5K under its research-use terms and does not introduce
-human subjects, participant data, or personally identifiable information. The
-released artifact excludes datasets, checkpoints, third-party source trees, and
-large generated outputs. Dataset provenance, selected evidence files, and
-checksums are recorded separately from the manuscript.
+The study uses CubiCasa5K under its research-use terms. It introduces no human
+subjects, participant data, or personally identifiable information. The release
+excludes datasets, checkpoints, raw tensors, third-party source trees, and
+unselected generated outputs. The evidence registry, frozen file identities,
+figure case manifest, artifact manifest, and checksums are released with the
+manuscript.
 
-\section{Conclusion}
-Strict locality and safe operation execution are measurable properties distinct
-from reconstruction fidelity. FloorFlow provides a strong oracle-control editing
-anchor and a plausible target-free execution path, while the preliminary
-operation audit exposes exactly where semantic realization remains unsolved.
+\section*{Reproducibility Statement}
+Every numerical value in the main tables is bound to
+\path{docs/floorplan_submission_source_registry_v2.json} and the frozen
+release in \path{configs/floorplan_submission_evidence_freeze_v2.json}.
+The provenance and freeze audits are machine-readable. Figure cases are selected
+by a recorded deterministic rule and stored in
+\path{outputs/reports/floorplan_figure_case_manifest_v1.json}. The artifact
+package is anonymous and contains source, tests, selected configurations,
+manuscript sources, tables, figures, and selected evidence. It does not contain
+datasets or checkpoints.
 
-\begin{thebibliography}{9}
-\raggedright
-\bibitem{housemind}
-HouseMind: Unified Floorplan Understanding, Generation, and Editing.
-arXiv:2603.11640.
-\bibitem{raster2seq}
-Raster2Seq: Vector Floorplan Reconstruction from Raster Inputs.
-DOI:10.1145/3799902.3811124.
-\bibitem{ce2eplan}
-CE2EPlan: End-to-End Boundary-Conditioned Vector Floorplan Generation.
-IEEE TVCG, 2026. DOI:10.1109/TVCG.2026.3665422.
-\bibitem{cubicasa}
-CubiCasa5K: A Dataset and Benchmark for Floorplan Recognition.
-DOI:10.1007/978-3-030-20205-7\_3.
-\bibitem{gsdiff}
-GSDiff: Geometry-Enhanced Structural Graph Generation.
-DOI:10.1609/aaai.v39i16.33904.
-\end{thebibliography}
+\section*{LLM Usage Statement}
+Large language model assistance was used for code editing, artifact auditing,
+LaTeX formatting, and language editing. Numerical claims were checked against the
+frozen source registry and generated tables. The reported experiments were not
+replaced by model-generated results, and no held-out number, execution receipt,
+or venue submission receipt was fabricated. The authors remain responsible for
+the final manuscript, data use, and external submission.
+
+{\small
+\bibliographystyle{ieeenat_fullname}
+\bibliography{references}
+}
 
 \end{document}
+

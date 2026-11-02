@@ -74,6 +74,7 @@ def test_cad_stage_loss_exposes_atomic_balancing_terms() -> None:
         "stage_opening_precision",
         "stage_opening_host",
         "stage_opening_type",
+        "stage_opening_family",
         "stage_furniture",
     }
     torch.stack(list(terms.values())).sum().backward()
@@ -118,3 +119,37 @@ def test_opening_type_loss_averages_cases_before_batch() -> None:
         components["stage_opening_type_loss"],
         torch.stack(losses).mean(),
     )
+
+
+def test_opening_family_loss_penalizes_door_window_collapse() -> None:
+    taxonomy = _taxonomy()
+    logits = torch.full(
+        (1, taxonomy.num_classes, 8, 8),
+        -8.0,
+        requires_grad=True,
+    )
+    with torch.no_grad():
+        door = taxonomy.opening_ids[0]
+        window = taxonomy.opening_ids[1]
+        logits[:, door, 2:5, 2:5] = 8.0
+    target = torch.zeros(1, 8, 8, dtype=torch.long)
+    window = taxonomy.opening_ids[1]
+    target[:, 2:5, 2:5] = window
+    _loss, components, terms = cad_stage_loss(
+        logits,
+        target,
+        torch.ones(1, 8, 8),
+        taxonomy,
+        opening_family_weight=1.0,
+        return_loss_terms=True,
+    )
+    assert components["stage_opening_family_loss"] > 0.5
+    assert torch.equal(
+        terms["stage_opening_family"],
+        components["stage_opening_family_loss"],
+    )
+    terms["stage_opening_family"].backward()
+    assert logits.grad is not None
+    assert torch.count_nonzero(
+        logits.grad[:, taxonomy.opening_ids[1]][:, 2:5, 2:5]
+    ) > 0

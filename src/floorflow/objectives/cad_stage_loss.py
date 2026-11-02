@@ -26,6 +26,8 @@ def cad_stage_loss(
     wall_precision_weight: float = 0.0,
     opening_precision_weight: float = 0.0,
     opening_host_weight: float = 0.0,
+    opening_family_weight: float = 0.0,
+    opening_class_weights: torch.Tensor | None = None,
     return_loss_terms: bool = False,
 ) -> tuple[torch.Tensor, dict[str, torch.Tensor]] | tuple[
     torch.Tensor,
@@ -66,6 +68,17 @@ def cad_stage_loss(
 
     opening_ids = torch.tensor(taxonomy.opening_ids, device=logits.device)
     opening_logits = logits[:, opening_ids]
+    if opening_class_weights is not None:
+        weights = opening_class_weights.to(
+            device=opening_logits.device,
+            dtype=opening_logits.dtype,
+        )
+        if weights.shape != (len(taxonomy.opening_ids),):
+            raise ValueError(
+                "opening class weights must match opening classes"
+            )
+    else:
+        weights = None
     opening_foreground = torch.logsumexp(opening_logits, dim=1) - 0.5 * torch.log(
         opening_logits.new_tensor(float(len(opening_ids)))
     )
@@ -104,6 +117,7 @@ def cad_stage_loss(
         F.cross_entropy(
             type_logits[index][opening_target[index]],
             type_target[index][opening_target[index]],
+            weight=weights,
         )
         for index in range(target.shape[0])
         if bool(opening_target[index].any())
@@ -113,11 +127,55 @@ def cad_stage_loss(
         if per_case_type_losses
         else opening_foreground.sum() * 0.0
     )
+    door_indices = [
+        index
+        for index, class_id in enumerate(taxonomy.opening_ids)
+        if taxonomy.class_names[class_id].startswith("door:")
+    ]
+    window_indices = [
+        index
+        for index, class_id in enumerate(taxonomy.opening_ids)
+        if taxonomy.class_names[class_id].startswith("window:")
+    ]
+    if not door_indices or not window_indices:
+        family_loss = opening_foreground.sum() * 0.0
+    else:
+        family_target = (
+            torch.isin(target, opening_ids[window_indices])
+            & opening_target
+        )
+        family_logits = torch.stack(
+            [
+                torch.logsumexp(
+                    opening_logits[:, door_indices],
+                    dim=1,
+                ),
+                torch.logsumexp(
+                    opening_logits[:, window_indices],
+                    dim=1,
+                ),
+            ],
+            dim=1,
+        )
+        per_case_family_losses = [
+            F.cross_entropy(
+                family_logits[index].permute(1, 2, 0)[opening_target[index]],
+                family_target[index][opening_target[index]].long(),
+            )
+            for index in range(target.shape[0])
+            if bool(opening_target[index].any())
+        ]
+        family_loss = (
+            torch.stack(per_case_family_losses).mean()
+            if per_case_family_losses
+            else opening_foreground.sum() * 0.0
+        )
     opening_loss = (
         opening_geometry_loss
         + float(opening_precision_weight) * opening_precision_loss
         + float(opening_host_weight) * opening_host_loss
         + 0.5 * type_loss
+        + float(opening_family_weight) * family_loss
     )
 
     furniture_ids = torch.tensor(taxonomy.furniture_ids, device=logits.device)
@@ -147,6 +205,7 @@ def cad_stage_loss(
         ),
         "stage_opening_host_loss": opening_host_loss.detach(),
         "stage_opening_type_loss": type_loss.detach(),
+        "stage_opening_family_loss": family_loss.detach(),
         "stage_furniture_loss": furniture_loss.detach(),
         "stage_family_total": total.detach(),
     }
@@ -158,6 +217,7 @@ def cad_stage_loss(
             "stage_opening_precision": opening_precision_loss,
             "stage_opening_host": opening_host_loss,
             "stage_opening_type": type_loss,
+            "stage_opening_family": family_loss,
             "stage_furniture": furniture_loss,
         }
     return total, components

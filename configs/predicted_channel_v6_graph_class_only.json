@@ -1,0 +1,11 @@
+{
+  "schema_version": "predicted-channel-v6-graph-class-only",
+  "extends": "predicted_channel_v6_room_identity_adapter_control.json",
+  "status": "graph_mask_residual_ablation",
+  "model": {
+    "area_preserving_mask_residual": "class_only"
+  },
+  "zero_shot_status": "rejected_as_inference_replacement_on_val32",
+  "zero_shot_report": "outputs/reports/graph_class_only_same_weight_val32_seed19_compare_v1.json",
+  "claim_boundary": "Keeps graph query/class messages but disables graph-to-mask ownership edits. Diagnostic ablation only until matched training."
+}

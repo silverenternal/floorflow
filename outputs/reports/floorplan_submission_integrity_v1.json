@@ -1,0 +1,54 @@
+{
+  "schema_version": "floorplan-submission-integrity-v2",
+  "status": "passed_scoped_release",
+  "scope": "existing oracle, predicted, operation-safety, and composition evidence",
+  "checks": {
+    "registry_passed": true,
+    "provenance_passed": true,
+    "freeze_audit_passed": true,
+    "freeze_hash_current": true,
+    "optional_heldout_not_blocking": true,
+    "no_clean_worktree_requirement": true
+  },
+  "areas": {
+    "plan": {
+      "passed": true,
+      "errors": []
+    },
+    "registry": {
+      "passed": true,
+      "errors": []
+    },
+    "freeze": {
+      "passed": true,
+      "errors": []
+    },
+    "tables": {
+      "passed": true,
+      "errors": []
+    },
+    "figures": {
+      "passed": true,
+      "errors": []
+    },
+    "texts": {
+      "passed": true,
+      "errors": []
+    },
+    "evidence": {
+      "passed": true,
+      "errors": []
+    },
+    "package": {
+      "passed": true,
+      "errors": []
+    }
+  },
+  "optional_generalization_not_evaluated": {
+    "status": "optional_generalization_not_evaluated",
+    "required_for_scoped_submission": false,
+    "report": "outputs/reports/floorplan_heldout_availability_v1.json"
+  },
+  "boundary": "This audit verifies the selected release and package identities. It does not open a new split, create an OpenReview submission, or issue a venue receipt.",
+  "errors": []
+}
