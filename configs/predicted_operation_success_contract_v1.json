@@ -1,0 +1,68 @@
+{
+  "schema_version": "predicted-operation-success-contract-v1",
+  "scope": "residential_target_free_typed_editing",
+  "inputs": {
+    "before_labels": "predicted pre-edit room partition",
+    "after_labels": "predicted post-edit room partition",
+    "visible_before": "predicted pre-edit visible labels",
+    "visible_after": "predicted post-edit visible labels",
+    "edit_region": "control-grid [x,y,w,h] expanded around the changed control component",
+    "source_control": "predicted control before the typed operation",
+    "edited_control": "predicted control after the typed operation"
+  },
+  "prohibitions": [
+    "Do not use target labels to select or modify the operation.",
+    "Do not count an abstention as a semantic success.",
+    "Do not open the test split before the model and thresholds are frozen.",
+    "Do not pool operation success with Room IoU or graph quality.",
+    "Do not treat direct family deletion as evidence of target-relative correctness."
+  ],
+  "operations": {
+    "room_type": {
+      "source_class": "room class with the largest negative control-logit delta in the edit region",
+      "target_class": "room class with the largest positive control-logit delta in the edit region",
+      "success": "The edit changes pixels, at least 50% of changed pixels use the requested target class, and at least 4 output pixels use the target class.",
+      "minimum_changed_pixels": 1
+    },
+    "room_add": {
+      "source_class": "room class with the largest negative control-logit delta in the edit region",
+      "target_class": "room class with the largest positive control-logit delta in the edit region",
+      "success": "The edit changes pixels, at least 50% of changed pixels use the requested target class, and the target class has at least 4 output pixels.",
+      "minimum_target_pixels": 4
+    },
+    "room_remove": {
+      "source_class": "room class with the largest negative control-logit delta in the edit region, falling back to the dominant pre-edit room class inside the region",
+      "success": "The edit changes pixels, at least 50% of source-class pixels are removed, and another room class remains after the merge.",
+      "minimum_changed_pixels": 1
+    },
+    "opening_delete": {
+      "success": "At least one opening pixel exists before and zero opening-family pixels remain inside the edit region."
+    },
+    "furniture_delete": {
+      "success": "At least one furniture pixel exists before and zero furniture-family pixels remain inside the edit region."
+    }
+  },
+  "shared_thresholds": {
+    "source_removed_fraction_min": 0.5,
+    "target_share_of_changed_min": 0.5,
+    "minimum_target_pixels": 4,
+    "outside_pixel_exact": 1.0,
+    "outside_room_label_exact": 1.0,
+    "validity": 1.0
+  },
+  "aggregation": {
+    "unit": "prompt",
+    "report_per_operation": true,
+    "report_supported_coverage": true,
+    "report_unsupported_abstention": true,
+    "required_final_status_fields": [
+      "split",
+      "test_opened",
+      "model_frozen",
+      "operation_success_rate",
+      "inside_region_changed_rate",
+      "outside_exact_rate",
+      "validity_rate"
+    ]
+  }
+}

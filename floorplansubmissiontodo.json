@@ -115,8 +115,8 @@
       ]
     },
     "predicted_control_operation_reasonableness": {
-      "status": "passed_on_validation_semantic_audit_pending",
-      "split": "val191",
+      "status": "safety_passed_on_test_development_exposure_semantic_audit_pending",
+      "split": "test_development_exposure",
       "target_free_at_inference": true,
       "prompt_count": 738,
       "supported_prompt_count": 438,
@@ -147,7 +147,7 @@
         ],
         "ged_interpretation": "Higher GED is a disclosed negative diagnostic."
       },
-      "protocol_boundary": "The file named residential_predicted_edit_test503_final_v1.json reports split val191 and test_opened=false. It is validation evidence, not a held-out test result.",
+      "protocol_boundary": "The file named residential_predicted_edit_test503_final_v1.json contains prompt rows with split=test. Its legacy summary incorrectly reported split=val191 and test_opened=false. The evaluator metadata writer is fixed. This run cannot serve as the final held-out result.",
       "sources": [
         "configs/residential_predicted_edit_v1.json",
         "outputs/reports/residential_predicted_edit_test503_final_v1.json",
@@ -185,7 +185,7 @@
     {
       "level": 2,
       "claim": "Under target-free predicted controls, FloorFlow executes supported typed operations safely, abstains on unsupported requests, and produces structurally plausible plans.",
-      "status": "validation_supported_semantic_and_test_audits_pending",
+      "status": "operation_safety_supported_semantic_and_frozen_test_pending",
       "required_tasks": [
         "FP-SUB-03",
         "FP-SUB-04",
@@ -373,7 +373,7 @@
     {
       "id": "FP-SUB-03",
       "priority": "P0",
-      "status": "in_progress",
+      "status": "completed_current_validation",
       "title": "Create the predicted-control reasonableness dossier",
       "depends_on": [
         "FP-SUB-00",
@@ -387,7 +387,7 @@
     {
       "id": "FP-SUB-04",
       "priority": "P0",
-      "status": "planned",
+      "status": "implemented_preliminary_model_updating_results_below_threshold",
       "title": "Define and run operation-specific semantic success audits",
       "depends_on": [
         "FP-SUB-03"
@@ -410,14 +410,16 @@
         "configs/predicted_operation_success_contract_v1.json",
         "scripts/evaluate_predicted_operation_success_v1.py",
         "outputs/reports/predicted_operation_success_val191_v1.json",
+        "outputs/reports/predicted_operation_success_smoke5_v12.json",
+        "docs/predicted_control_operation_success_audit_v1.md",
         "tests/test_predicted_operation_success.py"
       ],
-      "acceptance": "Every supported operation has a deterministic semantic-success predicate, coverage count, denominator, and paired or case-level uncertainty."
+      "acceptance": "Every supported operation has a deterministic semantic-success predicate, coverage count, denominator, and report. Preliminary stale-model results are below the proposed 0.90 threshold, so promotion awaits the updated frozen model."
     },
     {
       "id": "FP-SUB-05",
       "priority": "P0",
-      "status": "planned",
+      "status": "blocked_predicted_model_updating",
       "title": "Freeze the predicted-control validation protocol",
       "depends_on": [
         "FP-SUB-03",
@@ -447,7 +449,7 @@
     {
       "id": "FP-SUB-07",
       "priority": "P0",
-      "status": "planned",
+      "status": "integrity_tool_ready_heldout_pending",
       "title": "Run the final evidence integrity audit",
       "depends_on": [
         "FP-SUB-06"
@@ -460,7 +462,7 @@
     {
       "id": "FP-SUB-08",
       "priority": "P1",
-      "status": "in_progress",
+      "status": "completed_oracle_partial_predicted_pending",
       "title": "Refresh matched local and external comparisons",
       "depends_on": [
         "FP-SUB-02",
@@ -475,7 +477,7 @@
     {
       "id": "FP-SUB-09",
       "priority": "P1",
-      "status": "planned",
+      "status": "completed_model_updating_captions_current",
       "title": "Build reviewer-facing qualitative and failure evidence",
       "depends_on": [
         "FP-SUB-06"
@@ -490,7 +492,7 @@
     {
       "id": "FP-SUB-10",
       "priority": "P0",
-      "status": "planned",
+      "status": "draft_complete_heldout_pending",
       "title": "Freeze the main paper tables",
       "depends_on": [
         "FP-SUB-06",
@@ -508,7 +510,7 @@
     {
       "id": "FP-SUB-11",
       "priority": "P0",
-      "status": "planned",
+      "status": "draft_complete_final_heldout_pending",
       "title": "Write the complete CVPR manuscript",
       "depends_on": [
         "FP-SUB-07",
@@ -524,7 +526,7 @@
     {
       "id": "FP-SUB-12",
       "priority": "P0",
-      "status": "planned",
+      "status": "preliminary_review_complete_final_model_rereview_pending",
       "title": "Run simulated CVPR review and revise",
       "depends_on": [
         "FP-SUB-11"
@@ -538,7 +540,7 @@
     {
       "id": "FP-SUB-13",
       "priority": "P0",
-      "status": "planned",
+      "status": "draft_package_ready_final_heldout_pending",
       "title": "Prepare reproducibility and artifact package",
       "depends_on": [
         "FP-SUB-07",
@@ -554,7 +556,7 @@
     {
       "id": "FP-SUB-14",
       "priority": "P0",
-      "status": "planned",
+      "status": "blocked_pending_model_heldout",
       "title": "Run final claim, anonymity, and submission checks",
       "depends_on": [
         "FP-SUB-12",
@@ -568,7 +570,7 @@
     {
       "id": "FP-SUB-15",
       "priority": "P0",
-      "status": "planned",
+      "status": "blocked_pending_final_release",
       "title": "Submit",
       "depends_on": [
         "FP-SUB-14"
@@ -664,6 +666,7 @@
     "Freeze the predicted-control held-out prompt manifest and case split.",
     "Set operation-specific semantic-success thresholds before held-out access.",
     "Audit current predicted-control updates and replace stale validation reports if their contracts changed.",
+    "Use a fresh unopened held-out split for the final predicted-control claim because the current test manifest has been used for development.",
     "Decide whether the identity fallback remains a main-paper contribution or an appendix result."
   ]
 }

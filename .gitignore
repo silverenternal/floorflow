@@ -38,6 +38,11 @@ logs/
 *.tar
 *.tar.*
 *.tgz
+*.aux
+*.fdb_latexmk
+*.fls
+*.out
+*.synctex.gz
 
 # Vendored third-party trees contain data, checkpoints, and nested repositories.
 # Keep the provenance/license index, but do not commit the source trees.
