@@ -526,14 +526,16 @@
     {
       "id": "FP-SUB-12",
       "priority": "P0",
-      "status": "preliminary_review_complete_final_model_rereview_pending",
+      "status": "draft_review_complete_model_rereview_pending",
       "title": "Run simulated CVPR review and revise",
       "depends_on": [
         "FP-SUB-11"
       ],
       "deliverables": [
         "outputs/reports/floorplan_cvpr_review_v1.md",
-        "outputs/reports/floorplan_revision_roadmap_v1.json"
+        "outputs/reports/floorplan_revision_roadmap_v1.json",
+        "docs/floorplan_claim_evidence_matrix_v1.md",
+        "docs/floorplan_submission_review_v1.md"
       ],
       "acceptance": "A methodology reviewer, domain reviewer, and devil's advocate each address oracle leakage, exact-locality construction, fidelity limits, abstention coverage, and external comparability."
     },
