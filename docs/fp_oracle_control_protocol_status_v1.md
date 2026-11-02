@@ -152,6 +152,7 @@ comparison, while HouseMind-E supplies metric context rather than a ranking.
 
 ## Canonical Sources
 
+- [oracle_control_cvpr_dossier_v1.md](../paper/tables/oracle_control_cvpr_dossier_v1.md)
 - [residential_sota_main_v5.md](../paper/tables/residential_sota_main_v5.md)
 - [residential_sota_claim_gate_v5.json](../outputs/reports/residential_sota_claim_gate_v5.json)
 - [residential_edit_test503_v1.json](../outputs/reports/residential_edit_test503_v1.json)

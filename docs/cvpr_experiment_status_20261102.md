@@ -52,15 +52,17 @@ two anchors but not the graph anchors. The paper must state that distinction.
 
 ## Submission Tables
 
-1. [residential_sota_main_v5.md](../paper/tables/residential_sota_main_v5.md):
+1. [oracle_control_cvpr_dossier_v1.md](../paper/tables/oracle_control_cvpr_dossier_v1.md):
+   compact claim-evidence dossier and reviewer-facing source map.
+2. [residential_sota_main_v5.md](../paper/tables/residential_sota_main_v5.md):
    per-operation main editing metrics and external context.
-2. [residential_graph_protocol_dominance_v1.md](../paper/tables/residential_graph_protocol_dominance_v1.md):
+3. [residential_graph_protocol_dominance_v1.md](../paper/tables/residential_graph_protocol_dominance_v1.md):
    structural protocol separation.
-3. [fp_complexity_strata.md](../paper/tables/fp_complexity_strata.md):
+4. [fp_complexity_strata.md](../paper/tables/fp_complexity_strata.md):
    room-count, interface, and edit-area strata.
-4. [fevp_hardened_main_results_v2.md](../paper/tables/fevp_hardened_main_results_v2.md):
+5. [fevp_hardened_main_results_v2.md](../paper/tables/fevp_hardened_main_results_v2.md):
    attack-tested FEVP evidence.
-5. [fp_limitations_v2.md](../paper/tables/fp_limitations_v2.md):
+6. [fp_limitations_v2.md](../paper/tables/fp_limitations_v2.md):
    reviewer-facing limitations.
 
 ## Remaining Work Before Submission

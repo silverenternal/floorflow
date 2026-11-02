@@ -24,17 +24,19 @@ SOTA or deployable predicted/free-text editing.
 
 ## Main Tables
 
-1. `residential_sota_main_v5.md`
+1. `oracle_control_cvpr_dossier_v1.md`
+   - compact headline, matched controls, mechanism audit, slices, and source map
+2. `residential_sota_main_v5.md`
    - per-operation Delta-IoU and Delta-MSE
    - exact outside preservation, FP-Eval validity, FEVP validity, and watertightness
    - HouseMind-E protocol context and matched local baselines
-2. `residential_edit_fiveseed_v1.md`
+3. `residential_edit_fiveseed_v1.md`
    - operation-level five-seed stability
    - matched Raster2Seq and paired significance diagnostics
-3. `residential_graph_protocol_dominance_v1.md`
+4. `residential_graph_protocol_dominance_v1.md`
    - aligned HouseMind-style, canonical, and typed graph protocols
    - explicit statement that protocols are not pooled
-4. `fp_complexity_strata.md`
+5. `fp_complexity_strata.md`
    - room-count, interface, and edit-area behavior
 
 ## Appendix
