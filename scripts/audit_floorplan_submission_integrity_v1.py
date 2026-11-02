@@ -30,6 +30,8 @@ REQUIRED_PAPER_FILES = (
     "paper/figures/floorplan_protocol_overview_v1.pdf",
     "paper/figures/predicted_control_operation_panels_v1.pdf",
     "paper/figures/floorplan_failure_taxonomy_v1.pdf",
+    "docs/floorplan_heldout_availability_v1.md",
+    "docs/floorplan_submission_freeze_checklist_v1.md",
 )
 ACTIVE_TEXT_FILES = (
     "paper/main.tex",

@@ -419,7 +419,7 @@
     {
       "id": "FP-SUB-05",
       "priority": "P0",
-      "status": "blocked_predicted_model_updating",
+      "status": "freeze_tool_ready_selected_checkpoint_pending",
       "title": "Freeze the predicted-control validation protocol",
       "depends_on": [
         "FP-SUB-03",
@@ -427,6 +427,9 @@
       ],
       "deliverables": [
         "configs/predicted_control_submission_freeze_v1.json",
+        "configs/predicted_control_submission_freeze_template_v1.json",
+        "scripts/prepare_predicted_control_submission_freeze_v1.py",
+        "docs/floorplan_submission_freeze_checklist_v1.md",
         "outputs/reports/predicted_control_validation_freeze_v1.json"
       ],
       "acceptance": "Checkpoints, prompt manifest, operation parser, thresholds, evaluator version, tolerances, and statistics are immutable before held-out access."
@@ -434,7 +437,7 @@
     {
       "id": "FP-SUB-06",
       "priority": "P0",
-      "status": "blocked",
+      "status": "blocked_no_strictly_fresh_split",
       "title": "Open the predicted-control held-out split once",
       "depends_on": [
         "FP-SUB-05"
@@ -442,6 +445,8 @@
       "deliverables": [
         "outputs/reports/residential_predicted_edit_heldout_v1.json",
         "outputs/reports/predicted_control_heldout_rows_v1.json",
+        "outputs/reports/floorplan_heldout_availability_v1.json",
+        "docs/floorplan_heldout_availability_v1.md",
         "paper/tables/predicted_control_heldout_v1.md"
       ],
       "acceptance": "The held-out result reports supported execution, abstention, semantic success, exact locality, validity, plausibility, fidelity, graph diagnostics, and all negative results exactly once."
@@ -669,6 +674,8 @@
     "Set operation-specific semantic-success thresholds before held-out access.",
     "Audit current predicted-control updates and replace stale validation reports if their contracts changed.",
     "Use a fresh unopened held-out split for the final predicted-control claim because the current test manifest has been used for development.",
+    "Acquire a new compatible held-out manifest: all 503 CubiCasa test cases were already inferred by the predicted completion run.",
+    "Decide whether the paused corrected model is a selected candidate or only an exploratory worktree before freezing it.",
     "Decide whether the identity fallback remains a main-paper contribution or an appendix result."
   ]
 }

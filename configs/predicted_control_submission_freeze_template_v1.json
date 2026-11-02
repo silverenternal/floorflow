@@ -1,0 +1,38 @@
+{
+  "schema_version": "predicted-control-submission-freeze-v1",
+  "status": "template_not_frozen",
+  "source_commit": null,
+  "worktree_dirty": null,
+  "checkpoint": null,
+  "checkpoint_sha256": null,
+  "config": null,
+  "config_sha256": null,
+  "prompt_manifest": null,
+  "prompt_manifest_sha256": null,
+  "taxonomy_sha256": null,
+  "operation_success_contract": "configs/predicted_operation_success_contract_v1.json",
+  "operation_success_contract_sha256": null,
+  "evaluator_versions": {
+    "predicted_edit_report": "residential-predicted-edit-v1",
+    "operation_success": "predicted-operation-success-v1",
+    "fpeval": null,
+    "fevp": "fevp-report-v1"
+  },
+  "thresholds": {
+    "operation_semantic_success": 0.9,
+    "unsupported_abstention": 1.0,
+    "outside_pixel_exact": 1.0,
+    "outside_room_label_exact": 1.0,
+    "validity": 1.0,
+    "plan_plausibility": 0.95,
+    "functional_watertightness": 0.95
+  },
+  "heldout_split": null,
+  "heldout_manifest_sha256": null,
+  "freeze_policy": [
+    "Refuse to freeze from a dirty worktree.",
+    "Refuse to reuse a split whose full completion set has been inferred or evaluated.",
+    "Hash the model, config, prompt manifest, taxonomy, operation-success contract, and evaluator versions.",
+    "Do not change thresholds after held-out access."
+  ]
+}
