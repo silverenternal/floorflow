@@ -102,6 +102,19 @@ contour+program predictor 和 guided CFM 的 room IoU 分别只有
 - 室内房间 IoU、内墙 IoU、门/窗/家具 IoU、开洞 F1、房间面积覆盖率等评估。
 - 楼层级全量预处理：train 5,126、val 491、test 503，0 个解析失败。
 
+## CAD08 结构化编辑（实验性）
+
+仓库还提供一个独立的 CPU CAD 状态事务接口，支持有界房间重分类、拆分、合并，以及绑定到已注册墙宿主的开口新增和替换。接口维护房间实例、谱系、别名和开口—墙宿主关系，并可将有明确历史收据的二维状态写为 R2010 DXF 与 sidecar 后读回。它不调用或训练上述生成模型。
+
+该接口不会从预测图推断用户身份：初始化生成的对象 ID 是运行时 ID；开口操作必须收到当前状态中的明确 host ID；无法唯一绑定时保留失败或 unknown。R2010 校验使用仓库自己的 reader，不代表独立 CAD 软件兼容性或真实 CAD 安全认证。安装可选依赖和运行范围说明见 [`docs/cad08_structured_editing.md`](docs/cad08_structured_editing.md)。
+
+```bash
+uv sync --extra dev --extra cad
+uv run pytest tests/test_cad08_cpu_import.py tests/test_cad08_integrated_v1.py \
+  tests/test_cad08_opening_lifecycle.py \
+  tests/test_cad08_history_export.py tests/test_cad08_history_dxf_readback.py -q
+```
+
 ## 数据
 
 项目中的 `.data/cubicasa5k` 用于放置本机完整解压数据：

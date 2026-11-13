@@ -37,6 +37,10 @@ vector = [
     "skan>=0.13",
     "shapely>=2.1",
 ]
+cad = [
+    "ezdxf>=1.4.5,<2",
+    "shapely>=2.1",
+]
 code-ast = [
   "tree-sitter==0.26.0",
   "tree-sitter-python==0.25.0",
