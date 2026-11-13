@@ -36,28 +36,16 @@ cross-rebuild identity, and the original E/P/G/J evaluation fields. A package
 exported successfully is marked `exported_unvalidated` until a trusted receipt
 and readback are supplied.
 
-The export and readback modules use the bundled `ezdxf` and Shapely libraries;
-they are not independent geometry implementations. The test fixtures are
-synthetic CPU cases and do not establish acceptance by another CAD product.
+The exporter and reader both use the optional ezdxf and Shapely dependencies.
+The CPU tests exercise synthetic geometry. Interoperability with another CAD
+product is outside that test scope.
 
 ## Installation and focused verification
 
-```bash
-uv sync --extra dev --extra cad
-uv run pytest \
-  tests/test_cad08_cpu_import.py \
-  tests/test_cad08_integrated_v1.py \
-  tests/test_cad08_permission_v1.py \
-  tests/test_cad08_opening_lifecycle.py \
-  tests/test_cad08_geometry_normalized_preservation.py \
-  tests/test_cad08_history_archive.py \
-  tests/test_cad08_history_receipt.py \
-  tests/test_cad08_transition_history.py \
-  tests/test_cad08_history_export.py \
-  tests/test_cad08_history_dxf_readback.py -q
-```
+Follow the [CPU quickstart](../README.md#run-the-cpu-example) to run a room
+split and reclassification through the transaction, history, and readback
+APIs. The same section gives the command for the full CAD08 CPU suite.
 
 The CAD extra supplies Shapely 2.1 or newer and ezdxf 1.4.5 or newer in the
-1.x series. The dev extra supplies pytest. The CAD import path is lazy, so these
-CPU transaction and serialization tests do not require the Torch training
-runtime. No checkpoint or dataset is required.
+1.x series. The CAD import path is lazy. The example and focused tests run
+without the Torch training runtime, a dataset, or a checkpoint.
