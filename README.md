@@ -8,6 +8,14 @@ edit. The repository includes learned floorplan generation and control
 pipelines, an explicit geometry backend for typed edits, and evaluation
 protocols for measuring what changed and what was preserved.
 
+## Release scope
+
+The GitHub release includes the FloorFlow source, CAD08 CPU example, editing
+API documentation, and the existing floorplan evaluation protocols. The CPU
+example uses synthetic geometry. Learned workflows use separately obtained
+datasets and run-specific checkpoints, which are distributed separately
+from the source release where available.
+
 ## From an edit request to a committed floorplan
 
 1. **Represent.** Store rooms, wall material, openings, fixtures, and the

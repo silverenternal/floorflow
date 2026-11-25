@@ -41,12 +41,6 @@ cad = [
     "ezdxf>=1.4.5,<2",
     "shapely>=2.1",
 ]
-code-ast = [
-  "tree-sitter==0.26.0",
-  "tree-sitter-python==0.25.0",
-  "tree-sitter-rust==0.24.2",
-  "tree-sitter-cpp==0.23.4",
-]
 external = [
     "blobfile>=3.0",
     "cairosvg>=2.7",
